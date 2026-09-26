@@ -137,7 +137,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "3rdparty"
         ) || role.starts_with("test_")
             || role.starts_with("tests_")
-            || is_scaffold_template_dir_name(role)
+            || is_scaffold_template_dir_name(&lowered)
             // Python under `docs/` is Sphinx config and site builders.
             || name == "docs" && path.extension().is_some_and(|ext| ext == "py");
         // A separate documentation-site sub-app at the repo root
@@ -234,15 +234,17 @@ pub(crate) fn dir_role_name(lowercased_name: &str) -> &str {
 
 /// Starter-template payload directory — the material a project scaffolder
 /// copies into a new project (`template-react`, `cra-template-typescript`,
-/// as emitted by `create-*` packages). What the scaffolder *is* lives in
-/// its own source; the payloads are N near-identical starter projects.
+/// as emitted by `create-*` packages, or a Mason brick's `__brick__`).
+/// What the scaffolder *is* lives in its own source; the payloads are N
+/// near-identical starter projects, and not always in the language their
+/// names claim.
 ///
 /// The prefixed forms only. A bare `templates/` is the view layer in every
 /// server framework in the corpus (Django, Flask, Jinja, Helm charts) —
 /// demoting that would demote those projects' actual output.
 pub(crate) fn is_scaffold_template_dir_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
-    lower.starts_with("template-") || lower.starts_with("cra-template-")
+    lower.starts_with("template-") || lower.starts_with("cra-template-") || lower == "__brick__"
 }
 
 /// Default cost-side concavity for the scheduling ratio — gentle so
@@ -315,7 +317,8 @@ mod tests {
                 0.2,
                 "packages/create-x/template-react/src/main.tsx \
                  packages/create-x/cra-template-typescript/index.js \
-                 packages/create-x/Template-Vue/vite.config.ts",
+                 packages/create-x/Template-Vue/vite.config.ts \
+                 bricks/bloc/__brick__/{{name}}_bloc.dart",
             ),
             (
                 1.0,
