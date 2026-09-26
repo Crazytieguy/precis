@@ -1056,8 +1056,8 @@ fn redact_secrets(line: &str, in_document: bool) -> std::borrow::Cow<'_, str> {
     });
     static PLACEHOLDER: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
         regex::Regex::new(concat!(
-            r"^(?:<[^>]*>|\$\w+|[\w.]+\(.*\)|%[\w.()]+%)$",
-            r"|\$\{|\{\{|\{%|\{\w*\}|%(?:\(\w+\))?[sd]",
+            r"^(?:<[^>]*>|\$\w+|[\w.]+\(.*\)|%[\w.()]+%|%(?:\(\w+\))?[sd])$",
+            r"|\$\{|\{\{|\{%|\{\w*\}",
         ))
         .unwrap()
     });
@@ -1428,6 +1428,13 @@ mod tests {
                 r#"{"password": "…", "api_key": "…"}"#,
             ),
             ("postgres://app:pa$$w%rd@db/app", "postgres://app:…@db/app"),
+            (
+                "url = \"postgres://app:p%d0%b0ss7@db/app\"",
+                "url = \"postgres://app:…@db/app\"",
+            ),
+            ("postgres://%s:%s@%s/app", "postgres://%s:%s@%s/app"),
+            (r#"password = "hunter%s2""#, r#"password = "…""#),
+            (r#"password = "%s""#, r#"password = "%s""#),
             (
                 "f\"postgres://{user}:{password}@{host}\"",
                 "f\"postgres://{user}:{password}@{host}\"",
