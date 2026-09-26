@@ -1169,6 +1169,11 @@ function Provider() {}
 Provider.prototype._execute = function () {};
 Provider.prototype.run = function () {};
 export { Provider };
+export const documentSchema = z.object({
+  _id: z.string(),
+  __typename: z.literal(\"Document\"),
+  title: z.string(),
+});
 ",
         );
         assert_eq!(
@@ -1180,30 +1185,13 @@ export { Provider };
                 "  Callable name [9] head [9] doc [] body []",
                 "Callable name [11] head [11] doc [] body []",
                 "Callable name [13] head [13] doc [] body []",
+                "Whole name [15] head [15, 19] doc [] body [[16], [17], [18]]",
             ]
         );
     }
 
     #[test]
-    fn typescript_underscore_data_entries_stay_public() {
-        let model = extract_source(
-            "src/schema.ts",
-            "\
-export const documentSchema = z.object({
-  _id: z.string(),
-  __typename: z.literal(\"Document\"),
-  title: z.string(),
-});
-",
-        );
-        assert_eq!(
-            describe(&model),
-            ["Whole name [1] head [1, 5] doc [] body [[2], [3], [4]]"]
-        );
-    }
-
-    #[test]
-    fn typescript_internal_tagged_declarations_are_hidden() {
+    fn typescript_internal_tagged_declarations_members_and_fields_are_hidden() {
         let model = extract_source(
             "src/proxy.ts",
             "\
@@ -1220,23 +1208,6 @@ export class Client {
 /** @internal */
 export { assertNumber } from './warning';
 export { warn } from './warning';
-",
-        );
-        assert_eq!(
-            describe(&model),
-            [
-                "Whole name [6] head [6, 10] doc [[3, 4, 5]] body [[9]]",
-                "  Callable name [9] head [9] doc [] body []",
-            ]
-        );
-        assert_eq!(rows(&model.reexports), [[13]]);
-    }
-
-    #[test]
-    fn typescript_internal_tagged_fields_and_same_row_docs_are_hidden() {
-        let model = extract_source(
-            "src/parser.ts",
-            "\
 export class Parser {
     /** @internal */ buf: Uint8Array;
     /** @internal */
@@ -1252,10 +1223,13 @@ export class Parser {
         assert_eq!(
             describe(&model),
             [
-                "Whole name [1] head [1, 10] doc [] body [[6], [7]]",
-                "  Callable name [7] head [7] doc [] body [[8]]",
+                "Whole name [6] head [6, 10] doc [[3, 4, 5]] body [[9]]",
+                "  Callable name [9] head [9] doc [] body []",
+                "Whole name [14] head [14, 23] doc [] body [[19], [20]]",
+                "  Callable name [20] head [20] doc [] body [[21]]",
             ]
         );
+        assert_eq!(rows(&model.reexports), [[13]]);
     }
 
     #[test]
@@ -1488,25 +1462,14 @@ type DebugState = string;
     }
 
     #[test]
-    fn typescript_reexport_keeps_its_line_comment_label() {
-        let model = extract_source(
-            "src/index.ts",
-            "\
-// Base
-export * from './base';
-/** Errors. */
-export * from './errors';
-",
-        );
-        assert_eq!(rows(&model.reexports), [vec![1, 2], vec![4]]);
-    }
-
-    #[test]
     fn typescript_reexports_and_clauses_publish_without_declaring() {
         let model = extract_source(
             "src/api.ts",
             "\
+// Base
 export * from './a';
+/** Errors. */
+export * from './errors';
 export { b, c as d } from './b';
 function local() {}
 function hidden() {}
@@ -1514,12 +1477,15 @@ interface Shape {}
 export { local, type Shape };
 ",
         );
-        assert_eq!(rows(&model.reexports), [vec![1], vec![2], vec![6]]);
+        assert_eq!(
+            rows(&model.reexports),
+            [vec![1, 2], vec![4], vec![5], vec![9]]
+        );
         assert_eq!(
             describe(&model),
             [
-                "Callable name [3] head [3] doc [] body []",
-                "Whole name [5] head [5] doc [] body []",
+                "Callable name [6] head [6] doc [] body []",
+                "Whole name [8] head [8] doc [] body []",
             ]
         );
     }

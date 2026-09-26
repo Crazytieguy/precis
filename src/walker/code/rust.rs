@@ -604,39 +604,6 @@ pub fn f() {}
     }
 
     #[test]
-    fn rust_extract_hides_tests_and_doc_hidden() {
-        let source = "\
-pub struct Public;
-pub(crate) struct Crate;
-struct Private;
-#[doc(hidden)]
-pub struct Hidden;
-#[cfg(test)]
-fn helper() {}
-#[test]
-fn check() {}
-#[tokio::test]
-async fn check_async() {}
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn inner() {}
-}
-pub fn latest() {}
-";
-        let (file, model) = extract_source("a.rs", source);
-        assert_eq!(
-            roster(&file, &model.decls),
-            vec![
-                "pub struct Public;",
-                "pub(crate) struct Crate;",
-                "struct Private;",
-                "pub fn latest() {}",
-            ]
-        );
-    }
-
-    #[test]
     fn rust_extract_private_helpers_hide_behind_a_visible_item() {
         let source = "\
 static STATE: AtomicUsize = AtomicUsize::new(0);
@@ -687,7 +654,7 @@ pub fn escape() {}
     }
 
     #[test]
-    fn rust_extract_hides_test_only_cfgs_test_macros_and_hidden_variants() {
+    fn rust_extract_hides_tests_test_only_cfgs_and_doc_hidden() {
         let source = "\
 #[cfg(all(test, feature = \"x\"))]
 pub fn only_in_tests() {}
@@ -706,6 +673,16 @@ pub enum Kind {
     #[doc(hidden)]
     _Custom(String),
 }
+pub(crate) struct Crate;
+#[doc(hidden)]
+pub struct Hidden;
+#[tokio::test]
+async fn check_async() {}
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn inner() {}
+}
 ";
         let (file, model) = extract_source("a.rs", source);
         assert_eq!(
@@ -714,7 +691,8 @@ pub enum Kind {
                 "pub fn parse() {}",
                 "pub fn production() {}",
                 "pub fn on_unix() {}",
-                "pub enum Kind {"
+                "pub enum Kind {",
+                "pub(crate) struct Crate;",
             ]
         );
         assert_eq!(rows(&model.decls[3].body), vec![vec![14]]);

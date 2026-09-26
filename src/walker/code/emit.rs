@@ -445,48 +445,34 @@ mod tests {
         assert_eq!(batches[4].2, [7, 8, 9]);
     }
 
+    /// An oversize part chains its chunks, and a body that is one huge
+    /// statement still renders a prefix: the statement splits into rows,
+    /// chunked like any oversize part.
     #[test]
-    fn emit_chains_the_chunks_of_an_oversize_part() {
-        let mut callable = decl(1, vec![1], Shape::Callable);
-        callable.body = (2..=80).map(|row| rows(row..=row)).collect();
-        let batches = emit(
-            80,
-            FileModel {
-                decls: vec![callable],
-                ..FileModel::default()
-            },
-        );
-        let bodies: Vec<_> = batches
-            .iter()
-            .filter(|(key, _, _)| key.rung == Rung::Body)
-            .collect();
-        assert!(bodies.len() > 1);
-        for pair in bodies.windows(2) {
-            assert_eq!(pair[1].1.as_ref(), Some(&pair[0].0));
-            assert_eq!(pair[1].0.sub, pair[0].0.sub + 1);
+    fn emit_chains_the_chunks_of_an_oversize_part_or_item() {
+        let one_item_per_row = (2..=80).map(|row| rows(row..=row)).collect();
+        for body in [one_item_per_row, vec![rows(2..=80)]] {
+            let mut callable = decl(1, vec![1], Shape::Callable);
+            callable.body = body;
+            let batches = emit(
+                80,
+                FileModel {
+                    decls: vec![callable],
+                    ..FileModel::default()
+                },
+            );
+            let bodies: Vec<_> = batches
+                .iter()
+                .filter(|(key, _, _)| key.rung == Rung::Body)
+                .collect();
+            assert!(bodies.len() > 1);
+            for pair in bodies.windows(2) {
+                assert_eq!(pair[1].1.as_ref(), Some(&pair[0].0));
+                assert_eq!(pair[1].0.sub, pair[0].0.sub + 1);
+            }
+            assert_eq!(bodies[0].2.first(), Some(&2));
+            assert_eq!(bodies.last().unwrap().2.last(), Some(&80));
         }
-    }
-
-    /// A body that is one huge statement still renders a prefix: the
-    /// statement splits into rows, chunked like any oversize part.
-    #[test]
-    fn emit_splits_an_oversize_item_into_rows() {
-        let mut callable = decl(1, vec![1], Shape::Callable);
-        callable.body = vec![rows(2..=80)];
-        let batches = emit(
-            80,
-            FileModel {
-                decls: vec![callable],
-                ..FileModel::default()
-            },
-        );
-        let bodies: Vec<_> = batches
-            .iter()
-            .filter(|(key, _, _)| key.rung == Rung::Body)
-            .collect();
-        assert!(bodies.len() > 1);
-        assert_eq!(bodies[0].2.first(), Some(&2));
-        assert_eq!(bodies.last().unwrap().2.last(), Some(&80));
     }
 
     /// The roster lists in source order, so an oversize trailing re-export
