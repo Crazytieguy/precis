@@ -24,12 +24,15 @@
 
 use std::cell::RefCell;
 use std::collections::{HashMap, HashSet};
+use std::ops::RangeInclusive;
 use std::path::{Path, PathBuf};
 
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile, is_named_after};
+use super::{
+    Language, SourceFile, block_head, file_name, file_stem, is_named_after, named_children,
+};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -172,10 +175,7 @@ fn is_directive(statement: Node) -> bool {
 /// walk root): `index.ts`, `lib/main.js`, `src/node/index.ts`; and,
 /// outside `bin/`, the source named after that package (`lib/express.js`).
 fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
-    let (Some(stem), Some(dir)) = (
-        path.file_stem().and_then(|stem| stem.to_str()),
-        path.parent(),
-    ) else {
+    let (Some(stem), Some(dir)) = (file_stem(path), path.parent()) else {
         return false;
     };
     let package_dir = ctx.code.typescript.package_dir(dir, ctx.root());
@@ -200,10 +200,7 @@ fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
 const CONFIG_FILE_WEIGHT: f64 = 0.001;
 
 fn is_config_file(path: &Path) -> bool {
-    let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
-        return false;
-    };
-    name.starts_with('.') || name.contains(".config.")
+    file_name(path).is_some_and(|name| name.starts_with('.') || name.contains(".config."))
 }
 
 #[derive(Default)]
@@ -237,14 +234,12 @@ impl RunState {
 }
 
 fn is_declaration_file(path: &Path) -> bool {
-    path.file_name()
-        .and_then(|name| name.to_str())
-        .is_some_and(|name| {
-            let name = name.to_ascii_lowercase();
-            [".d.ts", ".d.mts", ".d.cts"]
-                .iter()
-                .any(|suffix| name.ends_with(suffix))
-        })
+    file_name(path).is_some_and(|name| {
+        let name = name.to_ascii_lowercase();
+        [".d.ts", ".d.mts", ".d.cts"]
+            .iter()
+            .any(|suffix| name.ends_with(suffix))
+    })
 }
 
 /// What one top-level statement contributes to the model.
@@ -723,43 +718,42 @@ fn is_commonjs_target(file: &SourceFile, left: Node) -> bool {
 /// it). The head starts at `statement`, so it carries `export`, `declare`
 /// and decorators.
 fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
-    let span = Span::of(file, statement);
-    let name_row = name_row(node).unwrap_or(span.start);
+    let rows = file.node_rows(statement);
+    let name_row = name_row(node).unwrap_or(*rows.start());
     let kind = node.kind();
     if is_function_kind(kind) {
-        return function_callable(file, span, name_row, node);
+        return function_callable(file, rows, name_row, node);
     }
     if is_class_kind(kind) {
-        return class(file, span, name_row, node.child_by_field_name("body"));
+        return class(file, rows, name_row, node.child_by_field_name("body"));
     }
     match kind {
         "interface_declaration" | "enum_declaration" | "internal_module" | "module" => {
-            whole(file, span, vec![name_row], node.child_by_field_name("body"))
+            file.whole(vec![name_row], rows, node.child_by_field_name("body"))
         }
         "type_alias_declaration" => {
             let object = node
                 .child_by_field_name("value")
                 .filter(|value| value.kind() == "object_type");
-            whole(file, span, vec![name_row], object)
+            file.whole(vec![name_row], rows, object)
         }
         // `declare global { … }`
-        "statement_block" => whole(file, span, vec![span.start], Some(node)),
+        "statement_block" => file.whole(vec![*rows.start()], rows, Some(node)),
         "lexical_declaration" | "variable_declaration" => match single_declarator(node) {
             Some(declarator) => match declarator.child_by_field_name("value") {
-                Some(value) => value_declaration(file, span, name_row, value),
-                None => whole(file, span, vec![name_row], None),
+                Some(value) => value_declaration(file, rows, name_row, value),
+                None => file.whole(vec![name_row], rows, None),
             },
             None => {
-                let mut cursor = node.walk();
-                let name_rows = node
-                    .named_children(&mut cursor)
+                let name_rows = named_children(Some(node))
+                    .into_iter()
                     .filter_map(|declarator| declarator.child_by_field_name("name"))
                     .map(|name| name.start_position().row + 1)
                     .collect();
-                whole(file, span, name_rows, None)
+                file.whole(name_rows, rows, None)
             }
         },
-        _ => value_declaration(file, span, name_row, node),
+        _ => value_declaration(file, rows, name_row, node),
     }
 }
 
@@ -769,7 +763,12 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
 /// arguments; an array literal lists its entries; anything else is all
 /// head. An assignment chain (`var X = exports.X = function …`) is shaped
 /// by its final value.
-fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node) -> DeclInfo {
+fn value_declaration(
+    file: &SourceFile,
+    rows: RangeInclusive<usize>,
+    name_row: usize,
+    value: Node,
+) -> DeclInfo {
     let mut value = value;
     while value.kind() == "assignment_expression"
         && let Some(right) = value.child_by_field_name("right")
@@ -777,20 +776,20 @@ fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node
         value = right;
     }
     if is_class_kind(value.kind()) {
-        return class(file, span, name_row, value.child_by_field_name("body"));
+        return class(file, rows, name_row, value.child_by_field_name("body"));
     }
     if value.kind() == "object" {
-        return class(file, span, name_row, Some(value));
+        return class(file, rows, name_row, Some(value));
     }
     if value.kind() == "array" {
-        return whole(file, span, vec![name_row], Some(value));
+        return file.whole(vec![name_row], rows, Some(value));
     }
     if let Some(function) = wrapped_function(value) {
-        return function_callable(file, span, name_row, function);
+        return function_callable(file, rows, name_row, function);
     }
     match last_object_argument(value) {
-        Some(object) => class(file, span, name_row, Some(object)),
-        None => whole(file, span, vec![name_row], None),
+        Some(object) => class(file, rows, name_row, Some(object)),
+        None => file.whole(vec![name_row], rows, None),
     }
 }
 
@@ -842,23 +841,6 @@ fn wrapped_function(value: Node) -> Option<Node> {
     }
 }
 
-/// First and last row of a node, as [`SourceFile::node_rows`] counts them.
-#[derive(Clone, Copy)]
-struct Span {
-    start: usize,
-    end: usize,
-}
-
-impl Span {
-    fn of(file: &SourceFile, node: Node) -> Self {
-        let rows = file.node_rows(node);
-        Self {
-            start: *rows.start(),
-            end: *rows.end(),
-        }
-    }
-}
-
 fn name_row(node: Node) -> Option<usize> {
     let name = node.child_by_field_name("name").or_else(|| {
         single_declarator(node).and_then(|declarator| declarator.child_by_field_name("name"))
@@ -869,96 +851,58 @@ fn name_row(node: Node) -> Option<usize> {
 /// A function's parts: [`callable`] over its statement block or, for an
 /// arrow function whose body is an expression, the head through the `=>`
 /// row and the rest of the expression as one body item.
-fn function_callable(file: &SourceFile, span: Span, name_row: usize, function: Node) -> DeclInfo {
+fn function_callable(
+    file: &SourceFile,
+    rows: RangeInclusive<usize>,
+    name_row: usize,
+    function: Node,
+) -> DeclInfo {
     let body = function.child_by_field_name("body");
     if body.is_none_or(|body| body.kind() == "statement_block") {
-        return callable(file, span, name_row, body);
+        return callable(file, rows, name_row, body);
     }
-    let mut cursor = function.walk();
+    let (start, end) = (*rows.start(), *rows.end());
     let arrow_row = function
-        .children(&mut cursor)
+        .children(&mut function.walk())
         .find(|child| child.kind() == "=>")
-        .map_or(span.end, |arrow| arrow.start_position().row + 1);
+        .map_or(end, |arrow| arrow.start_position().row + 1);
     let head_end = arrow_row.max(name_row);
-    let mut decl = callable(file, span, name_row, None);
-    if head_end < span.end {
-        decl.head = (span.start..=head_end).collect();
-        decl.body = vec![Item::new(head_end + 1..=span.end)];
+    DeclInfo {
+        body: vec![Item::new(head_end + 1..=end)],
+        ..DeclInfo::new(
+            vec![name_row],
+            (start..=head_end).collect(),
+            Shape::Callable,
+        )
     }
-    decl
 }
 
 /// Head through the row before the first statement (at least through the
 /// row opening the block and the name row); one body item per statement.
-fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) -> DeclInfo {
-    let first_statement = block.and_then(|block| block.named_child(0));
-    let (head_end, body) = match (block, first_statement) {
-        (Some(block), Some(first)) => {
-            let first_row = first.start_position().row + 1;
-            let head_end = (block.start_position().row + 1)
-                .max(first_row - 1)
-                .max(name_row);
-            let mut cursor = block.walk();
-            (
-                head_end,
-                file.node_items(block.named_children(&mut cursor), head_end),
-            )
-        }
-        _ => (span.end, Vec::new()),
-    };
-    DeclInfo {
-        name_rows: vec![name_row],
-        head: (span.start..=head_end).collect(),
-        doc: Vec::new(),
-        body,
-        shape: Shape::Callable,
-        members: Vec::new(),
-    }
-}
-
-/// Head through the row opening `block`, plus the rows from its closing
-/// row through the declaration's end; one body item per entry of `block`.
-/// Without a block, all head.
-fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Node>) -> DeclInfo {
-    let Some(block) = block else {
-        return DeclInfo {
-            name_rows,
-            head: (span.start..=span.end).collect(),
-            doc: Vec::new(),
-            body: Vec::new(),
-            shape: Shape::Whole,
-            members: Vec::new(),
-        };
-    };
-    let open_row = block.start_position().row + 1;
-    let mut cursor = block.walk();
-    let body = file.node_items(block.named_children(&mut cursor), open_row);
-    let last_body_row = body
-        .iter()
-        .flat_map(|item| item.rows.iter().copied())
-        .max()
-        .unwrap_or(open_row);
-    let suffix_start = Span::of(file, block).end.max(last_body_row + 1);
-    let head: Vec<usize> = (span.start..=open_row)
-        .chain(suffix_start.max(open_row + 1)..=span.end)
-        .collect();
-    DeclInfo {
-        name_rows,
-        head,
-        doc: Vec::new(),
-        body,
-        shape: Shape::Whole,
-        members: Vec::new(),
-    }
+fn callable(
+    file: &SourceFile,
+    rows: RangeInclusive<usize>,
+    name_row: usize,
+    block: Option<Node>,
+) -> DeclInfo {
+    let floor = block.map_or(name_row, |block| {
+        (block.start_position().row + 1).max(name_row)
+    });
+    file.callable(vec![name_row], rows, named_children(block), floor)
 }
 
 /// A class or object literal as a container: the header and closing row
 /// as head, each visible field or entry (with its comments) as a body
 /// item, and each visible method or function-valued field or entry as a
 /// member listed by its name row.
-fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Node>) -> DeclInfo {
+fn class(
+    file: &SourceFile,
+    rows: RangeInclusive<usize>,
+    class_name_row: usize,
+    block: Option<Node>,
+) -> DeclInfo {
     let Some(block) = block else {
-        return whole(file, span, vec![class_name_row], None);
+        return file.whole(vec![class_name_row], rows, None);
     };
     let open_row = block.start_position().row + 1;
     let mut body = Vec::new();
@@ -969,11 +913,11 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
     let mut first_decorator: Option<Node> = None;
     let mut cursor = block.walk();
     for child in block.named_children(&mut cursor) {
-        let child_span = Span::of(file, child);
+        let child_rows = file.node_rows(child);
         match child.kind() {
             "comment" => {
-                if child_span.start > last_row && first_decorator.is_none() {
-                    comment_start.get_or_insert(child_span.start);
+                if *child_rows.start() > last_row && first_decorator.is_none() {
+                    comment_start.get_or_insert(*child_rows.start());
                 }
                 continue;
             }
@@ -985,10 +929,7 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
         }
         let leading_comment = comment_start.take();
         let anchor = first_decorator.take().unwrap_or(child);
-        let span = Span {
-            start: anchor.start_position().row + 1,
-            end: child_span.end,
-        };
+        let (start, end) = (anchor.start_position().row + 1, *child_rows.end());
         let is_member = matches!(
             child.kind(),
             "method_definition" | "method_signature" | "abstract_method_signature"
@@ -1008,34 +949,27 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
         let is_data_entry = child.kind() == "pair" && function_block.is_none();
         if (is_member || is_field) && !is_hidden_member(file, child, is_data_entry) {
             if is_member || function_block.is_some() {
-                let member_name_row = name_row(child).unwrap_or(span.start);
+                let member_name_row = name_row(child).unwrap_or(start);
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
-                let mut member = callable(file, span, member_name_row, block);
+                let mut member = callable(file, start..=end, member_name_row, block);
                 member.doc = doc_items(file, anchor);
                 if !is_internal(file, &member.doc) {
                     body.push(Item::new(member.name_rows.iter().copied()));
                     members.push(member);
                 }
             } else {
-                let start = leading_comment.unwrap_or(span.start).max(last_row + 1);
-                if start <= span.end {
-                    body.push(Item::new(start..=span.end));
-                }
+                let start = leading_comment.unwrap_or(start).max(last_row + 1);
+                body.push(Item::new(start..=end));
             }
         }
-        last_row = last_row.max(span.end);
+        last_row = last_row.max(end);
     }
-    let close_row = Span::of(file, block).end;
-    let head: Vec<usize> = (span.start..=open_row)
-        .chain(close_row.max(last_row + 1)..=span.end)
-        .collect();
+    let close_row = *file.node_rows(block).end();
+    let head = block_head(rows, open_row, (close_row - 1).max(last_row));
     DeclInfo {
-        name_rows: vec![class_name_row],
-        head,
-        doc: Vec::new(),
         body,
-        shape: Shape::Whole,
         members,
+        ..DeclInfo::new(vec![class_name_row], head, Shape::Whole)
     }
 }
 
@@ -1383,7 +1317,7 @@ export class Options {
         );
         assert_eq!(
             describe(&model),
-            ["Whole name [1] head [1, 5] doc [] body [[2, 3, 4]]"]
+            ["Whole name [1] head [1, 5] doc [] body [[2, 4]]"]
         );
     }
 
@@ -1420,7 +1354,7 @@ export abstract class Shape {
         assert_eq!(
             describe(&model),
             [
-                "Whole name [1] head [1] doc [] body [[1]]",
+                "Whole name [1] head [1] doc [] body []",
                 "  Callable name [1] head [1] doc [] body [[2]]",
             ]
         );

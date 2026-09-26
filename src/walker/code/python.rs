@@ -34,7 +34,7 @@ use regex::Regex;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile};
+use super::{Language, SourceFile, file_name, file_stem};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -127,7 +127,7 @@ fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
 /// so it outranks its sibling helper modules. The `from . import core`
 /// form doesn't count: adding it measured -0.0001 avg7 (2026-09-25).
 fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
-    let Some(stem) = path.file_stem().and_then(|s| s.to_str()) else {
+    let Some(stem) = file_stem(path) else {
         return 1.0;
     };
     let mut module_path = vec![stem];
@@ -137,7 +137,7 @@ fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
         && let Some(init) = ctx.read_source(&package_dir.join("__init__.py"))
     {
         inits.push((module_path.len(), init));
-        let Some(package) = package_dir.file_name().and_then(|s| s.to_str()) else {
+        let Some(package) = file_name(package_dir) else {
             break;
         };
         module_path.insert(0, package);
@@ -178,7 +178,7 @@ fn imports_own_module(file: &SourceFile, statement: Node, ctx: &WalkCtx) -> bool
         .ancestors()
         .skip(1)
         .take_while(|dir| *dir != ctx.root() && dir.starts_with(ctx.root()))
-        .any(|dir| dir.file_name().and_then(|name| name.to_str()) == first_component)
+        .any(|dir| file_name(dir) == first_component)
 }
 
 /// Whether a `from … import …` re-exports a name on purpose: `X as X`, or
@@ -225,10 +225,6 @@ fn collect_string_contents<'a>(file: &'a SourceFile, node: Node, names: &mut Vec
     }
 }
 
-fn file_stem(path: &Path) -> Option<&str> {
-    path.file_stem().and_then(|stem| stem.to_str())
-}
-
 fn is_dunder(name: &str) -> bool {
     name.len() >= 4 && name.starts_with("__") && name.ends_with("__")
 }
@@ -265,14 +261,7 @@ fn is_docstring(node: Node) -> bool {
 /// A constant or alias: all head, no body.
 fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
     let rows = file.node_rows(node);
-    DeclInfo {
-        name_rows: vec![*rows.start()],
-        head: rows.collect(),
-        doc: Vec::new(),
-        body: Vec::new(),
-        shape: Shape::Whole,
-        members: Vec::new(),
-    }
+    DeclInfo::new(vec![*rows.start()], rows.collect(), Shape::Whole)
 }
 
 /// The `def`s and `class`es in the blocks of an `if` / `try` statement,
@@ -362,12 +351,10 @@ fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
         name_rows.push(head_end);
     }
     Some(DeclInfo {
-        name_rows,
-        head,
         doc,
         body,
-        shape,
         members,
+        ..DeclInfo::new(name_rows, head, shape)
     })
 }
 

@@ -16,8 +16,8 @@
 
 use tree_sitter::Node;
 
-use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile};
+use super::model::{DeclInfo, FileModel, Item};
+use super::{Language, SourceFile, named_children};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -201,22 +201,10 @@ fn body_block(node: Node) -> Option<Node> {
 fn callable(node: Node, file: &SourceFile) -> DeclInfo {
     let rows = file.node_rows(node);
     let start = *rows.start();
-    let block = body_block(node);
-    let head_end = match block {
-        Some(block) => block.start_position().row.max(start),
-        None => *rows.end(),
-    };
-    let body = block.map_or_else(Vec::new, |block| {
-        let mut cursor = block.walk();
-        file.node_items(block.named_children(&mut cursor), head_end)
-    });
+    let statements = named_children(body_block(node));
     DeclInfo {
-        name_rows: vec![start],
-        head: (start..=head_end).collect(),
         doc: file.comment_paragraphs_above(node),
-        body,
-        shape: Shape::Callable,
-        members: Vec::new(),
+        ..file.callable(vec![start], rows, statements, start)
     }
 }
 

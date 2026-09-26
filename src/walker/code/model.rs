@@ -144,6 +144,20 @@ pub(crate) struct DeclInfo {
     pub members: Vec<DeclInfo>,
 }
 
+impl DeclInfo {
+    /// A declaration without doc, body or members.
+    pub(crate) fn new(name_rows: Vec<usize>, head: Vec<usize>, shape: Shape) -> Self {
+        Self {
+            name_rows,
+            head,
+            doc: Vec::new(),
+            body: Vec::new(),
+            shape,
+            members: Vec::new(),
+        }
+    }
+}
+
 /// A group of rows the chunker keeps together: one paragraph, statement,
 /// field or re-export.
 #[derive(Debug, Clone, PartialEq, Eq)]

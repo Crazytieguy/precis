@@ -188,7 +188,7 @@ impl SourceFile {
             if new_rows.is_empty() {
                 continue;
             }
-            if !(node.kind().contains("comment") || node.kind() == "attribute_item") {
+            if !is_leading_trivia(node) {
                 pending.extend(new_rows);
                 items.push(Item::new(std::mem::take(&mut pending)));
             } else if trails_last_item && let Some(last) = items.last_mut() {
@@ -203,28 +203,141 @@ impl SourceFile {
         items
     }
 
-    /// `rows` split into one [`Item`] per paragraph: runs of non-blank
-    /// rows, broken at blank rows and at gaps.
-    pub(crate) fn paragraphs(&self, rows: impl IntoIterator<Item = usize>) -> Vec<Item> {
-        let mut items: Vec<Item> = Vec::new();
-        let mut previous = None;
-        for row in rows {
-            if self.line(row).trim().is_empty() {
-                previous = None;
-                continue;
+    /// One [`Item`] per named child of `list` that `admit` accepts, with
+    /// the own-row comments and attributes directly above it (see
+    /// [`Self::node_items`]); those above a child `admit` rejects are
+    /// dropped with it.
+    pub(crate) fn admitted_items(
+        &self,
+        list: Node,
+        after_row: usize,
+        admit: impl Fn(Node) -> bool,
+    ) -> Vec<Item> {
+        let mut nodes = Vec::new();
+        let mut leading = Vec::new();
+        let mut cursor = list.walk();
+        for child in list.named_children(&mut cursor) {
+            if is_leading_trivia(child) {
+                if self.starts_own_row(child) {
+                    leading.push(child);
+                }
+            } else if admit(child) {
+                nodes.append(&mut leading);
+                nodes.push(child);
+            } else {
+                leading.clear();
             }
+        }
+        nodes.append(&mut leading);
+        self.node_items(nodes, after_row)
+    }
+
+    /// A `Callable` spanning `rows` whose body holds `statements`: the
+    /// head runs through the row before the first statement, and at least
+    /// through `floor` (the name row, or the row opening the body); each
+    /// statement past it is one body item. Without statements, all head.
+    pub(crate) fn callable<'tree>(
+        &self,
+        name_rows: Vec<usize>,
+        rows: RangeInclusive<usize>,
+        statements: impl IntoIterator<Item = Node<'tree>>,
+        floor: usize,
+    ) -> DeclInfo {
+        let mut statements = statements.into_iter().peekable();
+        let head_end = statements
+            .peek()
+            .map_or(*rows.end(), |first| first.start_position().row.max(floor));
+        DeclInfo {
+            body: self.node_items(statements, head_end),
+            ..DeclInfo::new(
+                name_rows,
+                (*rows.start()..=head_end).collect(),
+                Shape::Callable,
+            )
+        }
+    }
+
+    /// A `Whole` spanning `rows` whose entries are the named children of
+    /// `block`: one body item per entry (see [`Self::node_items`]), and a
+    /// head of the rows through the one opening `block` plus those after
+    /// the last entry. Without a block, all head.
+    pub(crate) fn whole(
+        &self,
+        name_rows: Vec<usize>,
+        rows: RangeInclusive<usize>,
+        block: Option<Node>,
+    ) -> DeclInfo {
+        let Some(block) = block else {
+            return DeclInfo::new(name_rows, rows.collect(), Shape::Whole);
+        };
+        let open_row = block.start_position().row + 1;
+        let body = self.node_items(block.named_children(&mut block.walk()), open_row);
+        let content_end = body
+            .last()
+            .map_or(open_row, |item| item.rows[item.rows.len() - 1]);
+        DeclInfo {
+            body,
+            ..DeclInfo::new(
+                name_rows,
+                block_head(rows, open_row, content_end),
+                Shape::Whole,
+            )
+        }
+    }
+
+    /// Consecutive `rows` split into one [`Item`] per paragraph, broken at
+    /// blank rows.
+    pub(crate) fn paragraphs(&self, rows: impl IntoIterator<Item = usize>) -> Vec<Item> {
+        self.paragraphs_by(rows, |line| line.trim().is_empty())
+    }
+
+    /// `rows` split into one [`Item`] per paragraph: a row whose line
+    /// `is_break` accepts ends the paragraph above it, which keeps it.
+    pub(crate) fn paragraphs_by(
+        &self,
+        rows: impl IntoIterator<Item = usize>,
+        is_break: impl Fn(&str) -> bool,
+    ) -> Vec<Item> {
+        let mut items: Vec<Item> = Vec::new();
+        let mut after_break = true;
+        for row in rows {
+            let breaks = is_break(self.line(row));
             match items.last_mut() {
-                Some(item) if previous == Some(row - 1) => item.rows.push(row),
+                Some(item) if breaks || !after_break => item.rows.push(row),
                 _ => items.push(Item::new([row])),
             }
-            previous = Some(row);
+            after_break = breaks;
         }
         items
     }
 }
 
+/// The named children of `node`; none without a node.
+fn named_children<'tree>(node: Option<Node<'tree>>) -> Vec<Node<'tree>> {
+    node.map_or_else(Vec::new, |node| {
+        node.named_children(&mut node.walk()).collect()
+    })
+}
+
+/// A comment, or a Rust attribute: it belongs to the node after it.
+fn is_leading_trivia(node: Node) -> bool {
+    node.kind().contains("comment") || node.kind() == "attribute_item"
+}
+
+/// The head of a `Whole` with an entry block: `rows` through `open_row`,
+/// then those after `content_end`.
+fn block_head(rows: RangeInclusive<usize>, open_row: usize, content_end: usize) -> Vec<usize> {
+    (*rows.start()..=open_row)
+        .chain(content_end.max(open_row) + 1..=*rows.end())
+        .collect()
+}
+
 fn file_stem(path: &Path) -> Option<&str> {
     path.file_stem()?.to_str()
+}
+
+fn file_name(path: &Path) -> Option<&str> {
+    path.file_name()?.to_str()
 }
 
 /// Whether `path`'s stem is `dir`'s name, ignoring case and reading `-`
@@ -406,8 +519,8 @@ pub(super) mod test_support {
     }
 
     /// Writes `files` under a fresh root and extracts `target` with
-    /// `language`, asserting the [`model`] invariants on the normalized
-    /// result.
+    /// `language`: the normalized model the engine emits from, asserting
+    /// the [`model`] invariants on it.
     pub(crate) fn extract_in(
         language: &Language,
         files: &[(&str, &str)],
@@ -421,8 +534,8 @@ pub(super) mod test_support {
         }
         let ctx = WalkCtx::new(dir.path().to_path_buf());
         let file = parse(&dir.path().join(target), language, &ctx);
-        let model = (language.extract)(&file, &ctx);
-        if let Err(violation) = check_contract(&emit::normalize(model.clone(), &file)) {
+        let model = emit::normalize((language.extract)(&file, &ctx), &file);
+        if let Err(violation) = check_contract(&model) {
             panic!("{target}: {violation}");
         }
         (file, model)

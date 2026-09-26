@@ -19,8 +19,8 @@ use std::sync::LazyLock;
 use regex::Regex;
 use tree_sitter::Node;
 
-use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, ProgramFunction, SourceFile, show_program_flow};
+use super::model::{DeclInfo, FileModel, Item};
+use super::{Language, ProgramFunction, SourceFile, named_children, show_program_flow};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -46,36 +46,31 @@ fn sibling_mentions(file: &SourceFile) -> HashSet<String> {
 /// The top-level functions, methods, types, constants and variables the
 /// file declares.
 fn declared_names(file: &SourceFile) -> Vec<String> {
-    let root = file.tree.root_node();
-    let mut specs = Vec::new();
-    let mut cursor = root.walk();
-    for child in root.named_children(&mut cursor) {
+    let mut names = Vec::new();
+    for declaration in top_level_declarations(file.tree.root_node()) {
+        let mut cursor = declaration.walk();
+        names.extend(
+            declaration
+                .children_by_field_name("name", &mut cursor)
+                .map(|name| file.text(name).to_owned()),
+        );
+    }
+    names
+}
+
+/// The file's top-level functions, methods and specs.
+fn top_level_declarations(root: Node) -> Vec<Node> {
+    let mut declarations = Vec::new();
+    for child in named_children(Some(root)) {
         match child.kind() {
-            "function_declaration" | "method_declaration" => specs.push(child),
+            "function_declaration" | "method_declaration" => declarations.push(child),
             "type_declaration" | "const_declaration" | "var_declaration" => {
-                let mut inner = child.walk();
-                for spec in child.named_children(&mut inner) {
-                    if spec.kind().ends_with("_list") {
-                        let mut list = spec.walk();
-                        specs.extend(spec.named_children(&mut list));
-                    } else {
-                        specs.push(spec);
-                    }
-                }
+                declarations.extend(specs(child).0);
             }
             _ => {}
         }
     }
-    let mut names = Vec::new();
-    for spec in specs {
-        let mut inner = spec.walk();
-        names.extend(
-            spec.children_by_field_name("name", &mut inner)
-                .map(|name| file.text(name))
-                .map(str::to_owned),
-        );
-    }
-    names
+    declarations
 }
 
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
@@ -87,17 +82,11 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let mut is_program = false;
     let mut api_only = false;
     let mut functions = Vec::new();
-    let exports_something = root
-        .named_children(&mut root.walk())
-        .any(|child| match child.kind() {
-            "function_declaration" | "method_declaration" => is_exported_name(child, file),
-            "type_declaration" | "const_declaration" | "var_declaration" => specs(child)
-                .0
-                .into_iter()
-                .any(|spec| declares_exported(spec, file)),
-            _ => false,
-        });
-    let handed_out = handed_out_types(root, file);
+    let declarations = top_level_declarations(root);
+    let exports_something = declarations
+        .iter()
+        .any(|declaration| declares_exported(*declaration, file));
+    let handed_out = handed_out_types(&declarations, file);
     let mut cursor = root.walk();
     for child in root.named_children(&mut cursor) {
         let decl = match child.kind() {
@@ -160,16 +149,10 @@ fn is_exported(name: &str) -> bool {
     name.chars().next().is_some_and(char::is_uppercase)
 }
 
-/// Whether a function or method is exported by its name.
-fn is_exported_name(node: Node, file: &SourceFile) -> bool {
-    node.child_by_field_name("name")
-        .is_some_and(|name| is_exported(file.text(name)))
-}
-
 /// An exported function, or an exported method whose receiver type an
 /// importer can reach: an exported type, or one in `handed_out`.
 fn is_reachable_callable(node: Node, file: &SourceFile, handed_out: &[&str]) -> bool {
-    is_exported_name(node, file)
+    declares_exported(node, file)
         && node.child_by_field_name("receiver").is_none_or(|receiver| {
             let mut cursor = receiver.walk();
             let parameter = receiver.named_children(&mut cursor).next();
@@ -185,16 +168,20 @@ fn is_reachable_callable(node: Node, file: &SourceFile, handed_out: &[&str]) -> 
 /// The type names in the results of the file's exported functions and
 /// methods: an importer calls methods on what a constructor returns even
 /// when it cannot name the type.
-fn handed_out_types<'a>(root: Node, file: &'a SourceFile) -> Vec<&'a str> {
+fn handed_out_types<'a>(declarations: &[Node], file: &'a SourceFile) -> Vec<&'a str> {
     let mut names = Vec::new();
-    let mut cursor = root.walk();
-    for child in root.named_children(&mut cursor) {
-        if !matches!(child.kind(), "function_declaration" | "method_declaration")
-            || !is_exported_name(child, file)
+    for declaration in declarations {
+        if !matches!(
+            declaration.kind(),
+            "function_declaration" | "method_declaration"
+        ) || !declares_exported(*declaration, file)
         {
             continue;
         }
-        let mut pending: Vec<Node> = child.child_by_field_name("result").into_iter().collect();
+        let mut pending: Vec<Node> = declaration
+            .child_by_field_name("result")
+            .into_iter()
+            .collect();
         while let Some(node) = pending.pop() {
             if node.kind() == "type_identifier" {
                 names.push(file.text(node));
@@ -218,8 +205,8 @@ fn base_type_name(node: Node) -> Option<Node> {
     }
 }
 
-/// Whether a spec or struct field declares an exported name, or embeds
-/// an exported type.
+/// Whether a function, method, spec or struct field declares an exported
+/// name, or a field embeds an exported type.
 fn declares_exported(node: Node, file: &SourceFile) -> bool {
     let mut cursor = node.walk();
     let mut names = node.children_by_field_name("name", &mut cursor).peekable();
@@ -239,23 +226,13 @@ fn declares_exported(node: Node, file: &SourceFile) -> bool {
 /// instructs the toolchain and belongs with the declaration's head, as
 /// an attribute would.
 fn doc_and_directives(node: Node, file: &SourceFile) -> (Vec<Item>, Vec<usize>) {
-    let mut items: Vec<Item> = Vec::new();
-    let mut directives = Vec::new();
-    let mut after_break = true;
-    for row in file.comments_above(node, 1, |_| true).into_iter().flatten() {
-        let text = file.line(row).trim();
-        if is_directive(text) {
-            directives.push(row);
-            continue;
-        }
-        let is_break = text.is_empty() || text == "//";
-        match items.last_mut() {
-            Some(item) if is_break || !after_break => item.rows.push(row),
-            _ => items.push(Item::new([row])),
-        }
-        after_break = is_break;
-    }
-    (items, directives)
+    let (directives, doc): (Vec<usize>, Vec<usize>) = file
+        .comments_above(node, 1, |_| true)
+        .into_iter()
+        .flatten()
+        .partition(|&row| is_directive(file.line(row).trim()));
+    let doc = file.paragraphs_by(doc, |line| matches!(line.trim(), "" | "//"));
+    (doc, directives)
 }
 
 /// Go's directive comment syntax: `//line `, `//extern `, `//export `,
@@ -284,33 +261,17 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     let start = *rows.start();
     let block = node.child_by_field_name("body");
     let open_row = block.map_or(start, |block| *file.node_rows(block).start());
-    let mut statements = Vec::new();
-    if let Some(block) = block {
-        let mut cursor = block.walk();
-        for child in block.named_children(&mut cursor) {
-            if child.kind() == "statement_list" {
-                let mut inner = child.walk();
-                statements.extend(child.named_children(&mut inner));
-            } else {
-                statements.push(child);
-            }
+    let statements = named_children(block).into_iter().flat_map(|child| {
+        if child.kind() == "statement_list" {
+            named_children(Some(child))
+        } else {
+            vec![child]
         }
-    }
-    let body = file.node_items(statements, open_row);
-    let head_end = if body.is_empty() {
-        *rows.end()
-    } else {
-        open_row
-    };
+    });
+    let mut decl = file.callable(vec![start], rows, statements, open_row);
     let (doc, directives) = doc_and_directives(node, file);
-    Some(DeclInfo {
-        name_rows: vec![start],
-        head: directives.into_iter().chain(start..=head_end).collect(),
-        doc,
-        body,
-        shape: Shape::Callable,
-        members: Vec::new(),
-    })
+    decl.head.extend(directives);
+    Some(DeclInfo { doc, ..decl })
 }
 
 /// `type`, `const` or `var`: a grouped declaration's body is its specs;
@@ -359,41 +320,21 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     if name_rows.is_empty() {
         return None;
     }
-    let entries: Vec<Node> = entries.map_or_else(Vec::new, |list| {
-        let mut inner = list.walk();
-        list.named_children(&mut inner).collect()
-    });
-    let mut body = file.node_items(entries.iter().copied(), start);
-    let (doc, mut head) = doc_and_directives(node, file);
-    match (body.first(), body.last()) {
-        (Some(first), Some(last)) => head
-            .extend((start..first.rows[0]).chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())),
-        _ => head.extend(rows),
-    }
-    let end_rows = |shown: bool| -> Vec<usize> {
-        entries
+    let mut decl = file.whole(name_rows, rows, entries);
+    if let Some(list) = entries {
+        let is_entry = |entry: &Node| {
+            is_spec(entry) || matches!(entry.kind(), "field_declaration" | "method_elem")
+        };
+        let shows_some = named_children(Some(list))
             .iter()
-            .filter(|entry| {
-                is_spec(entry) || matches!(entry.kind(), "field_declaration" | "method_elem")
-            })
-            .filter(|entry| visible(entry) == shown)
-            .map(|entry| *file.node_rows(*entry).end())
-            .collect()
-    };
-    let (hidden, shown) = (end_rows(false), end_rows(true));
-    let hidden = if shown.is_empty() { Vec::new() } else { hidden };
-    body.retain(|item| {
-        let last = item.rows[item.rows.len() - 1];
-        !hidden.contains(&last) || shown.contains(&last)
-    });
-    Some(DeclInfo {
-        name_rows,
-        head,
-        doc,
-        body,
-        shape: Shape::Whole,
-        members: Vec::new(),
-    })
+            .any(|entry| is_entry(entry) && visible(entry));
+        decl.body = file.admitted_items(list, start, |entry| {
+            !is_entry(&entry) || !shows_some || visible(&entry)
+        });
+    }
+    let (doc, directives) = doc_and_directives(node, file);
+    decl.head.extend(directives);
+    Some(DeclInfo { doc, ..decl })
 }
 
 /// The specs of a `type`, `const` or `var` declaration, and the node
@@ -426,6 +367,7 @@ fn is_spec(node: &Node) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use super::super::model::Shape;
     use super::*;
 
     fn extract_source(source: &str) -> FileModel {

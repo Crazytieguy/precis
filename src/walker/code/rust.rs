@@ -22,13 +22,14 @@
 //!   `#[macro_export]` on a `macro_rules!`) hides its private functions
 //!   and macros; its private types, constants and statics stay.
 
-use std::collections::HashSet;
 use std::path::Path;
 
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, ProgramFunction, SourceFile, show_program_flow};
+use super::{
+    Language, ProgramFunction, SourceFile, block_head, file_name, named_children, show_program_flow,
+};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -114,7 +115,7 @@ fn extract_items(
             }
             "macro_definition" => {
                 let body = macro_open_row(node, file).map(|open_row| (open_row, node));
-                let entries = list_entries(node, file, |child| child.kind() == "macro_rule");
+                let entries = file.admitted_items(node, 0, |child| child.kind() == "macro_rule");
                 model
                     .decls
                     .push(whole(node, leading, file, body, entries, Vec::new()));
@@ -124,7 +125,7 @@ fn extract_items(
                 let list = node.child_by_field_name("body");
                 let body = list.map(|list| (list.start_position().row + 1, list));
                 let entries = list.map_or_else(Vec::new, |list| {
-                    list_entries(list, file, |entry| !Leading::above(entry, file).hidden)
+                    file.admitted_items(list, 0, |entry| !Leading::above(entry, file).hidden)
                 });
                 model
                     .decls
@@ -215,17 +216,9 @@ fn item_macro(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInf
         return None;
     }
     entries.push(Item::new(rows));
-    let mut decl = whole(
-        node,
-        leading,
-        file,
-        Some((open_row, tokens)),
-        entries,
-        Vec::new(),
-    );
-    name_rows.dedup();
-    decl.name_rows = name_rows;
-    Some(decl)
+    let body = Some((open_row, tokens));
+    let decl = whole(node, leading, file, body, entries, Vec::new());
+    Some(DeclInfo { name_rows, ..decl })
 }
 
 /// A `mod test { … }` / `mod tests { … }`, test code whether or not it is
@@ -236,9 +229,7 @@ fn is_test_module(node: Node, file: &SourceFile) -> bool {
 }
 
 fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
-    path.file_name()
-        .and_then(|name| name.to_str())
-        .is_some_and(|name| matches!(name, "lib.rs" | "main.rs"))
+    file_name(path).is_some_and(|name| matches!(name, "lib.rs" | "main.rs"))
 }
 
 /// What the outer attributes and doc comments above an item say about it.
@@ -367,37 +358,19 @@ fn name_rows(node: Node, field: &str) -> Vec<usize> {
 fn doc_items(leading: &Leading, file: &SourceFile) -> Vec<Item> {
     let mut rows = leading.doc_rows.clone();
     rows.sort_unstable();
-    rows.dedup();
-    rustdoc_paragraphs(&rows, file)
+    rustdoc_paragraphs(rows, file)
 }
 
 /// A function: the head runs from its first attribute through the row
 /// before its first statement; each statement is one body item.
 fn callable(node: Node, leading: Leading, file: &SourceFile) -> DeclInfo {
     let name_rows = name_rows(node, "name");
-    let first_row = node.start_position().row + 1;
-    let statements = node
-        .child_by_field_name("body")
-        .map_or_else(Vec::new, |block| list_entries(block, file, |_| true));
-    let head_end = match statements.first().and_then(|item| item.rows.iter().min()) {
-        Some(&first_statement_row) => (first_statement_row - 1).max(name_rows[0]),
-        None => *file.node_rows(node).end(),
-    };
-    let mut head = leading.attribute_rows.clone();
-    head.extend(first_row..=head_end);
-    let body = statements
-        .into_iter()
-        .map(|item| Item::new(item.rows.into_iter().filter(|&row| row > head_end)))
-        .filter(|item| !item.rows.is_empty())
-        .collect();
-    DeclInfo {
-        name_rows,
-        head,
-        doc: doc_items(&leading, file),
-        body,
-        shape: Shape::Callable,
-        members: Vec::new(),
-    }
+    let floor = name_rows[0];
+    let statements = named_children(node.child_by_field_name("body"));
+    let mut decl = file.callable(name_rows, file.node_rows(node), statements, floor);
+    decl.head.extend(&leading.attribute_rows);
+    decl.doc = doc_items(&leading, file);
+    decl
 }
 
 /// A declaration rendered whole. `body` is the row opening its entry list
@@ -410,37 +383,27 @@ fn whole(
     leading: Leading,
     file: &SourceFile,
     body: Option<(usize, Node)>,
-    mut entries: Vec<Item>,
+    entries: Vec<Item>,
     members: Vec<DeclInfo>,
 ) -> DeclInfo {
     let node_rows = file.node_rows(node);
-    let mut head = leading.attribute_rows.clone();
-    let name_rows = name_rows(
-        node,
-        if node.kind() == "impl_item" {
-            "type"
-        } else {
-            "name"
-        },
-    );
-    match body {
+    let name_field = if node.kind() == "impl_item" {
+        "type"
+    } else {
+        "name"
+    };
+    let mut head = match body {
         Some((open_row, list)) => {
-            head.extend(*node_rows.start()..=open_row);
-            let mut cursor = list.walk();
-            let last_content_row = list
-                .named_children(&mut cursor)
+            let last_content_row = named_children(Some(list))
+                .into_iter()
                 .filter(|child| !matches!(child.kind(), "line_comment" | "block_comment"))
                 .map(|child| *file.node_rows(child).end())
                 .fold(open_row, usize::max);
-            head.extend(last_content_row + 1..=*node_rows.end());
+            block_head(node_rows, open_row, last_content_row)
         }
-        None => head.extend(node_rows),
-    }
-    let head_rows: HashSet<usize> = head.iter().copied().collect();
-    for item in &mut entries {
-        item.rows.retain(|row| !head_rows.contains(row));
-    }
-    entries.retain(|item| !item.rows.is_empty());
+        None => node_rows.collect(),
+    };
+    head.extend(&leading.attribute_rows);
     let mut body = entries;
     body.extend(
         members
@@ -449,12 +412,10 @@ fn whole(
     );
     body.sort_by_key(|item| item.rows.iter().min().copied());
     DeclInfo {
-        name_rows,
-        head,
         doc: doc_items(&leading, file),
         body,
-        shape: Shape::Whole,
         members,
+        ..DeclInfo::new(name_rows(node, name_field), head, Shape::Whole)
     }
 }
 
@@ -486,7 +447,7 @@ fn container(
             members.push(callable(child, member_leading, file));
         }
     }
-    let entries = list_entries(list, file, |child| {
+    let entries = file.admitted_items(list, 0, |child| {
         !is_function(child) && !Leading::above(child, file).hidden && admit(child)
     });
     let open_row = list.start_position().row + 1;
@@ -529,33 +490,6 @@ fn macro_open_row(node: Node, file: &SourceFile) -> Option<usize> {
     Some(row + 1)
 }
 
-/// One item per named child of `list` that `admit` accepts, with the
-/// own-row comments and attributes directly above it (see
-/// [`SourceFile::node_items`]); those above a child `admit` rejects are
-/// dropped with it.
-fn list_entries(list: Node, file: &SourceFile, admit: impl Fn(Node) -> bool) -> Vec<Item> {
-    let mut nodes = Vec::new();
-    let mut leading = Vec::new();
-    let mut cursor = list.walk();
-    for child in list.named_children(&mut cursor) {
-        if matches!(
-            child.kind(),
-            "line_comment" | "block_comment" | "attribute_item"
-        ) {
-            if file.starts_own_row(child) {
-                leading.push(child);
-            }
-        } else if admit(child) {
-            nodes.append(&mut leading);
-            nodes.push(child);
-        } else {
-            leading.clear();
-        }
-    }
-    nodes.append(&mut leading);
-    file.node_items(nodes, 0)
-}
-
 /// The leading `//!` / `/*! */` rows of the file (license comments and
 /// `#![…]` attributes around them skipped), as paragraphs.
 fn module_doc(file: &SourceFile, root: Node) -> Vec<Item> {
@@ -572,40 +506,22 @@ fn module_doc(file: &SourceFile, root: Node) -> Vec<Item> {
             _ => break,
         }
     }
-    rows.sort_unstable();
-    rows.dedup();
-    rustdoc_paragraphs(&rows, file)
+    rustdoc_paragraphs(rows, file)
 }
 
-/// A doc comment row's markdown content: the comment marker and the one
-/// space after it stripped, a block comment's `*/` and leading `*` too.
-fn rustdoc_content(line: &str) -> &str {
-    let trimmed = line.trim();
-    for marker in ["///", "//!", "/**", "/*!"] {
-        if let Some(rest) = trimmed.strip_prefix(marker) {
-            let rest = rest.strip_suffix("*/").unwrap_or(rest);
-            return rest.strip_prefix(' ').unwrap_or(rest);
-        }
-    }
-    let trimmed = trimmed.strip_suffix("*/").unwrap_or(trimmed);
-    let trimmed = trimmed.strip_prefix('*').unwrap_or(trimmed);
-    trimmed.strip_prefix(' ').unwrap_or(trimmed)
-}
-
-/// Splits sorted doc rows into paragraph items at blank doc rows; a
-/// blank row stays with the paragraph above it.
-fn rustdoc_paragraphs(rows: &[usize], file: &SourceFile) -> Vec<Item> {
-    let mut items: Vec<Item> = Vec::new();
-    let mut after_blank = true;
-    for &row in rows {
-        let blank = rustdoc_content(file.line(row)).trim().is_empty();
-        match items.last_mut() {
-            Some(item) if blank || !after_blank => item.rows.push(row),
-            _ => items.push(Item::new([row])),
-        }
-        after_blank = blank;
-    }
-    items
+/// Sorted doc rows split into paragraph items at rows holding no
+/// markdown, only comment markers.
+fn rustdoc_paragraphs(rows: Vec<usize>, file: &SourceFile) -> Vec<Item> {
+    file.paragraphs_by(rows, |line| {
+        let line = line.trim();
+        let line = line.strip_suffix("*/").unwrap_or(line);
+        ["///", "//!", "/**", "/*!", "*"]
+            .iter()
+            .find_map(|marker| line.strip_prefix(marker))
+            .unwrap_or(line)
+            .trim()
+            .is_empty()
+    })
 }
 
 #[cfg(test)]
@@ -615,12 +531,6 @@ mod tests {
 
     fn extract_source(file_name: &str, source: &str) -> (SourceFile, FileModel) {
         super::super::test_support::extract_in(&LANGUAGE, &[(file_name, source)], file_name)
-    }
-
-    fn sorted(mut rows: Vec<usize>) -> Vec<usize> {
-        rows.sort_unstable();
-        rows.dedup();
-        rows
     }
 
     /// Each declaration's name row text, in source order.
@@ -809,12 +719,12 @@ pub fn one_line() -> u8 { 1 }
         let run = &model.decls[0];
         assert_eq!(run.shape, Shape::Callable);
         assert_eq!(run.name_rows, vec![3]);
-        assert_eq!(sorted(run.head.clone()), vec![2, 3, 4, 5]);
+        assert_eq!(run.head, vec![2, 3, 4, 5]);
         assert_eq!(rows(&run.doc), vec![vec![1]]);
         assert_eq!(rows(&run.body), vec![vec![6, 7], vec![8]]);
 
         let one_line = &model.decls[1];
-        assert_eq!(sorted(one_line.head.clone()), vec![11]);
+        assert_eq!(one_line.head, vec![11]);
         assert!(one_line.body.is_empty());
     }
 
@@ -836,10 +746,10 @@ pub struct Point { pub x: i32 }
         let kind = &model.decls[0];
         assert_eq!(kind.shape, Shape::Whole);
         assert_eq!(kind.name_rows, vec![2]);
-        assert_eq!(sorted(kind.head.clone()), vec![1, 2, 7]);
+        assert_eq!(kind.head, vec![1, 2, 7]);
         assert_eq!(rows(&kind.body), vec![vec![3, 4], vec![5, 6]]);
         for (decl, row) in model.decls[1..].iter().zip(8..) {
-            assert_eq!(sorted(decl.head.clone()), vec![row]);
+            assert_eq!(decl.head, vec![row]);
             assert!(decl.body.is_empty());
         }
     }
@@ -863,7 +773,7 @@ pub(crate) trait Internal {
 ";
         let (_, model) = extract_source("a.rs", source);
         let store = &model.decls[0];
-        assert_eq!(sorted(store.head.clone()), vec![1, 10]);
+        assert_eq!(store.head, vec![1, 10]);
         assert_eq!(rows(&store.body), vec![vec![2], vec![5], vec![7]]);
         let members: Vec<_> = store
             .members
@@ -872,7 +782,7 @@ pub(crate) trait Internal {
             .collect();
         assert_eq!(members, vec![vec![5], vec![7]]);
         assert_eq!(rows(&store.members[0].doc), vec![vec![4]]);
-        assert_eq!(sorted(store.members[1].head.clone()), vec![7]);
+        assert_eq!(store.members[1].head, vec![7]);
         assert_eq!(rows(&store.members[1].body), vec![vec![8]]);
         assert_eq!(model.decls[1].members.len(), 1);
     }
@@ -889,7 +799,7 @@ extern \"C\" {
 ";
         let (_, model) = extract_source("a.rs", source);
         let block = &model.decls[1];
-        assert_eq!(sorted(block.head.clone()), vec![2, 6]);
+        assert_eq!(block.head, vec![2, 6]);
         assert_eq!(rows(&block.body), vec![vec![4], vec![5]]);
         assert_eq!(rows(&block.members[0].doc), vec![vec![3]]);
     }
@@ -926,7 +836,7 @@ impl Opt<u8> {
             vec!["pub enum Opt<T> { None, Some(T) }"]
         );
         let opt = &model.decls[0];
-        assert_eq!(sorted(opt.head.clone()), vec![2, 3, 4]);
+        assert_eq!(opt.head, vec![2, 3, 4]);
         assert_eq!(rows(&opt.doc), vec![vec![1]]);
     }
 
@@ -972,7 +882,7 @@ impl Sealed for Engine {}
         assert_eq!(impls, vec![(3, vec![4, 5]), (8, vec![9]), (13, vec![14])]);
         assert_eq!(model.decls.len(), 6);
         let display = &model.decls[3];
-        assert_eq!(sorted(display.head.clone()), vec![8, 12]);
+        assert_eq!(display.head, vec![8, 12]);
         assert_eq!(rows(&display.body), vec![vec![9]]);
     }
 
@@ -1059,7 +969,7 @@ macro_rules! __private {
         let (file, model) = extract_source("a.rs", source);
         assert_eq!(roster(&file, &model.decls), vec!["macro_rules! bail {"]);
         let bail = &model.decls[0];
-        assert_eq!(sorted(bail.head.clone()), vec![2, 3, 10]);
+        assert_eq!(bail.head, vec![2, 3, 10]);
         assert_eq!(rows(&bail.body), vec![vec![4, 5, 6], vec![7, 8, 9]]);
         assert_eq!(rows(&bail.doc), vec![vec![1]]);
     }
@@ -1130,11 +1040,7 @@ thread_local!(static DEPTH: Cell<u8> = Cell::new(0));
             .iter()
             .map(|decl| {
                 assert_eq!(decl.shape, Shape::Whole);
-                (
-                    decl.name_rows.clone(),
-                    sorted(decl.head.clone()),
-                    rows(&decl.body),
-                )
+                (decl.name_rows.clone(), decl.head.clone(), rows(&decl.body))
             })
             .collect();
         assert_eq!(

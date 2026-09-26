@@ -28,8 +28,8 @@ use std::sync::LazyLock;
 use regex::Regex;
 use tree_sitter::Node;
 
-use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile, is_named_after};
+use super::model::{DeclInfo, FileModel, Shape};
+use super::{Language, SourceFile, is_named_after, named_children};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -182,18 +182,22 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
     if in_header && is_static(node, file) && !is_inline(node, file) {
         return None;
     }
-    let name_rows = name_rows(node);
-    let (head, body) = match shape {
-        Shape::Callable => callable_parts(node, file),
-        Shape::Whole => whole_parts(node, file),
+    let rows = file.node_rows(node);
+    let decl = match shape {
+        Shape::Callable => {
+            let block = node.child_by_field_name("body");
+            let mut statements = named_children(block);
+            if statements.iter().all(|child| child.kind() == "comment") {
+                statements.clear();
+            }
+            let open_row = block.map_or(*rows.start(), |block| block.start_position().row + 1);
+            file.callable(name_rows(node), rows, statements, open_row)
+        }
+        Shape::Whole => file.whole(name_rows(node), rows, aggregate_body(node)),
     };
     Some(DeclInfo {
-        name_rows,
-        head,
         doc: file.comment_paragraphs_above(node),
-        body,
-        shape,
-        members: Vec::new(),
+        ..decl
     })
 }
 
@@ -280,8 +284,6 @@ fn name_rows(node: Node) -> Vec<usize> {
             .filter_map(declared_name)
             .map(|name| name.start_position().row + 1),
     );
-    rows.sort_unstable();
-    rows.dedup();
     rows
 }
 
@@ -345,52 +347,6 @@ fn declared_name(declarator: Node) -> Option<Node> {
             .or_else(|| declarator.named_child(0))
             .and_then(declared_name),
     }
-}
-
-/// A function definition's head (through the row before its first
-/// statement) and its statements. A statement sharing the row of the
-/// body's opening `{` is head.
-fn callable_parts(node: Node, file: &SourceFile) -> (Vec<usize>, Vec<Item>) {
-    let rows = file.node_rows(node);
-    let body = node
-        .child_by_field_name("body")
-        .filter(|body| {
-            let mut cursor = body.walk();
-            body.named_children(&mut cursor)
-                .any(|child| child.kind() != "comment")
-        })
-        .map(|body| {
-            let mut cursor = body.walk();
-            file.node_items(
-                body.named_children(&mut cursor),
-                body.start_position().row + 1,
-            )
-        })
-        .unwrap_or_default();
-    let head_end = body.first().map_or(*rows.end(), |first| first.rows[0] - 1);
-    ((*rows.start()..=head_end).collect(), body)
-}
-
-/// A `Whole` declaration's head and body. With a struct / union / enum
-/// body, the head is the rows through the opening `{` plus the closing
-/// row and anything after it (`} Name;`), and each field or enumerator is
-/// one body item. Anything else is all head.
-fn whole_parts(node: Node, file: &SourceFile) -> (Vec<usize>, Vec<Item>) {
-    let rows = file.node_rows(node);
-    let Some(body_node) = aggregate_body(node) else {
-        return (rows.collect(), Vec::new());
-    };
-    let open_row = body_node.start_position().row + 1;
-    let close_row = body_node.end_position().row + 1;
-    let mut cursor = body_node.walk();
-    let body = file.node_items(body_node.named_children(&mut cursor), open_row);
-    let claimed_through = body
-        .last()
-        .and_then(|item| item.rows.last().copied())
-        .unwrap_or(open_row);
-    let mut head: Vec<usize> = (*rows.start()..=open_row).collect();
-    head.extend((close_row..=*rows.end()).filter(|row| *row > claimed_through));
-    (head, body)
 }
 
 /// The struct / union / enum body a declaration defines, unless the
