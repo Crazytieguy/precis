@@ -78,10 +78,7 @@ examples/
     README.md
     basic_select.ts
     functions.ts
-    group_by.ts
-    joins.ts
-    kitchen_sink.ts
-    where_conditions.ts
+    …
   electric/
     CHANGELOG.md
     README.md
@@ -238,7 +235,6 @@ packages/
       34→      "default": "./dist/electric/index.js"
       35→    }
       36→  },
-      37→  "scripts": {
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",
@@ -338,6 +334,7 @@ packages/
       graph.ts
       index.ts
         …
+        8→// Sample data generation
         9→const generateData = (size: number) => {
         …
         25→function run({
@@ -348,13 +345,14 @@ packages/
         30→  incrementalRuns: number
         31→}) {
         …
+        495→// Run benchmarks with different sizes and collect results
         496→const results = [
         497→  run({ initialSize: 90, incrementalRuns: 1000 }),
         498→  run({ initialSize: 900, incrementalRuns: 1000 }),
         499→  run({ initialSize: 9000, incrementalRuns: 1000 }),
         500→  run({ initialSize: 90000, incrementalRuns: 1000 }),
         501→]
-        …
+        503→// Generate the graph
         504→generateGraph(results)
     tsconfig.json
 pnpm-lock.yaml

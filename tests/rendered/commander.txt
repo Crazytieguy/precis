@@ -64,6 +64,7 @@ docs/
 eslint.config.js
 esm.mjs
   …
+  3→// wrapper to provide named exports for ESM.
   4→export const {
   5→  program,
   6→  createCommand,
@@ -311,8 +312,6 @@ lib/
     2304→  usage(str) {
     …
     2331→  name(str) {
-    …
-    2344→  helpGroup(heading) {
     …
     2695→}
     …

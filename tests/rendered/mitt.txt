@@ -162,11 +162,6 @@ README.md
   167→### emit
   168→
   169→Invoke all handlers for the given type.
-  170→If present, `'*'` handlers are invoked after type-matched handlers.
-  171→
-  172→Note: Manually firing '\*' handlers is not supported.
-  173→
-  174→#### Parameters
   …
   179→## Contribute
   …
@@ -216,18 +211,19 @@ package.json
 src/
   index.ts
     1→export type EventType = string | symbol;
-    …
+    3→// An event handler can take an optional event argument
+    4→// and should not return a value
     5→export type Handler<T = unknown> = (event: T) => void;
     6→export type WildcardHandler<T = Record<string, unknown>> = (
     7→	type: keyof T,
     8→	event: T[keyof T]
     9→) => void;
-    …
+    11→// An array of all currently registered event handlers for a type
     12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
     13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
     14→	WildcardHandler<T>
     15→>;
-    …
+    17→// A map of event types and their corresponding event handlers.
     18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
     19→	keyof Events | '*',
     20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>

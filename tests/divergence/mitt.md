@@ -1,4 +1,4 @@
-Score(3000)=0.788 I=0.937 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.739/0.773/0.800/0.788/0.837/0.876/0.836
+Score(3000)=0.815 I=0.955 C=0.695 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.739/0.773/0.815/0.815/0.857/0.889/0.849
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -32,57 +32,60 @@ Score(3000)=0.788 I=0.937 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 1249 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.792 |
 | ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.707 |
 | walker |  | 1446 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.802 |
-| walker |  | 1492 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.836 |
-| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.773 |
-| walker |  | 1603 | 111 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.774 |
-| ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.738 |
-| walker |  | 1833 | 230 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.835 |
-| ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.771 |
-| ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.744 |
-| walker |  | 2113 | 280 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.825 |
-| ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.792 |
-| walker |  | 2325 | 212 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.793 |
-| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.757 |
-| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.738 |
-| walker |  | 2623 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.826 |
-| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.786 |
-| walker |  | 2925 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.788 |
-| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.794 |
-| walker |  | 3088 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.795 |
-| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.770 |
-| walker |  | 3237 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.805 |
-| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.786 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.750 |
-| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.731 |
-| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.723 |
-| walker |  | 4135 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.870 |
-| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.835 |
-| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.808 |
-| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.786 |
-| ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.766 |
-| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.748 |
-| walker |  | 4940 | 805 | Plaintext::Rest { file: test/test-types-compilation.ts } |  |  | 0.836 |
-| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.840 |
-| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.822 |
-| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.799 |
-| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.781 |
-| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.768 |
-| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.745 |
-| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.730 |
-| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.711 |
-| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.700 |
-| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.705 |
-| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.707 |
-| walker |  | 7051 | 2111 | Plaintext::Rest { file: test/index_test.ts } |  |  | 0.903 |
-| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.902 |
-| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.902 |
-| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.887 |
-| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.885 |
-| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.869 |
-| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.853 |
-| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.836 |
-| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.823 |
-| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.816 |
-| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.811 |
-| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.807 |
-| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.797 |
+| walker |  | 1460 | 14 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.813 |
+| walker |  | 1475 | 15 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 4, sub: 0, line: 12 } |  |  | 0.826 |
+| walker |  | 1500 | 25 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 2, sub: 0, line: 5 } |  |  | 0.848 |
+| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.784 |
+| walker |  | 1546 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.814 |
+| ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.777 |
+| walker |  | 1657 | 111 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.778 |
+| walker |  | 1887 | 230 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.873 |
+| ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.806 |
+| ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.778 |
+| walker |  | 2167 | 280 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.858 |
+| ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.823 |
+| walker |  | 2379 | 212 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.825 |
+| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.787 |
+| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.767 |
+| walker |  | 2677 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.854 |
+| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.812 |
+| walker |  | 2979 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.814 |
+| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.819 |
+| walker |  | 3142 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.821 |
+| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.795 |
+| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.776 |
+| walker |  | 3291 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.810 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.773 |
+| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.753 |
+| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.745 |
+| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.715 |
+| walker |  | 4189 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.855 |
+| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.828 |
+| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.805 |
+| ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.785 |
+| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.767 |
+| walker |  | 4994 | 805 | Plaintext::Rest { file: test/test-types-compilation.ts } |  |  | 0.854 |
+| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.857 |
+| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.840 |
+| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.816 |
+| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.797 |
+| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.784 |
+| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.761 |
+| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.745 |
+| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.726 |
+| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.715 |
+| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.719 |
+| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.722 |
+| walker |  | 7105 | 2111 | Plaintext::Rest { file: test/index_test.ts } |  |  | 0.917 |
+| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.916 |
+| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.916 |
+| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.900 |
+| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.899 |
+| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.883 |
+| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.866 |
+| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.849 |
+| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.836 |
+| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.829 |
+| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.824 |
+| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.820 |
+| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.809 |

@@ -974,21 +974,34 @@ fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
     })
 }
 
-/// The `/** … */` blocks directly above `node`, one item per block.
-/// JSDoc is often separated from what it documents by one blank row
-/// (`/** … */`, blank, `function f`), so one blank row still attaches,
-/// and by tool directives (`// eslint-disable-next-line`), which are
-/// skipped. A file's `@license` / `@fileoverview` header is not the doc
-/// of the declaration under it.
+/// The comments directly above `node`: one item per block comment and
+/// per run of `//` rows. JSDoc is often separated from what it documents
+/// by one blank row (`/** … */`, blank, `function f`), so one blank row
+/// still attaches, and by tool directives (`// eslint-disable-next-line`),
+/// which are skipped. A file's `@license` / `@fileoverview` header is not
+/// the doc of the declaration under it.
 fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
-    file.comments_above(node, 2, |comment| {
-        let text = file.text(comment);
-        (text.starts_with("/**") && !is_file_header(comment, text)) || is_tool_directive(text)
-    })
-    .into_iter()
-    .filter(|rows| !is_tool_directive(file.line(*rows.start()).trim_start()))
-    .map(Item::new)
-    .collect()
+    let is_line_comment = |row: usize| file.line(row).trim_start().starts_with("//");
+    let mut items: Vec<Item> = Vec::new();
+    for rows in file.comments_above(node, 2, |comment| {
+        !is_file_header(comment, file.text(comment))
+    }) {
+        let start = *rows.start();
+        if is_tool_directive(file.line(start).trim_start()) {
+            continue;
+        }
+        match items.last_mut() {
+            Some(run)
+                if is_line_comment(start)
+                    && run.rows.last() == Some(&(start - 1))
+                    && is_line_comment(start - 1) =>
+            {
+                run.rows.extend(rows);
+            }
+            _ => items.push(Item::new(rows)),
+        }
+    }
+    items
 }
 
 const TOOL_DIRECTIVES: &[&str] = &[
@@ -1726,6 +1739,25 @@ export const c = 3;
         );
         let docs: Vec<Vec<Vec<usize>>> = model.decls.iter().map(|decl| rows(&decl.doc)).collect();
         assert_eq!(docs, [vec![vec![1]], vec![], vec![]]);
+    }
+
+    #[test]
+    fn code_typescript_line_comment_runs_are_docs() {
+        let model = extract_source(
+            "lib/provider.js",
+            "\
+//
+// ### function get (key, callback)
+// Retrieves the value for the key.
+//
+export function get(key, callback) {}
+// Implicit operators have no location.
+/** Token. */
+export type Token = string;
+",
+        );
+        let docs: Vec<Vec<Vec<usize>>> = model.decls.iter().map(|decl| rows(&decl.doc)).collect();
+        assert_eq!(docs, [vec![vec![1, 2, 3, 4]], vec![vec![6], vec![7]]]);
     }
 
     #[test]
