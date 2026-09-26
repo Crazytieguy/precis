@@ -78,12 +78,6 @@ impl Ledger {
     pub(super) fn owner(&self, row: usize) -> Option<&CodeKey> {
         self.owners.get(&row)
     }
-
-    /// Rows dropped as non-ancestor overlaps so far.
-    #[cfg(debug_assertions)]
-    pub(super) fn dropped_rows(&self) -> usize {
-        self.dropped_rows
-    }
 }
 
 #[cfg(test)]
@@ -91,6 +85,13 @@ mod tests {
     use super::*;
     use crate::batch::Rung;
     use std::path::PathBuf;
+
+    impl Ledger {
+        /// Rows dropped as non-ancestor overlaps so far.
+        pub(in crate::walker::code) fn dropped_rows(&self) -> usize {
+            self.dropped_rows
+        }
+    }
 
     fn key(rung: Rung, decl: u32) -> CodeKey {
         CodeKey {

@@ -37,14 +37,6 @@ pub(super) fn emit_file(
         out: Vec::new(),
     };
     emitter.emit(&model);
-    #[cfg(debug_assertions)]
-    if emitter.ledger.dropped_rows() > 0 {
-        eprintln!(
-            "code engine: dropped {} overlapping row(s) in {}",
-            emitter.ledger.dropped_rows(),
-            file.path.display()
-        );
-    }
     emitter.out
 }
 
