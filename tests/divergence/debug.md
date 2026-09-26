@@ -1,4 +1,4 @@
-Score(3000)=0.629 I=0.833 C=0.475 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.574/0.551/0.629/0.661/0.658/0.698
+Score(3000)=0.629 I=0.833 C=0.475 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.574/0.551/0.629/0.661/0.658/0.701
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -93,43 +93,43 @@ Score(3000)=0.629 I=0.833 C=0.475 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 5720 |  | 199 | src/common.js: `enable()` body — parsing the namespace string | 5.1 | 2.3 | 0.611 |
 | walker |  | 5760 | 389 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.654 |
 | walker |  | 5843 | 83 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 6, sub: 0, line: 192 } |  |  | 0.654 |
-| walker |  | 5866 | 23 | Code::CodeKey { rung: Body, file: src/node.js, decl: 6, sub: 0, line: 193 } |  |  | 0.654 |
+| walker |  | 5930 | 87 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 4, sub: 0, line: 115 } |  |  | 0.654 |
 | ns | 5938 |  | 218 | src/common.js: `debug(...args)` — enabled guard, ms-diff bookkeeping, `%O` coercion | 5.2 | 2.3 | 0.637 |
-| walker |  | 5957 | 91 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 9, sub: 0, line: 247 } |  |  | 0.637 |
-| walker |  | 6058 | 101 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 4, sub: 0, line: 115 } |  |  | 0.637 |
+| walker |  | 5953 | 23 | Code::CodeKey { rung: Body, file: src/node.js, decl: 6, sub: 0, line: 193 } |  |  | 0.637 |
+| walker |  | 6044 | 91 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 9, sub: 0, line: 247 } |  |  | 0.637 |
 | ns | 6252 |  | 314 | src/common.js: `debug(...args)` — the `%`-formatter substitution loop and log dispatch | 5.3 | 5.2 | 0.619 |
-| walker |  | 6535 | 477 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.660 |
-| walker |  | 6574 | 39 | Code::CodeKey { rung: Body, file: src/node.js, decl: 4, sub: 0, line: 155 } |  |  | 0.660 |
+| walker |  | 6521 | 477 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.660 |
+| walker |  | 6560 | 39 | Code::CodeKey { rung: Body, file: src/node.js, decl: 4, sub: 0, line: 155 } |  |  | 0.660 |
 | ns | 6586 |  | 334 | src/common.js: per-instance properties and the `enabled` getter/setter | 5.4 | 2.3 | 0.638 |
-| walker |  | 6762 | 188 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 0, line: 1 } |  |  | 0.653 |
-| walker |  | 6835 | 73 | Code::CodeKey { rung: Body, file: src/node.js, decl: 9, sub: 0, line: 231 } |  |  | 0.653 |
-| walker |  | 6924 | 89 | Code::CodeKey { rung: Body, file: src/node.js, decl: 7, sub: 0, line: 203 } |  |  | 0.654 |
+| walker |  | 6748 | 188 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 0, line: 1 } |  |  | 0.653 |
+| walker |  | 6821 | 73 | Code::CodeKey { rung: Body, file: src/node.js, decl: 9, sub: 0, line: 231 } |  |  | 0.653 |
+| walker |  | 6910 | 89 | Code::CodeKey { rung: Body, file: src/node.js, decl: 7, sub: 0, line: 203 } |  |  | 0.654 |
 | ns | 6978 |  | 392 | src/common.js: `matchesTemplate()` — the wildcard matcher | 5.5 | 2.3 | 0.633 |
-| walker |  | 7121 | 197 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 1, line: 1 } |  |  | 0.638 |
+| walker |  | 7107 | 197 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 1, line: 1 } |  |  | 0.638 |
 | ns | 7175 |  | 197 | src/common.js: `disable()` and `enabled()` bodies | 5.6 | 2.3 | 0.626 |
-| walker |  | 7373 | 252 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 2, line: 1 } |  |  | 0.651 |
+| walker |  | 7359 | 252 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 2, line: 1 } |  |  | 0.651 |
 | ns | 7424 |  | 249 | src/common.js: `selectColor()` and `extend()` bodies | 5.7 | 2.3 | 0.639 |
 | ns | 7559 |  | 135 | src/common.js: `coerce()` and the deprecated `destroy()` stub | 5.8 | 2.3 | 0.633 |
-| walker |  | 7575 | 202 | Code::CodeKey { rung: Body, file: src/node.js, decl: 5, sub: 0, line: 167 } |  |  | 0.634 |
+| walker |  | 7561 | 202 | Code::CodeKey { rung: Body, file: src/node.js, decl: 5, sub: 0, line: 167 } |  |  | 0.634 |
 | ns | 7635 |  | 76 | src/common.js: adapter-property spread and `createDebug`'s closure state | 5.9 | 2.1 | 0.629 |
-| walker |  | 7681 | 106 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 7, sub: 0, line: 200 } |  |  | 0.629 |
+| walker |  | 7667 | 106 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 7, sub: 0, line: 200 } |  |  | 0.629 |
 | ns | 7930 |  | 295 | src/node.js: `inspectOpts` derivation from `DEBUG_*` environment variables | 6.1 | 2.6 | 0.616 |
-| walker |  | 7950 | 269 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 0, line: 7 } |  |  | 0.660 |
-| walker |  | 8059 | 109 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 9, sub: 0, line: 247 } |  |  | 0.660 |
+| walker |  | 7936 | 269 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 0, line: 7 } |  |  | 0.660 |
+| walker |  | 8045 | 109 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 9, sub: 0, line: 247 } |  |  | 0.660 |
 | ns | 8194 |  | 264 | src/browser.js: `useColors()` — the inspector capability sniff | 6.2 | 2.7 | 0.654 |
-| walker |  | 8296 | 237 | Code::CodeKey { rung: Body, file: src/node.js, decl: 3, sub: 0, line: 124 } |  |  | 0.679 |
-| walker |  | 8503 | 207 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 1, line: 7 } |  |  | 0.690 |
+| walker |  | 8282 | 237 | Code::CodeKey { rung: Body, file: src/node.js, decl: 3, sub: 0, line: 124 } |  |  | 0.679 |
+| walker |  | 8489 | 207 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 1, line: 7 } |  |  | 0.690 |
 | ns | 8516 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.689 |
-| walker |  | 8664 | 161 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 8, sub: 0, line: 219 } |  |  | 0.691 |
+| walker |  | 8650 | 161 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 8, sub: 0, line: 219 } |  |  | 0.691 |
 | ns | 8849 |  | 333 | src/browser.js: `formatArgs()` — `%c` CSS injection | 6.4 | 2.7 | 0.675 |
-| walker |  | 8891 | 227 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 2, line: 7 } |  |  | 0.687 |
+| walker |  | 8877 | 227 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 2, line: 7 } |  |  | 0.687 |
 | ns | 9033 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.690 |
-| walker |  | 9089 | 198 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 3, line: 7 } |  |  | 0.708 |
+| walker |  | 9075 | 198 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 3, line: 7 } |  |  | 0.708 |
 | ns | 9385 |  | 352 | src/browser.js: `save`, `load`, `localstorage` bodies | 6.6 | 2.7 | 0.715 |
-| walker |  | 9479 | 390 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 5, sub: 0, line: 149 } |  |  | 0.738 |
+| walker |  | 9465 | 390 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 5, sub: 0, line: 149 } |  |  | 0.738 |
 | ns | 9529 |  | 144 | Formatter implementations: node `%o`/`%O` and browser `%j` | 6.7 | 2.6 | 0.730 |
-| walker |  | 9680 | 201 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 4, line: 7 } |  |  | 0.744 |
+| walker |  | 9666 | 201 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 4, line: 7 } |  |  | 0.744 |
 | ns | 9710 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.736 |
-| walker |  | 9875 | 195 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 5, line: 7 } |  |  | 0.747 |
+| walker |  | 9861 | 195 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 5, line: 7 } |  |  | 0.747 |
 | ns | 9920 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.735 |
-| walker |  | 9972 | 97 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 4, sub: 0, line: 115 } |  |  | 0.735 |
+| walker |  | 9958 | 97 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 4, sub: 0, line: 115 } |  |  | 0.735 |

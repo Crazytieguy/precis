@@ -112,27 +112,27 @@ Score(3000)=0.794 I=0.903 C=0.699 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 6741 |  | 285 | add(): enqueueing and the queued-task abort path | 4.8 | 4.4 | 0.635 |
 | ns | 6963 |  | 222 | #isIntervalPausedAt: the strict sliding-window branch | 4.9 | 4.1 | 0.623 |
 | walker |  | 6976 | 339 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 28, sub: 0, line: 952 } |  |  | 0.637 |
-| ns | 7319 |  | 356 | #isIntervalPausedAt: the default fixed-window branch | 4.10 | 4.9 | 0.620 |
-| walker |  | 7336 | 360 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 21, sub: 0, line: 756 } |  |  | 0.631 |
+| walker |  | 7319 | 343 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 21, sub: 0, line: 756 } |  |  | 0.631 |
+| ns | 7319 |  | 356 | #isIntervalPausedAt: the default fixed-window branch | 4.10 | 4.9 | 0.631 |
 | ns | 7536 |  | 217 | PriorityQueue: header, options type, class declaration and the head-cursor invariant | 5.1 |  | 0.623 |
 | ns | 7608 |  | 72 | Name-only roster of every PriorityQueue member (complete) | 5.2 |  | 0.626 |
-| walker |  | 7822 | 486 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.626 |
+| walker |  | 7805 | 486 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.626 |
 | ns | 7940 |  | 332 | PriorityQueue.enqueue: the priority insertion algorithm | 5.3 | 5.2 | 0.611 |
+| walker |  | 8280 | 475 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.611 |
 | ns | 8283 |  | 343 | PriorityQueue.dequeue, size and #compact: the consumed-prefix machinery | 5.4 | 5.2 | 0.594 |
-| walker |  | 8297 | 475 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.594 |
 | ns | 8363 |  | 80 | source/lower-bound.ts: provenance and signature | 5.5 |  | 0.595 |
 | ns | 8600 |  | 237 | Readme: the Custom QueueClass section with a complete worked implementation | 6.1 |  | 0.611 |
-| walker |  | 8746 | 449 | Markdown::Section { file: readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.623 |
+| walker |  | 8729 | 449 | Markdown::Section { file: readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.623 |
 | ns | 8751 |  | 151 | Readme FAQ: how to cancel or remove a queued task | 6.2 | 3.8 | 0.620 |
 | ns | 8934 |  | 183 | Readme FAQ: backpressure, and how concurrency relates to intervalCap | 6.3 | 3.8 | 0.625 |
 | ns | 9040 |  | 106 | package.json scripts: how to build, test and benchmark | 7.1 |  | 0.628 |
 | ns | 9216 |  | 176 | Test titles in test/debug.ts (all 11) | 7.2 |  | 0.622 |
-| walker |  | 9245 | 499 | Markdown::Section { file: readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.622 |
+| walker |  | 9228 | 499 | Markdown::Section { file: readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.622 |
 | ns | 9396 |  | 180 | Test titles in test/priority-queue.ts (all 8) | 7.3 |  | 0.618 |
-| walker |  | 9652 | 407 | Markdown::Section { file: readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.618 |
+| walker |  | 9635 | 407 | Markdown::Section { file: readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.618 |
 | ns | 9680 |  | 284 | Test titles in test/rate-limit.ts (all 9) and test/validation.ts (all 7) | 7.4 |  | 0.611 |
 | ns | 9691 |  | 11 | CI workflow and the remaining .github files | 7.5 |  | 0.612 |
 | ns | 9836 |  | 145 | The CI job definition itself | 7.6 | 7.5 | 0.605 |
 | ns | 9907 |  | 71 | bench.ts: the five benchmark cases | 7.7 |  | 0.603 |
-| walker |  | 9987 | 335 | Markdown::Section { file: readme.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.603 |
+| walker |  | 9987 | 352 | Markdown::Section { file: readme.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.603 |
 | ns | 9988 |  | 81 | tsconfig.json: the whole build configuration | 7.8 |  | 0.599 |

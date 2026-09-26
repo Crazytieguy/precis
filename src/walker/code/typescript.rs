@@ -992,6 +992,9 @@ fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
         !is_file_header(comment, file.text(comment))
     }) {
         let start = *rows.start();
+        if is_tool_directive(file.line(start).trim_start()) {
+            continue;
+        }
         match items.last_mut() {
             Some(run)
                 if is_line_comment(start)
@@ -1004,6 +1007,27 @@ fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
         }
     }
     items
+}
+
+const TOOL_DIRECTIVES: &[&str] = &[
+    "eslint-",
+    "istanbul ",
+    "c8 ignore",
+    "v8 ignore",
+    "tslint:",
+    "prettier-ignore",
+    "@ts-",
+    "deno-lint-",
+    "oxlint-",
+    "biome-ignore",
+];
+
+/// A comment addressed to a linter, type checker or coverage tool.
+fn is_tool_directive(comment: &str) -> bool {
+    let body = comment.trim_start_matches(['/', '*']).trim_start();
+    TOOL_DIRECTIVES
+        .iter()
+        .any(|directive| body.starts_with(directive))
 }
 
 const FILE_HEADER_TAGS: &[&str] = &[
@@ -1855,7 +1879,7 @@ export type Token = string;
     }
 
     #[test]
-    fn typescript_doc_skips_the_file_header() {
+    fn typescript_doc_skips_tool_directives_and_the_file_header() {
         let model = extract_source(
             "a.ts",
             "\
@@ -1871,15 +1895,18 @@ export class A {
   /* istanbul ignore next */
   handle() {}
 }
+// @ts-ignore
+export function lone() {}
 ",
         );
         assert_eq!(
             describe(&model),
             [
                 "Callable name [4] head [4] doc [] body []",
-                "Callable name [7] head [7] doc [[5], [6]] body []",
+                "Callable name [7] head [7] doc [[5]] body []",
                 "Whole name [8] head [8, 12] doc [] body [[11]]",
-                "  Callable name [11] head [11] doc [[9], [10]] body []",
+                "  Callable name [11] head [11] doc [[9]] body []",
+                "Callable name [14] head [14] doc [] body []",
             ]
         );
     }
