@@ -77,22 +77,16 @@ fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
     }
     let chain_head_value = dir_listing_value(&dir, &children, ctx);
     let mut groups = Vec::new();
-    loop {
-        groups.push(FsGroup {
-            parent: dir.clone(),
-            entries: FsEntries::Listed(listed_entries(&children).map(PathBuf::from).collect()),
-        });
-        let Some((name, EntryKind::Directory)) = children.iter().next() else {
-            break;
-        };
-        if crate::value::is_third_party_dir(&dir, ctx.root()) {
-            break;
-        }
+    while let Some((name, EntryKind::Directory)) = children.iter().next()
+        && children.len() == 1
+        && !crate::value::is_third_party_dir(&dir, ctx.root())
+    {
         let only_child = dir.join(name);
         let grandchildren = list_dir(&only_child, ctx.dir_filter());
-        if children.len() > 1 || grandchildren.is_empty() || !should_recurse_dir(&only_child, ctx) {
+        if grandchildren.is_empty() || !should_recurse_dir(&only_child, ctx) {
             break;
         }
+        groups.push(listing_group(&dir, vec![name]));
         dir = only_child;
         children = grandchildren;
     }
@@ -102,27 +96,18 @@ fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
     }
     let head_key: BatchKey = FsKey::DirListing { dir: dir.clone() }.into();
     let (head_entries, tail_entries) = listing_parts(&dir, &children, ctx);
-    let mut tail = None;
-    if !tail_entries.is_empty() {
-        let tail_share =
-            tail_entries.len() as f64 / (head_entries.len() + tail_entries.len()) as f64;
-        if let Some(last) = groups.last_mut() {
-            last.entries = FsEntries::Listed(head_entries.into_iter().map(PathBuf::from).collect());
-        }
-        tail = Some(Batch {
-            key: FsKey::DirListingTail { dir: dir.clone() }.into(),
-            predecessor: Some(head_key.clone()),
-            content: BatchContent::Fs {
-                groups: vec![FsGroup {
-                    parent: dir,
-                    entries: FsEntries::Listed(
-                        tail_entries.into_iter().map(PathBuf::from).collect(),
-                    ),
-                }],
-            },
-            value: value * tail_share.powf(crate::value::DEFAULT_CONCAVITY_EXPONENT),
-        });
-    }
+    let listed = head_entries.len() + tail_entries.len();
+    let tail = (!tail_entries.is_empty()).then(|| Batch {
+        key: FsKey::DirListingTail { dir: dir.clone() }.into(),
+        predecessor: Some(head_key.clone()),
+        value: value
+            * (tail_entries.len() as f64 / listed as f64)
+                .powf(crate::value::DEFAULT_CONCAVITY_EXPONENT),
+        content: BatchContent::Fs {
+            groups: vec![listing_group(&dir, tail_entries)],
+        },
+    });
+    groups.push(listing_group(&dir, head_entries));
     let head = Batch {
         key: head_key,
         predecessor: None,
@@ -130,6 +115,13 @@ fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
         value,
     };
     std::iter::once(head).chain(tail).collect()
+}
+
+fn listing_group(dir: &Path, entries: Vec<&String>) -> FsGroup {
+    FsGroup {
+        parent: dir.to_path_buf(),
+        entries: FsEntries::Listed(entries.into_iter().map(PathBuf::from).collect()),
+    }
 }
 
 /// Entries a listing of `children` names: all but asset sidecars.
