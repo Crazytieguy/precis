@@ -11,8 +11,9 @@
 //! joins the head, like a directive. Outside `package main`, what
 //! no importer can name (a lower-case declaration, spec, field or
 //! interface method, or a method on a lower-case type no exported
-//! function returns) is hidden, unless its file, or its struct, exports
-//! nothing.
+//! function returns) is hidden, unless its file exports nothing; an
+//! exported struct with no exported field shows its opening and closing
+//! rows only.
 
 use std::collections::HashSet;
 use std::sync::LazyLock;
@@ -327,12 +328,7 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
         let is_entry = |entry: &Node| {
             is_spec(entry) || matches!(entry.kind(), "field_declaration" | "method_elem")
         };
-        let shows_some = list
-            .named_children(&mut list.walk())
-            .any(|entry| is_entry(&entry) && visible(&entry));
-        decl.body = file.admitted_items(list, start, |entry| {
-            !is_entry(&entry) || !shows_some || visible(&entry)
-        });
+        decl.body = file.admitted_items(list, start, |entry| !is_entry(&entry) || visible(&entry));
     }
     let (doc, directives) = head_doc_and_directives(node, file);
     decl.head.extend(directives);
@@ -453,8 +449,8 @@ var x, Y = 1, 2
     }
 
     /// Outside `package main`, a declaration, spec, field or interface
-    /// method no importer can name is hidden, unless its file (or struct)
-    /// exports nothing. An exported method on an unexported type stays
+    /// method no importer can name is hidden, unless its file exports
+    /// nothing. An exported method on an unexported type stays
     /// when an exported function returns that type.
     #[test]
     fn go_library_hides_unexported_declarations() {
@@ -510,7 +506,7 @@ func NewPool() (*pool, error) { return nil, nil }
             [
                 "Whole name [7] head [7, 11] doc [] body [[8], [10]]",
                 "Whole name [13] head [13, 16] doc [] body [[14]]",
-                "Whole name [18] head [18, 20] doc [] body [[19]]",
+                "Whole name [18] head [18, 20] doc [] body []",
                 "Whole name [22, 23] head [22, 25] doc [] body [[23]]",
                 "Callable name [31] head [31] doc [] body []",
                 "Callable name [35] head [35] doc [] body []",

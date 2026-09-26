@@ -98,13 +98,7 @@ xxhash.go
   27→// Note that a zero-valued Digest is not ready to receive writes.
   28→// Call Reset or create a Digest using New before calling other methods.
   29→type Digest struct {
-  30→	v1    uint64
-  31→	v2    uint64
-  32→	v3    uint64
-  33→	v4    uint64
-  34→	total uint64
-  35→	mem   [32]byte
-  36→	n     int // how much of mem is used
+  …
   37→}
   39→// New creates a new Digest with a zero seed.
   40→func New() *Digest {
@@ -158,6 +152,9 @@ xxhash.go
   …
   175→// MarshalBinary implements the encoding.BinaryMarshaler interface.
   176→func (d *Digest) MarshalBinary() ([]byte, error) {
+  177→	b := make([]byte, 0, marshaledSize)
+  178→	b = append(b, magic...)
+  179→	b = appendUint64(b, d.v1)
   …
   189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
   190→func (d *Digest) UnmarshalBinary(b []byte) error {
@@ -251,6 +248,12 @@ xxhsum/
     31→	}
     32→}
     34→func contains(ss []string, s string) bool {
+    35→	for _, s1 := range ss {
+    36→		if s1 == s {
+    37→			return true
+    38→		}
+    39→	}
+    40→	return false
     …
     43→func printHash(r io.Reader, name string) {
     …

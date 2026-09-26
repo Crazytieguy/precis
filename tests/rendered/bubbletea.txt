@@ -1,6 +1,10 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
+    bug.yml
+    bug_report.md
+    config.yml
+    feature_request.md
   dependabot.yml
   workflows/
     build.yml
@@ -46,6 +50,68 @@ cursed_renderer_test.go
 cursor.go
 environ.go
 examples/
+  README.md
+  altscreen-toggle/
+  autocomplete/
+  canvas/
+  capability/
+  cellbuffer/
+  chat/
+  clickable/
+  colorprofile/
+  composable-views/
+  cursor-style/
+  debounce/
+  doom-fire/
+  dynamic-textarea/
+  exec/
+  eyes/
+  file-picker/
+  focus-blur/
+  fullscreen/
+  glamour/
+  go.mod
+  go.sum
+  help/
+  http/
+  isbn-form/
+  keyboard-enhancements/
+  list-default/
+  list-fancy/
+  list-simple/
+  mouse/
+  package-manager/
+  pager/
+  paginator/
+  pipe/
+  prevent-quit/
+  print-key/
+  progress-animated/
+  progress-bar/
+  progress-download/
+  progress-static/
+  query-term/
+  realtime/
+  result/
+  send-msg/
+  sequence/
+  set-terminal-color/
+  set-window-title/
+  simple/
+  space/
+  spinner/
+  spinners/
+  splash/
+  split-editors/
+  stopwatch/
+  suspend/
+  table/
+  table-resize/
+  tabs/
+  textarea/
+  textinput/
+  textinputs/
+  …
 exec.go
 exec_test.go
 focus.go
@@ -84,8 +150,9 @@ tea.go
   8→//
   9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
   …
+  38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
   39→var ErrProgramPanic = errors.New("program experienced a panic")
-  …
+  41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
   42→var ErrProgramKilled = errors.New("program was killed")
   …
   46→var ErrInterrupted = errors.New("program was interrupted")
@@ -174,7 +241,7 @@ tea.go
   316→	ProgressBarIndeterminate
   317→	ProgressBarWarning
   318→)
-  …
+  320→// String return a human-readable value for the given [ProgressBarState].
   321→func (s ProgressBarState) String() string {
   …
   336→type ProgressBar struct {
@@ -204,39 +271,33 @@ tea.go
   368→	// Blink is a boolean that determines whether the cursor should blink.
   369→	Blink bool
   370→}
-  …
+  372→// NewCursor returns a new cursor with the default settings and the given
+  373→// position.
   374→func NewCursor(x, y int) *Cursor {
   …
   390→type Cmd func() Msg
   …
   425→// Program is a terminal user interface.
   426→type Program struct {
-  427→	// disableInput disables all input. This is useful for programs that
-  428→	// don't need input, like a progress bar or a spinner.
-  429→	disableInput bool
-  430→
-  431→	// disableSignalHandler disables the signal handler that Bubble Tea sets up
-  432→	// for Programs. This is useful if you want to handle signals yourself.
-  433→	disableSignalHandler bool
-  434→
-  435→	// disableCatchPanics disables the panic catching that Bubble Tea does by
-  436→	// default. If panic catching is disabled the terminal will be in a fairly
-  437→	// unusable state after a panic because Bubble Tea will not perform its usual
-  438→	// cleanup on exit.
-  439→	disableCatchPanics bool
   …
+  552→}
+  554→// Quit is a special command that tells the Bubble Tea program to exit.
   555→func Quit() Msg {
   …
+  559→// QuitMsg signals that the program should quit. You can send a [QuitMsg] with
+  560→// [Quit].
   561→type QuitMsg struct{}
-  …
+  563→// Suspend is a special command that tells the Bubble Tea program to suspend.
   564→func Suspend() Msg {
   …
   574→type SuspendMsg struct{}
-  …
+  576→// ResumeMsg can be listen to do something once a program is resumed back
+  577→// from a suspend state.
   578→type ResumeMsg struct{}
   …
   586→type InterruptMsg struct{}
-  …
+  588→// Interrupt is a special command that tells the Bubble Tea program to
+  589→// interrupt.
   590→func Interrupt() Msg {
   …
   594→// NewProgram creates a new [Program].
@@ -250,6 +311,7 @@ tea.go
   …
   1204→func (p *Program) Kill() {
   …
+  1208→// Wait waits/blocks until the underlying Program finished shutting down.
   1209→func (p *Program) Wait() {
   …
   1319→func (p *Program) ReleaseTerminal() error {
@@ -285,6 +347,9 @@ tutorials/
     3→go 1.24.2
     4→
     5→toolchain go1.24.10
+    6→
+    7→require charm.land/bubbletea/v2 v2.0.0-00010101000000-000000000000
     …
+    29→replace charm.land/bubbletea/v2 => ../
   go.sum
 xterm.go
