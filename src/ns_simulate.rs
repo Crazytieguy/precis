@@ -12,7 +12,7 @@ use crate::content::{BatchContent, FsEntries, Render, Span, with_truncate_regex}
 use crate::fs_util::{DirFilter, lists_file};
 use crate::north_star::{NorthStar, NsBatch};
 use crate::ns_loader::{path_escapes_root, resolve_content};
-use crate::render::{RenderedTree, SourceCache};
+use crate::render::{RenderedTree, SourceCache, visible_full_line};
 
 pub struct SimulatedBatch {
     pub id: String,
@@ -270,7 +270,7 @@ fn validate_spans(
                         continue;
                     };
                     elides_a_word |= text[m.end()..].contains(char::is_alphanumeric);
-                    let full_tokens = crate::tokenizer::count(text);
+                    let full_tokens = crate::tokenizer::count(visible_full_line(text));
                     let truncated_tokens = crate::tokenizer::count(&format!("{}…", m.as_str()));
                     if truncated_tokens >= full_tokens {
                         violations.push(format!(

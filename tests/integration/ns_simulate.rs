@@ -40,16 +40,17 @@ const ELLIPSIS: &str = "{ kind = \"ellipsis\" }";
 
 /// Each batch's violation messages.
 fn violations(batches: &[String]) -> Vec<Vec<String>> {
-    let pin =
-        std::fs::read_to_string(Path::new(LOG_FIXTURE).join(precis::fs_util::PRECIS_PIN_FILE))
-            .unwrap();
+    violations_in(Path::new(LOG_FIXTURE), batches)
+}
+
+/// [`violations`] over the fixture at `root`.
+fn violations_in(root: &Path, batches: &[String]) -> Vec<Vec<String>> {
     let toml = format!(
-        "fixture = \"log\"\nrevision_pin = \"{}\"\n\n{}",
-        pin.trim(),
+        "fixture = \"log\"\nrevision_pin = \"unchecked\"\n\n{}",
         batches.concat()
     );
     let ns: NorthStar = toml::from_str(&toml).expect("valid ns toml");
-    simulate_ns(&ns, Path::new(LOG_FIXTURE))
+    simulate_ns(&ns, root)
         .into_iter()
         .map(|b| b.violations)
         .collect()
@@ -242,4 +243,18 @@ fn ns_simulate_detects_spans_on_files_precis_never_lists() {
             "is not a file precis lists",
         );
     }
+}
+
+/// The renderer shows a `Full` line's first 500 characters, so a
+/// truncation that keeps all of them saves nothing however long the line.
+#[test]
+fn ns_simulate_prices_truncation_against_the_visible_line() {
+    let fixture = tempfile::tempdir().unwrap();
+    std::fs::write(fixture.path().join("long.txt"), "word ".repeat(2000)).unwrap();
+    let content = "kind = \"lines\"\nspans = [{ path = \"long.txt\", start = 1, end = 1, \
+        render = { kind = \"truncated\", pattern = \"^.{500}\" } }]";
+    assert_flags(
+        &violations_in(fixture.path(), &[batch("1", content)])[0],
+        "saves no tokens",
+    );
 }
