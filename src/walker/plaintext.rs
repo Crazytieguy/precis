@@ -196,9 +196,10 @@ fn is_docker_compose_name(lower: &str) -> bool {
 
 /// A file named for the credentials it holds: a dotenv file (`.env`,
 /// `.env.local`, `production.env`), a name led by a credential word
-/// (`secrets.yml`, `credentials-dev.ini`, `creds_staging.conf`, an
-/// extensionless `secrets` script), a tool's auth file, Terraform
-/// variable values, or a service-account key. Samples (`.env.example`,
+/// (`secrets.yml`, `credentials-dev.ini`, `token.txt`, `api_key.txt`, an
+/// extensionless `secrets` script), a tool's auth file (`.pgpass`,
+/// `kubeconfig`), Terraform variable values, a key or certificate file
+/// (`master.key`, `server.pem`), or a service-account key. Samples (`.env.example`,
 /// `secrets.yml.sample`) hold placeholders, and source code and
 /// documents (`credentials.py`, `secrets.md`) are about credentials
 /// rather than holding them — except a dotenv name, whatever language
@@ -221,16 +222,39 @@ pub(crate) fn is_credential_name(path: &Path) -> bool {
     super::language_group(path).is_none()
         && (matches!(
             leading,
-            "env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
-        ) || lower.ends_with(".tfvars")
-            || lower.ends_with(".tfvars.json")
+            "env"
+                | "secret"
+                | "secrets"
+                | "credential"
+                | "credentials"
+                | "creds"
+                | "token"
+                | "tokens"
+                | "password"
+                | "passwords"
+                | "passwd"
+                | "apikey"
+                | "auth"
+        ) || ["api_key", "api-key"]
+            .iter()
+            .any(|prefix| lower.starts_with(prefix))
+            || [".tfvars", ".tfvars.json", ".key", ".pem"]
+                .iter()
+                .any(|suffix| lower.ends_with(suffix))
             || (lower.ends_with(".json")
                 && ["service-account", "service_account", "serviceaccount"]
                     .iter()
                     .any(|prefix| lower.starts_with(prefix)))
             || matches!(
                 lower.as_str(),
-                ".npmrc" | ".netrc" | ".pypirc" | ".git-credentials" | ".htpasswd"
+                ".npmrc"
+                    | ".netrc"
+                    | ".pypirc"
+                    | ".git-credentials"
+                    | ".htpasswd"
+                    | ".pgpass"
+                    | ".my.cnf"
+                    | "kubeconfig"
             ))
 }
 
@@ -2180,12 +2204,18 @@ mod tests {
             ("prod.tfvars.json", true), ("service-account.json", true),
             ("serviceAccountKey.json", true), (".npmrc", true), (".netrc", true),
             (".pypirc", true), (".git-credentials", true), (".htpasswd", true),
-            (".env.php", true), (".env.local.ts", true),
+            (".env.php", true), (".env.local.ts", true), ("token.txt", true),
+            ("tokens.json", true), ("password.txt", true), ("passwd", true),
+            ("apikey.txt", true), ("api_key.txt", true), ("api-keys.json", true),
+            ("auth.json", true), ("master.key", true), ("server.pem", true), (".pgpass", true),
+            (".my.cnf", true), ("kubeconfig", true),
             // Samples document keys with placeholder values.
             (".env.example", false), (".env.sample", false), (".env.template", false),
             (".env.dist", false),
             // Code and docs about credentials hold none.
             ("credentials.py", false), ("secrets.rs", false), ("credentials.go", false),
+            ("token.go", false), ("auth.ts", false), ("authors.txt", false),
+            ("keyboard.txt", false),
             ("env.d.ts", false), ("secrets.md", false), ("credentials.rst", false),
             (".env.local.example", false), ("secrets.yml.sample", false),
             ("service-account.yaml", false), ("environment.yml", false), ("config.json", false),
