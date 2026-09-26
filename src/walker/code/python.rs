@@ -8,10 +8,13 @@
 //!   implementation follows it is hidden: the implementation's signature
 //!   stands for the function, so the roster doesn't repeat its name.
 //! - **Head and name rows**: a decorated definition's head starts at its
-//!   first decorator. Its name rows are its one-row decorators
-//!   (`@property` and `@overload` say what a `def` is), the `def` /
-//!   `class` row and, when the signature spans rows, the row that closes
-//!   it (`) -> T:`), so a roster never lists an unclosed `def f(`.
+//!   first decorator. Its name rows are the `def` / `class` row and,
+//!   when the signature spans rows, the row that closes it (`) -> T:`),
+//!   so a roster never lists an unclosed `def f(`; a member's also
+//!   include its one-row decorators (`@property` and `@overload` say
+//!   what a method is). The file's roster leaves decorators to the
+//!   declaration's head: at two rows per entry, a long module's roster
+//!   ran out before the classes at its end.
 //! - **Doc**: the docstring opening a `def` / `class` body, or else the
 //!   `#` comments directly above the definition.
 //! - **Module doc**: a dunder-named module's (`__init__.py`,
@@ -95,7 +98,15 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             | "class_definition"
             | "decorated_definition"
             | "if_statement"
-            | "try_statement" => model.decls.extend(definitions(file, node)),
+            | "try_statement" => {
+                model
+                    .decls
+                    .extend(definitions(file, node).into_iter().map(|mut decl| {
+                        decl.name_rows
+                            .retain(|&row| !file.line(row).trim_start().starts_with('@'));
+                        decl
+                    }))
+            }
             "import_from_statement"
                 if is_package_init
                     && (imports_own_module(file, node, ctx)
@@ -699,7 +710,7 @@ def greet(
         assert_eq!(
             describe(&model),
             [
-                "Callable name [1, 2, 3, 5] head [1, 2, 3, 4, 5] doc [[6], [8, 9]] body [[10, 11], [12], [13]]"
+                "Callable name [3, 5] head [1, 2, 3, 4, 5] doc [[6], [8, 9]] body [[10, 11], [12], [13]]"
             ]
         );
     }
@@ -773,7 +784,7 @@ class Config(Base):  # the config
         assert_eq!(
             describe(&model),
             [
-                "Whole name [1, 2] head [1, 2] doc [[3]] body [[5, 6], [7], [10, 11], [15], [18], [20], [21]]",
+                "Whole name [2] head [1, 2] doc [[3]] body [[5, 6], [7], [10, 11], [15], [18], [20], [21]]",
                 "  Callable name [10, 11] head [10, 11] doc [[12]] body [[13]]",
                 "  Callable name [15] head [15] doc [] body [[16]]",
                 "  Callable name [18] head [18] doc [] body []",
@@ -915,8 +926,8 @@ class Wikicode:
         assert_eq!(
             describe(&model),
             [
-                "Callable name [1, 2] head [1, 2] doc [] body []",
-                "Callable name [3, 4] head [3, 4] doc [] body []",
+                "Callable name [2] head [1, 2] doc [] body []",
+                "Callable name [4] head [3, 4] doc [] body []",
             ]
         );
     }
@@ -947,7 +958,7 @@ class Node:
         assert_eq!(
             describe(&model),
             [
-                "Callable name [4, 5] head [4, 5] doc [[3]] body [[6]]",
+                "Callable name [5] head [4, 5] doc [[3]] body [[6]]",
                 "Whole name [8] head [8] doc [] body [[9], [11], [15]]",
                 "  Callable name [11] head [11] doc [[10]] body [[12]]",
                 "  Callable name [15] head [15] doc [[16]] body []",

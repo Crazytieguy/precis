@@ -43,10 +43,10 @@ Score(3000)=0.837 I=0.952 C=0.736 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 2181 | 220 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.913 |
 | ns | 2368 |  | 194 | Command constructor: every knob a command accepts | 3.3 |  | 0.884 |
 | ns | 2507 |  | 139 | Context: what it is | 3.4 | 3.1 | 0.863 |
-| walker |  | 2548 | 367 | Code::CodeKey { rung: Names, file: src/click/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.889 |
-| walker |  | 2559 | 11 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 3, sub: 0, line: 57 } |  |  | 0.889 |
-| walker |  | 2574 | 15 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 6, sub: 0, line: 100 } |  |  | 0.889 |
-| walker |  | 2597 | 23 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 4, sub: 0, line: 76 } |  |  | 0.889 |
+| walker |  | 2540 | 359 | Code::CodeKey { rung: Names, file: src/click/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.889 |
+| walker |  | 2551 | 11 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 3, sub: 0, line: 57 } |  |  | 0.889 |
+| walker |  | 2574 | 23 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 4, sub: 0, line: 76 } |  |  | 0.889 |
+| walker |  | 2597 | 23 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 6, sub: 0, line: 100 } |  |  | 0.889 |
 | walker |  | 2623 | 26 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 7, sub: 0, line: 119 } |  |  | 0.889 |
 | walker |  | 2667 | 44 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 62, sub: 0, line: 1516 } |  |  | 0.889 |
 | walker |  | 2759 | 92 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 83, sub: 0, line: 1988 } |  |  | 0.889 |

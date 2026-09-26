@@ -32,10 +32,31 @@ README.md
   115→## Recommendation for other hardware
   …
   138→# Models from the xLSTM NeurIPS Paper
-  …
+  139→
+  140→This section explains how to use the models from the xLSTM paper.
+  141→
   142→## How to use the xLSTM architecture from our NeurIPS paper
-  …
+  143→
+  144→For non language applications or for integrating in other architectures you can use the `xLSTMBlockStack` and for language modeling or other token-based applications you can use the `xLSTMLMModel`.
+  145→
   146→### Using the sLSTM CUDA kernels
+  147→
+  148→For the CUDA version of sLSTM, you need Compute Capability >= 8.0, see [https://developer.nvidia.com/cuda-gpus](https://developer.nvidia.com/cuda-gpus). If you have problems with the compilation, please try (thanks to [@zia1138](https://github.com/zia1138) for pointing out):
+  149→```bash
+  150→export TORCH_CUDA_ARCH_LIST="8.0;8.6;9.0"
+  151→```
+  153→For all kinds of custom setups with torch and CUDA, keep in mind that versions have to match. Also, to make sure the correct CUDA libraries are included you can use the "XLSTM_EXTRA_INCLUDE_PATHS" environment variable now to inject different include paths, e.g.:
+  154→
+  155→```bash
+  156→export XLSTM_EXTRA_INCLUDE_PATHS='/usr/local/include/cuda/:/usr/include/cuda/'
+  157→```
+  158→
+  159→or within python:
+  160→
+  161→```python
+  162→import os
+  163→os.environ['XLSTM_EXTRA_INCLUDE_PATHS']='/usr/local/include/cuda/:/usr/include/cuda/'
+  164→```
   …
   168→### xLSTM Block Stack
   …
@@ -206,41 +227,6 @@ xlstm/
     __init__.py (empty)
     conv.py
     feedforward.py
-      …
-      12→_act_fn_registry = {
-      13→    "gelu": nn.functional.gelu,
-      14→    "relu": nn.functional.relu,
-      15→    "relu^2": lambda x: torch.square(nn.functional.relu(x)),
-      16→    "sigmoid": nn.functional.sigmoid,
-      17→    "swish": nn.functional.silu,
-      18→    "selu": nn.functional.selu,
-      19→}
-      22→def get_act_fn(act_fn_name: str) -> Callable[[torch.Tensor], torch.Tensor]:
-      …
-      31→@dataclass
-      32→class FeedForwardConfig(UpProjConfigMixin):
-      33→    proj_factor: float = 1.3
-      34→    act_fn: str = "gelu"
-      35→    embedding_dim: int = -1
-      36→    dropout: float = 0.0
-      37→    bias: bool = False
-      38→    ff_type: Literal["ffn_gated"] = "ffn_gated"
-      39→
-      40→    _num_blocks: int = 1
-      41→
-      42→    def __post_init__(self):
-      …
-      49→class GatedFeedForward(nn.Module):
-      50→    config_class = FeedForwardConfig
-      51→
-      52→    def __init__(self, config: FeedForwardConfig):
-      …
-      72→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
-      …
-      77→    def reset_parameters(self):
-      …
-      90→def create_feedforward(config: FeedForwardConfig) -> nn.Module:
-      …
     init.py
     linear_headwise.py
     ln.py
@@ -303,10 +289,10 @@ xlstm/
       25→mLSTMStateType = dict[int, mLSTMLayerStateType]
       26→
       27→WeightModeType = Literal["single", "fused"]
-      28→
-      29→
-      30→@dataclass
+      …
       31→class xLSTMLargeConfig:
+      …
+      112→class xLSTMLarge(nn.Module):
       …
     utils.py
   xlstm_lm_model.py

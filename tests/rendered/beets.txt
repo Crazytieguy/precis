@@ -192,27 +192,6 @@ beetsplug/
       17→use of the wide range of MPD clients.
       18→"""
       …
-      37→from beetsplug._utils import vfs
-      …
-      51→PROTOCOL_VERSION = "0.16.0"
-      52→BUFSIZE = 1024
-      53→
-      54→HELLO = f"OK MPD {PROTOCOL_VERSION}"
-      55→CLIST_BEGIN = "command_list_begin"
-      56→CLIST_VERBOSE_BEGIN = "command_list_ok_begin"
-      57→CLIST_END = "command_list_end"
-      58→RESP_OK = "OK"
-      59→RESP_CLIST_VERBOSE = "list_OK"
-      60→RESP_ERR = "ACK"
-      61→
-      62→NEWLINE = "\n"
-      63→
-      64→ERROR_NOT_LIST = 1
-      65→ERROR_ARG = 2
-      66→ERROR_PASSWORD = 3
-      67→ERROR_PERMISSION = 4
-      68→ERROR_UNKNOWN = 5
-      …
     gstplayer.py
   bpm.py
   bpsync.py
@@ -362,8 +341,6 @@ beetsplug/
       296→@app.before_request
       297→def before_request():
       …
-      304→@app.route("/item/<idlist:ids>", methods=["GET", "DELETE", "PATCH"])
-      305→@resource("items", patchable=True)
       306→def get_item(id):
       …
       310→@app.route("/item/")
@@ -374,8 +351,6 @@ beetsplug/
       317→@app.route("/item/<int:item_id>/file")
       318→def item_file(item_id):
       …
-      338→@app.route("/item/query/<query:queries>", methods=["GET", "DELETE", "PATCH"])
-      339→@resource_query("items", patchable=True)
       340→def item_query(queries):
       …
       344→@app.route("/item/path/<everything:path>")
@@ -383,6 +358,43 @@ beetsplug/
       …
       354→@app.route("/item/values/<string:key>")
       355→def item_unique_field_values(key):
+      …
+      369→@app.route("/album/<idlist:ids>", methods=["GET", "DELETE"])
+      370→@resource("albums")
+      371→def get_album(id):
+      …
+      375→@app.route("/album/")
+      376→@app.route("/album/query/")
+      377→@resource_list("albums")
+      378→def all_albums():
+      …
+      382→@app.route("/album/query/<query:queries>", methods=["GET", "DELETE"])
+      383→@resource_query("albums")
+      384→def album_query(queries):
+      …
+      388→@app.route("/album/<int:album_id>/art")
+      389→def album_art(album_id):
+      …
+      397→@app.route("/album/values/<string:key>")
+      398→def album_unique_field_values(key):
+      …
+      412→@app.route("/artist/")
+      413→def all_artists():
+      …
+      423→@app.route("/stats")
+      424→def stats():
+      …
+      439→@app.route("/")
+      440→def home():
+      …
+      447→class WebPlugin(BeetsPlugin):
+      448→    def __init__(self):
+      …
+      462→    def commands(self):
+      …
+      520→class ReverseProxied:
+      …
+      540→    def __init__(self, app):
       …
     static/
       backbone.js

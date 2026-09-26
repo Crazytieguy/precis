@@ -175,15 +175,15 @@ Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 9417 | 19 | Code::CodeKey { rung: Doc, file: src/requests/cookies.py, decl: 43, sub: 0, line: 391 } |  |  | 0.643 |
 | ns | 9480 |  | 155 | `tests/conftest.py`: the fixture set every test builds on | 7.3 |  | 0.638 |
 | ns | 9575 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.635 |
-| walker |  | 9728 | 311 | Code::CodeKey { rung: Names, file: src/requests/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.637 |
-| walker |  | 9736 | 8 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 15, sub: 0, line: 176 } |  |  | 0.638 |
-| walker |  | 9754 | 18 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 14, sub: 0, line: 172 } |  |  | 0.639 |
-| ns | 9757 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.632 |
-| walker |  | 9774 | 20 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 4, sub: 0, line: 27 } |  |  | 0.632 |
-| walker |  | 9794 | 20 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 16, sub: 0, line: 179 } |  |  | 0.633 |
-| walker |  | 9817 | 23 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 6, sub: 0, line: 32 } |  |  | 0.633 |
-| walker |  | 9847 | 30 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 13, sub: 0, line: 165 } |  |  | 0.635 |
-| walker |  | 9889 | 42 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 11, sub: 0, line: 50 } |  |  | 0.635 |
+| walker |  | 9702 | 285 | Code::CodeKey { rung: Names, file: src/requests/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.637 |
+| walker |  | 9710 | 8 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 15, sub: 0, line: 176 } |  |  | 0.638 |
+| walker |  | 9728 | 18 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 14, sub: 0, line: 172 } |  |  | 0.639 |
+| walker |  | 9748 | 20 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 16, sub: 0, line: 179 } |  |  | 0.639 |
+| ns | 9757 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.633 |
+| walker |  | 9777 | 29 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 4, sub: 0, line: 27 } |  |  | 0.633 |
+| walker |  | 9807 | 30 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 6, sub: 0, line: 32 } |  |  | 0.633 |
+| walker |  | 9837 | 30 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 13, sub: 0, line: 165 } |  |  | 0.635 |
+| walker |  | 9879 | 42 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 11, sub: 0, line: 50 } |  |  | 0.635 |
 | ns | 9914 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.629 |
 | ns | 9962 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.627 |
-| walker |  | 9990 | 101 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 12, sub: 0, line: 152 } |  |  | 0.636 |
+| walker |  | 9991 | 112 | Code::CodeKey { rung: Decl, file: src/requests/_types.py, decl: 12, sub: 0, line: 152 } |  |  | 0.638 |
