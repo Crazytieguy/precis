@@ -158,7 +158,6 @@ chibicc.h
   106→Token *tokenize_file(char *filename);
   107→
   108→#define unreachable() \
-  109→  error("internal error at %s:%d", __FILE__, __LINE__)
   …
   115→char *search_include_paths(char *filename);
   116→void init_macros(void);
@@ -177,6 +176,9 @@ chibicc.h
   134→
   135→  // Local variable
   136→  int offset;
+  137→
+  138→  // Global variable or function
+  139→  bool is_function;
   …
   167→typedef struct Relocation Relocation;
   168→struct Relocation {

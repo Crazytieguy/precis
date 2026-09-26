@@ -11,8 +11,10 @@
 //! opaque, as does any block holding a statement other than an
 //! expression (an `#if` splitting a function body).
 //!
-//! - Function definitions are `Callable`; prototypes, typedefs, structs /
-//!   unions / enums, global variables, macros and declaring macro
+//! - Function definitions are `Callable`, and so is a function-like
+//!   macro: its `#define NAME(args)` row is the head, each continuation
+//!   row a body item. Prototypes, typedefs, structs / unions / enums,
+//!   global variables, object-like macros and declaring macro
 //!   invocations are `Whole`, with one body [`Item`] per field or
 //!   enumerator.
 //! - A non-`inline` `static` in a header is hidden, whatever the
@@ -160,13 +162,9 @@ fn is_header(path: &Path) -> bool {
 
 fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInfo> {
     let shape = match node.kind() {
-        "function_definition" => Shape::Callable,
-        "declaration"
-        | "type_definition"
-        | "struct_specifier"
-        | "union_specifier"
-        | "enum_specifier"
-        | "preproc_function_def" => Shape::Whole,
+        "function_definition" | "preproc_function_def" => Shape::Callable,
+        "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
+        | "enum_specifier" => Shape::Whole,
         "preproc_def" if !is_header_guard_define(node, file) => Shape::Whole,
         "ERROR" if misparsed_prototype_declarator(node).is_some() => Shape::Whole,
         "expression_statement" if is_declaring_macro_invocation(node, file) => Shape::Whole,
@@ -183,6 +181,15 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
     }
     let rows = file.node_rows(node);
     let decl = match shape {
+        Shape::Callable if node.kind() == "preproc_function_def" => {
+            let first = *rows.start();
+            DeclInfo {
+                body: (first + 1..=*rows.end())
+                    .map(|row| Item::new([row]))
+                    .collect(),
+                ..DeclInfo::new(vec![first], vec![first], Shape::Callable)
+            }
+        }
         Shape::Callable => {
             let block = node.child_by_field_name("body");
             let mut statements = named_children(block);
@@ -1110,7 +1117,7 @@ int ch_close(void);
     }
 
     #[test]
-    fn c_macros_are_whole_and_only_the_guard_define_is_skipped() {
+    fn c_macros_list_all_but_the_guard_define() {
         let source = "\
 #pragma once
 #ifndef UTIL_H
@@ -1127,7 +1134,10 @@ int util(void);
             name_rows_of(&model),
             vec![vec![4], vec![5], vec![6], vec![8]]
         );
-        assert_eq!(model.decls[2].head, vec![6, 7]);
+        assert_eq!(model.decls[1].shape, Shape::Whole);
+        assert_eq!(model.decls[2].shape, Shape::Callable);
+        assert_eq!(model.decls[2].head, vec![6]);
+        assert_eq!(rows(&model.decls[2].body), vec![vec![7]]);
     }
 
     #[test]

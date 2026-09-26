@@ -217,15 +217,24 @@ Score(3000)=0.702 I=0.907 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 8785 | 206 | Code::CodeKey { rung: Names, file: src/entry.c, decl: 0, sub: 4, line: 0 } |  |  | 0.536 |
 | ns | 8863 |  | 208 | make.lua: how clibs modules and the final executable are wired | 5.5 | 5.4 | 0.529 |
 | walker |  | 8976 | 191 | Code::CodeKey { rung: Names, file: src/lcrypt.c, decl: 0, sub: 1, line: 0 } |  |  | 0.529 |
-| walker |  | 9101 | 125 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 15, sub: 0, line: 187 } |  |  | 0.529 |
+| walker |  | 9107 | 131 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 13, sub: 0, line: 171 } |  |  | 0.529 |
 | ns | 9217 |  | 354 | make.lua: the Emscripten/WASM link configuration | 5.6 | 5.4 | 0.521 |
-| walker |  | 9231 | 130 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 16, sub: 0, line: 195 } |  |  | 0.521 |
-| walker |  | 9362 | 131 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 13, sub: 0, line: 171 } |  |  | 0.521 |
-| walker |  | 9495 | 133 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 14, sub: 0, line: 178 } |  |  | 0.521 |
+| walker |  | 9240 | 133 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 14, sub: 0, line: 178 } |  |  | 0.521 |
+| walker |  | 9462 | 222 | Code::CodeKey { rung: Names, file: src/lfs.c, decl: 0, sub: 0, line: 0 } |  |  | 0.521 |
+| walker |  | 9477 | 15 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 4, sub: 0, line: 17 } |  |  | 0.521 |
+| walker |  | 9492 | 15 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 5, sub: 0, line: 20 } |  |  | 0.521 |
+| walker |  | 9508 | 16 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 6, sub: 0, line: 23 } |  |  | 0.521 |
 | ns | 9518 |  | 301 | The full `soluna.app` C surface in src/entry.c | 6.1 | 3.3 | 0.513 |
+| walker |  | 9524 | 16 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 7, sub: 0, line: 26 } |  |  | 0.513 |
+| walker |  | 9539 | 15 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 8, sub: 0, line: 29 } |  |  | 0.517 |
 | ns | 9539 |  | 21 | Complete listing of .github: workflows and the composite action | 7.1 | 1.2 | 0.517 |
+| walker |  | 9554 | 15 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 9, sub: 0, line: 32 } |  |  | 0.517 |
+| walker |  | 9568 | 14 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 10, sub: 0, line: 35 } |  |  | 0.517 |
+| walker |  | 9600 | 32 | Code::CodeKey { rung: Decl, file: src/lfs.c, decl: 1, sub: 0, line: 5 } |  |  | 0.517 |
 | ns | 9738 |  | 199 | The composite action's four outputs (action.yml) | 7.2 | 7.1 | 0.512 |
-| walker |  | 9744 | 249 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 19, sub: 0, line: 231 } |  |  | 0.512 |
+| walker |  | 9823 | 223 | Code::CodeKey { rung: Names, file: src/material_text.c, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
 | ns | 9823 |  | 85 | Complete listing of web/ content, assets and static files | 7.3 | 1.2 | 0.522 |
+| walker |  | 9872 | 49 | Code::CodeKey { rung: Decl, file: src/material_text.c, decl: 1, sub: 0, line: 20 } |  |  | 0.522 |
+| walker |  | 9922 | 50 | Code::CodeKey { rung: Decl, file: src/material_text.c, decl: 2, sub: 0, line: 28 } |  |  | 0.522 |
 | ns | 9925 |  | 102 | Complete listing of web/layouts (Hugo templates and shortcodes) | 7.4 | 7.3 | 0.535 |
-| walker |  | 10000 | 256 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 17, sub: 0, line: 205 } |  |  | 0.535 |
+| walker |  | 9995 | 73 | Code::CodeKey { rung: Decl, file: src/material_text.c, decl: 3, sub: 0, line: 36 } |  |  | 0.535 |
