@@ -65,10 +65,6 @@ const LANGUAGES: [&Language; 6] = [
 ];
 
 impl Language {
-    fn is_entrypoint(&self, path: &Path, ctx: &WalkCtx) -> bool {
-        self.is_entrypoint.is_some_and(|test| test(path, ctx))
-    }
-
     /// The language whose extensions include `path`'s extension.
     pub(crate) fn from_path(path: &Path) -> Option<&'static Language> {
         LANGUAGES
@@ -360,16 +356,10 @@ fn file_name(path: &Path) -> Option<&str> {
 /// as `_`: the file a project names after itself (`lib/express.js` in
 /// `express`, `sds.h` in `sds`), conventionally its front door.
 fn is_named_after(path: &Path, dir: &Path) -> bool {
-    let normalized = |name: &std::ffi::OsStr| {
-        name.to_str()
-            .map(|name| name.to_ascii_lowercase().replace('-', "_"))
-    };
-    match (path.file_stem(), dir.file_name()) {
-        (Some(stem), Some(dir_name)) => {
-            normalized(stem).is_some_and(|stem| Some(stem) == normalized(dir_name))
-        }
-        _ => false,
-    }
+    let normalized = |name: &str| name.to_ascii_lowercase().replace('-', "_");
+    file_stem(path)
+        .zip(file_name(dir))
+        .is_some_and(|(stem, dir_name)| normalized(stem) == normalized(dir_name))
 }
 
 /// A top-level function of a program's entry file.
@@ -527,7 +517,7 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             Some(names) => names(&file),
             None => file_stem(path).into_iter().map(str::to_owned).collect(),
         };
-        let is_entrypoint = language.is_entrypoint(path, ctx);
+        let is_entrypoint = language.is_entrypoint.is_some_and(|test| test(path, ctx));
         emitted.push(EmittedFile {
             batches: emit::emit_file(language, &file, model, is_entrypoint, ctx),
             chained: !is_entrypoint,
