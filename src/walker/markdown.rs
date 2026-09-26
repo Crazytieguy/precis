@@ -588,8 +588,9 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
 fn is_decorative_block(block: Node, source: &str) -> bool {
     match block.kind() {
         "paragraph" => is_decorative_paragraph(block, source),
-        // `[label]: url` definitions render nothing on their own.
-        "link_reference_definition" => true,
+        // `[label]: url` definitions render nothing on their own; YAML /
+        // TOML front matter is site metadata, not project description.
+        "link_reference_definition" | "minus_metadata" | "plus_metadata" => true,
         "html_block" => is_decorative_html_block(block, source),
         _ => false,
     }
@@ -1544,9 +1545,9 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &BTreeSet<usize>)
 
 /// The chrome/substance line for the whole pre-heading region, stated
 /// once: decoration is image/badge-only paragraphs, tag-only HTML
-/// wrappers, in-page nav menus and tables of contents. Everything else
-/// above the first heading is substance. Both readers of that region use
-/// this — `ReadmeHeadline` and [`prelude_remainder_rows`].
+/// wrappers, front matter, in-page nav menus and tables of contents.
+/// Everything else above the first heading is substance. Both readers of
+/// that region use this — `ReadmeHeadline` and [`prelude_remainder_rows`].
 fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
     is_decorative_block(block, source)
         || is_html_nav_block(block, source)
@@ -2005,6 +2006,18 @@ mod tests {
                    Actual lede paragraph.\n",
             &[3, 5],
             &[1],
+        ),
+        (
+            "markdown_front_matter_is_decorative",
+            "---\n\
+                   title: Widget\n\
+                   ---\n\
+                   \n\
+                   # Widget\n\
+                   \n\
+                   Widget renders gadgets.\n",
+            &[5, 7],
+            &[1, 2, 3],
         ),
     ];
 
