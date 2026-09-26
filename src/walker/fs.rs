@@ -42,39 +42,20 @@ pub fn expand_listed<'k>(key: &'k FsKey, ctx: &WalkCtx) -> (Vec<Batch>, Option<&
     (out, (head.is_none() || tail).then_some(dir.as_path()))
 }
 
-/// Files in `dir` (non-recursive) whose extension matches.
-pub fn files_with_extension(dir: &Path, ext: &str, ctx: &WalkCtx) -> Vec<PathBuf> {
-    files_with_any_extension(dir, &[ext], ctx)
-}
-
-/// Files in `dir` matching any of `exts`, in one `read_dir` pass.
+/// Files `dir`'s listing shows whose extension matches any of `exts`,
+/// in name order.
 pub fn files_with_any_extension(dir: &Path, exts: &[&str], ctx: &WalkCtx) -> Vec<PathBuf> {
-    let Ok(read_dir) = std::fs::read_dir(dir) else {
-        return Vec::new();
-    };
-    let mut out: Vec<PathBuf> = read_dir
-        .flatten()
-        .filter_map(|e| {
-            // `Path::is_file` follows symlinks. Extension discovery feeds
-            // whole-file readers as well as parsers, so admitting a link
-            // here could render content outside the walk root. Use the
-            // directory entry's non-following type and reject symlinks
-            // uniformly before any metadata or source read.
-            if !e.file_type().ok()?.is_file() {
-                return None;
-            }
-            let path = e.path();
-            let actual = path.extension().and_then(|e| e.to_str())?;
-            if !exts.iter().any(|ext| actual.eq_ignore_ascii_case(ext)) {
-                return None;
-            }
-            // Same filter the listing uses: a file the listing hides
-            // must not come back as a content batch.
-            (!ctx.dir_filter().excludes(&path, false)).then_some(path)
+    list_dir(dir, ctx.dir_filter())
+        .iter()
+        .filter(|(name, kind)| {
+            matches!(kind, EntryKind::File)
+                && Path::new(name)
+                    .extension()
+                    .and_then(|actual| actual.to_str())
+                    .is_some_and(|actual| exts.iter().any(|ext| actual.eq_ignore_ascii_case(ext)))
         })
-        .collect();
-    out.sort();
-    out
+        .map(|(name, _)| dir.join(name))
+        .collect()
 }
 
 /// Listing of `dir`, run on through every directory that holds only one

@@ -697,26 +697,23 @@ mod tests {
 
     #[cfg(unix)]
     #[test]
-    fn walker_json_rejects_in_root_and_escaping_family_symlinks() {
+    fn walker_json_rejects_escaping_family_symlinks() {
         use std::os::unix::fs::symlink;
 
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path().join("repo");
         fs::create_dir(&root).unwrap();
-        let in_root = root.join("payload.txt");
         let outside = dir.path().join("outside.txt");
-        fs::write(&in_root, "{\"secret\": \"inside\"}\n").unwrap();
         fs::write(&outside, "{\"secret\": \"outside\"}\n").unwrap();
 
         for extension in ["json", "json5", "code-workspace"] {
-            symlink(&in_root, root.join(format!("in-root.{extension}"))).unwrap();
             symlink(&outside, root.join(format!("escaping.{extension}"))).unwrap();
         }
 
         let ctx = WalkCtx::new(root.clone());
         assert!(
             expand_in_dir(&root, &ctx).is_empty(),
-            "JSON-family discovery must reject both contained and escaping symlinks",
+            "JSON-family discovery must reject symlinks that escape the root",
         );
     }
 

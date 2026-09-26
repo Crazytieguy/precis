@@ -93,7 +93,7 @@ consumer inherits it (`fs_util::list_dir`, `resolved_kind`): a link
 surfaces only when it resolves inside the root, listing through a link
 yields nothing (so link cycles are unreachable), and a named file walks
 its directory with only that file admitted. Content batches come from
-link-rejecting enumeration. The exception is workspace-membership
+`list_dir` too. The exception is workspace-membership
 parsing, which reads `package.json`, `pnpm-workspace.yaml` and
 `Cargo.toml` by name and follows links; it parses member lists and never
 renders the text.

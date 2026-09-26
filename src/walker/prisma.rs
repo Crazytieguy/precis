@@ -10,7 +10,7 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, PrismaKey};
 use crate::render::Source;
 
-use super::{WalkCtx, fs::files_with_extension, single_file_lines_content};
+use super::{WalkCtx, fs::files_with_any_extension, single_file_lines_content};
 
 /// Field count at which a declaration body earns full base value. Wide
 /// models carry the schema's relations; scaling value by body size also
@@ -58,7 +58,7 @@ impl Decl {
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
-    for file in files_with_extension(dir, "prisma", ctx) {
+    for file in files_with_any_extension(dir, &["prisma"], ctx) {
         let Some(source) = ctx.read_source(&file) else {
             continue;
         };

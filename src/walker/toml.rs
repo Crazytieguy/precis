@@ -26,13 +26,13 @@ use crate::render::Source;
 use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
-use super::{WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content};
+use super::{WalkCtx, fs::files_with_any_extension, path_depth_factor, single_file_lines_content};
 
 type Section = (String, usize, usize);
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
-    for file in files_with_extension(dir, "toml", ctx) {
+    for file in files_with_any_extension(dir, &["toml"], ctx) {
         let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_toml_ng::LANGUAGE.into())
         else {
             continue;
