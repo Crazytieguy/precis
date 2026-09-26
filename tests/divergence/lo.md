@@ -1,4 +1,4 @@
-Score(3000)=0.638 I=0.731 C=0.557 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.777/0.629/0.614/0.638/0.596/0.570/0.521
+Score(3000)=0.638 I=0.731 C=0.557 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.777/0.629/0.614/0.638/0.596/0.572/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -105,82 +105,77 @@ Score(3000)=0.638 I=0.731 C=0.557 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 5891 | 36 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 20, sub: 0, line: 204 } |  |  | 0.575 |
 | ns | 5950 |  | 455 | it/seq.go roster 1/2: sequence transforms (L16-L615) | 3.2 |  | 0.552 |
 | walker |  | 6053 | 162 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 5, line: 0 } |  |  | 0.562 |
-| walker |  | 6067 | 14 | Code::CodeKey { rung: Decl, file: slice.go, decl: 31, sub: 0, line: 538 } |  |  | 0.562 |
-| walker |  | 6081 | 14 | Code::CodeKey { rung: Decl, file: slice.go, decl: 32, sub: 0, line: 547 } |  |  | 0.562 |
-| walker |  | 6261 | 180 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 6, line: 0 } |  |  | 0.572 |
+| walker |  | 6233 | 180 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 6, line: 0 } |  |  | 0.572 |
 | ns | 6285 |  | 335 | it/seq.go roster 2/2: take/drop, count, trim, buffer (L627-L1169) | 3.3 |  | 0.556 |
-| walker |  | 6417 | 156 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 7, line: 0 } |  |  | 0.564 |
-| walker |  | 6578 | 161 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 8, line: 0 } |  |  | 0.572 |
+| walker |  | 6389 | 156 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 7, line: 0 } |  |  | 0.564 |
+| walker |  | 6550 | 161 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 8, line: 0 } |  |  | 0.572 |
 | ns | 6666 |  | 381 | it/find.go roster: the iterator search surface | 3.4 |  | 0.555 |
-| walker |  | 6752 | 174 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 9, line: 0 } |  |  | 0.557 |
-| walker |  | 6767 | 15 | Code::CodeKey { rung: Doc, file: slice.go, decl: 50, sub: 0, line: 779 } |  |  | 0.557 |
-| walker |  | 6927 | 160 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 10, line: 0 } |  |  | 0.560 |
+| walker |  | 6724 | 174 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 9, line: 0 } |  |  | 0.557 |
+| walker |  | 6739 | 15 | Code::CodeKey { rung: Doc, file: slice.go, decl: 50, sub: 0, line: 779 } |  |  | 0.557 |
+| walker |  | 6899 | 160 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 10, line: 0 } |  |  | 0.560 |
 | ns | 6969 |  | 303 | it/map.go and it/type_manipulation.go rosters | 3.5 |  | 0.548 |
-| walker |  | 7095 | 168 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 11, line: 0 } |  |  | 0.554 |
-| ns | 7273 |  | 304 | it/intersect.go, it/math.go, it/channel.go, it/string.go rosters | 3.6 |  | 0.542 |
-| walker |  | 7289 | 194 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 12, line: 0 } |  |  | 0.551 |
-| walker |  | 7304 | 15 | Code::CodeKey { rung: Decl, file: slice.go, decl: 71, sub: 0, line: 1154 } |  |  | 0.551 |
-| walker |  | 7323 | 19 | Code::CodeKey { rung: Doc, file: slice.go, decl: 70, sub: 0, line: 1140 } |  |  | 0.551 |
-| walker |  | 7349 | 26 | Code::CodeKey { rung: Doc, file: slice.go, decl: 71, sub: 0, line: 1154 } |  |  | 0.551 |
+| walker |  | 7067 | 168 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 11, line: 0 } |  |  | 0.554 |
+| walker |  | 7261 | 194 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 12, line: 0 } |  |  | 0.564 |
+| ns | 7273 |  | 304 | it/intersect.go, it/math.go, it/channel.go, it/string.go rosters | 3.6 |  | 0.551 |
+| walker |  | 7280 | 19 | Code::CodeKey { rung: Doc, file: slice.go, decl: 70, sub: 0, line: 1140 } |  |  | 0.551 |
 | ns | 7363 |  | 90 | it/tuples.go: four zip/cross-join families with elision | 3.7 |  | 0.546 |
 | ns | 7489 |  | 126 | mutable/ and parallel/: both packages in full | 3.8 |  | 0.542 |
-| walker |  | 7600 | 251 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 13, line: 0 } |  |  | 0.558 |
+| walker |  | 7531 | 251 | Code::CodeKey { rung: Names, file: slice.go, decl: 0, sub: 13, line: 0 } |  |  | 0.558 |
+| walker |  | 7567 | 36 | Code::CodeKey { rung: Doc, file: slice.go, decl: 36, sub: 0, line: 591 } |  |  | 0.558 |
 | ns | 7603 |  | 114 | internal/constraints: the numeric constraint set | 3.9 |  | 0.553 |
-| walker |  | 7636 | 36 | Code::CodeKey { rung: Doc, file: slice.go, decl: 36, sub: 0, line: 591 } |  |  | 0.553 |
-| walker |  | 7673 | 37 | Code::CodeKey { rung: Doc, file: condition.go, decl: 3, sub: 0, line: 33 } |  |  | 0.553 |
-| walker |  | 7710 | 37 | Code::CodeKey { rung: Doc, file: condition.go, decl: 5, sub: 0, line: 105 } |  |  | 0.553 |
-| walker |  | 7747 | 37 | Code::CodeKey { rung: Doc, file: slice.go, decl: 4, sub: 0, line: 57 } |  |  | 0.553 |
-| walker |  | 7784 | 37 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 4, sub: 0, line: 34 } |  |  | 0.553 |
-| walker |  | 7822 | 38 | Code::CodeKey { rung: Doc, file: find.go, decl: 3, sub: 0, line: 40 } |  |  | 0.553 |
+| walker |  | 7604 | 37 | Code::CodeKey { rung: Doc, file: condition.go, decl: 3, sub: 0, line: 33 } |  |  | 0.553 |
+| walker |  | 7641 | 37 | Code::CodeKey { rung: Doc, file: condition.go, decl: 5, sub: 0, line: 105 } |  |  | 0.553 |
+| walker |  | 7678 | 37 | Code::CodeKey { rung: Doc, file: slice.go, decl: 4, sub: 0, line: 57 } |  |  | 0.553 |
+| walker |  | 7715 | 37 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 4, sub: 0, line: 34 } |  |  | 0.553 |
+| walker |  | 7753 | 38 | Code::CodeKey { rung: Doc, file: find.go, decl: 3, sub: 0, line: 40 } |  |  | 0.553 |
+| walker |  | 7791 | 38 | Code::CodeKey { rung: Doc, file: slice.go, decl: 12, sub: 0, line: 177 } |  |  | 0.553 |
+| walker |  | 7829 | 38 | Code::CodeKey { rung: Doc, file: slice.go, decl: 46, sub: 0, line: 721 } |  |  | 0.553 |
 | ns | 7835 |  | 232 | internal/xtime: the swappable Clock, and internal/xrand | 3.10 |  | 0.546 |
-| walker |  | 7860 | 38 | Code::CodeKey { rung: Doc, file: slice.go, decl: 12, sub: 0, line: 177 } |  |  | 0.546 |
+| walker |  | 7867 | 38 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 3, sub: 0, line: 28 } |  |  | 0.546 |
 | ns | 7885 |  | 50 | TestMain: goleak plus the fake clock | 4.1 |  | 0.544 |
-| walker |  | 7898 | 38 | Code::CodeKey { rung: Doc, file: slice.go, decl: 46, sub: 0, line: 721 } |  |  | 0.544 |
-| walker |  | 7936 | 38 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 3, sub: 0, line: 28 } |  |  | 0.544 |
+| walker |  | 7905 | 38 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 19, sub: 0, line: 193 } |  |  | 0.544 |
 | ns | 7938 |  | 53 | Unit-test conventions: testify, t.Parallel, `is := assert.New(t)` | 4.2 |  | 0.542 |
-| walker |  | 7974 | 38 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 19, sub: 0, line: 193 } |  |  | 0.542 |
+| walker |  | 7943 | 38 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 21, sub: 0, line: 215 } |  |  | 0.542 |
+| walker |  | 7982 | 39 | Code::CodeKey { rung: Doc, file: find.go, decl: 10, sub: 0, line: 148 } |  |  | 0.542 |
 | ns | 8001 |  | 63 | Example tests: the godoc `// Output:` convention | 4.3 |  | 0.540 |
-| walker |  | 8012 | 38 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 21, sub: 0, line: 215 } |  |  | 0.540 |
-| walker |  | 8051 | 39 | Code::CodeKey { rung: Doc, file: find.go, decl: 10, sub: 0, line: 148 } |  |  | 0.540 |
-| walker |  | 8090 | 39 | Code::CodeKey { rung: Doc, file: slice.go, decl: 34, sub: 0, line: 567 } |  |  | 0.540 |
+| walker |  | 8021 | 39 | Code::CodeKey { rung: Doc, file: slice.go, decl: 34, sub: 0, line: 567 } |  |  | 0.540 |
+| walker |  | 8060 | 39 | Code::CodeKey { rung: Doc, file: slice.go, decl: 68, sub: 0, line: 1113 } |  |  | 0.540 |
+| walker |  | 8099 | 39 | Code::CodeKey { rung: Doc, file: slice.go, decl: 69, sub: 0, line: 1129 } |  |  | 0.540 |
 | ns | 8118 |  | 117 | benchmark/: shared generators and the parametric bench shape | 4.4 |  | 0.536 |
-| walker |  | 8129 | 39 | Code::CodeKey { rung: Doc, file: slice.go, decl: 68, sub: 0, line: 1113 } |  |  | 0.536 |
-| walker |  | 8168 | 39 | Code::CodeKey { rung: Doc, file: slice.go, decl: 69, sub: 0, line: 1129 } |  |  | 0.536 |
-| walker |  | 8207 | 39 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 6, sub: 0, line: 53 } |  |  | 0.536 |
-| walker |  | 8247 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 33, sub: 0, line: 555 } |  |  | 0.536 |
+| walker |  | 8138 | 39 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 6, sub: 0, line: 53 } |  |  | 0.536 |
+| walker |  | 8178 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 33, sub: 0, line: 555 } |  |  | 0.536 |
+| walker |  | 8218 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 47, sub: 0, line: 737 } |  |  | 0.536 |
+| walker |  | 8258 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 58, sub: 0, line: 958 } |  |  | 0.536 |
 | ns | 8269 |  | 151 | exp/simd: what it requires and why it is a separate module | 5.1 |  | 0.534 |
-| walker |  | 8287 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 47, sub: 0, line: 737 } |  |  | 0.534 |
-| walker |  | 8327 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 58, sub: 0, line: 958 } |  |  | 0.534 |
-| walker |  | 8367 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 67, sub: 0, line: 1098 } |  |  | 0.534 |
-| walker |  | 8407 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 80, sub: 0, line: 1297 } |  |  | 0.534 |
+| walker |  | 8298 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 67, sub: 0, line: 1098 } |  |  | 0.534 |
+| walker |  | 8338 | 40 | Code::CodeKey { rung: Doc, file: slice.go, decl: 80, sub: 0, line: 1297 } |  |  | 0.534 |
+| walker |  | 8378 | 40 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 14, sub: 0, line: 147 } |  |  | 0.534 |
+| walker |  | 8418 | 40 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 16, sub: 0, line: 161 } |  |  | 0.534 |
 | ns | 8432 |  | 163 | exp/simd/math.go: the seven dispatcher families with elision | 5.2 |  | 0.526 |
-| walker |  | 8447 | 40 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 14, sub: 0, line: 147 } |  |  | 0.526 |
-| walker |  | 8487 | 40 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 16, sub: 0, line: 161 } |  |  | 0.526 |
-| walker |  | 8528 | 41 | Code::CodeKey { rung: Doc, file: find.go, decl: 38, sub: 0, line: 888 } |  |  | 0.526 |
-| walker |  | 8569 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 13, sub: 0, line: 192 } |  |  | 0.526 |
-| walker |  | 8610 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 35, sub: 0, line: 579 } |  |  | 0.526 |
-| walker |  | 8651 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 61, sub: 0, line: 1005 } |  |  | 0.526 |
+| walker |  | 8459 | 41 | Code::CodeKey { rung: Doc, file: find.go, decl: 38, sub: 0, line: 888 } |  |  | 0.526 |
+| walker |  | 8500 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 13, sub: 0, line: 192 } |  |  | 0.526 |
+| walker |  | 8541 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 35, sub: 0, line: 579 } |  |  | 0.526 |
+| walker |  | 8582 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 61, sub: 0, line: 1005 } |  |  | 0.526 |
+| walker |  | 8623 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 71, sub: 0, line: 1155 } |  |  | 0.526 |
+| walker |  | 8664 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 77, sub: 0, line: 1261 } |  |  | 0.526 |
 | ns | 8669 |  | 237 | exp/simd: runtime feature detection and the fallback path | 5.3 | 5.2 | 0.519 |
-| walker |  | 8692 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 77, sub: 0, line: 1261 } |  |  | 0.519 |
-| walker |  | 8733 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 78, sub: 0, line: 1272 } |  |  | 0.519 |
-| walker |  | 8774 | 41 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 8, sub: 0, line: 73 } |  |  | 0.519 |
+| walker |  | 8705 | 41 | Code::CodeKey { rung: Doc, file: slice.go, decl: 78, sub: 0, line: 1272 } |  |  | 0.519 |
+| walker |  | 8746 | 41 | Code::CodeKey { rung: Doc, file: type_manipulation.go, decl: 8, sub: 0, line: 73 } |  |  | 0.519 |
 | ns | 8787 |  | 118 | exp/simd width-specific files: the <Op><Type>x<Lanes> naming rule | 5.4 |  | 0.515 |
 | ns | 8887 |  | 100 | docs/ npm scripts: every documentation checker | 6.1 |  | 0.512 |
-| walker |  | 8978 | 204 | Code::CodeKey { rung: Names, file: errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
+| walker |  | 8950 | 204 | Code::CodeKey { rung: Names, file: errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
 | ns | 8993 |  | 106 | docs/scripts and docs/docs listings | 6.2 |  | 0.521 |
 | ns | 9134 |  | 141 | docs/docs category pages and the sidebar | 6.3 |  | 0.533 |
-| walker |  | 9217 | 239 | Code::CodeKey { rung: Decl, file: errors.go, decl: 2, sub: 0, line: 34 } |  |  | 0.533 |
-| walker |  | 9233 | 16 | Code::CodeKey { rung: Doc, file: errors.go, decl: 2, sub: 0, line: 34 } |  |  | 0.533 |
+| walker |  | 9189 | 239 | Code::CodeKey { rung: Decl, file: errors.go, decl: 2, sub: 0, line: 34 } |  |  | 0.533 |
+| walker |  | 9205 | 16 | Code::CodeKey { rung: Doc, file: errors.go, decl: 2, sub: 0, line: 34 } |  |  | 0.533 |
 | ns | 9280 |  | 146 | Makefile recipes: race tests and the SIMD guard | 7.1 | 1.10 | 0.535 |
-| walker |  | 9412 | 179 | Code::CodeKey { rung: Names, file: intersect.go, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
-| walker |  | 9581 | 169 | Code::CodeKey { rung: Names, file: intersect.go, decl: 0, sub: 1, line: 0 } |  |  | 0.543 |
+| walker |  | 9384 | 179 | Code::CodeKey { rung: Names, file: intersect.go, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
+| walker |  | 9553 | 169 | Code::CodeKey { rung: Names, file: intersect.go, decl: 0, sub: 1, line: 0 } |  |  | 0.543 |
 | ns | 9606 |  | 326 | golangci-lint: the enabled linter set | 7.2 |  | 0.532 |
-| walker |  | 9735 | 154 | Code::CodeKey { rung: Names, file: intersect.go, decl: 0, sub: 2, line: 0 } |  |  | 0.539 |
-| walker |  | 9769 | 34 | Code::CodeKey { rung: Decl, file: intersect.go, decl: 16, sub: 0, line: 306 } |  |  | 0.539 |
-| walker |  | 9788 | 19 | Code::CodeKey { rung: Doc, file: intersect.go, decl: 16, sub: 0, line: 306 } |  |  | 0.539 |
-| walker |  | 9796 | 8 | Code::CodeKey { rung: Body, file: intersect.go, decl: 16, sub: 0, line: 306 } |  |  | 0.539 |
+| walker |  | 9707 | 154 | Code::CodeKey { rung: Names, file: intersect.go, decl: 0, sub: 2, line: 0 } |  |  | 0.539 |
+| walker |  | 9715 | 8 | Code::CodeKey { rung: Body, file: intersect.go, decl: 16, sub: 0, line: 308 } |  |  | 0.539 |
 | ns | 9807 |  | 201 | golangci-lint: thresholds and exclusions | 7.3 |  | 0.534 |
-| walker |  | 9950 | 154 | Code::CodeKey { rung: Names, file: retry.go, decl: 0, sub: 0, line: 0 } |  |  | 0.535 |
+| walker |  | 9869 | 154 | Code::CodeKey { rung: Names, file: retry.go, decl: 0, sub: 0, line: 0 } |  |  | 0.535 |
 | ns | 9975 |  | 168 | CI: the Go version matrix | 7.4 |  | 0.530 |
-| walker |  | 9990 | 40 | Code::CodeKey { rung: Names, file: retry.go, decl: 0, sub: 1, line: 0 } |  |  | 0.532 |
-| ns | 9990 |  | 15 | Contribution surface: PR templates and the contributor loop | 7.5 |  | 0.532 |
+| ns | 9990 |  | 15 | Contribution surface: PR templates and the contributor loop | 7.5 |  | 0.531 |
+| walker |  | 9997 | 128 | Code::CodeKey { rung: Names, file: retry.go, decl: 0, sub: 1, line: 0 } |  |  | 0.535 |
