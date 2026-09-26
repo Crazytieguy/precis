@@ -155,9 +155,9 @@ impl SourceFile {
 
     /// One [`Item`] per node of `nodes` (statements, fields, specs), in
     /// order, holding only rows past `after_row` and past every earlier
-    /// node. A comment joins the item after it (a leading comment), or
-    /// the item before it when it starts on that item's last row (a
-    /// trailing comment); comments after the last item form their own.
+    /// node. A comment or Rust attribute joins the item after it (leading),
+    /// or the item before it when it starts on that item's last row
+    /// (trailing); ones after the last item form their own.
     pub(crate) fn node_items<'tree>(
         &self,
         nodes: impl IntoIterator<Item = Node<'tree>>,
@@ -175,7 +175,7 @@ impl SourceFile {
             if new_rows.is_empty() {
                 continue;
             }
-            if !node.kind().contains("comment") {
+            if !(node.kind().contains("comment") || node.kind() == "attribute_item") {
                 pending.extend(new_rows);
                 items.push(Item::new(std::mem::take(&mut pending)));
             } else if trails_last_item && let Some(last) = items.last_mut() {

@@ -346,40 +346,28 @@ fn macro_open_row(node: Node, file: &SourceFile) -> Option<usize> {
 }
 
 /// One item per named child of `list` that `admit` accepts, with the
-/// comments and attributes directly above it; rows claimed by an earlier
-/// item are not repeated. Comments after the last entry form their own
-/// item.
+/// comments and attributes directly above it (see
+/// [`SourceFile::node_items`]); those above a child `admit` rejects are
+/// dropped with it.
 fn list_entries(list: Node, file: &SourceFile, admit: impl Fn(Node) -> bool) -> Vec<Item> {
-    let mut items = Vec::new();
-    let mut claimed = HashSet::new();
-    let mut pending = Vec::new();
+    let mut nodes = Vec::new();
+    let mut leading = Vec::new();
     let mut cursor = list.walk();
     for child in list.named_children(&mut cursor) {
-        match child.kind() {
-            "line_comment" | "block_comment" | "attribute_item" => {
-                if file.starts_own_row(child) {
-                    pending.extend(file.node_rows(child));
-                }
-            }
-            _ if admit(child) => {
-                pending.extend(file.node_rows(child));
-                push_unclaimed(&mut items, &mut claimed, std::mem::take(&mut pending));
-            }
-            _ => pending.clear(),
+        if matches!(
+            child.kind(),
+            "line_comment" | "block_comment" | "attribute_item"
+        ) {
+            leading.push(child);
+        } else if admit(child) {
+            nodes.append(&mut leading);
+            nodes.push(child);
+        } else {
+            leading.clear();
         }
     }
-    push_unclaimed(&mut items, &mut claimed, pending);
-    items
-}
-
-fn push_unclaimed(items: &mut Vec<Item>, claimed: &mut HashSet<usize>, rows: Vec<usize>) {
-    let rows: Vec<usize> = rows
-        .into_iter()
-        .filter(|row| claimed.insert(*row))
-        .collect();
-    if !rows.is_empty() {
-        items.push(Item::new(rows));
-    }
+    nodes.append(&mut leading);
+    file.node_items(nodes, 0)
 }
 
 /// The leading `//!` / `/*! */` rows of the file (license comments and
