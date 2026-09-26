@@ -60,9 +60,11 @@ if { [ -z "$JQ" ] || [ ! -x "$PRECIS_BIN" ]; } && [ -n "${CLAUDE_PLUGIN_ROOT:-}"
   fi
 fi
 
-# If both precis and jq are available, run precis and emit additionalContext
+# If jq is available and precis runs, run it and emit additionalContext
 if [ -x "$PRECIS_BIN" ] && [ -n "$JQ" ]; then
-  HELP_OUTPUT=$("$PRECIS_BIN" --help 2>/dev/null) || HELP_OUTPUT=""
+  HELP_OUTPUT=$("$PRECIS_BIN" --help) || HELP_OUTPUT=""
+fi
+if [ -n "${HELP_OUTPUT:-}" ]; then
   # With PRECIS_SESSION_HOOK set, precis defaults --char-budget to what the
   # hook cap leaves after this wrapper and --help (src/main.rs).
   PRECIS_OUTPUT=$(PRECIS_SESSION_HOOK=1 "$PRECIS_BIN" . 2>/dev/null) || PRECIS_OUTPUT=""

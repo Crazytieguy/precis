@@ -198,6 +198,26 @@ fn plugin_hooks_session_start_without_binary() {
     assert!(stdout.contains("unsupported platform"), "{stdout}");
 }
 
+/// A binary that is present but doesn't run (a truncated download, the
+/// wrong architecture) is an error, not "available".
+#[test]
+fn plugin_hooks_session_start_with_broken_binary() {
+    let temp = tempfile::tempdir().unwrap();
+    let plugin_data = temp.path().join("plugin-data");
+    std::fs::create_dir_all(&plugin_data).unwrap();
+    let binary = plugin_data.join("precis");
+    std::fs::write(&binary, "#!/bin/sh\necho 'broken binary' >&2\nexit 126\n").unwrap();
+    std::fs::set_permissions(&binary, PermissionsExt::from_mode(0o755)).unwrap();
+    let stdout = run_hook(
+        "hooks/session-start.sh",
+        r#"{"source":"startup"}"#,
+        &[("CLAUDE_PLUGIN_DATA", plugin_data.as_os_str())],
+    );
+    assert!(stdout.contains("error, see"), "{stdout}");
+    let log = std::fs::read_to_string(plugin_data.join("error.log")).unwrap();
+    assert!(log.contains("broken binary"), "{log}");
+}
+
 /// The session hook runs the real binary on a fixture whose uncapped
 /// summary would push `additionalContext` past Claude Code's 10,000-unit
 /// inline limit; the binary caps itself so the whole context stays inline.
