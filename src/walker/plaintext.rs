@@ -1431,7 +1431,9 @@ fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source
 /// language ([`is_in_primary_language`]); an unparsed manifest prices as a
 /// manifest's identity block. Contributor tooling and unclassified prose /
 /// flat config sit low. The last `package_depth` directories above
-/// `file` are not depth ([`package_directories`]).
+/// `file` are not depth ([`package_directories`]) unless it sits in a
+/// test or example tree, which mirrors the packages it exercises rather
+/// than naming a unit of its own.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx, package_depth: usize) -> f64 {
     let tier = match class {
         Class::LanguageSource if is_in_primary_language(file, ctx) => {
@@ -1441,8 +1443,14 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx, package_depth: usize) -
         Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::FlatText => 488.0,
     };
+    let non_essential_factor = ctx.non_essential_factor(file);
+    let package_depth = if non_essential_factor < 1.0 {
+        0
+    } else {
+        package_depth
+    };
     let depth = ctx.depth_from_root(file).saturating_sub(package_depth);
-    tier * crate::value::depth_factor(depth) * ctx.non_essential_factor(file)
+    tier * crate::value::depth_factor(depth) * non_essential_factor
 }
 
 /// How many directories above `file` spell the package or namespace its
@@ -2666,6 +2674,23 @@ mod tests {
         assert_eq!(value("core.ml"), decl);
         assert_eq!(value("core.mli"), decl);
         assert!(value("tool.rb") < decl);
+    }
+
+    /// A test tree mirroring the package it tests (`tests/Composer/Test/`
+    /// for `namespace Composer\Test`) keeps its depth; the library's
+    /// package directories do not.
+    #[test]
+    fn plaintext_package_directories_stay_depth_in_a_test_tree() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let value = |name: &str, package_depth| {
+            class_value(Class::LanguageSource, &root.join(name), &ctx, package_depth)
+        };
+        let test = "tests/Composer/Test/CacheTest.php";
+        assert_eq!(value(test, 2), value(test, 0));
+        let library = "src/Composer/Cache/Store.php";
+        assert!(value(library, 2) > value(library, 0));
     }
 
     /// The root's Gradle scripts render; a module's are left to the listing.
