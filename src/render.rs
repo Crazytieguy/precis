@@ -1008,9 +1008,10 @@ pub fn visible_full_line(source_line: &str) -> &str {
 /// (`postgresql://admin:PASSWORD@db/app`) and the quoted literal assigned
 /// to a credential-named key (`password: "hunter2"`,
 /// `"api_key" => 'sk-…'`, `SECRET_KEY = "…"`, `authToken: "…"`), whatever
-/// punctuation it holds. A placeholder (`{}`, `{password}`, `{{ … }}`,
-/// `${DB_PASSWORD}`, `$DB_PASSWORD`, `$user:$password`, `<password>`, `%s`,
-/// `env(DB_PASSWORD)`, `%env(DB_PASSWORD)%`), a phrase
+/// punctuation it holds. A placeholder (`<password>`, `%s`, `$DB_PASSWORD`,
+/// `$user:$password`, `env(DB_PASSWORD)`, `%env(DB_PASSWORD)%`), a value
+/// holding a whole interpolation (`{}`, `{password}`, `{{ … }}`,
+/// `${DB_PASSWORD}`), a phrase
 /// (`"Save password": "Tallenna salasana"`),
 /// a version (`"parse-passwd": "^1.0.0"`), a value spelling its
 /// own key (`ACCESS_TOKEN = "access_token"`), and anything unquoted — a
@@ -1032,7 +1033,7 @@ fn redact_secrets(line: &str, in_document: bool) -> std::borrow::Cow<'_, str> {
     static PLACEHOLDER: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
         regex::Regex::new(concat!(
             r"^(?:<[^>]*>|\$\w+(?:[^\w\s$]+\$[A-Za-z_]\w*)*|[\w.]+\(.*\)|%[\w.()]+%|%(?:\(\w+\))?[sd])$",
-            r"|\$\{|\{\{|\{%|\{\w*\}",
+            r"|\$\{[^}]*\}|\{\{.*\}\}|\{%.*%\}|\{\w*\}",
         ))
         .unwrap()
     });
@@ -1443,6 +1444,9 @@ mod tests {
                 r#"secret: '%env(APP_SECRET)%'"#,
                 r#"secret: '%env(APP_SECRET)%'"#,
             ),
+            (r#"password = "hunter2{{""#, r#"password = "…""#),
+            (r#"password = "pa${ss""#, r#"password = "…""#),
+            ("postgres://u:p{%w@h/db", "postgres://u:…@h/db"),
         ] {
             assert_eq!(redact_secrets(line, false), shown);
         }

@@ -168,7 +168,7 @@ never reached the ones answer keys rank.
   counts: an unquoted value can't be told from a variable or a type by
   the line alone. Punctuation doesn't exempt a literal (generated
   passwords hold `$`, `%`, brackets); only a placeholder's whole shape
-  or an interpolation inside it (`${…}`, `{name}`, `{{`, `%s`,
+  or a whole interpolation inside it (`${…}`, `{name}`, `{{ … }}`, `%s`,
   `env(…)`, `<…>`) does. Documents (`.md`, `.mdx`, `.rst`, `.adoc`) keep their
   literals, which are placeholders (`API_KEY='your-key'`). Other
   secrets in ordinarily named config are not detected.
