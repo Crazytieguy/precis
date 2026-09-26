@@ -1129,49 +1129,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         if !matches!(kind, crate::fs_util::EntryKind::File) {
             continue;
         }
-        if is_license_file_name(name) {
-            continue;
-        }
         let file = dir.join(name);
-        let named = classify_plaintext(name)
-            .or_else(|| is_unparsed_manifest(dir, name, ctx).then_some(Class::Manifest));
-        // Parsed languages belong to the code engine, except a C++
-        // header the C grammar can't parse; a second slice would overlap
-        // its spans.
-        let owned_elsewhere = super::code::Language::from_path(&file).is_some();
-        // A Gradle script below a package root is one module's manifest,
-        // left to the listing like any nested module manifest.
-        let is_nested_gradle_script = !is_package_root(dir, ctx)
-            && [".gradle", ".gradle.kts"]
-                .iter()
-                .any(|suffix| name.ends_with(suffix));
-        if is_nested_gradle_script {
-            continue;
-        }
-        let Some(class) = named
-            .or_else(|| {
-                (!owned_elsewhere)
-                    .then(|| classify_source_text(name))
-                    .flatten()
-            })
-            .or_else(|| {
-                // An extensionless script (`bin/deploy`) names its language
-                // on its first line. `gradlew` and `mvnw` are generated
-                // build-tool wrappers, the same in every project.
-                (!name.contains('.')
-                    && !matches!(name.as_str(), "gradlew" | "mvnw")
-                    && gated_read_source(&file, ctx, SOURCE_TEXT_BYTE_GATE)
-                        .is_some_and(|source| source.starts_with("#!")))
-                .then_some(Class::FlatText)
-            })
-            .or_else(|| {
-                owned_elsewhere
-                    .then(|| gated_read_source(&file, ctx, SOURCE_TEXT_BYTE_GATE))
-                    .flatten()
-                    .is_some_and(|source| super::code::is_cpp_header(&file, &source))
-                    .then_some(Class::LanguageSource)
-            })
-        else {
+        let Some(class) = classify_file(dir, name, &file, ctx) else {
             continue;
         };
         if class != Class::Build {
@@ -1208,6 +1167,40 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         });
     }
     out
+}
+
+/// The class of `file`, named `name` in `dir`, or `None` when this walker
+/// leaves it alone: a license text, a Gradle script below a package root
+/// (one module's manifest, left to the listing like any nested module
+/// manifest), or a file the code engine parses — except a C++ header the C
+/// grammar can't parse, since a second slice would overlap its spans.
+fn classify_file(dir: &Path, name: &str, file: &Path, ctx: &WalkCtx) -> Option<Class> {
+    let is_nested_gradle_script =
+        !is_package_root(dir, ctx) && (name.ends_with(".gradle") || name.ends_with(".gradle.kts"));
+    if is_license_file_name(name) || is_nested_gradle_script {
+        return None;
+    }
+    if let Some(class) = classify_plaintext(name) {
+        return Some(class);
+    }
+    if is_unparsed_manifest(dir, name, ctx) {
+        return Some(Class::Manifest);
+    }
+    if super::code::Language::from_path(file).is_some() {
+        return gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)
+            .is_some_and(|source| super::code::is_cpp_header(file, &source))
+            .then_some(Class::LanguageSource);
+    }
+    // An extensionless script (`bin/deploy`) names its language on its first
+    // line. `gradlew` and `mvnw` are generated build-tool wrappers, the same
+    // in every project.
+    classify_source_text(name).or_else(|| {
+        (!name.contains('.')
+            && !matches!(name, "gradlew" | "mvnw")
+            && gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)
+                .is_some_and(|source| source.starts_with("#!")))
+        .then_some(Class::FlatText)
+    })
 }
 
 /// Once every batch a walker emitted is scheduled, the head of each listed
