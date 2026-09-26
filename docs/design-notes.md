@@ -245,7 +245,14 @@ must not undo:
   - Rust badge-paragraph skipping and rustdoc fence-aware paragraphs;
   - hiding impls of hidden types;
   - C decoration-row paragraph splits and the C banner cutoff on
-    declaration docs.
+    declaration docs;
+  - skipping linter / coverage directives in TS/JS docs (the JSDoc
+    above one attaches regardless);
+  - rostering a Python `__init__`'s third-party imports spelled
+    `X as X` or listed in `__all__` (0 of 572 real-world renders used
+    it);
+  - keeping Go methods on an unexported type an exported function
+    returns (0 of 572 real-world renders changed).
 - **Rows that condition or define a file's exports join its roster**:
   a Go `//go:build` constraint, a Lua module's top-level `return` and
   `setmetatable(…)` call.
