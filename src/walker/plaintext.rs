@@ -903,7 +903,9 @@ fn multiline_string_end(line: &str) -> Option<(&str, bool)> {
 
 /// Opening minus closing round and square brackets on a line, outside
 /// string and character literals and a trailing `//` comment. A `'` after
-/// a letter or digit is a Haskell prime or a digit separator, not a quote.
+/// a letter or digit is a Haskell prime or a digit separator, not a quote,
+/// and so is one no later `'` on the line closes: a type variable
+/// (`(x : 'a)`) or a Lisp quote (`(provide 'widget)`).
 fn bracket_balance(trimmed: &str) -> isize {
     let mut balance = 0;
     let mut quote: Option<char> = None;
@@ -918,7 +920,9 @@ fn bracket_balance(trimmed: &str) -> isize {
             Some(_) => {}
             None => match c {
                 '"' | '`' => quote = Some(c),
-                '\'' if !previous.is_alphanumeric() => quote = Some(c),
+                '\'' if !previous.is_alphanumeric() && chars.clone().any(|c| c == '\'') => {
+                    quote = Some(c);
+                }
                 '/' if chars.peek() == Some(&'/') => break,
                 '(' | '[' => balance += 1,
                 ')' | ']' => balance -= 1,
@@ -1539,6 +1543,9 @@ mod tests {
         assert!(!opens_block[3], "{opens_block:?}");
         assert_eq!(bracket_balance("foo(\"(\", ')', bar( // (("), 2);
         assert_eq!(bracket_balance("foldl' (+) 0 xs"), 0);
+        assert_eq!(bracket_balance("let singleton (x : 'a) = Node (x)"), 0);
+        assert_eq!(bracket_balance("(provide 'widget)"), 0);
+        assert_eq!(bracket_balance("(defvar modes '(text-mode prog-mode)"), 1);
         assert!(is_annotation_only("@Deprecated("));
         assert!(is_annotation_only(
             "[UnconditionalSuppressMessage(\"x\", \"y\")]"
