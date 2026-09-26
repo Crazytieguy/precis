@@ -195,6 +195,11 @@ impl DirFilter {
         Self::build(root, false)
     }
 
+    #[cfg(test)]
+    pub(crate) fn has_listed(&self, dir: &Path) -> bool {
+        self.listings.borrow().contains_key(dir)
+    }
+
     /// Filter with no ignore rules of its own, still scoped to `root`:
     /// [`list_dir`] keeps dropping [`is_internal_entry`] names and
     /// anything resolving outside `root`.

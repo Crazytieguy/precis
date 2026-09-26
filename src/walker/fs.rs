@@ -337,7 +337,8 @@ fn is_source_dir(dir: &Path) -> bool {
 
 /// A package module: a directory whose listing names its own entry file
 /// (`index.ts`, `mod.rs`, `__init__.py`), or whose parent's names a file
-/// of the same stem (`foo.rs` next to `foo/`).
+/// of the same stem (`foo.rs` next to `foo/`). The walk root's parent
+/// is outside the walk, so it is never listed.
 fn is_module_source_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     let lists_file = |dir: &Path, name: &str| {
         list_dir(dir, ctx.dir_filter()).get(name) == Some(&EntryKind::File)
@@ -345,7 +346,8 @@ fn is_module_source_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     MODULE_ENTRYPOINT_FILES
         .iter()
         .any(|name| lists_file(dir, name))
-        || dir.file_name().is_some()
+        || dir != ctx.root()
+            && dir.file_name().is_some()
             && dir.parent().is_some_and(|parent| {
                 MODULE_SIBLING_EXTS.iter().any(|ext| {
                     dir.with_extension(ext)
@@ -607,6 +609,19 @@ mod tests {
         assert_eq!(files_listed, Some(big.as_path()));
 
         assert_eq!(dir_listing_batches(root.join("tests"), &ctx).len(), 1);
+    }
+
+    #[test]
+    fn fs_root_module_check_does_not_list_the_root_parent() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path().join("pkg");
+        std::fs::create_dir_all(root.join("src")).unwrap();
+        std::fs::write(root.join("src/lib.rs"), "").unwrap();
+        std::fs::create_dir_all(temp.path().join("other/deep")).unwrap();
+        let ctx = WalkCtx::new(root.clone());
+        seed(&ctx);
+        dir_listing_batches(root, &ctx);
+        assert!(!ctx.dir_filter().has_listed(temp.path()));
     }
 
     #[test]
