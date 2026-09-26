@@ -223,7 +223,7 @@ fn is_sidecar(name: &str, siblings: &BTreeMap<String, EntryKind>) -> bool {
 const LISTING_VALUE: f64 = 1230.0;
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
-    let module_source_dir = is_module_source_dir(dir);
+    let module_source_dir = ctx.fs_state.is_module_source_dir(dir);
     let source_dir = is_source_dir(dir) || is_go_pkg_wrapper(dir);
     let non_essential = ctx.non_essential_factor(dir);
     let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
@@ -334,7 +334,7 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
         return false;
     };
     let parent_source_dir = is_source_dir(parent) || is_go_pkg_wrapper(parent);
-    if parent_source_dir || is_module_source_dir(parent) {
+    if parent_source_dir || ctx.fs_state.is_module_source_dir(parent) {
         return false;
     }
     let under_source_ancestor = has_source_root_ancestor(parent, ctx);
@@ -355,7 +355,10 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
 /// declared workspace member or a package module is the project's own
 /// code, whatever its layout.
 fn repeats_sibling_shape(dir: &Path, ctx: &WalkCtx) -> bool {
-    if dir == ctx.root() || is_declared_workspace_member(dir, ctx) || is_module_source_dir(dir) {
+    if dir == ctx.root()
+        || is_declared_workspace_member(dir, ctx)
+        || ctx.fs_state.is_module_source_dir(dir)
+    {
         return false;
     }
     let (Some(parent), Some(name)) = (dir.parent(), dir.file_name()) else {
@@ -437,9 +440,23 @@ pub(in crate::walker) struct FsState {
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
     shape_repeats: RefCell<HashMap<PathBuf, Rc<HashSet<String>>>>,
     listing_heads: RefCell<HashMap<PathBuf, Option<Rc<BTreeSet<String>>>>>,
+    module_source_dirs: RefCell<HashMap<PathBuf, bool>>,
 }
 
 impl FsState {
+    /// [`is_module_source_dir`], cached: a listing asks it of its parent
+    /// once per child.
+    fn is_module_source_dir(&self, dir: &Path) -> bool {
+        if let Some(&module) = self.module_source_dirs.borrow().get(dir) {
+            return module;
+        }
+        let module = is_module_source_dir(dir);
+        self.module_source_dirs
+            .borrow_mut()
+            .insert(dir.to_path_buf(), module);
+        module
+    }
+
     /// Whether `dir` holds a source file at any depth, reading at most
     /// [`PROBE_ENTRY_CAP`] entries.
     pub(in crate::walker) fn holds_source(&self, dir: &Path, filter: &DirFilter) -> bool {
