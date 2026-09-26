@@ -24,6 +24,7 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
+pub(in crate::walker) use self::c::is_cpp_header;
 use self::model::{DeclInfo, FileModel, Item, Shape};
 use super::fs::files_with_any_extension;
 use super::{WalkCtx, node_end_row_trimmed};

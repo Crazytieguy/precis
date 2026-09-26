@@ -11,10 +11,15 @@
 //!   body [`Item`] per field or enumerator.
 //! - A non-`inline` `static` in a header is hidden.
 //! - A declaration's doc is the comment run directly above it.
+//!
+//! A header written in C++ ([`is_cpp_header`]) is left to the plaintext
+//! fallback, like a `.hpp`.
 
 use std::ops::RangeInclusive;
 use std::path::Path;
+use std::sync::LazyLock;
 
+use regex::Regex;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
@@ -36,6 +41,9 @@ const IMPLEMENTATION_FILE_WEIGHT: f64 = 0.6;
 
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
+    if is_cpp_header(&file.path, &file.source) {
+        return FileModel::default();
+    }
     let in_header = is_header(&file.path);
     let mut decls = Vec::new();
     let mut directives = Vec::new();
@@ -70,6 +78,44 @@ fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
     } else {
         IMPLEMENTATION_FILE_WEIGHT
     }
+}
+
+/// Whether `path` is a header written in C++, which the C grammar
+/// misparses (namespaces read as functions, classes as statement lists,
+/// templates as expressions): a line of `source` opens a namespace or a
+/// class, starts a template, or is an access specifier, outside the
+/// `#if … __cplusplus` blocks a C header keeps for C++ callers.
+pub(in crate::walker) fn is_cpp_header(path: &Path, source: &str) -> bool {
+    if !is_header(path) {
+        return false;
+    }
+    static CPP_ONLY_LINE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(concat!(
+            r"^\s*(namespace(\s+[A-Za-z_][\w:]*)?\s*\{",
+            r"|class\s+[A-Za-z_]\w*(\s+[A-Za-z_]\w*)?\s*(final\s*)?[{:;]",
+            r"|template\s*<",
+            r"|(public|private|protected)\s*:)",
+        ))
+        .expect("valid regex")
+    });
+    let mut cplusplus_depth = 0usize;
+    for line in source.lines() {
+        if let Some(directive) = line.trim_start().strip_prefix('#') {
+            let directive = directive.trim_start();
+            if cplusplus_depth > 0 {
+                if directive.starts_with("if") {
+                    cplusplus_depth += 1;
+                } else if directive.starts_with("endif") {
+                    cplusplus_depth -= 1;
+                }
+            } else if directive.starts_with("if") && directive.contains("__cplusplus") {
+                cplusplus_depth = 1;
+            }
+        } else if cplusplus_depth == 0 && CPP_ONLY_LINE.is_match(line) {
+            return true;
+        }
+    }
+    false
 }
 
 fn is_header(path: &Path) -> bool {
@@ -791,6 +837,48 @@ int util(void);
             vec![vec![4], vec![5], vec![6], vec![8]]
         );
         assert_eq!(model.decls[2].head, vec![6, 7]);
+    }
+
+    #[test]
+    fn c_cpp_headers_are_left_to_the_fallback() {
+        let cpp = "\
+#pragma once
+namespace lib {
+// A widget.
+class Widget {
+ public:
+  virtual int Method1(int x) = 0;
+};
+int FreeFn(const Widget& w);
+}  // namespace lib
+";
+        assert!(is_cpp_header(Path::new("widget.h"), cpp));
+        assert!(model("widget.h", cpp).decls.is_empty());
+        assert!(!is_cpp_header(Path::new("widget.c"), cpp));
+        for line in [
+            "template <typename T>",
+            "class LIB_EXPORT Snapshot {",
+            "class Derived : public Base {",
+            "namespace {",
+            "  private:",
+        ] {
+            assert!(is_cpp_header(Path::new("x.h"), line), "{line}");
+        }
+        let c_with_cpp_wrappers = "\
+#ifdef __cplusplus
+extern \"C\" {
+#endif
+int api(void);
+#if defined(__cplusplus) && defined(WRAP)
+template <typename T> class wrapper {
+#ifdef DEBUG
+ public:
+#endif
+};
+#endif
+struct namespace_entry { int class_id; };
+";
+        assert!(!is_cpp_header(Path::new("api.h"), c_with_cpp_wrappers));
     }
 
     #[test]

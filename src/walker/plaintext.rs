@@ -802,8 +802,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         }
         let file = dir.join(name);
         let named = classify_plaintext(name);
-        // Parsed languages belong to the code engine; a second slice
-        // would overlap its spans.
+        // Parsed languages belong to the code engine, except a C++
+        // header the C grammar can't parse; a second slice would overlap
+        // its spans.
         let owned_elsewhere = super::code::Language::from_path(&file).is_some();
         let Some(class) = named
             .or_else(|| {
@@ -816,6 +817,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                     && !GENERATED_WRAPPER_SCRIPTS.contains(&name.as_str())
                     && opens_with_shebang(&file))
                 .then_some(Class::FlatText)
+            })
+            .or_else(|| {
+                owned_elsewhere
+                    .then(|| gated_read_source(&file, ctx, SOURCE_TEXT_BYTE_GATE))
+                    .flatten()
+                    .is_some_and(|source| super::code::is_cpp_header(&file, &source))
+                    .then_some(Class::LanguageSource)
             })
         else {
             continue;
@@ -1530,16 +1538,19 @@ mod tests {
         let root = dir.path();
         std::fs::write(root.join("App.jsx"), "export const X = 1;\n").unwrap();
         std::fs::write(root.join("App.kt"), "class App\n").unwrap();
+        std::fs::write(root.join("api.h"), "int api(void);\n").unwrap();
+        std::fs::write(root.join("widget.h"), "namespace lib { class Widget; }\n").unwrap();
         let ctx = WalkCtx::new(root.to_path_buf());
-        let files: Vec<_> = expand_in_dir(root, &ctx)
+        let mut files: Vec<_> = expand_in_dir(root, &ctx)
             .into_iter()
             .map(|batch| batch.key)
             .collect();
+        files.sort();
         assert_eq!(
             files,
-            vec![BatchKey::from(PlaintextKey::DeclSurface {
-                file: root.join("App.kt")
-            })]
+            ["App.kt", "widget.h"].map(|name| BatchKey::from(PlaintextKey::DeclSurface {
+                file: root.join(name)
+            }))
         );
     }
 
