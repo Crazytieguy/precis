@@ -114,8 +114,8 @@ struct Leading {
 
 impl Leading {
     /// Walks the attributes and comments directly preceding `node`. Plain
-    /// comments are skipped over (rustc ignores them); anything else ends
-    /// the run.
+    /// comments, own-row or trailing an attribute, are skipped over (rustc
+    /// ignores them); anything else ends the run.
     fn above(node: Node, file: &SourceFile) -> Self {
         let mut leading = Leading::default();
         let mut previous = node.prev_sibling();
@@ -135,7 +135,12 @@ impl Leading {
                 }
                 "line_comment" | "block_comment" => {
                     if !file.starts_own_row(sibling) {
-                        break;
+                        let trails_attribute = sibling
+                            .prev_sibling()
+                            .is_some_and(|before| before.kind() == "attribute_item");
+                        if !trails_attribute {
+                            break;
+                        }
                     }
                     if sibling.child_by_field_name("inner").is_some() {
                         break;
@@ -625,6 +630,28 @@ impl Foo {
         let (_, model) = extract_source("a.rs", source);
         let foo = &model.decls[1];
         assert_eq!(rows(&foo.body), vec![vec![4]]);
+    }
+
+    #[test]
+    fn rust_extract_comment_trailing_an_attribute_keeps_the_leading_run() {
+        let source = "\
+/// The type.
+#[derive(Copy, Clone)]
+#[allow(dead_code)] // trailing note
+pub enum Opt<T> { None, Some(T) }
+#[cfg(test)] // used in tests
+impl Opt<u8> {
+    pub fn check(&self) {}
+}
+";
+        let (file, model) = extract_source("a.rs", source);
+        assert_eq!(
+            roster(&file, &model.decls),
+            vec!["pub enum Opt<T> { None, Some(T) }"]
+        );
+        let opt = &model.decls[0];
+        assert_eq!(sorted(opt.head.clone()), vec![2, 3, 4]);
+        assert_eq!(rows(&opt.doc), vec![vec![1]]);
     }
 
     #[test]
