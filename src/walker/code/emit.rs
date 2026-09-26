@@ -28,12 +28,13 @@ pub(super) fn emit_file(
     language: &Language,
     file: &SourceFile,
     model: FileModel,
+    is_entrypoint: bool,
     ctx: &WalkCtx,
 ) -> Vec<Batch> {
     let model = normalize(model, file);
     let mut emitter = Emitter {
         file,
-        file_prior: file_prior(language, &file.path, ctx),
+        file_prior: file_prior(language, &file.path, is_entrypoint, ctx),
         ledger: Ledger::default(),
         out: Vec::new(),
     };
@@ -44,8 +45,8 @@ pub(super) fn emit_file(
 /// Location prior shared by every batch of the file: depth (pinned to 1
 /// for an entry file), non-essential discount and the language's file
 /// weight.
-fn file_prior(language: &Language, path: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(path, ctx, language.is_entrypoint(path, ctx))
+fn file_prior(language: &Language, path: &Path, is_entrypoint: bool, ctx: &WalkCtx) -> f64 {
+    file_depth_factor(path, ctx, is_entrypoint)
         * language.file_weight.map_or(1.0, |weight| weight(path, ctx))
 }
 

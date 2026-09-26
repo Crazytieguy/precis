@@ -22,10 +22,9 @@
 //! `Whole` declarations whose entries are body items. Imports and
 //! `require` declarations are not modeled.
 
-use std::cell::RefCell;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::ops::RangeInclusive;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use tree_sitter::Node;
 
@@ -34,6 +33,7 @@ use super::{
     Language, SourceFile, block_head, file_name, file_stem, has_extension, is_named_after,
     named_children,
 };
+use crate::fs_util::lists_file;
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -173,13 +173,18 @@ fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     let (Some(stem), Some(dir)) = (file_stem(path), path.parent()) else {
         return false;
     };
-    let package_dir = ctx.code.typescript.package_dir(dir, ctx.root());
-    let Ok(relative) = path.strip_prefix(&package_dir) else {
+    let root = ctx.root();
+    let package_dir = dir
+        .ancestors()
+        .take_while(|ancestor| *ancestor != root && ancestor.starts_with(root))
+        .find(|ancestor| lists_file(&ancestor.join("package.json"), ctx.dir_filter()))
+        .unwrap_or(root);
+    let Ok(relative) = path.strip_prefix(package_dir) else {
         return false;
     };
     relative.components().count() <= 3
         && (ENTRYPOINT_STEMS.contains(&stem)
-            || (is_named_after(path, &package_dir) && !relative.starts_with("bin")))
+            || (is_named_after(path, package_dir) && !relative.starts_with("bin")))
 }
 
 /// Tooling config (`vite.config.ts`, `.eslintrc.js`) is not the
@@ -196,36 +201,6 @@ const CONFIG_FILE_WEIGHT: f64 = 0.001;
 
 fn is_config_file(path: &Path) -> bool {
     file_name(path).is_some_and(|name| name.starts_with('.') || name.contains(".config."))
-}
-
-#[derive(Default)]
-pub(crate) struct RunState {
-    /// Nearest enclosing package directory of each directory asked about.
-    package_dirs: RefCell<HashMap<PathBuf, PathBuf>>,
-}
-
-impl RunState {
-    /// The nearest directory at or above `dir` holding a `package.json`,
-    /// stopping at `root`; `root` when there is none.
-    fn package_dir(&self, dir: &Path, root: &Path) -> PathBuf {
-        if let Some(hit) = self.package_dirs.borrow().get(dir) {
-            return hit.clone();
-        }
-        let package_dir = if dir == root || !dir.starts_with(root) {
-            root.to_path_buf()
-        } else if dir.join("package.json").is_file() {
-            dir.to_path_buf()
-        } else {
-            dir.parent().map_or_else(
-                || root.to_path_buf(),
-                |parent| self.package_dir(parent, root),
-            )
-        };
-        self.package_dirs
-            .borrow_mut()
-            .insert(dir.to_path_buf(), package_dir.clone());
-        package_dir
-    }
 }
 
 fn is_declaration_file(path: &Path) -> bool {
@@ -2016,7 +1991,7 @@ export class A {
 
     #[test]
     fn typescript_config_weighs_less() {
-        let ctx = WalkCtx::new(PathBuf::from("/repo"));
+        let ctx = WalkCtx::new("/repo".into());
         let weight = |relative: &str| file_weight(&Path::new("/repo").join(relative), &ctx);
         for primary in [
             "index.js",

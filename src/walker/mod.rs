@@ -132,8 +132,6 @@ pub struct WalkCtx {
     cargo_workspace: workspace::WorkspaceMembership,
     fs_state: fs::FsState,
     json_state: json::JsonState,
-    /// Run state of the code engine's language modules.
-    code: code::CodeState,
     /// The tree's essential source, walked once; `None` past
     /// [`crate::fs_util::PROBE_ENTRY_CAP`].
     essential_source: OnceCell<Option<EssentialSource>>,
@@ -163,7 +161,6 @@ impl WalkCtx {
             cargo_workspace: workspace::WorkspaceMembership::default(),
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
-            code: code::CodeState::default(),
             essential_source: OnceCell::new(),
             primary_language: OnceCell::new(),
             dominant_source_file: OnceCell::new(),

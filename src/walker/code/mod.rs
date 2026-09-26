@@ -1,7 +1,6 @@
 //! The shared code engine: one declaration ladder for every source
 //! language, fed by a thin extraction module per language. Each
-//! `code/<lang>.rs` exports one [`Language`] (plus, if it keeps per-run
-//! caches, a `RunState` reachable as `ctx.code.<lang>`); the engine
+//! `code/<lang>.rs` exports one [`Language`]; the engine
 //! (`emit`, `chunk`, `ledger`) owns keys, predecessors, chunking, row
 //! ownership and value, and a language module never builds a batch.
 
@@ -66,7 +65,7 @@ const LANGUAGES: [&Language; 6] = [
 ];
 
 impl Language {
-    pub(crate) fn is_entrypoint(&self, path: &Path, ctx: &WalkCtx) -> bool {
+    fn is_entrypoint(&self, path: &Path, ctx: &WalkCtx) -> bool {
         self.is_entrypoint.is_some_and(|test| test(path, ctx))
     }
 
@@ -104,12 +103,6 @@ pub(crate) fn parsed_extensions() -> impl Iterator<Item = &'static str> {
 /// thousands deep. C99 requires compilers to support 63 nested levels of
 /// conditional inclusion.
 const MAX_SCOPE_NESTING: usize = 63;
-
-/// Per-run state of the language modules that keep any.
-#[derive(Default)]
-pub(crate) struct CodeState {
-    typescript: typescript::RunState,
-}
 
 /// One parsed source file, built once and shared by extraction and
 /// emission.
@@ -510,9 +503,10 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             Some(names) => names(&file),
             None => file_stem(path).into_iter().map(str::to_owned).collect(),
         };
+        let is_entrypoint = language.is_entrypoint(path, ctx);
         emitted.push(EmittedFile {
-            batches: emit::emit_file(language, &file, model, ctx),
-            chained: !language.is_entrypoint(path, ctx),
+            batches: emit::emit_file(language, &file, model, is_entrypoint, ctx),
+            chained: !is_entrypoint,
             non_essential: ctx.non_essential_factor(path) < 1.0,
             bytes,
             names,
