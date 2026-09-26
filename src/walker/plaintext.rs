@@ -348,15 +348,6 @@ pub(in crate::walker) fn is_derived_artifact_name(lower: &str) -> bool {
         || matches!(ext, "map" | "lock")
 }
 
-/// Whether `file` starts with `#!`: an extensionless script (`bin/deploy`,
-/// a tool shipped as one executable) names its language on its first line
-/// rather than in its name.
-fn opens_with_shebang(file: &Path) -> bool {
-    let mut head = [0; 2];
-    std::fs::File::open(file)
-        .is_ok_and(|mut opened| opened.read_exact(&mut head).is_ok() && &head == b"#!")
-}
-
 /// A license text (`LICENSE`, `COPYING.txt`, `MIT-LICENSE.txt`,
 /// `LICENSE-APACHE`, `LICENSE.md`). No walker renders one: the listing names
 /// the file and the manifest's `license` field names the license, and the
@@ -1236,11 +1227,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                     .flatten()
             })
             .or_else(|| {
-                // `gradlew` and `mvnw` are generated build-tool wrappers, the
-                // same in every project that has one.
+                // An extensionless script (`bin/deploy`) names its language
+                // on its first line. `gradlew` and `mvnw` are generated
+                // build-tool wrappers, the same in every project.
                 (!name.contains('.')
                     && !matches!(name.as_str(), "gradlew" | "mvnw")
-                    && opens_with_shebang(&file))
+                    && gated_read_source(&file, ctx, SOURCE_TEXT_BYTE_GATE)
+                        .is_some_and(|source| source.starts_with("#!")))
                 .then_some(Class::FlatText)
             })
             .or_else(|| {
