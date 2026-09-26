@@ -340,9 +340,8 @@ must not undo:
   - AMD/UMD factory unwrapping, Python `@overload` stub hiding, Rust
     declaring-macro invocations (`bitflags!`, `cfg_*!`), Go
     `Deprecated:` and directive rows in the head, and C recovery for
-    `NOEXCEPT`-suffixed prototypes, all-caps macro invocations and the
-    `#if !defined(X)` guard spelling (each grid ±0.0002 avg7, at most
-    three plugin-mode renders of 236 changed).
+    `NOEXCEPT`-suffixed prototypes and all-caps macro invocations (each
+    grid ±0.0002 avg7, at most three plugin-mode renders of 236 changed).
 - **Measured again and kept** (2026-09-26): the sibling-reference roster
   chain (size-only ordering cost 3000 −.0069); the Lua identity table
   (3000 −.0025); TS one-hop publishing of factory callees and signature
@@ -351,7 +350,11 @@ must not undo:
   types, and `defineComponent({…})` / hereby `task({…})` render as raw
   code); the Go methods-only-file listing (without it such a file lists
   only its `//go:build` row); C parse-debris skipping (stb and
-  miniaudio roster their guard `#define`s) and the gate-doc walk.
+  miniaudio roster their guard `#define`s) and the gate-doc walk; the
+  `#if !defined(X)` header-guard spelling (grid-flat, but without it
+  every header in a project using that spelling rosters its guard `#if`
+  and `#define`, and a header that also holds an implementation section
+  becomes one opaque gate that hides its whole API).
 - **TS/JS docs skip linter / coverage directives** (`// @ts-ignore`,
   `/* istanbul ignore next */`): without the skip, a directive that is a
   declaration's only comment became its whole doc, at doc priority.
