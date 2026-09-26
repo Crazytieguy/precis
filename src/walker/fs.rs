@@ -189,13 +189,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     let non_essential = ctx.non_essential_factor(dir);
     let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
     let under_root_source_ancestor = has_source_root_ancestor(dir, ctx);
-    // A catalog of source files that no name or entrypoint marks as a
-    // source dir: a flat partition of the package (`lib/helpers/`), or an
-    // inventory inside tests, examples or docs.
-    let source_inventory_dir = !source_dir
-        && !module_source_dir
-        && ctx.fs_state.holds_source(dir, ctx.dir_filter())
-        && (non_essential < 1.0 || under_root_source_ancestor);
+    let source_inventory_dir = is_source_inventory_dir(dir, ctx);
     // A partition under the repository's source root names part of the
     // package's API wherever it sits, so it prices like depth 1.
     let depth = if source_inventory_dir && under_root_source_ancestor {
@@ -221,14 +215,11 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    // A catalog parent's listing already names every child, so the
-    // children's own listings are deferred, not dropped.
-    let catalog_child_factor =
-        if parent_is_high_fanout_catalog(dir, ctx) || repeats_sibling_shape(dir, ctx) {
-            CATALOG_CHILD_LISTING_SUPPRESSION
-        } else {
-            1.0
-        };
+    let catalog_child_factor = if is_deferred_catalog_child(dir, ctx) {
+        CATALOG_CHILD_LISTING_SUPPRESSION
+    } else {
+        1.0
+    };
     LISTING_VALUE * depth * fanout * catalog_child_factor * media_roster_factor(children)
 }
 
@@ -276,58 +267,49 @@ const CATALOG_PARENT_MIN_CHILD_DIRS: usize = 10;
 /// reachable at large budgets.
 const CATALOG_CHILD_LISTING_SUPPRESSION: f64 = 0.05;
 
-/// True when `dir`'s parent is a high-fanout source-inventory catalog:
-/// a directory of many uniform child dirs whose own listing enumerates
-/// every child.
-/// Named `src`/`lib`/`pkg` roots and package module dirs (with an
-/// `index.*`/`__init__.py`/`mod.rs` entrypoint) are deliberately NOT
-/// catalogs — their children are first-class modules, not catalog leaves.
-fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
-    // The walk root has no parent *inside the walk*. Without this the
-    // probe reads the directory the root happens to sit in — so
-    // `precis ~/projects/myrepo` suppresses the root listing whenever
-    // `~/projects` holds ten-plus sibling checkouts, making the summary
-    // depend on files the walk never looks at.
-    if dir == ctx.root() {
-        return false;
-    }
-    let Some(parent) = dir.parent() else {
-        return false;
-    };
-    let parent_source_dir = is_source_dir(parent) || is_go_pkg_wrapper(parent);
-    if parent_source_dir || ctx.fs_state.is_module_source_dir(parent) {
-        return false;
-    }
-    let under_source_ancestor = has_source_root_ancestor(parent, ctx);
-    if ctx.non_essential_factor(parent) >= 1.0 && !under_source_ancestor {
-        return false;
-    }
-    if !ctx.fs_state.holds_source(parent, ctx.dir_filter()) {
-        return false;
-    }
-    ctx.fs_state.child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
+/// A catalog of source files that no name or entrypoint marks as a
+/// source dir: a flat partition of the package (`lib/helpers/`), or an
+/// inventory inside tests, examples or docs.
+fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
+    !is_source_dir(dir)
+        && !is_go_pkg_wrapper(dir)
+        && !ctx.fs_state.is_module_source_dir(dir)
+        && ctx.fs_state.holds_source(dir, ctx.dir_filter())
+        && (ctx.non_essential_factor(dir) < 1.0 || has_source_root_ancestor(dir, ctx))
 }
 
-/// True when `dir` is one of many sibling directories and names exactly
-/// the three or more entries an earlier sibling names (`keyboards/*/`,
-/// `charts/*/`): the first of each shape shows what the siblings hold.
-/// Listing a one- or two-entry shape (`Cargo.toml` and `src/`) costs
-/// about what naming it does, and deferring it hides the code below. A
-/// declared workspace member or a package module is the project's own
-/// code, whatever its layout.
-fn repeats_sibling_shape(dir: &Path, ctx: &WalkCtx) -> bool {
-    if dir == ctx.root()
-        || is_declared_workspace_member(dir, ctx)
-        || ctx.fs_state.is_module_source_dir(dir)
-    {
-        return false;
-    }
+/// Whether `dir`'s listing is deferred, not dropped, behind its
+/// parent's, which already names it. The parent holds at least
+/// [`CATALOG_PARENT_MIN_CHILD_DIRS`] subdirectories, and either it is a
+/// source inventory, whose children are catalog leaves, or `dir` names
+/// exactly the three or more entries an earlier sibling names
+/// (`keyboards/*/`, `charts/*/`), so the first of each shape shows what
+/// the siblings hold. Listing a one- or two-entry shape (`Cargo.toml`
+/// and `src/`) costs about what naming it does, and deferring it hides
+/// the code below. A declared workspace member or a package module is
+/// the project's own code, whatever its layout. The walk root's parent
+/// is outside the walk, so the root is never deferred.
+fn is_deferred_catalog_child(dir: &Path, ctx: &WalkCtx) -> bool {
     let (Some(parent), Some(name)) = (dir.parent(), dir.file_name()) else {
         return false;
     };
-    ctx.fs_state
-        .shape_repeats(parent, ctx.dir_filter())
-        .contains(name.to_string_lossy().as_ref())
+    if dir == ctx.root() || subdirectory_count(parent, ctx) < CATALOG_PARENT_MIN_CHILD_DIRS {
+        return false;
+    }
+    is_source_inventory_dir(parent, ctx)
+        || !is_declared_workspace_member(dir, ctx)
+            && !ctx.fs_state.is_module_source_dir(dir)
+            && ctx
+                .fs_state
+                .shape_repeats(parent, ctx.dir_filter())
+                .contains(name.to_string_lossy().as_ref())
+}
+
+fn subdirectory_count(dir: &Path, ctx: &WalkCtx) -> usize {
+    list_dir(dir, ctx.dir_filter())
+        .values()
+        .filter(|kind| matches!(kind, EntryKind::Directory))
+        .count()
 }
 
 fn is_declared_workspace_member(dir: &Path, ctx: &WalkCtx) -> bool {
@@ -398,7 +380,6 @@ fn has_module_sibling_file(dir: &Path) -> bool {
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
-    child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
     shape_repeats: RefCell<HashMap<PathBuf, Rc<HashSet<String>>>>,
     module_source_dirs: RefCell<HashMap<PathBuf, bool>>,
 }
@@ -443,43 +424,22 @@ impl FsState {
         Some(holds)
     }
 
-    /// Count of immediate subdirectories of `dir`, cached per parent:
-    /// `parent_is_high_fanout_catalog` asks about the same parent once
-    /// per child, so recounting would be O(N²) in the parent's entries.
-    pub(in crate::walker) fn child_dir_count(&self, dir: &Path, filter: &DirFilter) -> usize {
-        if let Some(count) = self.child_dir_counts.borrow().get(dir).copied() {
-            return count;
-        }
-        let count = list_dir(dir, filter)
-            .values()
-            .filter(|kind| matches!(kind, EntryKind::Directory))
-            .count();
-        self.child_dir_counts
-            .borrow_mut()
-            .insert(dir.to_path_buf(), count);
-        count
-    }
-
     /// Names of `parent`'s subdirectories whose three or more entry names
-    /// repeat an earlier subdirectory's, when `parent` holds at least
-    /// [`CATALOG_PARENT_MIN_CHILD_DIRS`] of them.
+    /// repeat an earlier subdirectory's.
     fn shape_repeats(&self, parent: &Path, filter: &DirFilter) -> Rc<HashSet<String>> {
         if let Some(repeats) = self.shape_repeats.borrow().get(parent) {
             return Rc::clone(repeats);
         }
         let mut repeats = HashSet::new();
-        if self.child_dir_count(parent, filter) >= CATALOG_PARENT_MIN_CHILD_DIRS {
-            let mut shapes = HashSet::new();
-            let listing = list_dir(parent, filter);
-            let subdirs = listing
-                .iter()
-                .filter(|(_, kind)| matches!(kind, EntryKind::Directory));
-            for (name, _) in subdirs {
-                let entries = list_dir(&parent.join(name), filter);
-                if entries.len() > 2 && !shapes.insert(entries.keys().cloned().collect::<Vec<_>>())
-                {
-                    repeats.insert(name.clone());
-                }
+        let mut shapes = HashSet::new();
+        let listing = list_dir(parent, filter);
+        let subdirs = listing
+            .iter()
+            .filter(|(_, kind)| matches!(kind, EntryKind::Directory));
+        for (name, _) in subdirs {
+            let entries = list_dir(&parent.join(name), filter);
+            if entries.len() > 2 && !shapes.insert(entries.keys().cloned().collect::<Vec<_>>()) {
+                repeats.insert(name.clone());
             }
         }
         let repeats = Rc::new(repeats);
