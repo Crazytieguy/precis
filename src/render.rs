@@ -159,7 +159,8 @@ impl SourceCache {
 
     fn read(&self, path: &Path, limit: usize, allow_cut: bool) -> Option<Arc<Source>> {
         if let Some(cached) = self.cached(path) {
-            return (allow_cut || cached.len() <= limit).then_some(cached);
+            let whole_read = limit == MAX_SOURCE_BYTES;
+            return (allow_cut || whole_read || cached.len() <= limit).then_some(cached);
         }
         if crate::walker::is_refused_by_name(path) {
             return None;
@@ -1166,6 +1167,19 @@ mod tests {
         assert!(cache.get(&second).is_none());
         assert!(cache.get_head(&head, 1).is_none());
         assert!(cache.get(&first).is_some());
+    }
+
+    #[test]
+    fn render_source_cache_keeps_serving_a_source_its_decoding_grew_past_the_cap() {
+        let temp = tempfile::tempdir().unwrap();
+        let path = temp.path().join("latin1.txt");
+        let mut bytes = vec![0xFF; MAX_SOURCE_BYTES / 2];
+        bytes.push(b'\n');
+        std::fs::write(&path, bytes).unwrap();
+        let cache = SourceCache::new();
+        let first = cache.get(&path).unwrap();
+        assert!(first.len() > MAX_SOURCE_BYTES);
+        assert!(Arc::ptr_eq(&first, &cache.get(&path).unwrap()));
     }
 
     #[test]
