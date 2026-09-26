@@ -2038,7 +2038,10 @@ mod tests {
             ("config/credentials.local.json", "{\"token\": \"t0k\"}\n"),
             (
                 "deploy_key",
-                &format!("-----BEGIN PRIVATE KEY-----\n{}\n", "MIIEv".repeat(13)),
+                &format!(
+                    "-----BEGIN PRIVATE KEY-----\n{}\n-----END PRIVATE KEY-----\n",
+                    "MIIEv".repeat(13)
+                ),
             ),
             (
                 "signing-key.asc",

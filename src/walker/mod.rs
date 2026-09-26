@@ -421,12 +421,14 @@ pub(crate) fn is_refused(path: &Path, text: &str) -> bool {
 
 /// A PEM or PGP private-key block: an armor header naming a private key,
 /// then key material — a base64 run at least one armor line (64
-/// characters, RFC 7468 and RFC 4880) long before the closing armor. A
+/// characters, RFC 7468 and RFC 4880) long — then the closing armor. A
 /// header alone (a parser's constant, a documented placeholder) holds
-/// no key.
+/// no key, whatever long token (a SHA-256 hex digest) follows it.
 fn holds_private_key(text: &str) -> bool {
     text.split("-----BEGIN ").skip(1).any(|block| {
-        let block = block.split("-----END ").next().unwrap_or_default();
+        let Some((block, _)) = block.split_once("-----END ") else {
+            return false;
+        };
         block.split_once("-----").is_some_and(|(label, body)| {
             label.contains("PRIVATE KEY")
                 && body
@@ -560,12 +562,16 @@ mod tests {
     }
 
     #[test]
-    fn walker_mod_private_keys_need_key_material_under_their_armor() {
+    fn walker_mod_private_keys_need_key_material_between_their_armor() {
         let body = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7VJTUt9Us8cKj";
         for text in [
             format!("-----BEGIN RSA PRIVATE KEY-----\n{body}\n-----END RSA PRIVATE KEY-----\n"),
-            format!("const KEY = \"-----BEGIN EC PRIVATE KEY-----\\n{body}\\n\";\n"),
-            format!("-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n{body}\n=ab12\n"),
+            format!(
+                "const KEY = \"-----BEGIN EC PRIVATE KEY-----\\n{body}\\n-----END EC PRIVATE KEY-----\";\n"
+            ),
+            format!(
+                "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n{body}\n=ab12\n-----END PGP PRIVATE KEY BLOCK-----\n"
+            ),
         ] {
             assert!(holds_private_key(&text), "{text}");
         }
@@ -574,6 +580,10 @@ mod tests {
             "-----BEGIN PRIVATE KEY-----\n<your key here>\n-----END PRIVATE KEY-----\n".to_string(),
             "if line == \"-----BEGIN RSA PRIVATE KEY-----\" {\n    parse(line)\n}\n".to_string(),
             format!("-----BEGIN CERTIFICATE-----\n{body}\n-----END CERTIFICATE-----\n"),
+            format!(
+                "const HEADER = \"-----BEGIN RSA PRIVATE KEY-----\";\nconst EMPTY_SHA256 = \"{}\";\n",
+                "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ),
         ] {
             assert!(!holds_private_key(&text), "{text}");
         }
