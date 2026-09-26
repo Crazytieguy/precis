@@ -1364,9 +1364,15 @@ mod tests {
 
     use super::*;
 
-    /// Line numbers a surface selects, for readable assertions.
-    fn surface_of(source: &str) -> Vec<usize> {
-        declaration_surface(source, Class::LanguageSource, SOURCE_TEXT_DECL_LINES).0
+    /// The lines a surface selects, for readable assertions.
+    fn surface_text(source: &str, class: Class) -> Vec<&str> {
+        let lines: Vec<&str> = source.lines().collect();
+        let (rows, _) = declaration_surface(source, class, SOURCE_TEXT_DECL_LINES);
+        rows.iter().map(|n| lines[n - 1]).collect()
+    }
+
+    fn surface(source: &str) -> Vec<&str> {
+        surface_text(source, Class::LanguageSource)
     }
 
     #[test]
@@ -1379,9 +1385,7 @@ mod tests {
                     import java.util.Deque;\nimport java.util.Queue;\nimport java.util.Objects;\n\n\
                     public final class Gson {\n  private final List<X> factories;\n\
                     \n  public String toJson(Object src) {\n    return \"\";\n  }\n}\n";
-        let selected = surface_of(java);
-        let lines: Vec<&str> = java.lines().collect();
-        let text: Vec<&str> = selected.iter().map(|n| lines[n - 1]).collect();
+        let text = surface(java);
         assert!(
             text.iter().all(|line| !line.contains("Copyright")
                 && !line.contains("Licensed")
@@ -1407,8 +1411,7 @@ mod tests {
                       Copyright (c) 2007-2026 ShareX Team\n\n    This program is free software.\n\
                       */\n\n#endregion License Information (GPL v3)\n\n\
                       using System;\n\nnamespace ShareX\n";
-        let lines: Vec<&str> = csharp.lines().collect();
-        let text: Vec<&str> = surface_of(csharp).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(csharp);
         assert_eq!(text, vec!["using System;", "namespace ShareX"]);
     }
 
@@ -1418,8 +1421,7 @@ mod tests {
     fn plaintext_source_text_surface_skips_banners_in_every_comment_syntax() {
         let haskell = "{-\n    Copyright 2012 Vidar Holen\n\n    GNU General Public License\n-}\n\
                        module ShellCheck.AST where\n\ndata Token = Token\n";
-        let lines: Vec<&str> = haskell.lines().collect();
-        let text: Vec<&str> = surface_of(haskell).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(haskell);
         assert_eq!(
             text,
             vec!["module ShellCheck.AST where", "data Token = Token"]
@@ -1428,8 +1430,7 @@ mod tests {
         let php = "<?php declare(strict_types=1);\n\n/*\n * This file is part of Composer.\n *\n\
                    * (c) Nils Adermann\n *\n * For the full copyright and license information\n */\n\n\
                    namespace Composer;\n\nclass Cache\n{\n}\n";
-        let lines: Vec<&str> = php.lines().collect();
-        let text: Vec<&str> = surface_of(php).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(php);
         assert_eq!(text, vec!["namespace Composer;", "class Cache"]);
 
         assert!(!is_comment_line("(*fn)(argument);"));
@@ -1442,14 +1443,16 @@ mod tests {
     fn plaintext_source_text_surface_skips_compiler_directives_and_section_marks() {
         let swift = "#if canImport(Darwin)\nimport Darwin\n#elseif canImport(Glibc)\nimport Glibc\n#endif\n\n\
                      // MARK: - Instant\n\n#pragma warning disable CA1815\npublic struct Instant {\n}\n";
-        let lines: Vec<&str> = swift.lines().collect();
-        let text: Vec<&str> = surface_of(swift).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(swift);
         assert_eq!(
             text,
             vec!["import Darwin", "import Glibc", "public struct Instant {"]
         );
         assert!(!is_compiler_directive("#include <stdio.h>"));
         assert!(!is_compiler_directive("#define MAX 3"));
+        assert!(is_comment_line("#Region \"Fields\""));
+        assert!(is_comment_line("#endregion"));
+        assert!(!is_comment_line("#region-picker {"));
     }
 
     /// The interior of a multi-line `<!-- … -->` is comment, not a roster
@@ -1459,24 +1462,12 @@ mod tests {
         let xml = "<?xml version=\"1.0\"?>\n<!--\n  ~ one\n  ~ two\n  ~ three\n  ~ four\n-->\n\
                    <project>\n  <groupId>org.example</groupId>\n  <artifactId>app</artifactId>\n\
                    </project>\n";
-        let lines: Vec<&str> = xml.lines().collect();
-        let text: Vec<&str> = declaration_surface(xml, Class::Manifest, SOURCE_TEXT_DECL_LINES)
-            .0
-            .iter()
-            .map(|n| lines[n - 1])
-            .collect();
+        let text = surface_text(xml, Class::Manifest);
         assert!(text.contains(&"  <artifactId>app</artifactId>"), "{text:?}");
         assert!(
             text.iter().filter(|line| line.contains('~')).count() <= SOURCE_TEXT_COMMENT_LINES,
             "{text:?}"
         );
-    }
-
-    #[test]
-    fn plaintext_source_text_region_marker_is_a_comment_but_a_css_id_is_not() {
-        assert!(is_comment_line("#Region \"Fields\""));
-        assert!(is_comment_line("#endregion"));
-        assert!(!is_comment_line("#region-picker {"));
     }
 
     /// Column-zero statements ahead of a file's functions do not take the
@@ -1488,25 +1479,14 @@ mod tests {
             .map(|n| format!("let g:setting_{n} = {n}\n"))
             .collect();
         let vim = setup + "\nfunction! plug#begin(...)\n  return 1\nendfunction\n";
-        let lines: Vec<&str> = vim.lines().collect();
-        let text = |class| -> Vec<&str> {
-            declaration_surface(&vim, class, SOURCE_TEXT_DECL_LINES)
-                .0
-                .iter()
-                .map(|n| lines[n - 1])
-                .collect()
-        };
-        assert!(
-            text(Class::LanguageSource).contains(&"function! plug#begin(...)"),
-            "{:?}",
-            text(Class::LanguageSource)
-        );
-        assert!(!text(Class::FlatText).contains(&"function! plug#begin(...)"));
+        let text = surface_text(&vim, Class::LanguageSource);
+        assert!(text.contains(&"function! plug#begin(...)"), "{text:?}");
+        assert!(!surface_text(&vim, Class::FlatText).contains(&"function! plug#begin(...)"));
     }
 
     /// A multi-line annotation, a wrapped initializer and the tail of a
     /// wrapped signature continue the line above them and never take a slot
-    /// from a declaration.
+    /// from a declaration. Brackets inside literals do not count.
     #[test]
     fn plaintext_source_text_surface_skips_continuation_lines() {
         let kotlin = [
@@ -1529,7 +1509,7 @@ mod tests {
         ]
         .join("\n");
         let lines: Vec<&str> = kotlin.lines().collect();
-        let text: Vec<&str> = surface_of(&kotlin).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(&kotlin);
         assert_eq!(
             text,
             vec![
@@ -1546,6 +1526,14 @@ mod tests {
         );
         assert!(opens_block[0] && opens_block[10], "{opens_block:?}");
         assert!(!opens_block[3], "{opens_block:?}");
+        assert_eq!(bracket_balance("foo(\"(\", ')', bar( // (("), 2);
+        assert_eq!(bracket_balance("foldl' (+) 0 xs"), 0);
+        assert!(is_annotation_only("@Deprecated("));
+        assert!(is_annotation_only(
+            "[UnconditionalSuppressMessage(\"x\", \"y\")]"
+        ));
+        assert!(!is_annotation_only("@Override public void run() {"));
+        assert!(!is_annotation_only("@interface Foo : NSObject"));
     }
 
     /// An abstract member is the API a trait or interface defines and
@@ -1568,8 +1556,7 @@ mod tests {
             .map(String::from),
         );
         let scala = scala.join("\n");
-        let lines: Vec<&str> = scala.lines().collect();
-        let text: Vec<&str> = surface_of(&scala).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(&scala);
         assert!(
             text.contains(&"  def map[A, B](fa: F[A])(f: A => B): F[B]"),
             "{text:?}"
@@ -1607,16 +1594,14 @@ mod tests {
     #[test]
     fn plaintext_source_text_surface_skips_multiline_string_interiors() {
         let php = "<?php\nclass A {\n    function f() { return <<<'EOF'\nif (x) {\n    y();\n}\nEOF;\n    }\n}\n";
-        let lines: Vec<&str> = php.lines().collect();
-        let text: Vec<&str> = surface_of(php).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(php);
         assert_eq!(
             text,
             vec!["<?php", "class A {", "    function f() { return <<<'EOF'"]
         );
 
         let elixir = "defmodule Router do\n  @doc \"\"\"\n  ## Examples\n\n  from any scope.\n  \"\"\"\n  def pipeline(plug) do\n    plug\n  end\nend\n";
-        let lines: Vec<&str> = elixir.lines().collect();
-        let text: Vec<&str> = surface_of(elixir).iter().map(|n| lines[n - 1]).collect();
+        let text = surface(elixir);
         assert!(!text.contains(&"  ## Examples"), "{text:?}");
         assert!(text.contains(&"  def pipeline(plug) do"), "{text:?}");
 
@@ -1628,95 +1613,56 @@ mod tests {
         );
     }
 
+    /// Descent reaches past one wrapper line (a Ruby `module`) and a doc
+    /// comment's ` * ` level to the members below, one-liners included, but
+    /// not into statement bodies, and never below column zero when column
+    /// zero already declares (CSS selectors, whose `#main` is no comment).
     #[test]
-    fn plaintext_source_text_bracket_balance_ignores_literals() {
-        assert_eq!(bracket_balance("foo(\"(\", ')', bar( // (("), 2);
-        assert_eq!(bracket_balance("foldl' (+) 0 xs"), 0);
-        assert!(is_annotation_only("@Deprecated("));
-        assert!(is_annotation_only(
-            "[UnconditionalSuppressMessage(\"x\", \"y\")]"
-        ));
-        assert!(!is_annotation_only("@Override public void run() {"));
-        assert!(!is_annotation_only("@interface Foo : NSObject"));
-    }
-
-    #[test]
-    fn plaintext_source_text_surface_descends_past_a_single_wrapper() {
-        // Ruby wraps everything in `module`; column zero alone is one
-        // line that is identical across the whole project.
+    fn plaintext_source_text_surface_descent() {
         let ruby = "# frozen_string_literal: true\n\nmodule Devise\n  class Mapping\n\
                         def self.find_scope!(obj)\n      obj\n    end\n\
                     \n    def initialize(name)\n      @name = name\n    end\n  end\nend\n";
-        let lines: Vec<&str> = ruby.lines().collect();
-        let text: Vec<&str> = surface_of(ruby).iter().map(|n| lines[n - 1]).collect();
-        assert!(text.contains(&"module Devise"), "{text:?}");
-        assert!(text.contains(&"  class Mapping"), "{text:?}");
-        assert!(
-            text.iter()
-                .any(|line| line.contains("def self.find_scope!")),
-            "descent stopped too early: {text:?}"
-        );
-        assert!(
-            !text
-                .iter()
-                .any(|line| line.contains("frozen_string_literal")),
-            "tooling pragma leaked: {text:?}"
-        );
-    }
-
-    /// A file with few top-level declarations does not descend into a
-    /// function's statements to fill its roster.
-    #[test]
-    fn plaintext_source_text_surface_stops_at_statement_bodies() {
         let cpp = "namespace leveldb {\n\nStatus BuildTable(const std::string& dbname, Env* env,\n\
                    \x20                 Iterator* iter) {\n  Status s;\n  if (iter->Valid()) {\n\
                    \x20   s = Write();\n  }\n  return s;\n}\n\n}  // namespace leveldb\n";
-        let lines: Vec<&str> = cpp.lines().collect();
-        let text: Vec<&str> = surface_of(cpp).iter().map(|n| lines[n - 1]).collect();
-        assert_eq!(
-            text,
-            vec![
-                "namespace leveldb {",
-                "Status BuildTable(const std::string& dbname, Env* env,"
-            ]
-        );
-    }
-
-    /// A class whose members are all expression-bodied still descends to
-    /// them.
-    #[test]
-    fn plaintext_source_text_surface_descends_to_one_liner_members() {
         let kotlin = "object Config {\n    fun host() = \"localhost\"\n    fun port() = 8080\n}\n";
-        assert_eq!(surface_of(kotlin), vec![1, 2, 3]);
-    }
-
-    /// A doc comment's ` * ` lines form an indentation level of their own
-    /// that does not stop descent to the members below it.
-    #[test]
-    fn plaintext_source_text_surface_descends_past_a_doc_comment_level() {
         let java = "/**\n * A client.\n */\npublic class Client {\n    public void open() {\n\
                     \x20       connect();\n    }\n}\n";
-        let lines: Vec<&str> = java.lines().collect();
-        let text: Vec<&str> = surface_of(java).iter().map(|n| lines[n - 1]).collect();
-        assert!(text.contains(&"    public void open() {"), "{text:?}");
-    }
-
-    #[test]
-    fn plaintext_source_text_surface_never_descends_when_column_zero_declares() {
-        // CSS selectors sit at column zero, so the surface stays there
-        // and never picks up property lines from inside a rule.
         let css = "a {\n  color: red;\n}\n\nh1,\nh2 {\n  margin: 0;\n}\n\n\
                    .card {\n  padding: 1rem;\n}\n\n#main {\n  display: flex;\n}\n";
-        let lines: Vec<&str> = css.lines().collect();
-        let text: Vec<&str> = surface_of(css).iter().map(|n| lines[n - 1]).collect();
-        assert!(
-            text.iter().all(|line| !line.starts_with(' ')),
-            "descended into rule bodies: {text:?}"
-        );
-        assert!(
-            text.contains(&"#main {"),
-            "`#main` read as a comment: {text:?}"
-        );
+        let cases: &[(&str, &[&str], &[&str])] = &[
+            (
+                ruby,
+                &["module Devise", "class Mapping", "def self.find_scope!"],
+                &["frozen_string_literal"],
+            ),
+            (
+                cpp,
+                &["namespace leveldb {", "Status BuildTable("],
+                &["Status s;", "iter->Valid()", "return s;"],
+            ),
+            (
+                kotlin,
+                &["object Config {", "fun host()", "fun port()"],
+                &[],
+            ),
+            (java, &["public void open() {"], &[]),
+            (
+                css,
+                &["#main {"],
+                &["color", "margin", "padding", "display"],
+            ),
+        ];
+        for (source, present, absent) in cases {
+            let text = surface(source);
+            let has = |needle: &str| text.iter().any(|line| line.contains(needle));
+            for needle in *present {
+                assert!(has(needle), "missing {needle:?}: {text:?}");
+            }
+            for needle in *absent {
+                assert!(!has(needle), "leaked {needle:?}: {text:?}");
+            }
+        }
     }
 
     #[test]
@@ -1725,51 +1671,34 @@ mod tests {
             .map(|n| format!("Paragraph line {n}."))
             .collect::<Vec<_>>()
             .join("\n");
-        let selected = surface_of(&prose);
-        assert_eq!(selected, (1..=SOURCE_TEXT_DECL_LINES).collect::<Vec<_>>());
+        assert_eq!(
+            surface(&prose),
+            prose
+                .lines()
+                .take(SOURCE_TEXT_DECL_LINES)
+                .collect::<Vec<_>>()
+        );
     }
 
     #[test]
     fn plaintext_source_text_classification_rejects_derived_and_credential_files() {
-        assert_eq!(
-            classify_source_text("Gson.java"),
-            Some(Class::LanguageSource)
-        );
-        assert_eq!(
-            classify_source_text("Session.swift"),
-            Some(Class::LanguageSource)
-        );
-        assert_eq!(
-            classify_source_text("Layout.vue"),
-            Some(Class::LanguageSource)
-        );
-        assert_eq!(classify_source_text("Gemfile"), Some(Class::LanguageSource));
-        assert_eq!(
-            classify_source_text("schema.proto"),
-            Some(Class::LanguageSource)
-        );
-        assert_eq!(classify_source_text("guide.rst"), None);
-        assert_eq!(classify_source_text("app.css"), Some(Class::FlatText));
-        assert_eq!(classify_source_text("build.sh"), Some(Class::FlatText));
-        // Derived artifacts and credentials never render.
-        assert_eq!(classify_source_text("app.min.css"), None);
-        assert_eq!(classify_source_text("vendor.bundle.css"), None);
-        assert_eq!(classify_source_text("main.js.map"), None);
-        assert_eq!(classify_source_text("pnpm-lock.yaml"), None);
-        assert_eq!(classify_source_text("secrets.sh"), None);
-        assert_eq!(classify_source_text("credentials.txt"), None);
-        // `.md` files stay with the markdown walker.
-        assert_eq!(classify_source_text("LICENSE.md"), None);
-        // Formats an owning walker already claims stay with it.
-        for owned in [
-            "lib.rs",
-            "main.py",
-            "app.ts",
-            "go.mod",
-            "index.html",
-            "pom.xml",
-        ] {
-            assert_eq!(classify_source_text(owned), None, "{owned}");
+        let language = Some(Class::LanguageSource);
+        let flat = Some(Class::FlatText);
+        #[rustfmt::skip]
+        let cases = [
+            ("Gson.java", language), ("Session.swift", language), ("Layout.vue", language),
+            ("Gemfile", language), ("schema.proto", language), ("guide.rst", None),
+            ("app.css", flat), ("build.sh", flat),
+            // Derived artifacts and credentials never render.
+            ("app.min.css", None), ("vendor.bundle.css", None), ("main.js.map", None),
+            ("pnpm-lock.yaml", None), ("secrets.sh", None), ("credentials.txt", None),
+            // `.md` files stay with the markdown walker, and formats an owning
+            // walker already claims stay with it.
+            ("LICENSE.md", None), ("lib.rs", None), ("main.py", None), ("app.ts", None),
+            ("go.mod", None), ("index.html", None), ("pom.xml", None),
+        ];
+        for (name, expected) in cases {
+            assert_eq!(classify_source_text(name), expected, "{name}");
         }
     }
 
@@ -1892,109 +1821,79 @@ mod tests {
         assert_eq!(factor("Makefile", Class::FlatText), 1.0);
     }
 
+    /// The rows each build file renders at the root and one level down. A
+    /// small Makefile renders whole anywhere; one too long, or too wide for
+    /// the byte gate, renders at the root only its `.PHONY` declarations
+    /// (through their continuation lines), and a long root Dockerfile only
+    /// its head.
     #[test]
-    fn plaintext_small_makefile_stays_whole() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let file = root.join("Makefile");
-        std::fs::write(&file, "FLAGS = --all\n\nbuild:\n\ttool $(FLAGS)\n").unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        assert_eq!(batches.len(), 1);
-        assert!(matches!(
-            &batches[0].key,
-            BatchKey::Plaintext(PlaintextKey::Whole { file: batch_file })
-                if batch_file == &file
-        ));
-    }
-
-    #[test]
-    fn plaintext_small_but_wide_makefile_keeps_original_byte_gate() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let file = root.join("Makefile");
-        let source = format!("build: {}\n", "dependency ".repeat(BUILD_BYTE_GATE));
-        std::fs::write(&file, source).unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert!(expand_in_dir(root, &ctx).is_empty());
-    }
-
-    #[test]
-    fn plaintext_oversized_makefile_renders_only_its_phony_targets() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::create_dir(root.join("docs")).unwrap();
-        let mut source = String::from(
-            "BUILD_DEPS = common-a common-b\n.PHONY: build test\n\nbuild: $(BUILD_DEPS)\n",
-        );
-        for index in 0..60 {
-            source.push_str(&format!(
-                "target-{index:02}: dep-{index:02}-a dep-{index:02}-b\n\tRECIPE_{index:02}\n"
-            ));
-        }
-        std::fs::write(root.join("Makefile"), &source).unwrap();
-        std::fs::write(root.join("docs/Makefile"), &source).unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        assert_eq!(batches.len(), 1);
-        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
-            panic!("expected a lines batch");
+    fn plaintext_build_file_rows() {
+        let recipes = |prefix: &str| -> String {
+            (0..60)
+                .map(|index| format!("target-{index:02}: dep-{index:02}\n\tRECIPE_{index:02}\n"))
+                .fold(prefix.to_string(), |source, recipe| source + &recipe)
         };
-        let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
-        assert_eq!(rows, [(2, 2)]);
-        assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
-    }
-
-    #[test]
-    fn plaintext_oversized_makefile_phony_targets_include_continuation_lines() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let mut source = String::from(
-            ".PHONY: build \\\n\ttest lint\nSHELL = /bin/sh\n.PHONY: \\\n\trelease \\\n\tdocs\n\n",
-        );
-        for index in 0..60 {
-            source.push_str(&format!(
-                "target-{index:02}: dep-{index:02}\n\tRECIPE_{index:02}\n"
-            ));
+        let dockerfile = (0..BUILD_LINE_CAP)
+            .map(|index| format!("RUN step-{index}\n"))
+            .fold("ARG BASE=ubuntu:24.04\n".to_string(), |source, step| {
+                source + &step
+            });
+        let cases = [
+            (
+                "Makefile",
+                "FLAGS = --all\n\nbuild:\n\ttool $(FLAGS)\n".to_string(),
+                vec![(1, 4)],
+                vec![(1, 4)],
+            ),
+            (
+                "Makefile",
+                format!("build: {}\n", "dependency ".repeat(BUILD_BYTE_GATE)),
+                vec![],
+                vec![],
+            ),
+            (
+                "Makefile",
+                recipes(
+                    "BUILD_DEPS = common-a common-b\n.PHONY: build test\n\nbuild: $(BUILD_DEPS)\n",
+                ),
+                vec![(2, 2)],
+                vec![],
+            ),
+            (
+                "Makefile",
+                recipes(
+                    ".PHONY: build \\\n\ttest lint\nSHELL = /bin/sh\n.PHONY: \\\n\trelease \\\n\tdocs\n\n",
+                ),
+                vec![(1, 2), (4, 6)],
+                vec![],
+            ),
+            (
+                "Dockerfile",
+                dockerfile,
+                vec![(1, SOURCE_TEXT_DECL_LINES)],
+                vec![],
+            ),
+        ];
+        for (name, source, root_rows, nested_rows) in cases {
+            let dir = tempfile::tempdir().unwrap();
+            let root = dir.path();
+            std::fs::create_dir(root.join("nested")).unwrap();
+            std::fs::write(root.join(name), &source).unwrap();
+            std::fs::write(root.join("nested").join(name), &source).unwrap();
+            let ctx = WalkCtx::new(root.to_path_buf());
+            let rows = |dir: &Path| -> Vec<(usize, usize)> {
+                expand_in_dir(dir, &ctx)
+                    .iter()
+                    .flat_map(|batch| match &batch.content {
+                        crate::content::BatchContent::Lines { spans, .. } => spans.clone(),
+                        crate::content::BatchContent::Fs { .. } => Vec::new(),
+                    })
+                    .map(|span| (span.start, span.end))
+                    .collect()
+            };
+            assert_eq!(rows(root), root_rows, "{name}: {source:.40}");
+            assert_eq!(rows(&root.join("nested")), nested_rows, "nested {name}");
         }
-        std::fs::write(root.join("Makefile"), &source).unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
-            panic!("expected a lines batch");
-        };
-        let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
-        assert_eq!(rows, [(1, 2), (4, 6)]);
-    }
-
-    #[test]
-    fn plaintext_oversized_root_dockerfile_renders_its_head() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::create_dir(root.join("docker")).unwrap();
-        let mut source = String::from("FROM ubuntu:24.04\n");
-        for index in 0..BUILD_LINE_CAP {
-            source.push_str(&format!("RUN step-{index}\n"));
-        }
-        std::fs::write(root.join("Dockerfile"), &source).unwrap();
-        std::fs::write(root.join("docker/Dockerfile"), &source).unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        assert_eq!(batches.len(), 1);
-        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
-            panic!("expected a lines batch");
-        };
-        let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
-        assert!(
-            matches!(rows[..], [(1, end)] if end < BUILD_LINE_CAP),
-            "{rows:?}"
-        );
-        assert!(expand_in_dir(&root.join("docker"), &ctx).is_empty());
     }
 
     /// A root `pom.xml` leads with its coordinates, not the `<project
@@ -2066,37 +1965,80 @@ mod tests {
         }
     }
 
-    /// Drive the full `FsWalker` + scheduler against a real
-    /// directory (an in-memory `SourceCache`
-    /// preload bypasses `read_dir` and never exercises the discovery
-    /// path). Asserts the plaintext content lands in the rendered
-    /// output and that the scheduler logs a `Plaintext::Whole` batch,
-    /// and that a license text renders only as its listing entry.
+    /// Drive the full `FsWalker` + scheduler against a real directory. A
+    /// named file renders whole, its first `PLAINTEXT_LINE_CAP` lines when
+    /// it runs longer, and never when its bytes overflow the gate. Once the
+    /// walkers' batches are all scheduled, a file no walker claims renders
+    /// its head; a license text, credentials and hidden files stay names,
+    /// and a sidecar the listing leaves out stays unnamed.
     #[test]
-    fn plaintext_real_dir_renders_seeded_files() {
+    fn plaintext_real_dir_renders_named_files_and_the_floor() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
-        std::fs::write(
-            root.join("LICENSE"),
-            "MIT License\n\nCopyright (c) Yoav\n\nSee LICENSE.\n",
-        )
-        .unwrap();
-        std::fs::write(root.join(".tool-versions"), "rust 1.80.0\n").unwrap();
+        let tool_versions: String = std::iter::once("rust 1.80.0\n".to_string())
+            .chain((1..PLAINTEXT_LINE_CAP + 5).map(|i| format!("line {i}\n")))
+            .collect();
+        let files = [
+            (".tool-versions", tool_versions.as_str()),
+            (".gitignore", &format!("{}\n", "x".repeat(250)).repeat(60)),
+            ("chapter.tex", "\\section{Intro}\nFirst words.\n"),
+            ("LICENSE", "MIT License\n\nCopyright (c) Yoav\n"),
+            ("secrets.yml", "api_token: abc\n"),
+            ("secrets.production.yaml", "db_password: hunter2\n"),
+            ("config/credentials.local.json", "{\"token\": \"t0k\"}\n"),
+            ("deploy_key", "-----BEGIN PRIVATE KEY-----\n"),
+            (
+                "signing-key.asc",
+                "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\nlQVYBGXpayloadAAAA\n=ab12\n\
+                 -----END PGP PRIVATE KEY BLOCK-----\n",
+            ),
+            (".github/labels.yml", "- name: bug\n"),
+            ("sprite.png.meta", "guid: 0123\n"),
+        ];
+        for (path, text) in files {
+            std::fs::create_dir_all(root.join(path).parent().unwrap()).unwrap();
+            std::fs::write(root.join(path), text).unwrap();
+        }
+        std::fs::write(root.join("sprite.png"), [0x89, b'P', b'N', b'G', 0]).unwrap();
 
         let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         let rendered = report.tree.render();
-
-        assert!(
-            !rendered.contains("MIT License"),
-            "rendered output carries the LICENSE body:\n{rendered}",
-        );
-        assert!(
-            rendered.contains("rust 1.80.0"),
-            "rendered output is missing the .tool-versions body:\n{rendered}",
-        );
-        assert_no_plaintext_whole(&report, "LICENSE");
-        assert_has_plaintext_whole(&report, ".tool-versions");
+        for shown in ["rust 1.80.0", "First words."] {
+            assert!(rendered.contains(shown), "{rendered}");
+        }
+        for hidden in [
+            "MIT License",
+            "api_token",
+            "hunter2",
+            "t0k",
+            "BEGIN PRIVATE KEY",
+            "PGP PRIVATE KEY",
+            "payload",
+            "name: bug",
+            "guid",
+            "xxxx",
+        ] {
+            assert!(!rendered.contains(hidden), "{hidden:?} in {rendered}");
+        }
+        let whole_rows = |suffix: &str| -> Vec<(usize, usize)> {
+            report
+                .scheduled
+                .iter()
+                .filter(|record| {
+                    matches!(&record.key, BatchKey::Plaintext(PlaintextKey::Whole { file })
+                        if file.ends_with(suffix))
+                })
+                .flat_map(|record| match &record.content {
+                    crate::content::BatchContent::Lines { spans, .. } => spans.clone(),
+                    crate::content::BatchContent::Fs { .. } => Vec::new(),
+                })
+                .map(|span| (span.start, span.end))
+                .collect()
+        };
+        assert_eq!(whole_rows(".tool-versions"), [(1, PLAINTEXT_LINE_CAP)]);
+        assert_eq!(whole_rows(".gitignore"), []);
+        assert_eq!(whole_rows("LICENSE"), []);
     }
 
     /// A file the code engine parses is never also a fallback file —
@@ -2168,157 +2110,25 @@ mod tests {
         assert!(value("tool.rb") < decl);
     }
 
-    /// A small file in an unparsed language renders whole once the
-    /// budget reaches past its surface — not four lines and a `…` for
-    /// the closing brace.
-    #[test]
-    fn plaintext_small_source_text_file_renders_whole() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(
-            root.join("Foo.java"),
-            "package demo;\n\npublic class Foo {\n    int x;\n}\n",
-        )
-        .unwrap();
-        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
-        let rendered = scheduler.run().render();
-        assert!(rendered.contains("5→}"), "{rendered}");
-        assert!(!rendered.contains('…'), "{rendered}");
-    }
-
-    /// A small file renders whole past its license banner, and keeps the
-    /// doc comment that follows the banner.
+    /// A small file in an unparsed language renders whole once the budget
+    /// reaches past its surface — through its closing brace, not four lines
+    /// and a `…` — past its license banner, keeping the doc comment that
+    /// follows the banner.
     #[test]
     fn plaintext_small_source_text_file_renders_whole_past_its_banner() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         std::fs::write(
-            root.join("package-info.java"),
+            root.join("Foo.java"),
             "/*\n * Copyright (C) 2012 The Authors\n */\n\n/**\n * Escapers and encoders.\n */\n\
-             package demo.escape;\n",
+             package demo;\n\npublic class Foo {\n    int x;\n}\n",
         )
         .unwrap();
         let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
         let rendered = scheduler.run().render();
         assert!(!rendered.contains("Copyright"), "{rendered}");
-        assert!(
-            rendered.contains("6→ * Escapers and encoders."),
-            "{rendered}"
-        );
-        assert!(rendered.contains("8→package demo.escape;"), "{rendered}");
-    }
-
-    /// A file whose byte count slips under the gate but whose line
-    /// count exceeds `PLAINTEXT_LINE_CAP` renders its first
-    /// `PLAINTEXT_LINE_CAP` lines. The cap bounds what is *rendered*,
-    /// not whether the file is reachable at all — dropping it made
-    /// "one line too long" mean "renders as nothing".
-    #[test]
-    fn plaintext_too_many_lines_head_sampled_not_skipped() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let body: String = (0..(PLAINTEXT_LINE_CAP + 5))
-            .map(|i| format!("line {i}\n"))
-            .collect();
-        std::fs::write(root.join(".tool-versions"), body).unwrap();
-
-        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
-        let report = scheduler.run_with_report();
-        let whole_rows: Vec<(usize, usize)> = report
-            .scheduled
-            .iter()
-            .filter(|record| matches!(record.key, BatchKey::Plaintext(PlaintextKey::Whole { .. })))
-            .flat_map(|record| match &record.content {
-                crate::content::BatchContent::Lines { spans, .. } => {
-                    spans.iter().map(|span| (span.start, span.end)).collect()
-                }
-                crate::content::BatchContent::Fs { .. } => Vec::new(),
-            })
-            .collect();
-        assert_eq!(whole_rows, vec![(1, PLAINTEXT_LINE_CAP)]);
-    }
-
-    /// Once the walkers' batches are all scheduled, a file no walker
-    /// claims renders its head; a license text, credentials and hidden files
-    /// stay names, and a sidecar the listing leaves out stays unnamed.
-    #[test]
-    fn plaintext_floor_renders_unclaimed_heads_once_the_pool_runs_dry() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(root.join("chapter.tex"), "\\section{Intro}\nFirst words.\n").unwrap();
-        std::fs::write(root.join("LICENSE"), "MIT License\n").unwrap();
-        std::fs::write(root.join("secrets.yml"), "api_token: abc\n").unwrap();
-        std::fs::write(
-            root.join("secrets.production.yaml"),
-            "db_password: hunter2\n",
-        )
-        .unwrap();
-        std::fs::create_dir(root.join("config")).unwrap();
-        std::fs::write(
-            root.join("config/credentials.local.json"),
-            "{\"token\": \"t0k\"}\n",
-        )
-        .unwrap();
-        std::fs::write(root.join("deploy_key"), "-----BEGIN PRIVATE KEY-----\n").unwrap();
-        std::fs::write(
-            root.join("signing-key.asc"),
-            "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\nlQVYBGXpayloadAAAA\n=ab12\n-----END PGP PRIVATE KEY BLOCK-----\n",
-        )
-        .unwrap();
-        std::fs::create_dir(root.join(".github")).unwrap();
-        std::fs::write(root.join(".github/labels.yml"), "- name: bug\n").unwrap();
-        std::fs::write(root.join("sprite.png"), [0x89, b'P', b'N', b'G', 0]).unwrap();
-        std::fs::write(root.join("sprite.png.meta"), "guid: 0123\n").unwrap();
-
-        let rendered =
-            Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None).run();
-        let rendered = rendered.render();
-        assert!(rendered.contains("First words."), "{rendered}");
-        assert!(!rendered.contains("MIT License"), "{rendered}");
-        assert!(!rendered.contains("api_token"), "{rendered}");
-        assert!(!rendered.contains("hunter2"), "{rendered}");
-        assert!(!rendered.contains("t0k"), "{rendered}");
-        assert!(!rendered.contains("BEGIN PRIVATE KEY"), "{rendered}");
-        assert!(!rendered.contains("PGP PRIVATE KEY"), "{rendered}");
-        assert!(!rendered.contains("payload"), "{rendered}");
-        assert!(!rendered.contains("name: bug"), "{rendered}");
-        assert!(!rendered.contains("guid"), "{rendered}");
-    }
-
-    #[test]
-    fn plaintext_oversized_named_file_skipped() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let long_line = "x".repeat(250);
-        let body: String = std::iter::repeat_n(long_line.as_str(), 60)
-            .collect::<Vec<_>>()
-            .join("\n");
-        std::fs::write(root.join(".gitignore"), body).unwrap();
-
-        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
-        let report = scheduler.run_with_report();
-        assert_no_plaintext_whole(&report, ".gitignore");
-    }
-
-    fn assert_has_plaintext_whole(report: &crate::scheduler::RunReport, suffix: &str) {
-        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
-        assert!(
-            keys.iter().any(|k| matches!(
-                k,
-                BatchKey::Plaintext(PlaintextKey::Whole { file }) if file.ends_with(suffix),
-            )),
-            "missing Plaintext::Whole batch ending with {suffix:?}; scheduled keys: {keys:?}",
-        );
-    }
-
-    fn assert_no_plaintext_whole(report: &crate::scheduler::RunReport, suffix: &str) {
-        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
-        assert!(
-            !keys.iter().any(|k| matches!(
-                k,
-                BatchKey::Plaintext(PlaintextKey::Whole { file }) if file.ends_with(suffix),
-            )),
-            "unexpected Plaintext::Whole batch ending with {suffix:?}; scheduled keys: {keys:?}",
-        );
+        for line in ["6→ * Escapers and encoders.", "8→package demo;", "12→}"] {
+            assert!(rendered.contains(line), "{rendered}");
+        }
     }
 }
