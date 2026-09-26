@@ -900,6 +900,7 @@ fn class(
     let mut members = Vec::new();
     let mut last_row = open_row;
     let mut comment_start = None;
+    let mut tagged_internal = false;
     // A method's decorators are its preceding siblings, not its children.
     let mut first_decorator: Option<Node> = None;
     for child in block.named_children(&mut block.walk()) {
@@ -908,6 +909,7 @@ fn class(
             "comment" => {
                 if *child_rows.start() > last_row && first_decorator.is_none() {
                     comment_start.get_or_insert(*child_rows.start());
+                    tagged_internal |= is_internal(file, &[Item::new(child_rows)]);
                 }
                 continue;
             }
@@ -918,6 +920,7 @@ fn class(
             _ => {}
         }
         let leading_comment = comment_start.take();
+        let internal = std::mem::take(&mut tagged_internal);
         let anchor = first_decorator.take().unwrap_or(child);
         let (start, end) = (anchor.start_position().row + 1, *child_rows.end());
         let is_member = matches!(
@@ -937,7 +940,7 @@ fn class(
             .child_by_field_name("value")
             .and_then(wrapped_function_block);
         let is_data_entry = child.kind() == "pair" && function_block.is_none();
-        if (is_member || is_field) && !is_hidden_member(file, child, is_data_entry) {
+        if (is_member || is_field) && !internal && !is_hidden_member(file, child, is_data_entry) {
             if is_member || function_block.is_some() {
                 let member_name_row = name_row(child).unwrap_or(start);
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
@@ -1272,6 +1275,32 @@ export { warn } from './warning';
             ]
         );
         assert_eq!(rows(&model.reexports), [[13]]);
+    }
+
+    #[test]
+    fn typescript_internal_tagged_fields_and_same_row_docs_are_hidden() {
+        let model = extract_source(
+            "src/parser.ts",
+            "\
+export class Parser {
+    /** @internal */ buf: Uint8Array;
+    /** @internal */
+    pos: number;
+    /** @internal */ helper(): void {}
+    size = 0;
+    parse(x: string): number {
+        return 1;
+    }
+}
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1, 10] doc [] body [[6], [7]]",
+                "  Callable name [7] head [7] doc [] body [[8]]",
+            ]
+        );
     }
 
     #[test]
