@@ -712,9 +712,22 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
     let mut is_roster_complete = false;
     // In a language file the roster is for types and functions;
     // statements and directives take the slots they leave. A flat file's
-    // surface stays its head.
+    // surface stays its head. Among declarations of one rank, the ones the
+    // rest of the file names most come first; file order breaks ties, and
+    // orders statements.
     if is_language {
-        rows.sort_by_key(|&(.., rank)| rank);
+        let mut word_counts: HashMap<&str, usize> = HashMap::new();
+        for word in source.split(|c: char| !(c.is_alphanumeric() || c == '_')) {
+            *word_counts.entry(word).or_default() += 1;
+        }
+        rows.sort_by_cached_key(|&(_, line, kind, rank)| {
+            let declares = kind == SurfaceLine::Decl && rank < DeclarationRank::Statement;
+            let references = declares
+                .then(|| declared_name(lines[line - 1].trim()))
+                .flatten()
+                .and_then(|name| word_counts.get(name));
+            (rank, std::cmp::Reverse(references.copied().unwrap_or(0)))
+        });
     }
     for (depth, level) in levels
         .into_iter()
@@ -818,6 +831,30 @@ fn declares_type(trimmed: &str) -> bool {
         .rev()
         .skip(1)
         .any(|word| TYPE_KEYWORDS.contains(&word))
+}
+
+/// The name a declaration line declares: the identifier after a
+/// declaring keyword (`foo` in `def self.foo`), before a C-family
+/// parameter list (`run` in `public void run()`), or a shell function's.
+/// Nothing for a call opening a block (`project(":app") {`) or prose.
+fn declared_name(trimmed: &str) -> Option<&str> {
+    let head = &trimmed[..head_end(trimmed)];
+    let words: Vec<&str> = head.split_whitespace().collect();
+    let follows_keyword = words.len() >= 2
+        && [TYPE_KEYWORDS, MEMBER_KEYWORDS]
+            .iter()
+            .any(|keywords| keywords.contains(&words[words.len() - 2]));
+    let precedes_parameters = words.len() >= 2
+        && !head.ends_with(char::is_whitespace)
+        && trimmed[head.len()..].starts_with('(');
+    if !(follows_keyword || precedes_parameters || defines_function(trimmed)) {
+        return None;
+    }
+    words
+        .last()?
+        .rsplit(|c: char| !(c.is_alphanumeric() || c == '_'))
+        .find(|word| !word.is_empty())
+        .filter(|word| !word.starts_with(|c: char| c.is_ascii_digit()))
 }
 
 /// Where a line's modifiers, keyword and name end: its first bracket or
@@ -1982,6 +2019,31 @@ mod tests {
         ));
         assert!(!is_annotation_only("@Override public void run() {"));
         assert!(!is_annotation_only("@interface Foo : NSObject"));
+    }
+
+    /// Past the cap, the declarations the rest of the file names most
+    /// win over earlier ones, and the surface stays in file order. A call
+    /// opening a block names nothing.
+    #[test]
+    fn plaintext_source_text_surface_ranks_declarations_by_references() {
+        let mut shell: Vec<String> = (0..SOURCE_TEXT_DECL_LINES)
+            .flat_map(|n| [format!("helper{n}() {{"), "  :".into(), "}".into()])
+            .collect();
+        shell.extend(["dispatch() {", "  :", "}"].map(String::from));
+        shell.extend((0..3).map(|_| "dispatch \"$@\"".to_string()));
+        let shell = shell.join("\n");
+        let text = surface(&shell);
+        assert_eq!(text.len(), SOURCE_TEXT_DECL_LINES, "{text:?}");
+        assert_eq!(text.last(), Some(&"dispatch() {"), "{text:?}");
+        assert!(!text.contains(&"helper7() {"), "{text:?}");
+
+        assert_eq!(declared_name("def self.run(args)"), Some("run"));
+        assert_eq!(declared_name("public void run() {"), Some("run"));
+        assert_eq!(declared_name("project(\":app\") {"), None);
+        assert_eq!(
+            declared_name("there are nested routes. (Passed a callback"),
+            None
+        );
     }
 
     /// An abstract member is the API a trait or interface defines and

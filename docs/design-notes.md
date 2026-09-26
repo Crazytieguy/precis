@@ -237,6 +237,14 @@ code to a single language.**
   bodies. Extending the dir-mode roster the same way cost library-file
   breadth (8,000-token renders of fallback repos: 1,616 -> 1,490 files
   with rows) at a flat grid.
+- Past its declaration cap, a fallback roster keeps, within each rank,
+  the declarations the rest of the file names most, not the first ones:
+  file order showed a big entry file's first helpers and never its
+  dispatcher or its main API. A name counts only after a declaring
+  keyword, before a parameter list or as a shell function, so calls and
+  prose that open blocks keep file order. Flat on the grid; on the
+  real-world corpus, the share of swapped-in rows whose name another file
+  uses rose from 70% to 77% (plugin) and 80% to 84% (8,000 tokens).
 
 ## Output notation
 
