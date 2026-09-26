@@ -819,23 +819,6 @@ mod tests {
         assert!(!list_dir(&via_link, &filter).is_empty());
     }
 
-    #[cfg(unix)]
-    #[test]
-    fn fs_util_list_dir_drops_a_fifo_and_a_link_to_one() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        std::fs::write(root.join("deploy"), "#!/bin/sh\n").unwrap();
-        let status = Command::new("mkfifo")
-            .arg(root.join("events"))
-            .status()
-            .unwrap();
-        assert!(status.success());
-        std::os::unix::fs::symlink("events", root.join("events-link")).unwrap();
-
-        let filter = DirFilter::without_global_excludes(root);
-        assert_eq!(names_in(root, &filter), ["deploy"]);
-    }
-
     /// A linked worktree carries a `.git` pointer file, and keeps
     /// `info/exclude` in the shared common dir named by `commondir`.
     #[test]

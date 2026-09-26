@@ -73,7 +73,8 @@ fn robustness_root_with_only_a_license_lists_it() {
 }
 
 /// Reading a FIFO blocks until a writer appears, and a socket cannot be
-/// read at all: listings leave both out, and a named one is an error.
+/// read at all: listings leave both out, links to them included, and a
+/// named one is an error.
 #[cfg(unix)]
 #[test]
 fn robustness_special_files_are_never_read() {
@@ -81,17 +82,16 @@ fn robustness_special_files_are_never_read() {
     write(&temp.path().join("main.py"), "def main():\n    return 1\n");
     let fifo = temp.path().join("events.log");
     mkfifo(&fifo);
+    std::os::unix::fs::symlink("events.log", temp.path().join("latest.log")).unwrap();
     let _socket = std::os::unix::net::UnixListener::bind(temp.path().join("app.sock")).unwrap();
 
     let out = render(temp.path(), 3000).unwrap();
-    assert!(out.contains("1→def main():"), "{out}");
-    assert!(
-        !out.contains("events.log") && !out.contains("app.sock"),
-        "{out}"
-    );
+    assert_eq!(out, "main.py\n  1→def main():\n  2→    return 1\n");
 
-    let error = render(&fifo, 3000).unwrap_err();
-    assert!(error.to_string().contains("regular file"), "{error}");
+    for special in [&fifo, &temp.path().join("latest.log")] {
+        let error = render(special, 3000).unwrap_err();
+        assert!(error.to_string().contains("regular file"), "{error}");
+    }
 }
 
 #[test]

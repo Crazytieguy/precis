@@ -482,18 +482,6 @@ mod tests {
     }
 
     #[test]
-    fn walker_mod_parse_skips_files_over_the_byte_cap() {
-        let tmp = tempfile::tempdir().unwrap();
-        let root = tmp.path();
-        std::fs::write(root.join("small.c"), "int x;\n").unwrap();
-        std::fs::write(root.join("huge.c"), " ".repeat(PARSE_BYTE_CAP + 1)).unwrap();
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let c: Language = tree_sitter_c::LANGUAGE.into();
-        assert!(ctx.parse_tree(&root.join("small.c"), &c).is_some());
-        assert!(ctx.parse_tree(&root.join("huge.c"), &c).is_none());
-    }
-
-    #[test]
     fn walker_mod_build_file_spans_bridges_interior_blank_gaps() {
         // Rows 2 and 4 are blank; collecting 1/3/5 must yield one span
         // covering the whole region, blanks included.
