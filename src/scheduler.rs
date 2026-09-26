@@ -21,7 +21,7 @@
 //! (`ranking_cost`).
 
 use std::cmp::Ordering;
-use std::collections::{BTreeSet, BinaryHeap, HashMap, HashSet};
+use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::PathBuf;
 use std::rc::Rc;
 
@@ -71,13 +71,10 @@ pub struct Scheduler<W: Walker> {
     scheduled_log: Vec<(BatchId, Cost)>,
     /// Cached exact marginal cost per emitted batch.
     cost_cache: HashMap<BatchId, Cost>,
-    /// Eligible batches by ratio, best on top. A batch whose ratio
-    /// inputs change is pushed again with a new generation, and the
-    /// entries it leaves behind are dropped when they surface or when
-    /// they outnumber the live ones.
-    ranking: BinaryHeap<RankedBatch>,
-    /// Generation of each batch's live [`Self::ranking`] entry, by id.
-    rank_generation: Vec<u32>,
+    /// Eligible batches by ratio, best last.
+    ranking: BTreeSet<Rc<RankedBatch>>,
+    /// Each batch's [`Self::ranking`] entry, by id.
+    ranked: Vec<Option<Rc<RankedBatch>>>,
     /// Batches whose ratio must be recomputed before the next pick.
     stale: Vec<BatchId>,
     /// File → span batches touching it. Applying a batch to a file can
@@ -138,8 +135,8 @@ impl<W: Walker> Scheduler<W> {
             waiting: HashMap::new(),
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
-            ranking: BinaryHeap::new(),
-            rank_generation: Vec::new(),
+            ranking: BTreeSet::new(),
+            ranked: Vec::new(),
             stale: Vec::new(),
             batches_by_path: HashMap::new(),
             dominant_file_batches: HashSet::new(),
@@ -265,7 +262,7 @@ impl<W: Walker> Scheduler<W> {
             }
         }
         self.entries.push(batch);
-        self.rank_generation.push(0);
+        self.ranked.push(None);
     }
 
     // ---- exact pool ----
@@ -273,16 +270,7 @@ impl<W: Walker> Scheduler<W> {
     /// Top-ranked eligible batch + its cost.
     fn top_ranked(&mut self) -> Option<(BatchId, Cost)> {
         self.rerank_stale();
-        self.drop_superseded_rankings();
-        while let Some(top) = self.ranking.peek() {
-            if self.eligible.contains(&top.id)
-                && top.generation == self.rank_generation[top.id.index()]
-            {
-                break;
-            }
-            self.ranking.pop();
-        }
-        let best = self.ranking.peek()?.id;
+        let best = self.ranking.last()?.id;
         if !self.root_identity_read
             && self.is_listing_below_spine(best)
             && let Some(identity) = self
@@ -297,20 +285,8 @@ impl<W: Walker> Scheduler<W> {
         Some((best, self.cost_cache[&best]))
     }
 
-    /// Rebuilds the ranking from its live entries once superseded ones
-    /// outnumber them, so entries under a winning top can't pile up.
-    fn drop_superseded_rankings(&mut self) {
-        if self.ranking.len() <= 2 * self.eligible.len() {
-            return;
-        }
-        let (eligible, rank_generation) = (&self.eligible, &self.rank_generation);
-        self.ranking.retain(|ranked| {
-            eligible.contains(&ranked.id) && ranked.generation == rank_generation[ranked.id.index()]
-        });
-    }
-
-    /// Pushes every stale eligible batch into the ranking at its
-    /// current ratio, costing it first if its cost isn't cached.
+    /// Ranks every stale eligible batch at its current ratio, costing
+    /// it first if its cost isn't cached.
     fn rerank_stale(&mut self) {
         let mut stale = std::mem::take(&mut self.stale);
         stale.sort_unstable();
@@ -324,14 +300,26 @@ impl<W: Walker> Scheduler<W> {
                 .entry(id)
                 .or_insert_with(|| self.tree.marginal_cost(&entry.content));
             let ratio = self.ranking_ratio(id);
-            let generation = &mut self.rank_generation[id.index()];
-            *generation += 1;
-            self.ranking.push(RankedBatch {
+            if self.ranked[id.index()]
+                .as_ref()
+                .is_some_and(|ranked| ranked.ratio == ratio)
+            {
+                continue;
+            }
+            self.unrank(id);
+            let ranked = Rc::new(RankedBatch {
                 ratio,
                 key: self.entries[id.index()].key.clone(),
                 id,
-                generation: *generation,
             });
+            self.ranking.insert(Rc::clone(&ranked));
+            self.ranked[id.index()] = Some(ranked);
+        }
+    }
+
+    fn unrank(&mut self, id: BatchId) {
+        if let Some(ranked) = self.ranked[id.index()].take() {
+            self.ranking.remove(&ranked);
         }
     }
 
@@ -422,6 +410,7 @@ impl<W: Walker> Scheduler<W> {
         );
         self.scheduled.insert(id);
         self.eligible.remove(&id);
+        self.unrank(id);
         if let Some(released) = self.waiting.remove(&self.entries[id.index()].key) {
             self.eligible.extend(&released);
             self.stale.extend(released);
@@ -546,7 +535,6 @@ struct RankedBatch {
     ratio: f64,
     key: BatchKey,
     id: BatchId,
-    generation: u32,
 }
 
 impl Ord for RankedBatch {

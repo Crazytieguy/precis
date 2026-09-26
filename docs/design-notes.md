@@ -541,9 +541,12 @@ breadth pressure on them after 1000 to 4000 spine tokens 3000 −0.004 to
 - **Very large budgets are slow.** Runs at 3000 tokens and in the
   plugin stay under 1.5 s on the largest corpus repositories, but zig
   takes 12 s at 100k tokens, llvm 14 s and TypeScript 13 s at 1M.
-  Ranking is incremental (a heap re-ranking only the batches whose
-  ratio inputs changed), so what remains is parsing every file of each
-  expanded directory (nearly all of zig's time) and re-costing: scheduling a
-  batch drops the cached cost of every other batch on its file, so a
-  file with hundreds of batches is re-costed per pick (more than half of
-  TypeScript's time at 1M). Only the CLI reaches these budgets.
+  Ranking is incremental (an ordered set re-ranking only the batches
+  whose ratio inputs changed, and only when the ratio moved: rust at 1M
+  re-ranks 200 batches per pick, and skipping the unmoved ones is what
+  keeps the set at the heap's speed), so what remains is parsing every
+  file of each expanded directory (nearly all of zig's time) and
+  re-costing: scheduling a batch drops the cached cost of every other
+  batch on its file, so a file with hundreds of batches is re-costed per
+  pick (more than half of TypeScript's time at 1M). Only the CLI reaches
+  these budgets.
