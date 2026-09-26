@@ -70,6 +70,13 @@ impl Source {
         }
     }
 
+    /// Memory the text and its line index take.
+    fn held_bytes(&self) -> usize {
+        self.text.len()
+            + std::mem::size_of_val(&*self.line_ranges)
+            + std::mem::size_of_val(&*self.non_blank_prefix)
+    }
+
     /// 1-based line `number`, without its line terminator.
     pub fn line(&self, number: usize) -> Option<&str> {
         let range = self.line_ranges.get(number.checked_sub(1)?)?.clone();
@@ -96,9 +103,23 @@ impl Source {
 /// while a 25.9 MB generated `parser.c` cost 900 MB and seconds to parse.
 pub(crate) const MAX_SOURCE_BYTES: usize = 8 * 1024 * 1024;
 
+/// Most a run's [`SourceCache`] holds, text and line index together; a
+/// read past it is refused. The largest run over the 286-repo robustness
+/// and eval corpora, at a 1M-token budget, holds 82 MB of text in 2.2M
+/// lines (134 MB with the index); without a cap, a few hundred generated
+/// one-character-per-line files in one listing held 1.8 GB.
+const SOURCE_CACHE_BYTE_CAP: usize = 256 * 1024 * 1024;
+
 /// Shared source-file cache — read and index each file at most once per run.
 #[derive(Clone, Debug, Default)]
-pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<Source>>>>);
+pub struct SourceCache(Rc<RefCell<CachedSources>>);
+
+#[derive(Debug, Default)]
+struct CachedSources {
+    by_path: HashMap<PathBuf, Arc<Source>>,
+    /// Summed [`Source::held_bytes`] of `by_path`.
+    held_bytes: usize,
+}
 
 impl SourceCache {
     pub fn new() -> Self {
@@ -106,11 +127,12 @@ impl SourceCache {
     }
 
     /// Read `path`, caching. `None` unless it is a regular file of at
-    /// most [`MAX_SOURCE_BYTES`] holding no NUL byte (binary), and not
-    /// [refused](crate::walker::is_refused): nothing else is source, and a
-    /// FIFO or device named by a link could block or read forever. Bytes
-    /// that aren't UTF-8 (a Latin-1 name in a license header) read as
-    /// U+FFFD rather than hiding the whole file.
+    /// most [`MAX_SOURCE_BYTES`] holding no NUL byte (binary), not
+    /// [refused](crate::walker::is_refused), and within what is left of
+    /// [`SOURCE_CACHE_BYTE_CAP`]: nothing else is source, and a FIFO or
+    /// device named by a link could block or read forever. Bytes that
+    /// aren't UTF-8 (a Latin-1 name in a license header) read as U+FFFD
+    /// rather than hiding the whole file.
     pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
         if let Some(cached) = self.cached(path) {
             return Some(cached);
@@ -119,7 +141,10 @@ impl SourceCache {
             return None;
         }
         let metadata = std::fs::metadata(path).ok()?;
-        if !metadata.is_file() || metadata.len() > MAX_SOURCE_BYTES as u64 {
+        if !metadata.is_file()
+            || metadata.len() > MAX_SOURCE_BYTES as u64
+            || metadata.len() as usize > self.bytes_left()
+        {
             return None;
         }
         let mut bytes = Vec::new();
@@ -135,28 +160,41 @@ impl SourceCache {
         if crate::walker::holds_private_key(&text) {
             return None;
         }
-        let source = Arc::new(Source::new(Arc::from(text)));
-        self.0
-            .borrow_mut()
-            .insert(path.to_path_buf(), source.clone());
-        Some(source)
+        self.admit(path.to_path_buf(), Source::new(Arc::from(text)))
     }
 
     /// `path`'s source if it has already been read, without reading it.
     pub fn cached(&self, path: &Path) -> Option<Arc<Source>> {
-        self.0.borrow().get(path).cloned()
+        self.0.borrow().by_path.get(path).cloned()
     }
 
     /// Insert a pre-loaded source, unless it is
-    /// [refused](crate::walker::is_refused). Idempotent.
+    /// [refused](crate::walker::is_refused) or past what is left of
+    /// [`SOURCE_CACHE_BYTE_CAP`]. Idempotent.
     pub fn insert(&self, path: PathBuf, source: Arc<str>) {
-        if crate::walker::is_refused(&path, &source) {
+        if self.cached(&path).is_some()
+            || source.len() > self.bytes_left()
+            || crate::walker::is_refused(&path, &source)
+        {
             return;
         }
-        self.0
-            .borrow_mut()
-            .entry(path)
-            .or_insert_with(|| Arc::new(Source::new(source)));
+        self.admit(path, Source::new(source));
+    }
+
+    fn bytes_left(&self) -> usize {
+        SOURCE_CACHE_BYTE_CAP.saturating_sub(self.0.borrow().held_bytes)
+    }
+
+    fn admit(&self, path: PathBuf, source: Source) -> Option<Arc<Source>> {
+        let held_bytes = source.held_bytes();
+        if held_bytes > self.bytes_left() {
+            return None;
+        }
+        let source = Arc::new(source);
+        let mut cache = self.0.borrow_mut();
+        cache.held_bytes += held_bytes;
+        cache.by_path.insert(path, source.clone());
+        Some(source)
     }
 }
 
@@ -1104,6 +1142,25 @@ mod tests {
                 entries: FsEntries::Listed(entries.iter().map(PathBuf::from).collect()),
             }],
         }
+    }
+
+    #[test]
+    fn render_source_cache_refuses_reads_past_its_byte_cap() {
+        let temp = tempfile::tempdir().unwrap();
+        let [first, second, head] = ["first.txt", "second.txt", "head.txt"].map(|name| {
+            let path = temp.path().join(name);
+            std::fs::write(&path, "a\nb\n").unwrap();
+            path
+        });
+        let cache = SourceCache::new();
+        assert!(cache.get(&first).is_some());
+        let first_bytes = cache.0.borrow().held_bytes;
+        assert!(first_bytes > "a\nb\n".len());
+        cache.0.borrow_mut().held_bytes = SOURCE_CACHE_BYTE_CAP - first_bytes + 1;
+        assert!(cache.get(&second).is_none());
+        cache.insert(head.clone(), Arc::from("a\nb\n"));
+        assert!(cache.cached(&head).is_none());
+        assert!(cache.get(&first).is_some());
     }
 
     fn one_span(path: PathBuf, line: usize, render: Render) -> BatchContent {

@@ -132,7 +132,12 @@ never reached the ones answer keys rank.
   `__init__.py` ancestry open by fixed name to the listing's rules
   (refused reads as no declaration). `SourceCache::get` then reads only
   a regular file of at most `MAX_SOURCE_BYTES` with no NUL byte,
-  decoding bytes that aren't UTF-8 as U+FFFD. The spine survey reads its
+  decoding bytes that aren't UTF-8 as U+FFFD. Everything the cache
+  holds, text and line index, is charged to one run-wide
+  `SOURCE_CACHE_BYTE_CAP`, reads (`get`) and handed-in heads (`insert`)
+  alike: the parse cap alone left the reads walkers make without
+  parsing (the C++-header probe, fallback-language and prose files)
+  unbounded. The spine survey reads its
   candidates through `read_source` too; the floor's head read
   (`plaintext::file_head`) has its own capped reader but sees only
   listed files. Workspace membership
