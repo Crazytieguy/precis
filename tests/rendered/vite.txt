@@ -228,46 +228,6 @@ packages/
         hmrLogger.ts
         importMetaResolver.ts
         index.ts
-          …
-          3→export {
-          4→  EvaluatedModules,
-          5→  normalizeModuleId,
-          6→  type EvaluatedModuleNode,
-          7→} from './evaluatedModules'
-          8→export { ModuleRunner } from './runner'
-          9→export { ESModulesEvaluator } from './esmEvaluator'
-          10→export {
-          11→  createDefaultImportMeta,
-          12→  createNodeImportMeta,
-          13→} from './createImportMeta'
-          14→
-          15→export { createWebSocketModuleRunnerTransport } from '../shared/moduleRunnerTransport'
-          16→
-          17→export type { FetchFunctionOptions, FetchResult } from '../shared/invokeMethods'
-          18→export type {
-          19→  ModuleRunnerTransportHandlers,
-          20→  ModuleRunnerTransport,
-          21→} from '../shared/moduleRunnerTransport'
-          22→export type { HMRLogger } from '../shared/hmr'
-          23→export type {
-          24→  ModuleEvaluator,
-          25→  ModuleRunnerContext,
-          26→  FetchFunction,
-          27→  ResolvedResult,
-          28→  SSRImportMetadata,
-          29→  ModuleRunnerImportMeta,
-          30→  ModuleRunnerOptions,
-          31→  ModuleRunnerHmr,
-          32→} from './types'
-          33→export {
-          34→  ssrDynamicImportKey,
-          35→  ssrExportAllKey,
-          36→  ssrExportNameKey,
-          37→  ssrImportKey,
-          38→  ssrImportMetaKey,
-          39→  ssrModuleExportsKey,
-          40→} from './constants'
-          41→export type { InterceptorOptions } from './sourcemap/interceptor'
         runner.ts
         sourcemap/
           decoder.ts
@@ -417,28 +377,85 @@ playground/
   alias/
   assets/
   assets-sanitize/
+    +circle.svg
+    .env
+    __tests__/
+    _circle.svg
+    index.html
+    index.js
+    package.json
+    vite.config.js
   backend-integration/
   base-conflict/
   build-old/
   cli/
+    __tests__/
+    index.html
+    index.js
+    package.json
+    vite.config.js
   cli-module/
+    __tests__/
+    index.html
+    index.js
+    package.json
+    vite.config.js
   client-reload/
   csp/
+    __tests__/
+    dynamic.css
+    dynamic.js
+    from-js.css
+    index.html
+    index.js
+    linked.css
+    package.json
+    vite.config.js
   css/
   css-codesplit/
   css-codesplit-cjs/
   css-dynamic-import/
+    __tests__/
+    dynamic.css
+    dynamic.js
+    index.html
+    index.js
+    package.json
+    static.css
+    static.js
   css-lightningcss/
   css-lightningcss-proxy/
+    __tests__/
+    index.html
+    package.json
+    server.js
   css-lightningcss-root/
+    __tests__/
+    package.json
+    root/
+    vite.config.js
   css-no-codesplit/
   css-sourcemap/
   data-uri/
   define/
   devtools/
+    index.html
+    package.json
+    src/
+      counter.ts
+      main.ts
+    vite.config.ts
   dynamic-import/
   dynamic-import-inline/
   env/
+    .env
+    .env.development
+    .env.production
+    __tests__/
+    index.html
+    index.js
+    package.json
+    vite.config.js
   env-nested/
   environment-react-ssr/
   extensions/
@@ -468,7 +485,37 @@ playground/
   preload/
   preserve-symlinks/
   proxy-bypass/
-  …
+  proxy-hmr/
+  resolve/
+  resolve-linked/
+    dep.js
+    package.json
+    src/
+      index.js
+  resolve-tsconfig-paths/
+  shims.d.ts
+  ssr/
+  ssr-alias/
+  ssr-conditions/
+  ssr-deps/
+  ssr-html/
+  ssr-noexternal/
+  ssr-pug/
+  ssr-resolve/
+  ssr-wasm/
+  ssr-webworker/
+  tailwind/
+  tailwind-sourcemap/
+  tailwind-v3/
+  test-utils.ts
+  transform-plugin/
+  tsconfig-json/
+  tsconfig-json-load-error/
+  tsconfig.json
+  vitestGlobalSetup.ts
+  vitestSetup.ts
+  wasm/
+  worker/
 pnpm-lock.yaml
 pnpm-workspace.yaml
 scripts/

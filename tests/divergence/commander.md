@@ -167,43 +167,42 @@ Score(3000)=0.583 I=0.796 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 8679 | 15 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 97, sub: 0, line: 537 } |  |  | 0.545 |
 | walker |  | 8695 | 16 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 62, sub: 0, line: 293 } |  |  | 0.545 |
 | walker |  | 8711 | 16 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 78, sub: 0, line: 370 } |  |  | 0.545 |
-| walker |  | 8724 | 13 | Code::CodeKey { rung: Names, file: typings/esm.d.mts, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
-| walker |  | 8741 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 35, sub: 0, line: 237 } |  |  | 0.545 |
-| walker |  | 8758 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 36, sub: 0, line: 239 } |  |  | 0.545 |
+| walker |  | 8728 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 35, sub: 0, line: 237 } |  |  | 0.545 |
+| walker |  | 8745 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 36, sub: 0, line: 239 } |  |  | 0.545 |
+| walker |  | 8762 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 37, sub: 0, line: 241 } |  |  | 0.545 |
 | ns | 8764 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.536 |
-| walker |  | 8775 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 37, sub: 0, line: 241 } |  |  | 0.536 |
-| walker |  | 8792 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 38, sub: 0, line: 243 } |  |  | 0.536 |
-| walker |  | 8810 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 33, sub: 0, line: 233 } |  |  | 0.536 |
-| walker |  | 8828 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 34, sub: 0, line: 235 } |  |  | 0.536 |
-| walker |  | 8846 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 112, sub: 0, line: 660 } |  |  | 0.536 |
-| walker |  | 8864 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 115, sub: 0, line: 685 } |  |  | 0.536 |
-| walker |  | 8883 | 19 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 43, sub: 0, line: 255 } |  |  | 0.536 |
-| walker |  | 8902 | 19 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 50, sub: 0, line: 272 } |  |  | 0.536 |
-| walker |  | 8922 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 9, sub: 0, line: 67 } |  |  | 0.536 |
-| walker |  | 8942 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 13, sub: 0, line: 87 } |  |  | 0.536 |
-| walker |  | 8962 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 14, sub: 0, line: 92 } |  |  | 0.536 |
-| walker |  | 8982 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 26, sub: 0, line: 189 } |  |  | 0.536 |
-| walker |  | 9002 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 121, sub: 0, line: 723 } |  |  | 0.536 |
-| walker |  | 9022 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 122, sub: 0, line: 728 } |  |  | 0.536 |
-| walker |  | 9042 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 140, sub: 0, line: 897 } |  |  | 0.536 |
-| walker |  | 9062 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 142, sub: 0, line: 909 } |  |  | 0.536 |
-| walker |  | 9083 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 24, sub: 0, line: 179 } |  |  | 0.536 |
+| walker |  | 8779 | 17 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 38, sub: 0, line: 243 } |  |  | 0.536 |
+| walker |  | 8797 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 33, sub: 0, line: 233 } |  |  | 0.536 |
+| walker |  | 8815 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 34, sub: 0, line: 235 } |  |  | 0.536 |
+| walker |  | 8833 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 112, sub: 0, line: 660 } |  |  | 0.536 |
+| walker |  | 8851 | 18 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 115, sub: 0, line: 685 } |  |  | 0.536 |
+| walker |  | 8870 | 19 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 43, sub: 0, line: 255 } |  |  | 0.536 |
+| walker |  | 8889 | 19 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 50, sub: 0, line: 272 } |  |  | 0.536 |
+| walker |  | 8909 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 9, sub: 0, line: 67 } |  |  | 0.536 |
+| walker |  | 8929 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 13, sub: 0, line: 87 } |  |  | 0.536 |
+| walker |  | 8949 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 14, sub: 0, line: 92 } |  |  | 0.536 |
+| walker |  | 8969 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 26, sub: 0, line: 189 } |  |  | 0.536 |
+| walker |  | 8989 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 121, sub: 0, line: 723 } |  |  | 0.536 |
+| walker |  | 9009 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 122, sub: 0, line: 728 } |  |  | 0.536 |
+| walker |  | 9029 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 140, sub: 0, line: 897 } |  |  | 0.536 |
+| walker |  | 9049 | 20 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 142, sub: 0, line: 909 } |  |  | 0.536 |
+| walker |  | 9070 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 24, sub: 0, line: 179 } |  |  | 0.536 |
+| walker |  | 9091 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 39, sub: 0, line: 246 } |  |  | 0.536 |
 | ns | 9094 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.528 |
-| walker |  | 9104 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 39, sub: 0, line: 246 } |  |  | 0.528 |
-| walker |  | 9125 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 66, sub: 0, line: 307 } |  |  | 0.528 |
-| walker |  | 9146 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 83, sub: 0, line: 398 } |  |  | 0.528 |
-| walker |  | 9167 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 139, sub: 0, line: 893 } |  |  | 0.528 |
-| walker |  | 9188 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 148, sub: 0, line: 946 } |  |  | 0.528 |
-| walker |  | 9210 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 28, sub: 0, line: 200 } |  |  | 0.524 |
+| walker |  | 9112 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 66, sub: 0, line: 307 } |  |  | 0.528 |
+| walker |  | 9133 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 83, sub: 0, line: 398 } |  |  | 0.528 |
+| walker |  | 9154 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 139, sub: 0, line: 893 } |  |  | 0.528 |
+| walker |  | 9175 | 21 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 148, sub: 0, line: 946 } |  |  | 0.528 |
+| walker |  | 9197 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 28, sub: 0, line: 200 } |  |  | 0.528 |
 | ns | 9210 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.524 |
-| walker |  | 9232 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 95, sub: 0, line: 533 } |  |  | 0.524 |
-| walker |  | 9254 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 124, sub: 0, line: 742 } |  |  | 0.524 |
-| walker |  | 9276 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 144, sub: 0, line: 922 } |  |  | 0.524 |
-| walker |  | 9298 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 146, sub: 0, line: 935 } |  |  | 0.524 |
-| walker |  | 9320 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 153, sub: 0, line: 990 } |  |  | 0.524 |
-| walker |  | 9372 | 52 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 41, sub: 0, line: 1902 } |  |  | 0.524 |
+| walker |  | 9219 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 95, sub: 0, line: 533 } |  |  | 0.524 |
+| walker |  | 9241 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 124, sub: 0, line: 742 } |  |  | 0.524 |
+| walker |  | 9263 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 144, sub: 0, line: 922 } |  |  | 0.524 |
+| walker |  | 9285 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 146, sub: 0, line: 935 } |  |  | 0.524 |
+| walker |  | 9307 | 22 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 153, sub: 0, line: 990 } |  |  | 0.524 |
+| walker |  | 9359 | 52 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 41, sub: 0, line: 1902 } |  |  | 0.524 |
 | ns | 9471 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.531 |
 | ns | 9673 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.526 |
 | ns | 9848 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.532 |
 | ns | 9940 |  | 92 | jest.config.js | 5.4 |  | 0.530 |
-| walker |  | 9997 | 625 | Fs::DirListing { dir: tests } |  |  | 0.580 |
+| walker |  | 9997 | 638 | Fs::DirListing { dir: tests } |  |  | 0.582 |

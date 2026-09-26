@@ -87,7 +87,13 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     for (statement, top_level) in classified {
         let node = match top_level {
             TopLevel::Reexport => {
-                model.reexports.push(Item::new(file.node_rows(statement)));
+                let comments = doc_items(file, statement)
+                    .into_iter()
+                    .filter(|doc| file.line(doc.rows[0]).trim_start().starts_with("//"))
+                    .flat_map(|doc| doc.rows);
+                model
+                    .reexports
+                    .push(Item::new(comments.chain(file.node_rows(statement))));
                 continue;
             }
             TopLevel::Exported(node) => node,
@@ -1522,6 +1528,20 @@ export interface TreeState<T> extends StateType<T> {}
             .map(|decl| decl.name_rows.clone())
             .collect();
         assert_eq!(name_rows, [vec![1], vec![3], vec![4], vec![7]]);
+    }
+
+    #[test]
+    fn code_typescript_reexport_keeps_its_line_comment_label() {
+        let model = extract_source(
+            "src/index.ts",
+            "\
+// Base
+export * from './base';
+/** Errors. */
+export * from './errors';
+",
+        );
+        assert_eq!(rows(&model.reexports), [vec![1, 2], vec![4]]);
     }
 
     #[test]
