@@ -145,10 +145,13 @@ displaces a priced batch.
   paste; no walker carries a check of its own. The name rule exempts samples (`*.example`,
   `*.sample`, `*.template`, `*.dist`), source code and documents, which
   are about credentials rather than holding them. A URL's password
-  (`scheme://user:PASSWORD@host`) is redacted where rows are formatted
-  (`render::format_line_row`), so it holds for every walker and the
-  floor, and for costing as well as output. Other secrets in ordinarily
-  named config are not detected.
+  (`scheme://user:PASSWORD@host`) and the quoted literal of a
+  credential-named key (`password: "…"`, `API_KEY = "…"`) are redacted
+  where rows are formatted (`render::redact_secrets`), so it holds for
+  every walker and the floor, and for costing as well as output. Only
+  a quoted, space-free literal with a letter counts: an unquoted value
+  can't be told from a variable or a type by the line alone. Other
+  secrets in ordinarily named config are not detected.
 
 ## Cross-language vs language-specific concerns
 

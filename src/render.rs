@@ -1000,16 +1000,50 @@ pub fn visible_full_line(source_line: &str) -> &str {
     }
 }
 
-/// `line` with the password of every URL that carries one
-/// (`postgresql://admin:PASSWORD@db/app`) shown as `…`: a connection
-/// string written inline is the one place a secret sits in files precis
-/// otherwise shows. A placeholder (`{}`, `${DB_PASSWORD}`, `<password>`)
-/// is code or documentation, and shows.
-fn redact_url_passwords(line: &str) -> std::borrow::Cow<'_, str> {
+/// `line` with its inline secrets shown as `…`: the password of a URL
+/// (`postgresql://admin:PASSWORD@db/app`) and the quoted literal assigned
+/// to a credential-named key (`password: "hunter2"`,
+/// `"api_key" => 'sk-…'`, `SECRET_KEY = "…"`, `authToken: "…"`). A
+/// placeholder (`{}`, `${DB_PASSWORD}`, `<password>`, `%s`,
+/// `env(DB_PASSWORD)`), a phrase (`"Save password": "Tallenna salasana"`),
+/// a number or version (`"parse-passwd": "^1.0.0"`), a value spelling its
+/// own key (`ACCESS_TOKEN = "access_token"`), and anything unquoted — a
+/// variable, a call, a type — is code or documentation, and shows.
+fn redact_secrets(line: &str) -> std::borrow::Cow<'_, str> {
     static URL_PASSWORD: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
         regex::Regex::new(r#"(://[^\s/:@"'`]*:)[^\s/@"'`{}$<>]+@"#).unwrap()
     });
-    URL_PASSWORD.replace_all(line, "${1}…@")
+    static CREDENTIAL_LITERAL: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(concat!(
+            r#"(?i)(?<open>["']?)"#,
+            r"(?<key>[\w.-]*(?:password|passwd|pwd|secret|token|(?:api|access|secret|private|auth)[_-]?key))",
+            r#"(?<close>["']?)\s*(?:=>|:=|:|=)\s*"#,
+            r#"(?<literal>"[^"{}()$<%\s]*[a-z][^"{}()$<%\s]*"|'[^'{}()$<%\s]*[a-z][^'{}()$<%\s]*')"#,
+        ))
+        .unwrap()
+    });
+    let line = URL_PASSWORD.replace_all(line, "${1}…@");
+    let alphanumerics = |text: &str| -> String {
+        text.chars()
+            .filter(|c| c.is_alphanumeric())
+            .flat_map(char::to_lowercase)
+            .collect()
+    };
+    let redacted = CREDENTIAL_LITERAL.replace_all(&line, |caps: &regex::Captures| {
+        let whole = caps.get(0).unwrap();
+        let literal = caps.name("literal").unwrap();
+        if caps["open"] != caps["close"]
+            || alphanumerics(&caps["key"]).ends_with(&alphanumerics(literal.as_str()))
+        {
+            return whole.as_str().to_string();
+        }
+        let quote = &literal.as_str()[..1];
+        format!("{}{quote}…{quote}", &line[whole.start()..literal.start()])
+    });
+    if let std::borrow::Cow::Owned(redacted) = redacted {
+        return std::borrow::Cow::Owned(redacted);
+    }
+    line
 }
 
 /// Render one line: render spec + raw source text (empty string when
@@ -1020,7 +1054,7 @@ fn format_line_row(
     source_line: &str,
     indent_depth: usize,
 ) -> String {
-    let source_line = &*redact_url_passwords(source_line);
+    let source_line = &*redact_secrets(source_line);
     let mut s = INDENT_UNIT.repeat(indent_depth);
     match render {
         Render::Ellipsis => {
@@ -1257,7 +1291,7 @@ mod tests {
     }
 
     #[test]
-    fn render_url_passwords_are_redacted_and_nothing_else() {
+    fn render_inline_secrets_are_redacted_and_nothing_else() {
         for (line, shown) in [
             (
                 r#"url = "postgresql://admin:hunter2@db:5432/app""#,
@@ -1278,8 +1312,43 @@ mod tests {
                 "postgres://app:${DB_PASSWORD}@db/app",
                 "postgres://app:${DB_PASSWORD}@db/app",
             ),
+            (r#"    password: "@ns1bl3""#, r#"    password: "…""#),
+            (
+                r#"{"api_key": "sk-123", "user": "a"}"#,
+                r#"{"api_key": "…", "user": "a"}"#,
+            ),
+            ("'client_secret' => 'abc',", "'client_secret' => '…',"),
+            (r#"#GOTIFY_TOKEN="123456789ABCDEF""#, r#"#GOTIFY_TOKEN="…""#),
+            (
+                r#"connect(authToken := "t0k")"#,
+                r#"connect(authToken := "…")"#,
+            ),
+            ("password = get_password()", "password = get_password()"),
+            ("token: Token,", "token: Token,"),
+            ("password: '{{ vault_pw }}'", "password: '{{ vault_pw }}'"),
+            (r#"secret = "${SECRET}""#, r#"secret = "${SECRET}""#),
+            (
+                r#"secret = "env(APPLE_SECRET)""#,
+                r#"secret = "env(APPLE_SECRET)""#,
+            ),
+            ("password: '<password>'", "password: '<password>'"),
+            (r#"token: """#, r#"token: """#),
+            (r#"l.token = "=""#, r#"l.token = "=""#),
+            (r#"if token == "if""#, r#"if token == "if""#),
+            (
+                r#"ACCESS_TOKEN = "access_token""#,
+                r#"ACCESS_TOKEN = "access_token""#,
+            ),
+            (r#"tokenizer = "gpt2""#, r#"tokenizer = "gpt2""#),
+            (r#""parse-passwd": "^1.0.0""#, r#""parse-passwd": "^1.0.0""#),
+            (r#"githubToken: "ghp_abc""#, r#"githubToken: "…""#),
+            (r#""Password": "密码""#, r#""Password": "密码""#),
+            (
+                r#""Save password": "Tallenna salasana""#,
+                r#""Save password": "Tallenna salasana""#,
+            ),
         ] {
-            assert_eq!(redact_url_passwords(line), shown);
+            assert_eq!(redact_secrets(line), shown);
         }
     }
 

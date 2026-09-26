@@ -1,4 +1,4 @@
-Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.924/0.983/0.897/0.809/0.676/0.610/0.564
+Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.924/0.983/0.897/0.809/0.676/0.582/0.564
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -39,7 +39,6 @@ Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 648 |  | 114 | README feature list, second half | 1.8 |  | 0.784 |
 | ns | 781 |  | 133 | Complete listings for the config / agent / tools / models packages | 1.9 |  | 0.781 |
 | walker |  | 798 | 167 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.874 |
-| walker |  | 798 | 0 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.874 |
 | walker |  | 820 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.874 |
 | ns | 999 |  | 218 | Complete listings for the builtin / hooks / session / auth / tokens / ui packages | 1.10 |  | 0.877 |
 | walker |  | 1036 | 216 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.946 |
@@ -101,69 +100,67 @@ Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 5006 |  | 192 | The tool-calling loop: step bound, tool-call branch and the approval gate | 4.3 | 4.2 | 0.632 |
 | walker |  | 5085 | 191 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.632 |
 | walker |  | 5100 | 15 | Code::CodeKey { rung: Body, file: internal/tokens/init.go, decl: 1, sub: 0, line: 21 } |  |  | 0.632 |
-| walker |  | 5132 | 32 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 3, sub: 0, line: 18 } |  |  | 0.632 |
 | ns | 5185 |  | 179 | agent factory: AgentCreationOptions fields and both functions | 4.4 |  | 0.621 |
-| walker |  | 5317 | 185 | Code::CodeKey { rung: Names, file: internal/config/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.630 |
-| walker |  | 5359 | 42 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 3, sub: 0, line: 109 } |  |  | 0.630 |
-| ns | 5548 |  | 363 | Every top-level symbol of internal/tools/mcp.go (locations) | 4.5 |  | 0.613 |
-| walker |  | 5578 | 219 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 5, sub: 0, line: 137 } |  |  | 0.613 |
-| ns | 5764 |  | 216 | AgenticLoopConfig head and every mode-driving function in cmd/root.go (locations) | 4.6 |  | 0.607 |
-| walker |  | 5877 | 299 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 4, sub: 0, line: 116 } |  |  | 0.607 |
+| walker |  | 5335 | 235 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.621 |
+| ns | 5548 |  | 363 | Every top-level symbol of internal/tools/mcp.go (locations) | 4.5 |  | 0.604 |
+| walker |  | 5562 | 227 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.604 |
+| walker |  | 5594 | 32 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 3, sub: 0, line: 18 } |  |  | 0.604 |
+| ns | 5764 |  | 216 | AgenticLoopConfig head and every mode-driving function in cmd/root.go (locations) | 4.6 |  | 0.598 |
+| walker |  | 5779 | 185 | Code::CodeKey { rung: Names, file: internal/config/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.607 |
+| walker |  | 5821 | 42 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 3, sub: 0, line: 109 } |  |  | 0.607 |
 | ns | 5906 |  | 142 | CreateProvider: the complete list of supported providers | 5.1 |  | 0.598 |
-| walker |  | 6110 | 233 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 1, sub: 0, line: 17 } |  |  | 0.625 |
-| ns | 6234 |  | 328 | Every top-level symbol of internal/models/providers.go (locations) | 5.2 | 5.1 | 0.607 |
-| walker |  | 6269 | 159 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 0, line: 155 } |  |  | 0.614 |
-| ns | 6384 |  | 150 | ModelsRegistry: model validation and suggestion API | 5.3 |  | 0.607 |
-| walker |  | 6420 | 151 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 1, line: 155 } |  |  | 0.623 |
-| ns | 6476 |  | 92 | The generated model catalogue: generator types and the DO-NOT-EDIT header | 5.4 |  | 0.619 |
-| walker |  | 6596 | 176 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 2, line: 155 } |  |  | 0.634 |
-| walker |  | 6611 | 15 | Code::CodeKey { rung: Body, file: internal/tokens/init.go, decl: 2, sub: 0, line: 50 } |  |  | 0.634 |
-| ns | 6652 |  | 176 | Builtin server registry: the complete set of in-process servers | 6.1 |  | 0.622 |
-| walker |  | 6736 | 125 | Code::CodeKey { rung: Names, file: internal/hooks/events.go, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
-| ns | 6824 |  | 172 | Every top-level symbol of internal/builtin/registry.go (locations) | 6.2 | 6.1 | 0.616 |
-| walker |  | 6829 | 93 | Code::CodeKey { rung: Decl, file: internal/hooks/events.go, decl: 2, sub: 0, line: 7 } |  |  | 0.616 |
-| walker |  | 6886 | 57 | Code::CodeKey { rung: Names, file: internal/hooks/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
-| walker |  | 6913 | 27 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 1, sub: 0, line: 14 } |  |  | 0.616 |
-| walker |  | 6968 | 55 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 3, sub: 0, line: 30 } |  |  | 0.616 |
-| walker |  | 7033 | 65 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 2, sub: 0, line: 21 } |  |  | 0.617 |
-| ns | 7041 |  | 217 | Bash builtin: output/timeout limits and the complete banned-command list | 6.3 |  | 0.602 |
-| walker |  | 7205 | 172 | Code::CodeKey { rung: Names, file: internal/session/session.go, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
-| ns | 7239 |  | 198 | The http builtin: its four tools and every symbol in http.go (locations) | 6.4 |  | 0.593 |
-| walker |  | 7300 | 95 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 4, sub: 0, line: 66 } |  |  | 0.593 |
-| ns | 7351 |  | 112 | HookEvent: the complete set of hook events | 7.1 |  | 0.598 |
-| walker |  | 7411 | 111 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 2, sub: 0, line: 36 } |  |  | 0.599 |
-| walker |  | 7565 | 154 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 1, sub: 0, line: 19 } |  |  | 0.599 |
+| walker |  | 6040 | 219 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 5, sub: 0, line: 137 } |  |  | 0.598 |
+| ns | 6234 |  | 328 | Every top-level symbol of internal/models/providers.go (locations) | 5.2 | 5.1 | 0.582 |
+| walker |  | 6339 | 299 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 4, sub: 0, line: 116 } |  |  | 0.582 |
+| ns | 6384 |  | 150 | ModelsRegistry: model validation and suggestion API | 5.3 |  | 0.575 |
+| ns | 6476 |  | 92 | The generated model catalogue: generator types and the DO-NOT-EDIT header | 5.4 |  | 0.571 |
+| walker |  | 6572 | 233 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 1, sub: 0, line: 17 } |  |  | 0.596 |
+| ns | 6652 |  | 176 | Builtin server registry: the complete set of in-process servers | 6.1 |  | 0.585 |
+| walker |  | 6731 | 159 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 0, line: 155 } |  |  | 0.592 |
+| ns | 6824 |  | 172 | Every top-level symbol of internal/builtin/registry.go (locations) | 6.2 | 6.1 | 0.585 |
+| walker |  | 6882 | 151 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 1, line: 155 } |  |  | 0.601 |
+| ns | 7041 |  | 217 | Bash builtin: output/timeout limits and the complete banned-command list | 6.3 |  | 0.587 |
+| walker |  | 7058 | 176 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 2, line: 155 } |  |  | 0.601 |
+| walker |  | 7073 | 15 | Code::CodeKey { rung: Body, file: internal/tokens/init.go, decl: 2, sub: 0, line: 50 } |  |  | 0.601 |
+| walker |  | 7198 | 125 | Code::CodeKey { rung: Names, file: internal/hooks/events.go, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
+| ns | 7239 |  | 198 | The http builtin: its four tools and every symbol in http.go (locations) | 6.4 |  | 0.592 |
+| walker |  | 7291 | 93 | Code::CodeKey { rung: Decl, file: internal/hooks/events.go, decl: 2, sub: 0, line: 7 } |  |  | 0.592 |
+| walker |  | 7348 | 57 | Code::CodeKey { rung: Names, file: internal/hooks/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.592 |
+| ns | 7351 |  | 112 | HookEvent: the complete set of hook events | 7.1 |  | 0.597 |
+| walker |  | 7375 | 27 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 1, sub: 0, line: 14 } |  |  | 0.597 |
+| walker |  | 7430 | 55 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 3, sub: 0, line: 30 } |  |  | 0.598 |
+| walker |  | 7495 | 65 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 2, sub: 0, line: 21 } |  |  | 0.598 |
 | ns | 7566 |  | 215 | Hook configuration schema: HookConfig, HookMatcher, HookEntry | 7.2 |  | 0.605 |
-| walker |  | 7767 | 202 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 3, sub: 0, line: 48 } |  |  | 0.606 |
-| walker |  | 7800 | 33 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 1, sub: 0, line: 10 } |  |  | 0.606 |
-| ns | 7838 |  | 272 | Hook wire protocol: CommonInput and HookOutput | 7.3 |  | 0.597 |
-| walker |  | 7895 | 95 | Code::CodeKey { rung: Names, file: internal/models/providers.go, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
-| walker |  | 7955 | 60 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 1, sub: 0, line: 28 } |  |  | 0.598 |
-| ns | 8029 |  | 191 | Per-event hook input structs | 7.4 |  | 0.592 |
-| walker |  | 8051 | 96 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 3, sub: 0, line: 124 } |  |  | 0.592 |
-| walker |  | 8166 | 115 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 5, sub: 0, line: 539 } |  |  | 0.592 |
-| ns | 8335 |  | 306 | Hook executor and validator symbol rosters | 7.5 |  | 0.581 |
-| walker |  | 8410 | 244 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.581 |
+| walker |  | 7667 | 172 | Code::CodeKey { rung: Names, file: internal/session/session.go, decl: 0, sub: 0, line: 0 } |  |  | 0.605 |
+| walker |  | 7762 | 95 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 4, sub: 0, line: 66 } |  |  | 0.605 |
+| ns | 7838 |  | 272 | Hook wire protocol: CommonInput and HookOutput | 7.3 |  | 0.596 |
+| walker |  | 7873 | 111 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 2, sub: 0, line: 36 } |  |  | 0.596 |
+| walker |  | 8027 | 154 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 1, sub: 0, line: 19 } |  |  | 0.597 |
+| ns | 8029 |  | 191 | Per-event hook input structs | 7.4 |  | 0.590 |
+| walker |  | 8229 | 202 | Code::CodeKey { rung: Decl, file: internal/session/session.go, decl: 3, sub: 0, line: 48 } |  |  | 0.591 |
+| walker |  | 8262 | 33 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 1, sub: 0, line: 10 } |  |  | 0.591 |
+| ns | 8335 |  | 306 | Hook executor and validator symbol rosters | 7.5 |  | 0.580 |
+| walker |  | 8357 | 95 | Code::CodeKey { rung: Names, file: internal/models/providers.go, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
+| walker |  | 8417 | 60 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 1, sub: 0, line: 28 } |  |  | 0.581 |
 | ns | 8492 |  | 157 | README: hooks.yml file locations and the --no-hooks escape hatch | 7.6 | 1.6 | 0.576 |
-| walker |  | 8639 | 229 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.576 |
-| walker |  | 8655 | 16 | Code::CodeKey { rung: Names, file: internal/tokens/counter.go, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
+| walker |  | 8513 | 96 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 3, sub: 0, line: 124 } |  |  | 0.576 |
+| walker |  | 8628 | 115 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 5, sub: 0, line: 539 } |  |  | 0.576 |
+| walker |  | 8644 | 16 | Code::CodeKey { rung: Names, file: internal/tokens/counter.go, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
+| walker |  | 8678 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 2, sub: 0, line: 14 } |  |  | 0.576 |
 | ns | 8681 |  | 189 | Script mode: a worked frontmatter example and the variable rules | 8.1 |  | 0.570 |
-| walker |  | 8689 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 2, sub: 0, line: 14 } |  |  | 0.570 |
-| walker |  | 8723 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 4, sub: 0, line: 24 } |  |  | 0.570 |
+| walker |  | 8712 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 4, sub: 0, line: 24 } |  |  | 0.570 |
 | ns | 8812 |  | 131 | Every top-level symbol of cmd/script.go (locations) | 8.2 |  | 0.564 |
-| walker |  | 8925 | 202 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 2, sub: 0, line: 70 } |  |  | 0.564 |
-| walker |  | 8943 | 18 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 1, sub: 0, line: 131 } |  |  | 0.564 |
-| walker |  | 8980 | 37 | Code::CodeKey { rung: Doc, file: sdk/mcphost.go, decl: 8, sub: 0, line: 218 } |  |  | 0.564 |
+| walker |  | 8914 | 202 | Code::CodeKey { rung: Decl, file: internal/models/providers.go, decl: 2, sub: 0, line: 70 } |  |  | 0.564 |
+| walker |  | 8932 | 18 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 1, sub: 0, line: 131 } |  |  | 0.564 |
+| walker |  | 8969 | 37 | Code::CodeKey { rung: Doc, file: sdk/mcphost.go, decl: 8, sub: 0, line: 218 } |  |  | 0.564 |
 | ns | 9110 |  | 298 | Session file format: Session, Metadata, Message and ToolCall fields | 8.3 |  | 0.577 |
-| walker |  | 9290 | 310 | Code::CodeKey { rung: Names, file: internal/agent/agent.go, decl: 0, sub: 0, line: 0 } |  |  | 0.586 |
-| walker |  | 9350 | 60 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 12, sub: 0, line: 135 } |  |  | 0.586 |
-| ns | 9404 |  | 294 | The public SDK surface: Options and every exported symbol | 8.4 |  | 0.596 |
-| walker |  | 9417 | 67 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 13, sub: 0, line: 144 } |  |  | 0.596 |
-| walker |  | 9493 | 76 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 11, sub: 0, line: 125 } |  |  | 0.596 |
-| walker |  | 9596 | 103 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 9, sub: 0, line: 67 } |  |  | 0.608 |
-| ns | 9606 |  | 202 | The complete slash-command table: names and descriptions | 8.5 |  | 0.601 |
-| walker |  | 9760 | 164 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 1, sub: 0, line: 22 } |  |  | 0.601 |
-| ns | 9827 |  | 221 | ui.SetupCLI: the AgentInterface contract and CLISetupOptions | 8.6 |  | 0.593 |
-| walker |  | 9983 | 223 | Code::CodeKey { rung: Names, file: internal/session/manager.go, decl: 0, sub: 0, line: 0 } |  |  | 0.586 |
-| ns | 9983 |  | 156 | Release packaging: the goreleaser build matrix | 9.1 |  | 0.586 |
-| walker |  | 10000 | 17 | Code::CodeKey { rung: Decl, file: internal/session/manager.go, decl: 1, sub: 0, line: 15 } |  |  | 0.586 |
+| ns | 9404 |  | 294 | The public SDK surface: Options and every exported symbol | 8.4 |  | 0.587 |
+| walker |  | 9433 | 464 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.587 |
+| ns | 9606 |  | 202 | The complete slash-command table: names and descriptions | 8.5 |  | 0.580 |
+| walker |  | 9743 | 310 | Code::CodeKey { rung: Names, file: internal/agent/agent.go, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
+| walker |  | 9803 | 60 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 12, sub: 0, line: 135 } |  |  | 0.589 |
+| ns | 9827 |  | 221 | ui.SetupCLI: the AgentInterface contract and CLISetupOptions | 8.6 |  | 0.581 |
+| walker |  | 9870 | 67 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 13, sub: 0, line: 144 } |  |  | 0.581 |
+| walker |  | 9946 | 76 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 11, sub: 0, line: 125 } |  |  | 0.581 |
+| ns | 9983 |  | 156 | Release packaging: the goreleaser build matrix | 9.1 |  | 0.574 |
+| walker |  | 9991 | 45 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 9, sub: 0, line: 67 } |  |  | 0.578 |

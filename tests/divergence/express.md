@@ -100,55 +100,54 @@ Score(3000)=0.620 I=0.849 C=0.453 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 5590 |  | 315 | res.send() body-type dispatch | 4.4 | 2.9 | 0.456 |
 | ns | 5771 |  | 181 | View.prototype.lookup() — view file resolution | 4.5 | 2.5 | 0.447 |
 | walker |  | 5894 | 328 | Markdown::Section { file: Readme.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.447 |
-| walker |  | 6072 | 178 | Markdown::Section { file: Readme.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.447 |
-| walker |  | 6135 | 63 | Code::CodeKey { rung: Doc, file: lib/request.js, decl: 4, sub: 0, line: 140 } |  |  | 0.447 |
-| walker |  | 6198 | 63 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 7, sub: 0, line: 162 } |  |  | 0.447 |
+| walker |  | 6077 | 183 | Markdown::Section { file: Readme.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.447 |
+| walker |  | 6140 | 63 | Code::CodeKey { rung: Doc, file: lib/request.js, decl: 4, sub: 0, line: 140 } |  |  | 0.447 |
+| walker |  | 6203 | 63 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 7, sub: 0, line: 162 } |  |  | 0.447 |
 | ns | 6222 |  | 451 | res.send() response finalization | 4.6 | 4.4 | 0.429 |
-| walker |  | 6262 | 64 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 6, sub: 0, line: 130 } |  |  | 0.429 |
-| walker |  | 6327 | 65 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 4, sub: 0, line: 61 } |  |  | 0.429 |
-| walker |  | 6392 | 65 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 5, sub: 0, line: 75 } |  |  | 0.429 |
-| walker |  | 6553 | 161 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 18, sub: 0, line: 794 } |  |  | 0.429 |
+| walker |  | 6267 | 64 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 6, sub: 0, line: 130 } |  |  | 0.429 |
+| walker |  | 6332 | 65 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 4, sub: 0, line: 61 } |  |  | 0.429 |
+| walker |  | 6397 | 65 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 5, sub: 0, line: 75 } |  |  | 0.429 |
+| walker |  | 6558 | 161 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 18, sub: 0, line: 794 } |  |  | 0.429 |
 | ns | 6598 |  | 376 | test/ listing — every spec file | 5.1 |  | 0.491 |
-| walker |  | 6622 | 69 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 8, sub: 0, line: 194 } |  |  | 0.491 |
+| walker |  | 6627 | 69 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 8, sub: 0, line: 194 } |  |  | 0.491 |
 | ns | 6684 |  | 86 | test/acceptance/ listing | 5.2 |  | 0.503 |
 | ns | 6785 |  | 101 | examples/ listing | 5.3 |  | 0.519 |
-| walker |  | 6976 | 354 | Markdown::Section { file: Readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.519 |
+| walker |  | 6981 | 354 | Markdown::Section { file: Readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.519 |
 | ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.514 |
-| walker |  | 7140 | 164 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 13, sub: 0, line: 629 } |  |  | 0.514 |
+| walker |  | 7145 | 164 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 13, sub: 0, line: 629 } |  |  | 0.514 |
 | ns | 7299 |  | 258 | examples/README.md — annotated example index (second half) | 5.5 | 5.4 | 0.509 |
-| walker |  | 7305 | 165 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 2, sub: 0, line: 64 } |  |  | 0.509 |
-| walker |  | 7376 | 71 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 2, sub: 0, line: 59 } |  |  | 0.509 |
+| walker |  | 7310 | 165 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 2, sub: 0, line: 64 } |  |  | 0.509 |
+| walker |  | 7381 | 71 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 2, sub: 0, line: 59 } |  |  | 0.509 |
 | ns | 7390 |  | 91 | test/support/ and test/fixtures/ listings | 5.6 |  | 0.502 |
-| walker |  | 7447 | 71 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 10, sub: 0, line: 249 } |  |  | 0.502 |
-| walker |  | 7519 | 72 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 2, sub: 0, line: 40 } |  |  | 0.502 |
+| walker |  | 7452 | 71 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 10, sub: 0, line: 249 } |  |  | 0.502 |
+| walker |  | 7524 | 72 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 2, sub: 0, line: 40 } |  |  | 0.502 |
 | ns | 7542 |  | 152 | Test harness: env preamble, assertion helpers, template engine | 5.7 |  | 0.499 |
-| walker |  | 7591 | 72 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 3, sub: 0, line: 51 } |  |  | 0.499 |
-| walker |  | 7664 | 73 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 9, sub: 0, line: 225 } |  |  | 0.499 |
+| walker |  | 7596 | 72 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 3, sub: 0, line: 51 } |  |  | 0.499 |
+| walker |  | 7669 | 73 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 9, sub: 0, line: 225 } |  |  | 0.499 |
 | ns | 7673 |  | 131 | A complete example app: examples/hello-world/index.js | 5.8 |  | 0.493 |
 | ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.488 |
-| walker |  | 7846 | 182 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 3, sub: 0, line: 97 } |  |  | 0.488 |
-| walker |  | 7926 | 80 | Code::CodeKey { rung: Doc, file: lib/request.js, decl: 6, sub: 0, line: 185 } |  |  | 0.488 |
-| walker |  | 8007 | 81 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 4, sub: 0, line: 152 } |  |  | 0.488 |
+| walker |  | 7851 | 182 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 3, sub: 0, line: 97 } |  |  | 0.488 |
+| walker |  | 7931 | 80 | Code::CodeKey { rung: Doc, file: lib/request.js, decl: 6, sub: 0, line: 185 } |  |  | 0.488 |
+| walker |  | 8012 | 81 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 4, sub: 0, line: 152 } |  |  | 0.488 |
 | ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.504 |
-| walker |  | 8207 | 200 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 10, sub: 0, line: 503 } |  |  | 0.504 |
-| walker |  | 8295 | 88 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 6, sub: 0, line: 256 } |  |  | 0.504 |
+| walker |  | 8212 | 200 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 10, sub: 0, line: 503 } |  |  | 0.504 |
+| walker |  | 8300 | 88 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 6, sub: 0, line: 256 } |  |  | 0.504 |
 | ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.498 |
-| walker |  | 8507 | 212 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 9, sub: 0, line: 433 } |  |  | 0.498 |
+| walker |  | 8512 | 212 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 9, sub: 0, line: 433 } |  |  | 0.498 |
 | ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.494 |
-| walker |  | 8602 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 5, sub: 0, line: 190 } |  |  | 0.494 |
-| walker |  | 8697 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 15, sub: 0, line: 494 } |  |  | 0.494 |
+| walker |  | 8607 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 5, sub: 0, line: 190 } |  |  | 0.494 |
+| walker |  | 8702 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 15, sub: 0, line: 494 } |  |  | 0.494 |
 | ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.488 |
 | ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.487 |
-| walker |  | 8926 | 229 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 14, sub: 0, line: 664 } |  |  | 0.487 |
-| walker |  | 8964 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 7, sub: 0, line: 214 } |  |  | 0.487 |
+| walker |  | 8930 | 228 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 14, sub: 0, line: 664 } |  |  | 0.487 |
+| walker |  | 8968 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 7, sub: 0, line: 214 } |  |  | 0.487 |
 | ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.483 |
-| walker |  | 9239 | 275 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 17, sub: 0, line: 742 } |  |  | 0.484 |
-| walker |  | 9358 | 119 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 8, sub: 0, line: 322 } |  |  | 0.484 |
+| walker |  | 9243 | 275 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 17, sub: 0, line: 742 } |  |  | 0.484 |
+| walker |  | 9362 | 119 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 8, sub: 0, line: 322 } |  |  | 0.484 |
 | ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.495 |
-| walker |  | 9479 | 121 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 12, sub: 0, line: 439 } |  |  | 0.495 |
-| walker |  | 9603 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 10, sub: 0, line: 399 } |  |  | 0.495 |
+| walker |  | 9483 | 121 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 12, sub: 0, line: 439 } |  |  | 0.495 |
+| walker |  | 9607 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 10, sub: 0, line: 399 } |  |  | 0.495 |
 | ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.504 |
-| walker |  | 9727 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 11, sub: 0, line: 420 } |  |  | 0.504 |
-| walker |  | 9856 | 129 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 1, sub: 0, line: 52 } |  |  | 0.504 |
+| walker |  | 9731 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 11, sub: 0, line: 420 } |  |  | 0.504 |
+| walker |  | 9860 | 129 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 1, sub: 0, line: 52 } |  |  | 0.504 |
 | ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.500 |
-| walker |  | 9997 | 141 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 9, sub: 0, line: 351 } |  |  | 0.512 |
