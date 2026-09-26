@@ -4,8 +4,10 @@
 
 use std::collections::{HashMap, VecDeque};
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use crate::fs_util::{DirFilter, PROBE_ENTRY_CAP};
+use crate::render::Source;
 
 /// Minimum share of the tree's essential source bytes for the largest
 /// source file to count as the repository's spine.
@@ -93,12 +95,13 @@ pub(super) fn enumerate_essential_source(
 /// Select a source file in the `primary` language that carries at least
 /// [`DOMINANT_SOURCE_MASS_SHARE`] of the essential source — the largest
 /// one when several do. A candidate over
-/// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] is never read, and one whose text
-/// reads as machine-generated (a banner, or minified line lengths) never
-/// wins.
+/// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] is never read, and one that `read`
+/// refuses or whose text reads as machine-generated (a banner, or
+/// minified line lengths) never wins.
 pub(super) fn find_dominant_source_file(
     source: &EssentialSource,
     primary: &str,
+    read: impl Fn(&Path) -> Option<Arc<Source>>,
 ) -> Option<PathBuf> {
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
@@ -116,8 +119,7 @@ pub(super) fn find_dominant_source_file(
                 && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
         })
         .filter(|(path, _, _)| {
-            std::fs::read_to_string(path)
-                .is_ok_and(|text| !super::plaintext::is_machine_generated_text(&text))
+            read(path).is_some_and(|text| !super::plaintext::is_machine_generated_text(&text))
         })
         .max_by(|a, b| a.1.cmp(&b.1).then_with(|| b.0.cmp(&a.0)))
         .map(|(path, _, _)| path.clone())
@@ -180,8 +182,8 @@ mod tests {
     use crate::walker::plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS;
 
     fn dominant_source_file_of(root: &Path) -> Option<PathBuf> {
-        let source = enumerate_essential_source(root, &DirFilter::new(root))?;
-        find_dominant_source_file(&source, find_primary_language(&source)?)
+        let ctx = crate::walker::WalkCtx::new(root.to_path_buf());
+        ctx.dominant_source_file().map(Path::to_path_buf)
     }
 
     /// The spine detector runs on whatever path a user points precis

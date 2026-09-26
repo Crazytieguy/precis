@@ -215,6 +215,7 @@ impl WalkCtx {
                 survey::find_dominant_source_file(
                     self.essential_source()?,
                     self.primary_language()?,
+                    |path| self.read_source(path),
                 )
             })
             .as_deref()

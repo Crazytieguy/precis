@@ -134,8 +134,10 @@ displaces a priced batch.
   `__init__.py` ancestry open by fixed name to the listing's rules
   (refused reads as no declaration). `SourceCache::get` then reads only
   a regular file of at most `MAX_SOURCE_BYTES` with no NUL byte,
-  decoding bytes that aren't UTF-8 as U+FFFD. The floor's head read
-  (`plaintext::file_head`) sees only listed files. Workspace membership
+  decoding bytes that aren't UTF-8 as U+FFFD. The spine survey reads its
+  candidates through `read_source` too; the floor's head read
+  (`plaintext::file_head`) has its own capped reader but sees only
+  listed files. Workspace membership
   canonicalizes member manifest paths without reading them, and the TS
   engine's nearest-`package.json` probe is a stat, which follows links
   but reads nothing.
