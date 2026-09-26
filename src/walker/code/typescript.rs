@@ -856,27 +856,9 @@ fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
 /// JSDoc is often separated from what it documents by one blank row
 /// (`/** … */`, blank, `function f`), so one blank row still attaches.
 fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
-    let mut blocks = Vec::new();
-    let mut next_start = node.start_position().row + 1;
-    let mut previous = node.prev_sibling();
-    while let Some(comment) = previous {
-        let span = Span::of(file, comment);
-        let is_attached_jsdoc = comment.kind() == "comment"
-            && file.text(comment).starts_with("/**")
-            && span.end < next_start
-            && next_start - span.end <= 2
-            && file.starts_own_row(comment);
-        if !is_attached_jsdoc {
-            break;
-        }
-        blocks.push(comment);
-        next_start = span.start;
-        previous = comment.prev_sibling();
-    }
-    blocks
+    file.comments_above(node, 2, |comment| file.text(comment).starts_with("/**"))
         .into_iter()
-        .rev()
-        .map(|comment| Item::new(file.node_rows(comment)))
+        .map(Item::new)
         .collect()
 }
 

@@ -102,11 +102,10 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         Shape::Callable => callable_parts(node, file),
         Shape::Whole => whole_parts(node, file),
     };
-    let doc_rows = file.comment_rows_above(node);
     Some(DeclInfo {
         name_rows,
         head,
-        doc: file.paragraphs(doc_rows),
+        doc: file.comment_paragraphs_above(node),
         body,
         shape,
         members: Vec::new(),

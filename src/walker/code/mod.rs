@@ -118,26 +118,39 @@ impl SourceFile {
             .is_some_and(|before| before.trim().is_empty())
     }
 
-    /// Rows of the comments directly above `node`: a run of `comment`
-    /// siblings, each on its own rows and ending at most one row above
-    /// the next.
-    pub(crate) fn comment_rows_above(&self, node: Node) -> Vec<usize> {
-        let mut rows = Vec::new();
-        let mut next_start = node.start_position().row;
+    /// The rows of each comment directly above `node`, in source order: a
+    /// run of `comment` siblings that `accept` admits, each on its own
+    /// rows and ending at most `max_gap` rows above the next.
+    pub(crate) fn comments_above(
+        &self,
+        node: Node,
+        max_gap: usize,
+        accept: impl Fn(Node) -> bool,
+    ) -> Vec<RangeInclusive<usize>> {
+        let mut comments = Vec::new();
+        let mut next_start = *self.node_rows(node).start();
         let mut previous = node.prev_sibling();
         while let Some(comment) = previous {
+            let rows = self.node_rows(comment);
+            let gap = next_start.saturating_sub(*rows.end());
             if comment.kind() != "comment"
-                || next_start.saturating_sub(comment.end_position().row) > 1
+                || !(1..=max_gap).contains(&gap)
                 || !self.starts_own_row(comment)
+                || !accept(comment)
             {
                 break;
             }
-            rows.extend(self.node_rows(comment));
-            next_start = comment.start_position().row;
+            next_start = *rows.start();
+            comments.push(rows);
             previous = comment.prev_sibling();
         }
-        rows.sort_unstable();
-        rows
+        comments.reverse();
+        comments
+    }
+
+    /// The comments directly above `node`, one [`Item`] per paragraph.
+    pub(crate) fn comment_paragraphs_above(&self, node: Node) -> Vec<Item> {
+        self.paragraphs(self.comments_above(node, 1, |_| true).into_iter().flatten())
     }
 
     /// One [`Item`] per node of `nodes` (statements, fields, specs), in

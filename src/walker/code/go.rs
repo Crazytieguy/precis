@@ -33,7 +33,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 continue;
             }
             "package_clause" => {
-                model.module_doc = doc_items(child, file);
+                model.module_doc = file.comment_paragraphs_above(child);
                 let mut inner = child.walk();
                 is_program = child
                     .named_children(&mut inner)
@@ -55,10 +55,6 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     }
     show_program_flow(&mut model.decls, &functions);
     model
-}
-
-fn doc_items(node: Node, file: &SourceFile) -> Vec<Item> {
-    file.paragraphs(file.comment_rows_above(node))
 }
 
 /// A function or method: the head runs through the row opening its
@@ -90,7 +86,7 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     Some(DeclInfo {
         name_rows: vec![start],
         head: (start..=head_end).collect(),
-        doc: doc_items(node, file),
+        doc: file.comment_paragraphs_above(node),
         body,
         shape: Shape::Callable,
         members: Vec::new(),
@@ -158,7 +154,7 @@ fn whole(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     Some(DeclInfo {
         name_rows,
         head,
-        doc: doc_items(node, file),
+        doc: file.comment_paragraphs_above(node),
         body,
         shape: Shape::Whole,
         members: Vec::new(),
