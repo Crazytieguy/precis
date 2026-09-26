@@ -182,55 +182,6 @@ examples/
         tusb_config.h
         usb_descriptors.c
   host/
-    CMakeLists.txt
-    CMakePresets.json
-    bare_api/
-      CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      only.txt
-      skip.txt
-      src/
-        main.c
-        tusb_config.h
-    cdc_msc_hid/
-      CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      only.txt
-      skip.txt
-      src/
-    cdc_msc_hid_freertos/
-      CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      only.txt
-      skip.txt
-      src/
-    device_info/
-      CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      only.txt
-      skip.txt
-      src/
-        CMakeLists.txt
-        main.c
-        tusb_config.h
-    hid_controller/
-      CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      only.txt
-      skip.txt
-      src/
-        app.h
-        hid_app.c
-        main.c
-        tusb_config.h
-    midi_rx/
-    msc_file_explorer/
-    msc_file_explorer_freertos/
   typec/
     CMakeLists.txt
     CMakePresets.json
@@ -319,6 +270,20 @@ src/
     2→
     3→# Get TinyUSB sources. Note: DCD and HCD drivers are not included
     4→function(tinyusb_sources_get OUTPUT_VAR)
+    5→  set(${OUTPUT_VAR}
+    6→    # common
+    7→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/tusb.c
+    8→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/common/tusb_fifo.c
+    9→    # device
+    10→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/device/usbd.c
+    11→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/audio/audio_device.c
+    12→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/cdc/cdc_device.c
+    13→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/dfu/dfu_device.c
+    14→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/dfu/dfu_rt_device.c
+    15→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/hid/hid_device.c
+    16→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/midi/midi_device.c
+    17→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/msc/msc_device.c
+    18→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/mtp/mtp_device.c
     …
     37→endfunction()
     38→

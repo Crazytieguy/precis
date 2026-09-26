@@ -16,14 +16,14 @@ Score(3000)=0.715 I=0.847 C=0.603 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | ns | 285 |  | 51 | All README H2 section headings | 1.5 |  | 0.817 |
 | walker |  | 338 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 1.000 |
 | ns | 343 |  | 58 | .gitignore in full — which sources are generated and absent | 1.6 |  | 0.904 |
-| walker |  | 354 | 16 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.905 |
-| ns | 489 |  | 146 | build.sh: the registry prerequisite check and the actual compile command | 1.7 |  | 0.811 |
-| ns | 595 |  | 106 | src/CMakeLists.txt in full — the ESP-IDF/PlatformIO build | 1.8 |  | 0.747 |
-| ns | 665 |  | 70 | Connection state constants (STATE_NONE through STATE_PLAY) | 2.1 |  | 0.707 |
-| walker |  | 683 | 329 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.708 |
-| walker |  | 802 | 119 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.708 |
-| ns | 885 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.648 |
-| walker |  | 908 | 106 | Plaintext::DeclSurface { file: src/CMakeLists.txt } |  |  | 0.723 |
+| walker |  | 444 | 106 | Plaintext::DeclSurface { file: src/CMakeLists.txt } |  |  | 0.918 |
+| walker |  | 460 | 16 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.919 |
+| ns | 489 |  | 146 | build.sh: the registry prerequisite check and the actual compile command | 1.7 |  | 0.824 |
+| ns | 595 |  | 106 | src/CMakeLists.txt in full — the ESP-IDF/PlatformIO build | 1.8 |  | 0.833 |
+| ns | 665 |  | 70 | Connection state constants (STATE_NONE through STATE_PLAY) | 2.1 |  | 0.788 |
+| walker |  | 789 | 329 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.790 |
+| ns | 885 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.723 |
+| walker |  | 908 | 119 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.723 |
 | walker |  | 1033 | 125 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.723 |
 | ns | 1038 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.669 |
 | walker |  | 1262 | 229 | Code::CodeKey { rung: Names, file: include/globals.h, decl: 0, sub: 0, line: 0 } |  |  | 0.671 |

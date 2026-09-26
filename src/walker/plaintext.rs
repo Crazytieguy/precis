@@ -114,16 +114,16 @@ pub(crate) enum Class {
     /// to the listing.
     Tooling,
     /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
-    /// `Dockerfile`, compose files).
+    /// `Dockerfile`, compose files). A root one too long to render whole
+    /// shows its flat surface, as [`Class::FlatText`] does.
     Build,
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
     /// The project's manifest or build script in a format no walker parses
-    /// ([`is_unparsed_manifest_name`]), or a root build file too long
-    /// to render whole. Rendered like [`Class::FlatText`], so its head
-    /// fields (the project's name, version and description; a
-    /// Dockerfile's base image) lead, and priced like a build file.
+    /// ([`is_unparsed_manifest_name`]). Rendered like [`Class::FlatText`],
+    /// so its head fields (the project's name, version and description)
+    /// lead, and priced as a manifest's identity block.
     Manifest,
     /// A source file in a language no walker parses — the
     /// language-agnostic fallback. Rendered as a declaration surface.
@@ -1229,7 +1229,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 Some(content) => (content, class_value(class, &file, ctx)),
                 None => {
                     if class == Class::Build && ctx.depth_from_root(&file) == 1 {
-                        push_source_text_batches(&mut out, &file, ctx, Class::Manifest);
+                        push_source_text_batches(&mut out, &file, ctx, class);
                     }
                     continue;
                 }
@@ -1388,7 +1388,8 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::LanguageSource if is_in_primary_language(file, ctx) => {
             crate::value::code_rung_value(crate::batch::Rung::Decl)
         }
-        Class::Build | Class::Manifest | Class::DotenvSample | Class::LanguageSource => 905.0,
+        Class::Manifest => crate::value::manifest_identity_value(1.0, 1.0),
+        Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::Tooling | Class::FlatText => 488.0,
     };
     tier * path_depth_factor(file, ctx)
