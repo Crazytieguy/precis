@@ -13,8 +13,8 @@
 //!   declares items (see `item_macro`) are `Whole`; `trait`, `impl` and
 //!   `extern` blocks are `Whole` containers whose members are their
 //!   functions.
-//! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
-//!   items, inline `mod test` / `mod tests`, `const _`, and an
+//! - **Hidden**: test-only (`#[cfg(test)]`, `#[cfg(all(test, …))]`),
+//!   `#[test]`-style and `#[doc(hidden)]` items, fields and variants, inline `mod test` / `mod tests`, `const _`, and an
 //!   inherent-impl function without a visibility modifier. An inherent
 //!   impl with no admitted function is hidden. Outside `main.rs`, a module
 //!   that declares some visible item (a visibility modifier, or
@@ -121,7 +121,9 @@ fn extract_items(
             | "static_item" => {
                 let list = node.child_by_field_name("body");
                 let body = list.map(|list| (list.start_position().row + 1, list));
-                let entries = list.map_or_else(Vec::new, |list| list_entries(list, file, |_| true));
+                let entries = list.map_or_else(Vec::new, |list| {
+                    list_entries(list, file, |entry| !Leading::above(entry, file).hidden)
+                });
                 model
                     .decls
                     .push(whole(node, leading, file, body, entries, Vec::new()));
@@ -244,7 +246,8 @@ struct Leading {
     attribute_rows: Vec<usize>,
     /// Rows of `///` / `/** */` comments and `#[doc = …]` attributes.
     doc_rows: Vec<usize>,
-    /// `#[cfg(test)]`, `#[test]` / `#[tokio::test]`-style or `#[doc(hidden)]`.
+    /// `#[doc(hidden)]`, a test-only `#[cfg]` (see `is_test_cfg`), or a test
+    /// attribute: `#[test]`, `#[tokio::test]`, `#[rstest]`, `#[test_case(…)]`.
     hidden: bool,
     /// `#[macro_export]`.
     exported: bool,
@@ -262,9 +265,11 @@ impl Leading {
                 "attribute_item" => {
                     let attribute = compact_attribute(sibling, file);
                     let path = attribute.split(['(', '=']).next().unwrap_or_default();
-                    let is_test = path.rsplit("::").next() == Some("test");
+                    let last_segment = path.rsplit("::").next().unwrap_or_default();
+                    let is_test =
+                        last_segment.ends_with("test") || last_segment.starts_with("test_");
                     leading.hidden |=
-                        is_test || attribute == "cfg(test)" || attribute == "doc(hidden)";
+                        is_test || is_test_cfg(&attribute) || attribute == "doc(hidden)";
                     leading.exported |= attribute == "macro_export";
                     if attribute.starts_with("doc=") {
                         leading.doc_rows.extend(file.node_rows(sibling));
@@ -294,6 +299,39 @@ impl Leading {
         }
         leading
     }
+}
+
+/// `cfg(test)`, or `cfg(all(…))` / `cfg(any(…))` with a bare `test` among
+/// its predicates: code compiled for tests (and at most test-like builds).
+fn is_test_cfg(compact_attribute: &str) -> bool {
+    let Some(predicate) = compact_attribute
+        .strip_prefix("cfg(")
+        .and_then(|rest| rest.strip_suffix(')'))
+    else {
+        return false;
+    };
+    let Some(arguments) = ["all(", "any("]
+        .iter()
+        .find_map(|combinator| predicate.strip_prefix(combinator))
+        .and_then(|rest| rest.strip_suffix(')'))
+    else {
+        return predicate == "test";
+    };
+    let mut depth = 0;
+    let mut start = 0;
+    let mut has_test = false;
+    for (index, character) in arguments.char_indices().chain([(arguments.len(), ',')]) {
+        match character {
+            '(' => depth += 1,
+            ')' => depth -= 1,
+            ',' if depth == 0 => {
+                has_test |= &arguments[start..index] == "test";
+                start = index + 1;
+            }
+            _ => {}
+        }
+    }
+    has_test
 }
 
 /// An attribute item's contents between `#[` and `]`, whitespace removed:
@@ -696,6 +734,33 @@ pub fn escape(text: &str) -> String {
         let private_only = "fn a() {}\nfn b() {}\n";
         let (_, model) = extract_source("util.rs", private_only);
         assert_eq!(model.decls.len(), 2);
+    }
+
+    #[test]
+    fn rust_extract_hides_test_cfg_combinations_test_macros_and_hidden_variants() {
+        let source = "\
+#[cfg(all(test, feature = \"x\"))]
+pub fn only_in_tests() {}
+#[cfg(any(test, fuzzing))]
+pub fn test_support() {}
+#[cfg(not(test))]
+pub fn production() {}
+#[test_case::test_case(1)]
+pub fn case(value: u8) {}
+#[rstest]
+pub fn fixture() {}
+pub enum Kind {
+    A,
+    #[doc(hidden)]
+    _Custom(String),
+}
+";
+        let (file, model) = extract_source("a.rs", source);
+        assert_eq!(
+            roster(&file, &model.decls),
+            vec!["pub fn production() {}", "pub enum Kind {"]
+        );
+        assert_eq!(rows(&model.decls[1].body), vec![vec![12]]);
     }
 
     #[test]
