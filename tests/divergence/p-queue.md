@@ -134,5 +134,5 @@ Score(3000)=0.794 I=0.903 C=0.699 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 9691 |  | 11 | CI workflow and the remaining .github files | 7.5 |  | 0.612 |
 | ns | 9836 |  | 145 | The CI job definition itself | 7.6 | 7.5 | 0.605 |
 | ns | 9907 |  | 71 | bench.ts: the five benchmark cases | 7.7 |  | 0.603 |
+| walker |  | 9987 | 335 | Markdown::Section { file: readme.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.603 |
 | ns | 9988 |  | 81 | tsconfig.json: the whole build configuration | 7.8 |  | 0.599 |
-| walker |  | 9998 | 346 | Markdown::Section { file: readme.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.599 |

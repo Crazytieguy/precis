@@ -1,4 +1,4 @@
-Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.582/0.694/0.649/0.520/0.539/0.535
+Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.570/0.694/0.649/0.520/0.539/0.535
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -33,29 +33,29 @@ Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 1011 | 34 | Fs::DirListing { dir: test } |  |  | 0.736 |
 | walker |  | 1021 | 10 | Fs::DirListing { dir: test/svg2js } |  |  | 0.736 |
 | walker |  | 1034 | 13 | Fs::DirListing { dir: test/cli } |  |  | 0.736 |
+| walker |  | 1120 | 86 | Json::Scripts { file: package.json } |  |  | 0.736 |
 | ns | 1231 |  | 356 | Complete plugins/ listing (all 58 modules) | 1.8 |  | 0.570 |
-| walker |  | 1318 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.570 |
-| walker |  | 1337 | 19 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.570 |
-| walker |  | 1430 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
-| ns | 1470 |  | 239 | svgo.config.mjs shape (README Configuration) | 1.9 |  | 0.537 |
+| walker |  | 1404 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.570 |
+| walker |  | 1423 | 19 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.570 |
+| ns | 1470 |  | 239 | svgo.config.mjs shape (README Configuration) | 1.9 |  | 0.526 |
+| walker |  | 1516 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
 | ns | 1669 |  | 199 | optimize() body, part 1: multipass loop and plugin resolution | 1.10 | 1.4 | 0.512 |
-| walker |  | 1786 | 356 | Fs::DirListing { dir: plugins } |  |  | 0.732 |
+| walker |  | 1872 | 356 | Fs::DirListing { dir: plugins } |  |  | 0.732 |
 | ns | 1873 |  | 204 | optimize() body, part 2: overrides, invoke, stringify, datauri | 1.11 | 1.10 | 0.693 |
-| walker |  | 1941 | 155 | Json::Scripts { file: package.json } |  |  | 0.693 |
-| walker |  | 1998 | 57 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.693 |
-| walker |  | 2027 | 29 | Fs::DirListing { dir: test/coa } |  |  | 0.693 |
-| walker |  | 2232 | 205 | Json::Dependencies { file: package.json } |  |  | 0.694 |
-| walker |  | 2267 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.695 |
+| walker |  | 1929 | 57 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.693 |
+| walker |  | 1958 | 29 | Fs::DirListing { dir: test/coa } |  |  | 0.693 |
+| walker |  | 2163 | 205 | Json::Dependencies { file: package.json } |  |  | 0.694 |
+| walker |  | 2198 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.695 |
 | ns | 2423 |  | 550 | Complete exported type roster of lib/types.ts | 1.12 |  | 0.635 |
-| walker |  | 2493 | 226 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.635 |
-| ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.615 |
-| walker |  | 2720 | 227 | Json::Entry { file: package.json } |  |  | 0.658 |
+| walker |  | 2425 | 227 | Json::Entry { file: package.json } |  |  | 0.638 |
+| walker |  | 2554 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.638 |
+| walker |  | 2605 | 51 | Fs::DirListing { dir: test/fixtures/config-loader } |  |  | 0.638 |
+| walker |  | 2611 | 6 | Fs::DirListing { dir: test/fixtures/config-loader/one/two } |  |  | 0.638 |
+| walker |  | 2618 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/cjs } |  |  | 0.638 |
+| walker |  | 2625 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/mjs } |  |  | 0.638 |
+| ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.658 |
 | ns | 2755 |  | 64 | Version constant | 1.14 |  | 0.649 |
-| walker |  | 2849 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.649 |
-| walker |  | 2900 | 51 | Fs::DirListing { dir: test/fixtures/config-loader } |  |  | 0.649 |
-| walker |  | 2906 | 6 | Fs::DirListing { dir: test/fixtures/config-loader/one/two } |  |  | 0.649 |
-| walker |  | 2913 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/cjs } |  |  | 0.649 |
-| walker |  | 2920 | 7 | Fs::DirListing { dir: test/fixtures/config-loader/mjs } |  |  | 0.649 |
+| walker |  | 2920 | 295 | Json::ScriptsTail { file: package.json } |  |  | 0.649 |
 | ns | 3125 |  | 370 | preset-default: the complete default pipeline in execution order | 2.1 |  | 0.602 |
 | ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.591 |
 | walker |  | 3308 | 388 | Fs::DirListing { dir: docs/04-plugins } |  |  | 0.591 |

@@ -1,4 +1,4 @@
-Score(3000)=0.669 I=0.778 C=0.574 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.724/0.559/0.633/0.669/0.630/0.585/0.588
+Score(3000)=0.669 I=0.778 C=0.574 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.724/0.559/0.623/0.669/0.630/0.585/0.588
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -90,37 +90,38 @@ Score(3000)=0.669 I=0.778 C=0.574 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | walker |  | 1492 | 11 | Toml::Dependencies { file: crates/mdbook-compare/Cargo.toml } |  |  | 0.595 |
 | walker |  | 1503 | 11 | Toml::Dependencies { file: crates/xtask/Cargo.toml } |  |  | 0.595 |
 | walker |  | 1554 | 51 | Json::Dependencies { file: package.json } |  |  | 0.595 |
-| walker |  | 1570 | 16 | Code::CodeKey { rung: ModuleDoc, file: src/cmd/watch/native.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
 | ns | 1573 |  | 153 | Bundled front-end asset listing | 2.8 |  | 0.569 |
-| walker |  | 1605 | 35 | Fs::DirListing { dir: guide/src/format } |  |  | 0.593 |
-| walker |  | 1612 | 7 | Fs::DirListing { dir: guide/src/format/images } |  |  | 0.593 |
-| ns | 1626 |  | 53 | Examples tree listing | 2.9 |  | 0.581 |
-| walker |  | 1632 | 20 | Fs::DirListing { dir: guide/src/format/theme } |  |  | 0.594 |
-| walker |  | 1649 | 17 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/mdbook.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 1673 | 24 | Fs::DirListing { dir: ci } |  |  | 0.594 |
-| walker |  | 1712 | 39 | Fs::DirListing { dir: guide/src/cli } |  |  | 0.629 |
-| walker |  | 1730 | 18 | Code::CodeKey { rung: ModuleDoc, file: crates/xtask/src/changelog.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
-| ns | 1736 |  | 110 | mdbook-core crate root | 3.1 |  | 0.617 |
-| walker |  | 1742 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| walker |  | 1754 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/builtin_preprocessors/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| walker |  | 1766 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/theme/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| walker |  | 1790 | 24 | Fs::DirListing { dir: guide/src/format/configuration } |  |  | 0.639 |
-| walker |  | 1803 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/fs.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| walker |  | 1816 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/html.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| walker |  | 1829 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/hide_lines.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| walker |  | 1842 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html_handlebars/static_files.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| walker |  | 1856 | 14 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/theme/playground_editor.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| ns | 1867 |  | 131 | mdbook-html crate roots (whole files) | 3.2 |  | 0.621 |
+| walker |  | 1606 | 52 | Json::Scripts { file: package.json } |  |  | 0.569 |
+| ns | 1626 |  | 53 | Examples tree listing | 2.9 |  | 0.557 |
+| walker |  | 1643 | 37 | Json::ScriptsTail { file: package.json } |  |  | 0.557 |
+| walker |  | 1659 | 16 | Code::CodeKey { rung: ModuleDoc, file: src/cmd/watch/native.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.557 |
+| walker |  | 1694 | 35 | Fs::DirListing { dir: guide/src/format } |  |  | 0.581 |
+| walker |  | 1701 | 7 | Fs::DirListing { dir: guide/src/format/images } |  |  | 0.581 |
+| walker |  | 1721 | 20 | Fs::DirListing { dir: guide/src/format/theme } |  |  | 0.594 |
+| ns | 1736 |  | 110 | mdbook-core crate root | 3.1 |  | 0.583 |
+| walker |  | 1738 | 17 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/mdbook.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
+| walker |  | 1762 | 24 | Fs::DirListing { dir: ci } |  |  | 0.583 |
+| walker |  | 1801 | 39 | Fs::DirListing { dir: guide/src/cli } |  |  | 0.617 |
+| walker |  | 1819 | 18 | Code::CodeKey { rung: ModuleDoc, file: crates/xtask/src/changelog.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| walker |  | 1831 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| walker |  | 1843 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/builtin_preprocessors/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| walker |  | 1855 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/theme/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| ns | 1867 |  | 131 | mdbook-html crate roots (whole files) | 3.2 |  | 0.600 |
+| walker |  | 1879 | 24 | Fs::DirListing { dir: guide/src/format/configuration } |  |  | 0.621 |
+| walker |  | 1892 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/fs.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.621 |
+| walker |  | 1905 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/html.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.621 |
+| walker |  | 1918 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/hide_lines.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.621 |
+| walker |  | 1931 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html_handlebars/static_files.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.621 |
 | ns | 1942 |  | 75 | mdbook-driver modules and re-exports | 3.3 | 1.5 | 0.613 |
+| walker |  | 1945 | 14 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/theme/playground_editor.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.613 |
 | ns | 2107 |  | 165 | The `Preprocessor` trait | 3.4 |  | 0.600 |
-| walker |  | 2211 | 355 | Toml::Identity { file: Cargo.toml } |  |  | 0.628 |
-| walker |  | 2240 | 29 | Fs::DirListing { dir: crates/mdbook-html/front-end/playground_editor } |  |  | 0.639 |
-| walker |  | 2255 | 15 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/toml_ext.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| ns | 2259 |  | 152 | `PreprocessorContext` and `parse_input` | 3.5 |  | 0.628 |
-| walker |  | 2286 | 31 | Fs::DirListing { dir: crates/mdbook-html/front-end/css } |  |  | 0.648 |
-| walker |  | 2318 | 32 | Fs::DirListing { dir: crates/mdbook-html/front-end/templates } |  |  | 0.669 |
-| ns | 2367 |  | 108 | The `Renderer` trait | 3.6 |  | 0.661 |
-| walker |  | 2407 | 89 | Json::Scripts { file: package.json } |  |  | 0.661 |
+| ns | 2259 |  | 152 | `PreprocessorContext` and `parse_input` | 3.5 |  | 0.590 |
+| walker |  | 2300 | 355 | Toml::Identity { file: Cargo.toml } |  |  | 0.617 |
+| walker |  | 2329 | 29 | Fs::DirListing { dir: crates/mdbook-html/front-end/playground_editor } |  |  | 0.628 |
+| walker |  | 2344 | 15 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-core/src/utils/toml_ext.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.628 |
+| ns | 2367 |  | 108 | The `Renderer` trait | 3.6 |  | 0.620 |
+| walker |  | 2375 | 31 | Fs::DirListing { dir: crates/mdbook-html/front-end/css } |  |  | 0.639 |
+| walker |  | 2407 | 32 | Fs::DirListing { dir: crates/mdbook-html/front-end/templates } |  |  | 0.661 |
 | walker |  | 2428 | 21 | Toml::Operational { file: crates/mdbook-driver/Cargo.toml } |  |  | 0.661 |
 | walker |  | 2436 | 8 | Code::CodeKey { rung: Names, file: guide/guide-helper/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
 | ns | 2506 |  | 139 | `RenderContext` fields and methods | 3.7 |  | 0.649 |
