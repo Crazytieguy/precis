@@ -158,7 +158,8 @@ mod tests {
         );
     }
 
-    /// The 0.1 plugin's manifest, which sets no [`SESSION_HOOK_VAR`].
+    /// The 0.1 plugin's manifest, which sets no [`SESSION_HOOK_VAR`], and
+    /// not another plugin's whose name starts the same.
     #[test]
     fn main_recognizes_legacy_plugin_manifest() {
         let legacy = r#"{
@@ -168,6 +169,8 @@ mod tests {
 }
 "#;
         assert!(is_precis_plugin_manifest(legacy));
+        let other = legacy.replace("\"precis\"", "\"precis-notes\"");
+        assert!(!is_precis_plugin_manifest(&other));
     }
 
     /// Rebuilds `additionalContext` the way the hook does on a fixture
