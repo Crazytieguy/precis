@@ -11,7 +11,7 @@ use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
 use std::ffi::{OsStr, OsString};
 use std::fs::FileType;
-use std::path::{Path, PathBuf};
+use std::path::{Component, Path, PathBuf};
 use std::rc::Rc;
 
 use ignore::Match;
@@ -566,6 +566,37 @@ pub(crate) fn lists_file(path: &Path, filter: &DirFilter) -> bool {
         return false;
     };
     list_dir(dir, filter).get(name) == Some(&EntryKind::File)
+}
+
+/// Whether the listings reach `path` from the walk root: each directory
+/// on the way down is listed as one by its parent, and the last lists
+/// `path` as a file. [`lists_file`] asks only the last listing, which a
+/// walk that got there has already passed through; this is for a path
+/// named from outside any walk.
+pub(crate) fn listed_from_root(path: &Path, filter: &DirFilter) -> bool {
+    let Ok(relative) = path.strip_prefix(filter.root()) else {
+        return false;
+    };
+    let mut dir = filter.root().to_path_buf();
+    let mut components = relative
+        .components()
+        .filter(|component| *component != Component::CurDir)
+        .peekable();
+    while let Some(component) = components.next() {
+        let Some(name) = component.as_os_str().to_str() else {
+            return false;
+        };
+        let expected = if components.peek().is_some() {
+            EntryKind::Directory
+        } else {
+            EntryKind::File
+        };
+        if list_dir(&dir, filter).get(name) != Some(&expected) {
+            return false;
+        }
+        dir.push(name);
+    }
+    dir != filter.root()
 }
 
 /// Whether [`list_dir`] lists nothing for `path`, reading only as far

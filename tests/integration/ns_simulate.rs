@@ -245,6 +245,37 @@ fn ns_simulate_detects_spans_on_files_precis_never_lists() {
     }
 }
 
+/// A file its own directory lists is still out of reach when a directory
+/// above it is one no listing admits.
+#[test]
+fn ns_simulate_detects_spans_under_directories_precis_never_lists() {
+    let fixture = tempfile::tempdir().unwrap();
+    let root = fixture.path();
+    for dir in [".git", "out/nested", "shown"] {
+        std::fs::create_dir_all(root.join(dir)).unwrap();
+    }
+    std::fs::write(root.join(".gitignore"), "out/\n").unwrap();
+    for file in [".git/config", "out/nested/a.txt", "shown/a.txt"] {
+        std::fs::write(root.join(file), "text\n").unwrap();
+    }
+    let span_on = |path: &str| {
+        batch(
+            "1",
+            &format!(
+                "kind = \"lines\"\nspans = [{{ path = \"{path}\", start = 1, end = 1, render = {FULL} }}]"
+            ),
+        )
+    };
+    for path in [".git/config", "out/nested/a.txt"] {
+        assert_flags(
+            &violations_in(root, &[span_on(path)])[0],
+            "is not a file precis lists",
+        );
+    }
+    let shown = violations_in(root, &[span_on("shown/a.txt")]);
+    assert!(shown[0].is_empty(), "{shown:?}");
+}
+
 /// The renderer shows a `Full` line's first 500 characters, so a
 /// truncation that keeps all of them saves nothing however long the line.
 #[test]

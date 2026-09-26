@@ -9,7 +9,7 @@ use std::rc::Rc;
 
 use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, Span, with_truncate_regex};
-use crate::fs_util::{DirFilter, lists_file};
+use crate::fs_util::{DirFilter, listed_from_root};
 use crate::north_star::{NorthStar, NsBatch};
 use crate::ns_loader::{path_escapes_root, resolve_content};
 use crate::render::{RenderedTree, SourceCache, visible_full_line};
@@ -221,10 +221,10 @@ fn validate_spans(
             continue;
         }
         let absolute = fixture_root.join(&span.path);
-        if !lists_file(&absolute, filter) {
+        if !listed_from_root(&absolute, filter) {
             violations.push(if absolute.exists() {
                 format!(
-                    "span file {path} is not a file precis lists (ignored, internal, or not a regular file), so no walker can show it"
+                    "span file {path} is not a file precis lists (it or a directory on its path is ignored or internal, or it is not a regular file), so no walker can show it"
                 )
             } else {
                 format!("span file missing: {path}")
