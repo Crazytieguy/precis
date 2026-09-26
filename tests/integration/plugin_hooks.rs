@@ -227,6 +227,8 @@ fn plugin_hooks_session_start_context_fits_hook_cap() {
 
     let uncapped = Command::new(env!("CARGO_BIN_EXE_precis"))
         .current_dir(&fixture)
+        .env_remove("PRECIS_SESSION_HOOK")
+        .env_remove("CLAUDE_PLUGIN_ROOT")
         .output()
         .unwrap();
     assert!(precis::char_units(&String::from_utf8(uncapped.stdout).unwrap()) > HOOK_CONTEXT_CAP);
