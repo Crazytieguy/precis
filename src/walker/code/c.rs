@@ -5,10 +5,11 @@
 //! of `extern "C" { … }` (bare or `#ifdef __cplusplus`-wrapped), and
 //! `#if` / `#ifdef` blocks holding only declarations and directives.
 //! `#ifndef X` / `#define X …` supplying a default counts as a
-//! declaration, and so do function definitions in a source file; in a
-//! header they mark the implementation section of a single-header
-//! library, which stays opaque, as does any block holding a statement
-//! (an `#if` splitting a function body).
+//! declaration, and so do function definitions in a source file and
+//! `inline` ones in a header; another definition in a header marks the
+//! implementation section of a single-header library, which stays
+//! opaque, as does any block holding a statement other than an
+//! expression (an `#if` splitting a function body).
 //!
 //! - Function definitions are `Callable`; prototypes, typedefs, structs /
 //!   unions / enums, global variables, macros and declaring macro
@@ -472,10 +473,11 @@ fn is_disabled_preproc_if(node: Node, file: &SourceFile) -> bool {
 }
 
 /// For a `preproc_if*` / `preproc_else*` subtree: `None` when any branch
-/// holds a statement, or a function definition in a header, else whether
-/// it holds at least one declaration beside its directives and comments.
-/// A macro definition counts only when it supplies a default for the
-/// name the block tests (`#ifndef X` / `#define X …`). Answers are
+/// holds a statement, or a non-`inline` function definition in a header,
+/// else whether it holds at least one declaration beside its directives,
+/// comments and other expression statements. A macro definition counts
+/// only when it supplies a default for the name the block tests
+/// (`#ifndef X` / `#define X …`). Answers are
 /// memoized in `answers` by node id and found bottom-up, so nested gates
 /// cost time linear in their size and no stack depth.
 fn feature_gate_is_declaration_only(
@@ -508,10 +510,14 @@ fn feature_gate_is_declaration_only(
             let declares = match child.kind() {
                 "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
                 | "enum_specifier" => Some(true),
-                "function_definition" if !is_header(&file.path) => Some(true),
                 "preproc_def" | "preproc_function_def" => {
                     Some(guarded_name(node).is_some_and(|name| is_define_of(child, name, file)))
                 }
+                "function_definition" if !is_header(&file.path) || is_inline(child, file) => {
+                    Some(true)
+                }
+                "expression_statement" => Some(is_declaring_macro_invocation(child, file)),
+                "ERROR" if misparsed_prototype_declarator(child).is_some() => Some(true),
                 "preproc_include" | "preproc_call" | "comment" => Some(false),
                 _ if is_nested_gate(child) => answers[&child.id()],
                 _ => None,
@@ -746,14 +752,18 @@ int packed(void);
   counter += 1;
 }
 #endif
+#ifdef HAVE_MODULE
+static int module_fn(int x) { return x; }
+REGISTER_MODULE(module_fn);
+#endif
 ";
         assert_eq!(
             name_rows_of(&model("krep.c", source)),
-            vec![vec![2], vec![4], vec![15], vec![19]]
+            vec![vec![2], vec![4], vec![15], vec![19], vec![26], vec![27]]
         );
         assert_eq!(
             name_rows_of(&model("krep.h", source)),
-            vec![vec![2], vec![4], vec![19]]
+            vec![vec![2], vec![4], vec![15], vec![19]]
         );
     }
 
