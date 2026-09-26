@@ -258,3 +258,65 @@ fn ns_simulate_prices_truncation_against_the_visible_line() {
         "saves no tokens",
     );
 }
+
+/// The rules without a dedicated test above: each case's last batch
+/// carries exactly the one violation named, and every earlier batch none.
+#[test]
+fn ns_simulate_flags_each_remaining_rule_on_its_batch_alone() {
+    let truncated = |pattern: &str| format!("{{ kind = \"truncated\", pattern = \"{pattern}\" }}");
+    let cases = [
+        (
+            vec![lines("1", 1, 3, FULL), lines("2", 3, 5, FULL)],
+            "non-ancestor overlap",
+        ),
+        (
+            vec![with_predecessor(lines("1", 1, 3, FULL), "9")],
+            "predecessor \"9\" not found in prior batches",
+        ),
+        (
+            vec![lines("1", 1, 1, &truncated("("))],
+            "invalid Truncated regex",
+        ),
+        (vec![lines("1", 1, 1, &truncated("^.*"))], "saves no tokens"),
+        (
+            vec![lines("1", 1, 1, &truncated("no such text"))],
+            "produced no/empty match",
+        ),
+        (vec![lines("1", 5, 3, FULL)], "span range inverted"),
+        (vec![lines("1", 0, 3, FULL)], "span range inverted"),
+        (
+            vec![batch(
+                "1",
+                &format!(
+                    "kind = \"lines\"\nspans = [{{ path = \"src/nope.rs\", start = 1, end = 1, render = {FULL} }}]"
+                ),
+            )],
+            "span file missing: src/nope.rs",
+        ),
+        (
+            vec![batch(
+                "1",
+                "kind = \"fs\"\ngroups = [{ parent = \"nope\", entries = \"all\" }]",
+            )],
+            "fs content resolution failed",
+        ),
+    ];
+    for (batches, needle) in cases {
+        let found = violations(&batches);
+        let (last, earlier) = found.split_last().unwrap();
+        assert!(earlier.iter().all(Vec::is_empty), "{needle}: {found:?}");
+        assert_eq!(last.len(), 1, "{needle}: {last:?}");
+        assert_flags(last, needle);
+    }
+}
+
+/// A predecessor edge licenses the overlap the rule above forbids.
+#[test]
+fn ns_simulate_accepts_overlap_along_a_predecessor_edge() {
+    let found = violations(&[
+        lines("1", 1, 3, FULL),
+        with_predecessor(lines("2", 3, 5, FULL), "1"),
+        with_predecessor(lines("3", 1, 1, ELLIPSIS), "2"),
+    ]);
+    assert!(found.iter().all(Vec::is_empty), "{found:?}");
+}
