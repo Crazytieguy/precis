@@ -217,7 +217,6 @@ README.md
   198→## Support
   …
   202→## Bugs, development feedback
-  203→
   …
   211→## History
   212→
@@ -266,6 +265,9 @@ autogen.sh
   1→#!/bin/sh
   2→autoreconf --force --install --verbose -Wall
 check-pcp-style.sh
+  …
+  3→set -eu -o pipefail
+  …
 configure.ac
 darwin/
   DarwinMachine.c

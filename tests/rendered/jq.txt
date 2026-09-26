@@ -110,7 +110,6 @@ README.md
   56→
   57→```console
   58→make LDFLAGS=-all-static
-  59→```
   …
   67→## Community & Support
   68→
@@ -134,8 +133,10 @@ compile-ios.sh
   10→unset LDFLAGS
   …
   13→usage(){
-  14→cat << EOF
-  15→${0##*/}: usage
+  …
+  51→t_exit() {
+  …
+  66→cd "${builddir}/"
   …
 config/
   .gitignore

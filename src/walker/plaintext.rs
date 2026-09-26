@@ -862,7 +862,7 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
     {
         return DeclarationRank::Internal;
     }
-    if opens_block {
+    if opens_block || defines_function(trimmed) {
         return DeclarationRank::Heading;
     }
     // A type declared without members (`struct Options;`, `extension
@@ -1011,7 +1011,9 @@ fn is_identifier_char(c: char) -> bool {
 /// For a line that opens a multi-line string, the token that ends it and
 /// whether that token is a heredoc identifier, which ends it only at the
 /// start of a line. A heredoc's identifier must start upper-case, so a
-/// shift (`a << b`) or a stream insertion is not read as one.
+/// shift (`a << b`) or a stream insertion is not read as one; set off by a
+/// space (a shell's `cat << EOF`), it must be all upper-case and end the
+/// command, so a shift by a constant (`1 << BITS;`) is not either.
 fn multiline_string_end(line: &str) -> Option<(&str, bool)> {
     if let Some(delimiter) = ["\"\"\"", "'''"]
         .into_iter()
@@ -1020,12 +1022,22 @@ fn multiline_string_end(line: &str) -> Option<(&str, bool)> {
         return Some((delimiter, false));
     }
     let (_, rest) = line.split_once("<<")?;
-    let rest = rest
-        .trim_start_matches(['<', '~', '-'])
-        .trim_start_matches(['\'', '"']);
+    let rest = rest.trim_start_matches(['<', '~', '-']);
+    let is_spaced = rest.starts_with(' ');
+    let rest = rest.trim_start().trim_start_matches(['\'', '"']);
     let identifier = leading_identifier(rest);
-    identifier
-        .starts_with(|c: char| c.is_ascii_uppercase())
+    let ends_command = || {
+        identifier
+            .chars()
+            .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_')
+            && rest[identifier.len()..]
+                .trim_start_matches(['\'', '"'])
+                .trim_start()
+                .chars()
+                .next()
+                .is_none_or(|c| c == '>' || c == '|')
+    };
+    (identifier.starts_with(|c: char| c.is_ascii_uppercase()) && (!is_spaced || ends_command()))
         .then_some((identifier, true))
 }
 
@@ -1100,7 +1112,14 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
     } else {
         SOURCE_TEXT_DECL_LINES
     };
-    let (selected, banner_end) = declaration_surface(&source, class, decl_cap);
+    // A script that defines functions is a program, however it is priced.
+    let surface_class =
+        if class == Class::FlatText && source.lines().any(|line| defines_function(line.trim())) {
+            Class::LanguageSource
+        } else {
+            class
+        };
+    let (selected, banner_end) = declaration_surface(&source, surface_class, decl_cap);
     let surface_rows = selected.len();
     let Some(content) = single_file_lines_content(file, &source, selected) else {
         return;
@@ -1139,6 +1158,27 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
             content,
             value,
         });
+    }
+}
+
+/// A shell or PowerShell function definition: `name() {`, `function name {`.
+fn defines_function(trimmed: &str) -> bool {
+    let is_name = |name: &str| {
+        !name.is_empty()
+            && name
+                .chars()
+                .all(|c| c.is_alphanumeric() || "_-:.".contains(c))
+    };
+    let Some(head) = trimmed.strip_suffix('{') else {
+        return false;
+    };
+    let head = head.trim_end();
+    match head.strip_prefix("function ") {
+        Some(name) => is_name(name.trim_end_matches(['(', ')', ' '])),
+        None => head
+            .strip_suffix(')')
+            .and_then(|head| head.trim_end().strip_suffix('('))
+            .is_some_and(|name| is_name(name.trim_end())),
     }
 }
 
@@ -1693,6 +1733,49 @@ mod tests {
         assert!(!surface_text(&vim, Class::FlatText).contains(&"function! plug#begin(...)"));
     }
 
+    /// A script that defines functions surfaces them ahead of its variable
+    /// prologue; one that does not stays a head slice.
+    #[test]
+    fn plaintext_source_text_script_functions_outrank_its_prologue() {
+        for line in [
+            "nvm_echo() {",
+            "function _acme_main {",
+            "function Get-Item() {",
+            ".mixin () {",
+        ] {
+            assert!(defines_function(line), "{line}");
+        }
+        for line in [
+            "endif()",
+            "if (x) {",
+            "function arguments",
+            "$(call f) {",
+            "echo \"a() {\"",
+        ] {
+            assert!(!defines_function(line), "{line}");
+        }
+        let prologue: String = (0..SOURCE_TEXT_DECL_LINES)
+            .map(|n| format!("VAR_{n}=value\n"))
+            .collect();
+        let script = format!("{prologue}\nnvm_echo() {{\n  printf '%s' \"$*\"\n}}\n");
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("nvm.sh");
+        std::fs::write(&file, &script).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let mut batches = Vec::new();
+        push_source_text_batches(&mut batches, &file, &ctx, Class::FlatText);
+        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
+            panic!("expected a lines batch");
+        };
+        let function_row = SOURCE_TEXT_DECL_LINES + 2;
+        assert!(
+            spans
+                .iter()
+                .any(|span| (span.start..=span.end).contains(&function_row)),
+            "{spans:?}"
+        );
+    }
+
     /// A flat config's indented value list is content, not a wrapped
     /// signature: every value stays on the surface.
     #[test]
@@ -1839,6 +1922,19 @@ mod tests {
                 .iter()
                 .all(|inside| !inside)
         );
+
+        for (line, closes_at) in [
+            ("cat << 'EOF' > out.txt", Some("EOF")),
+            ("cat << USAGE", Some("USAGE")),
+            ("int mask = 1 << BITS;", None),
+            ("std::cout << NAME << std::endl;", None),
+        ] {
+            assert_eq!(
+                multiline_string_end(line).map(|(end, _)| end),
+                closes_at,
+                "{line}"
+            );
+        }
 
         let closer_above_opener = "EOF\nx = <<EOF\n  EOF_NOT\nEOF;\nEOF\n";
         assert_eq!(
