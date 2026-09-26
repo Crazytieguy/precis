@@ -185,10 +185,6 @@ src/typeguard/
     …
     452→) -> None:
     …
-    474→def check_class(
-    …
-    479→) -> None:
-    …
   _config.py
     …
     11→T = TypeVar("T")
@@ -222,6 +218,8 @@ src/typeguard/
     …
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
+    26→
+    27→
     28→@overload
     29→def check_type(
     30→    value: object,
@@ -231,6 +229,8 @@ src/typeguard/
     34→    typecheck_fail_callback: TypeCheckFailCallback | None = ...,
     35→    collection_check_strategy: CollectionCheckStrategy = ...,
     36→) -> T: ...
+    37→
+    38→
     39→@overload
     40→def check_type(
     41→    value: object,

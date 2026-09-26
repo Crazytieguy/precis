@@ -3,9 +3,10 @@
 //! - **Declarations**: top-level `def` (`Callable`), `class` (`Whole`
 //!   container whose methods are members), simple `NAME = …` assignments
 //!   and `type X = …` aliases (`Whole`). A decorated definition's head
-//!   starts at its first decorator. Its name rows are the `def` / `class`
-//!   row and, when the signature spans rows, the row that closes it
-//!   (`) -> T:`), so a roster never lists an unclosed `def f(`.
+//!   starts at its first decorator. Its name rows are its one-row
+//!   decorators (`@property` and `@overload` say what a `def` is), the
+//!   `def` / `class` row and, when the signature spans rows, the row that
+//!   closes it (`) -> T:`), so a roster never lists an unclosed `def f(`.
 //! - **Doc**: the docstring opening a `def` / `class` body.
 //! - **Module doc**: an entry file's (a dunder-named module:
 //!   `__init__.py`, `__main__.py`, `__version__.py`) module docstring and
@@ -217,7 +218,8 @@ fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo>
         Shape::Callable => (file.node_items(statements, head_end), Vec::new()),
         Shape::Whole => class_body(file, &statements, head_end),
     };
-    let mut name_rows = vec![name_row];
+    let mut name_rows = single_row_decorators(file, unit);
+    name_rows.push(name_row);
     if head_end > name_row {
         name_rows.push(head_end);
     }
@@ -229,6 +231,17 @@ fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo>
         shape,
         members,
     })
+}
+
+/// Rows of the decorators above a definition that each fit on one row.
+fn single_row_decorators(file: &SourceFile, unit: Node) -> Vec<usize> {
+    let mut cursor = unit.walk();
+    unit.named_children(&mut cursor)
+        .filter(|child| child.kind() == "decorator")
+        .map(|decorator| file.node_rows(decorator))
+        .filter(|rows| rows.start() == rows.end())
+        .map(|rows| *rows.start())
+        .collect()
 }
 
 /// 1-based row of the `:` that ends a `def` / `class` header.
@@ -388,7 +401,7 @@ def greet(
             panic!("one decl: {:?}", model.decls);
         };
         assert_eq!(decl.shape, Shape::Callable);
-        assert_eq!(decl.name_rows, vec![3, 5]);
+        assert_eq!(decl.name_rows, vec![1, 2, 3, 5]);
         assert_eq!(decl.head, vec![1, 2, 3, 4, 5]);
         assert_eq!(rows(&decl.doc), vec![vec![6], vec![8, 9]]);
         assert_eq!(rows(&decl.body), vec![vec![10, 11], vec![12], vec![13]]);
@@ -471,7 +484,7 @@ class Config(Base):  # the config
             panic!("one decl: {:?}", model.decls);
         };
         assert_eq!(class.shape, Shape::Whole);
-        assert_eq!(class.name_rows, vec![2]);
+        assert_eq!(class.name_rows, vec![1, 2]);
         assert_eq!(class.head, vec![1, 2]);
         assert_eq!(rows(&class.doc), vec![vec![3]]);
         assert_eq!(
@@ -479,7 +492,7 @@ class Config(Base):  # the config
             vec![
                 vec![5, 6],
                 vec![7],
-                vec![11],
+                vec![10, 11],
                 vec![15],
                 vec![18],
                 vec![20, 21]
@@ -500,7 +513,7 @@ class Config(Base):  # the config
         assert_eq!(
             members,
             vec![
-                (vec![11], vec![10, 11], vec![vec![12]], vec![vec![13]],),
+                (vec![10, 11], vec![10, 11], vec![vec![12]], vec![vec![13]],),
                 (vec![15], vec![15], vec![], vec![vec![16]],),
                 (vec![18], vec![18], vec![], vec![]),
             ]
@@ -509,11 +522,18 @@ class Config(Base):  # the config
     }
 
     #[test]
-    fn code_python_multi_row_signature_lists_its_closing_row() {
+    fn code_python_roster_lists_decorators_and_signature_closing_row() {
         let model = extract_source(
             "props.py",
             "\
 class Params:
+    @property
+    def port(self) -> int: ...
+    @port.setter
+    def port(self, value: int) -> None: ...
+    @retry(
+        times=3,
+    )
     def connect(
         self, host: str, timeout: float = 10.0,
     ) -> \"Connection\": ...
@@ -538,8 +558,12 @@ class Wide(
         assert_eq!(
             summary,
             vec![
-                (vec![1], vec![vec![2, 4]], vec![vec![2, 4]]),
-                (vec![5, 7], vec![], vec![vec![8]]),
+                (
+                    vec![1],
+                    vec![vec![2, 3], vec![4, 5], vec![9, 11]],
+                    vec![vec![2, 3], vec![4, 5], vec![9, 11]]
+                ),
+                (vec![12, 14], vec![], vec![vec![15]]),
             ]
         );
     }

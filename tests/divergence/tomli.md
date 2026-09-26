@@ -80,18 +80,17 @@ Score(3000)=0.474 I=0.797 C=0.282 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 4194 |  | 264 | Complete roster of test classes and test methods | 3.3 |  | 0.556 |
 | walker |  | 4285 | 176 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.556 |
 | ns | 4370 |  | 176 | tox core configuration: the interpreter matrix and default command | 3.4 |  | 0.546 |
-| walker |  | 4380 | 95 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 54, sub: 0, line: 764 } |  |  | 0.546 |
+| walker |  | 4472 | 187 | Code::CodeKey { rung: Names, file: src/tomli/_re.py, decl: 0, sub: 0, line: 0 } |  |  | 0.546 |
 | ns | 4522 |  | 152 | setup.py: the mypyc build path | 3.5 |  | 0.533 |
-| walker |  | 4555 | 175 | Code::CodeKey { rung: Names, file: src/tomli/_re.py, decl: 0, sub: 0, line: 0 } |  |  | 0.533 |
-| walker |  | 4567 | 12 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.533 |
-| walker |  | 4671 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.534 |
+| walker |  | 4576 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.533 |
 | ns | 4716 |  | 194 | pyproject.toml: build backend and project metadata | 3.6 |  | 0.528 |
+| walker |  | 4735 | 159 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 5, sub: 0, line: 46 } |  |  | 0.528 |
 | ns | 4774 |  | 58 | Listings of the helper trees: benchmark, fuzzer, profiler, scripts, workflows | 3.7 |  | 0.543 |
-| walker |  | 4830 | 159 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 5, sub: 0, line: 46 } |  |  | 0.543 |
 | ns | 4957 |  | 183 | test_data.py: how the TOML corpus is discovered and compared | 3.8 | 3.3 | 0.532 |
-| walker |  | 5067 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.534 |
-| ns | 5096 |  | 139 | tests/burntsushi.py: purpose and complete function roster | 3.9 |  | 0.527 |
-| walker |  | 5101 | 34 | Code::CodeKey { rung: Names, file: src/tomli/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| walker |  | 4972 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.533 |
+| walker |  | 5006 | 34 | Code::CodeKey { rung: Names, file: src/tomli/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
+| ns | 5096 |  | 139 | tests/burntsushi.py: purpose and complete function roster | 3.9 |  | 0.531 |
+| walker |  | 5101 | 95 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 54, sub: 0, line: 764 } |  |  | 0.531 |
 | walker |  | 5211 | 110 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 16, sub: 0, line: 76 } |  |  | 0.559 |
 | ns | 5347 |  | 251 | Flags: the two flag constants, the state fields, and the complete method roster | 4.1 | 2.2 | 0.562 |
 | ns | 5471 |  | 124 | NestedDict: the parsed-document container and its two methods | 4.2 | 2.2 | 0.562 |

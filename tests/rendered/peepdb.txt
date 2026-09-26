@@ -93,6 +93,7 @@ peepdb/
     26→@click.version_option()
     27→def cli():
     …
+    50→    pass
     53→@cli.command()
     54→@click.argument('connection_name')
     55→@click.option('--db-type',
@@ -143,6 +144,7 @@ peepdb/
     24→KEYRING_SERVICE_NAME = "PEEP_DB"
     …
     27→logger = logging.getLogger(__name__)
+    28→
     29→@cached(cache=TTLCache(maxsize=1024, ttl=600))
     30→def generate_key_from_password(salt):
     …
@@ -224,8 +226,6 @@ peepdb/
       15→    def connect(self):
       …
       26→    def disconnect(self):
-      …
-      30→    def fetch_tables(self) -> List[str]:
       …
     mariadb.py
     mongodb.py

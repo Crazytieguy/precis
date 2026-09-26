@@ -118,16 +118,6 @@ res/
   desc_xlstm_overview.svg
   xlstm_7b_poster.svg
 setup.cfg
-  1→[metadata]
-  2→version = 2.0.5
-  3→name = xlstm
-  4→description = A novel LSTM variant with promising performance compared to Transformers.
-  5→long_description = file: README.md
-  6→long_description_content_type = text/markdown
-  7→project_urls =
-  …
-  9→classifiers =
-  …
 tests/
   __init__.py (empty)
   conftest.py
@@ -261,6 +251,7 @@ xlstm/
     …
   xlstm_block_stack.py
     …
+    15→@dataclass
     16→class xLSTMBlockStackConfig:
     …
     77→class xLSTMBlockStack(nn.Module):
@@ -271,6 +262,12 @@ xlstm/
     90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
     …
     111→    def reset_parameters(self) -> None:
+    …
+    117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
+    …
+    126→    def step(
+    127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
+    128→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
     …
   xlstm_large/
     __init__.py
