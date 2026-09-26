@@ -18,7 +18,7 @@
 //!   inline `mod test` / `mod tests`, `const _`, and an inherent-impl
 //!   function without a visibility modifier. An inherent impl with no
 //!   admitted function is hidden. Outside `main.rs`, a module
-//!   that declares some visible item (a visibility modifier, or
+//!   that declares some unhidden visible item (a visibility modifier, or
 //!   `#[macro_export]` on a `macro_rules!`) hides its private functions
 //!   and macros; its private types, constants and statics stay.
 
@@ -65,7 +65,8 @@ fn extract_items(
     let mut cursor = scope.walk();
     let hides_private = program_functions.is_none()
         && scope.named_children(&mut cursor).any(|node| {
-            has_visibility_rule(node) && is_visible(node, &Leading::above(node, file), file)
+            let leading = Leading::above(node, file);
+            has_visibility_rule(node) && !leading.hidden && is_visible(node, &leading, file)
         });
     for node in scope.named_children(&mut cursor) {
         if matches!(
@@ -250,7 +251,7 @@ struct Leading {
     /// `#[doc(hidden)]`, a test-only `#[cfg]` (see `is_test_cfg`), or a test
     /// attribute: `#[test]`, `#[tokio::test]`, `#[rstest]`, `#[test_case(…)]`.
     hidden: bool,
-    /// `#[macro_export]`.
+    /// `#[macro_export]`, with or without arguments.
     exported: bool,
 }
 
@@ -271,7 +272,7 @@ impl Leading {
                         last_segment.ends_with("test") || last_segment.starts_with("test_");
                     leading.hidden |=
                         is_test || is_test_cfg(&attribute) || attribute == "doc(hidden)";
-                    leading.exported |= attribute == "macro_export";
+                    leading.exported |= path == "macro_export";
                     if attribute.starts_with("doc=") {
                         leading.doc_rows.extend(file.node_rows(sibling));
                     } else {
@@ -302,8 +303,7 @@ impl Leading {
     }
 }
 
-/// `cfg(test)`, or `cfg(all(…))` / `cfg(any(…))` with a bare `test` among
-/// its predicates: test code or test support.
+/// `cfg(test)`, or `cfg(all(…))` with a bare `test` among its predicates.
 fn is_test_cfg(compact_attribute: &str) -> bool {
     let Some(predicate) = compact_attribute
         .strip_prefix("cfg(")
@@ -311,9 +311,8 @@ fn is_test_cfg(compact_attribute: &str) -> bool {
     else {
         return false;
     };
-    let Some(arguments) = ["all(", "any("]
-        .iter()
-        .find_map(|combinator| predicate.strip_prefix(combinator))
+    let Some(arguments) = predicate
+        .strip_prefix("all(")
         .and_then(|rest| rest.strip_suffix(')'))
     else {
         return predicate == "test";
@@ -735,15 +734,38 @@ pub fn escape(text: &str) -> String {
         let private_only = "fn a() {}\nfn b() {}\n";
         let (_, model) = extract_source("util.rs", private_only);
         assert_eq!(model.decls.len(), 2);
+        let test_helper_only = "\
+static STATE: u8 = 0;
+fn a() {}
+#[cfg(test)]
+pub fn helper() {}
+";
+        let (file, model) = extract_source("util.rs", test_helper_only);
+        assert_eq!(
+            roster(&file, &model.decls),
+            vec!["static STATE: u8 = 0;", "fn a() {}"]
+        );
+        let exported_with_arguments = "\
+#[macro_export(local_inner_macros)]
+macro_rules! bail {
+    () => {};
+}
+pub fn escape() {}
+";
+        let (file, model) = extract_source("glob.rs", exported_with_arguments);
+        assert_eq!(
+            roster(&file, &model.decls),
+            vec!["macro_rules! bail {", "pub fn escape() {}"]
+        );
     }
 
     #[test]
-    fn rust_extract_hides_test_cfg_combinations_test_macros_and_hidden_variants() {
+    fn rust_extract_hides_test_only_cfgs_test_macros_and_hidden_variants() {
         let source = "\
 #[cfg(all(test, feature = \"x\"))]
 pub fn only_in_tests() {}
-#[cfg(any(test, fuzzing))]
-pub fn test_support() {}
+#[cfg(any(test, feature = \"alloc\"))]
+pub fn parse() {}
 #[cfg(not(test))]
 pub fn production() {}
 #[test_case::test_case(1)]
@@ -759,9 +781,13 @@ pub enum Kind {
         let (file, model) = extract_source("a.rs", source);
         assert_eq!(
             roster(&file, &model.decls),
-            vec!["pub fn production() {}", "pub enum Kind {"]
+            vec![
+                "pub fn parse() {}",
+                "pub fn production() {}",
+                "pub enum Kind {"
+            ]
         );
-        assert_eq!(rows(&model.decls[1].body), vec![vec![12]]);
+        assert_eq!(rows(&model.decls[2].body), vec![vec![12]]);
     }
 
     #[test]
