@@ -213,6 +213,14 @@ cmd/
     …
   root_test.go
   secrets.go
+    …
+    12→type secrets map[string]string
+    13→
+    14→func newSecrets(secretList []string) secrets {
+    …
+    40→func (s secrets) AsMap() map[string]string {
+    41→	return s
+    …
   testdata/
 codecov.yml
 go.mod

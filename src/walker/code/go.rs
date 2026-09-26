@@ -82,10 +82,17 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let mut api_only = false;
     let mut functions = Vec::new();
     let declarations = top_level_declarations(root);
-    let exports_something = declarations
-        .iter()
-        .any(|declaration| declares_exported(*declaration, file));
     let handed_out = handed_out_types(&declarations, file);
+    let exports_something = declarations.iter().any(|declaration| {
+        if matches!(
+            declaration.kind(),
+            "function_declaration" | "method_declaration"
+        ) {
+            is_reachable_callable(*declaration, file, &handed_out)
+        } else {
+            declares_exported(*declaration, file)
+        }
+    });
     for child in root.named_children(&mut root.walk()) {
         let decl = match child.kind() {
             "comment" if file.text(child).starts_with("//go:build") => {
@@ -494,6 +501,10 @@ func NewPool() (*pool, error) { return nil, nil }
         );
         let internal = extract_source("package cmd\n\nvar rootCmd = 1\n\nfunc run() {}\n");
         assert_eq!(internal.decls.len(), 2);
+        let methods_on_internal_type = extract_source(
+            "//go:build !disabled\n\npackage ops\n\ntype op struct{}\n\nfunc (o *op) Evaluate() bool { return true }\n",
+        );
+        assert_eq!(methods_on_internal_type.decls.len(), 2);
     }
 
     /// A bare `//` row splits a doc, so its summary can show alone.
