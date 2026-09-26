@@ -1018,10 +1018,10 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
         }
         last_row = last_row.max(span.end);
     }
-    let mut head: Vec<usize> = (span.start..=open_row).collect();
-    if span.end > last_row {
-        head.push(span.end);
-    }
+    let close_row = Span::of(file, block).end;
+    let head: Vec<usize> = (span.start..=open_row)
+        .chain(close_row.max(last_row + 1)..=span.end)
+        .collect();
     DeclInfo {
         name_rows: vec![class_name_row],
         head,
@@ -1482,6 +1482,10 @@ module.exports = Area = Base.extend({
     this.id = id;
   },
 });
+export const strict = z.object({
+  id: z.string(),
+})
+  .strict();
 ",
         );
         assert_eq!(
@@ -1493,6 +1497,7 @@ module.exports = Area = Base.extend({
                 "Whole name [11] head [11] doc [] body []",
                 "Whole name [12] head [12, 16] doc [] body [[13]]",
                 "  Callable name [13] head [13] doc [] body [[14]]",
+                "Whole name [17] head [17, 19, 20] doc [] body [[18]]",
             ]
         );
     }
