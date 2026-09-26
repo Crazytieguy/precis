@@ -24,6 +24,24 @@ else
   JQ=""
 fi
 
+# Detect platform
+OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+ARCH=$(uname -m)
+
+case "$ARCH" in
+  aarch64|arm64) ARCH="aarch64" ;;
+  x86_64)        ;;
+  *)             exit 0 ;;
+esac
+
+case "$OS-$ARCH" in
+  darwin-aarch64)  TARGET="aarch64-apple-darwin" ;;
+  darwin-x86_64)   TARGET="x86_64-apple-darwin" ;;
+  linux-aarch64)   TARGET="aarch64-unknown-linux-gnu" ;;
+  linux-x86_64)    TARGET="x86_64-unknown-linux-gnu" ;;
+  *)               exit 0 ;;
+esac
+
 # Get latest release tag
 RELEASE_JSON=$(curl -fSs https://api.github.com/repos/Crazytieguy/precis/releases/latest 2>/dev/null) || exit 0
 
@@ -43,40 +61,39 @@ if [ -x "$PRECIS_BIN" ] && [ -f "$PLUGIN_DATA/version" ]; then
   fi
 fi
 
-# Detect platform
-OS=$(uname -s | tr '[:upper:]' '[:lower:]')
-ARCH=$(uname -m)
+ARCHIVE="precis-${TARGET}.tar.xz"
+DOWNLOAD_URL="https://github.com/Crazytieguy/precis/releases/download/${TAG}/${ARCHIVE}"
 
-case "$ARCH" in
-  aarch64|arm64) ARCH="aarch64" ;;
-  x86_64)        ;;
-  *)             exit 0 ;;
-esac
+# Unpack beside the binary so the final mv is a rename on one filesystem:
+# the sync session hook may exec the binary while this async hook replaces it.
+WORK_DIR=$(mktemp -d "$PLUGIN_DATA/update.XXXXXXXX")
+trap 'rm -rf "$WORK_DIR"' EXIT
 
-case "$OS-$ARCH" in
-  darwin-aarch64)  TARGET="aarch64-apple-darwin" ;;
-  darwin-x86_64)   TARGET="x86_64-apple-darwin" ;;
-  linux-aarch64)   TARGET="aarch64-unknown-linux-gnu" ;;
-  linux-x86_64)    TARGET="x86_64-unknown-linux-gnu" ;;
-  *)               exit 0 ;;
-esac
+curl -fsSL "$DOWNLOAD_URL" -o "$WORK_DIR/$ARCHIVE" || exit 0
+curl -fsSL "$DOWNLOAD_URL.sha256" -o "$WORK_DIR/$ARCHIVE.sha256" || exit 0
 
-DOWNLOAD_URL="https://github.com/Crazytieguy/precis/releases/download/${TAG}/precis-${TARGET}.tar.xz"
-
-TMPFILE=$(mktemp /tmp/precis-download-XXXXXXXX.tar.xz)
-TMPDIR=$(mktemp -d /tmp/precis-extract-XXXXXXXX)
-trap 'rm -rf "$TMPFILE" "$TMPDIR"' EXIT
-
-curl -fSL "$DOWNLOAD_URL" -o "$TMPFILE" || exit 0
-tar xf "$TMPFILE" -C "$TMPDIR" || exit 0
-
-# cargo-dist nests the binary in a subdirectory
-mv "$TMPDIR"/*/precis "$PRECIS_BIN" 2>/dev/null || mv "$TMPDIR"/precis "$PRECIS_BIN" || exit 0
-chmod +x "$PRECIS_BIN"
-
-if ! "$PRECIS_BIN" --help >/dev/null 2>&1; then
-  rm -f "$PRECIS_BIN"
+if command -v sha256sum >/dev/null 2>&1; then
+  ACTUAL=$(sha256sum "$WORK_DIR/$ARCHIVE")
+else
+  ACTUAL=$(shasum -a 256 "$WORK_DIR/$ARCHIVE")
+fi
+EXPECTED=$(cut -d ' ' -f 1 "$WORK_DIR/$ARCHIVE.sha256")
+if [ -z "$EXPECTED" ] || [ "${ACTUAL%% *}" != "$EXPECTED" ]; then
+  echo "precis: checksum mismatch for $DOWNLOAD_URL" >&2
   exit 0
 fi
 
+tar xf "$WORK_DIR/$ARCHIVE" -C "$WORK_DIR" || exit 0
+
+# cargo-dist nests the binary in a subdirectory
+if [ -f "$WORK_DIR/precis" ]; then
+  NEW_BIN="$WORK_DIR/precis"
+else
+  NEW_BIN=$(find "$WORK_DIR" -mindepth 2 -maxdepth 2 -type f -name precis | head -1)
+fi
+[ -n "$NEW_BIN" ] || exit 0
+chmod +x "$NEW_BIN"
+"$NEW_BIN" --help >/dev/null 2>&1 || exit 0
+
+mv -f "$NEW_BIN" "$PRECIS_BIN"
 echo "$TAG" > "$PLUGIN_DATA/version"
