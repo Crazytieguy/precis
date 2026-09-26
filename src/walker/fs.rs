@@ -25,9 +25,14 @@ pub fn seed(ctx: &WalkCtx) -> Vec<Batch> {
         .collect()
 }
 
-/// Listings of the subdirectories a just-scheduled listing names.
+/// Listings of the subdirectories a just-scheduled listing names. A
+/// third-party directory's listing names the projects it vendors; their
+/// own trees are not listed.
 pub fn expand_listed(key: &FsKey, ctx: &WalkCtx) -> Vec<Batch> {
     let FsKey::DirListing { dir } = key;
+    if crate::value::is_third_party_dir(dir, ctx.root()) {
+        return Vec::new();
+    }
     list_dir(dir, ctx.dir_filter())
         .iter()
         .filter(|(_, kind)| matches!(kind, EntryKind::Directory))
@@ -650,6 +655,30 @@ mod tests {
             value("chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
         );
         assert!(value("chart9") > value("chart1"));
+    }
+
+    #[test]
+    fn fs_third_party_listings_name_their_projects_without_listing_them() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        for dir in [
+            "vendor/jquery",
+            "lib/third_party/zlib",
+            "source/vendor/ansi-styles",
+        ] {
+            std::fs::create_dir_all(root.join(dir)).unwrap();
+            std::fs::write(root.join(dir).join("index.js"), "").unwrap();
+        }
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let expands = |dir: &str| {
+            let key = FsKey::DirListing {
+                dir: root.join(dir),
+            };
+            !expand_listed(&key, &ctx).is_empty()
+        };
+        assert!(!expands("vendor"));
+        assert!(!expands("lib/third_party"));
+        assert!(expands("source/vendor"));
     }
 
     #[test]

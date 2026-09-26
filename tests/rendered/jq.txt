@@ -93,6 +93,24 @@ README.md
   39→- make
   40→- automake
   41→- autoconf
+  42→
+  43→#### Instructions
+  44→
+  45→```console
+  46→git submodule update --init    # if building from git to get oniguruma
+  47→autoreconf -i                  # if building from git
+  48→./configure --with-oniguruma=builtin
+  49→make clean                     # if upgrading from a version previously built from source
+  50→make -j8
+  51→make check
+  52→sudo make install
+  53→```
+  54→
+  55→Build a statically linked version:
+  56→
+  57→```console
+  58→make LDFLAGS=-all-static
+  59→```
   …
   67→## Community & Support
   68→
@@ -347,37 +365,4 @@ tests/
   yes-main-program.jq
 vendor/
   decNumber/
-    ICU-license.html
-    decBasic.c
-    decCommon.c
-    decContext.c
-    decContext.h
-    decDPD.h
-    decDouble.c
-    decDouble.h
-    decNumber.c
-    decNumber.h
-    decNumberLocal.h
-    decPacked.c
-    decPacked.h
-    decQuad.c
-    decQuad.h
-    decSingle.c
-    decSingle.h
-    decimal128.c
-    decimal128.h
-    decimal32.c
-    decimal32.h
-    decimal64.c
-    decimal64.h
-    decnumber.pdf
-    example1.c
-    example2.c
-    example3.c
-    example4.c
-    example5.c
-    example6.c
-    example7.c
-    example8.c
-    readme.txt
   oniguruma/ (empty)

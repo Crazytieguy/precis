@@ -124,11 +124,8 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "locales"
                 | "l10n"
                 | "translations"
-                | "third_party"
-                | "third-party"
-                | "thirdparty"
-                | "3rdparty"
-        ) || role.starts_with("test_")
+        ) || is_third_party_role(role)
+            || role.starts_with("test_")
             || role.starts_with("tests_")
             || is_scaffold_template_dir_name(&lowered)
             // Python under `docs/` is Sphinx config and site builders.
@@ -198,6 +195,26 @@ fn is_docs_site_subtree(first_component: &str, root: &std::path::Path) -> bool {
         return false;
     }
     root.join(first_component).join("package.json").is_file()
+}
+
+/// A directory of other projects' code: a third-party directory at any
+/// depth, or a vendor directory at the root.
+pub(crate) fn is_third_party_dir(dir: &std::path::Path, root: &std::path::Path) -> bool {
+    let Ok(relative) = dir.strip_prefix(root) else {
+        return false;
+    };
+    let Some(name) = relative.file_name().and_then(|name| name.to_str()) else {
+        return false;
+    };
+    is_third_party_role(dir_role_name(&name.to_ascii_lowercase()))
+        || relative.components().count() == 1 && is_vendor_dir_name(name)
+}
+
+fn is_third_party_role(role: &str) -> bool {
+    matches!(
+        role,
+        "third_party" | "third-party" | "thirdparty" | "3rdparty"
+    )
 }
 
 /// Dirs that hold vendored content at the root but can name a project's
