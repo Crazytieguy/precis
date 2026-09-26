@@ -28,7 +28,7 @@ pub fn manifest_operational_value(depth: f64) -> f64 {
 /// already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;
 /// Cap on the listing roster-mass boost (reached around ~40 entries).
-const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
+pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 
 /// Ratio-neutralizing factor for "roster" batches — complete catalogs of
 /// N peer entries (directory listings, names surfaces, member catalogs)
@@ -37,17 +37,12 @@ const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 /// the complete catalogs NS authors anchor on. Scaling value by
 /// `(N / baseline)^k`, `k` = [`DEFAULT_CONCAVITY_EXPONENT`], pushes back
 /// against that. Boost-only (≥ 1): small rosters keep their existing
-/// rank rather than being demoted. [`roster_mass_factor`] caps it for
-/// directory listings.
+/// rank rather than being demoted. [`ROSTER_MASS_FACTOR_CAP`] caps it
+/// for directory listings.
 pub fn roster_mass(entries: usize) -> f64 {
     (entries as f64 / ROSTER_MASS_BASELINE)
         .powf(DEFAULT_CONCAVITY_EXPONENT)
         .max(1.0)
-}
-
-/// [`roster_mass`], capped.
-pub fn roster_mass_factor(entries: usize) -> f64 {
-    roster_mass(entries).min(ROSTER_MASS_FACTOR_CAP)
 }
 
 /// Base value of each code-engine rung (`walker::code`), before the file
@@ -262,9 +257,10 @@ fn dir_role_name(lowercased_name: &str) -> &str {
 /// The prefixed forms only. A bare `templates/` is the view layer in every
 /// server framework in the corpus (Django, Flask, Jinja, Helm charts) —
 /// demoting that would demote those projects' actual output.
-fn is_scaffold_template_dir_name(name: &str) -> bool {
-    let lower = name.to_ascii_lowercase();
-    lower.starts_with("template-") || lower.starts_with("cra-template-") || lower == "__brick__"
+fn is_scaffold_template_dir_name(lowered: &str) -> bool {
+    lowered.starts_with("template-")
+        || lowered.starts_with("cra-template-")
+        || lowered == "__brick__"
 }
 
 /// Default cost-side concavity for the scheduling ratio — gentle so

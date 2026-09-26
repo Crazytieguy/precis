@@ -206,7 +206,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     // Without the roster factor a source inventory's ratio falls with its
     // length against tiny sibling listings.
     let fanout = if source_inventory_dir {
-        crate::value::roster_mass_factor(children.len())
+        crate::value::roster_mass(children.len()).min(crate::value::ROSTER_MASS_FACTOR_CAP)
     } else {
         1.0
     };
