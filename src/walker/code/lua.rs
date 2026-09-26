@@ -60,6 +60,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             .map(|row| Item::new([row]))
             .collect(),
         decls: decls.into_iter().map(|node| callable(node, file)).collect(),
+        non_essential: false,
     }
 }
 

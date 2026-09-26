@@ -411,6 +411,7 @@ mod tests {
             module_doc: vec![rows(1..=1)],
             reexports: Vec::new(),
             decls: vec![whole, callable],
+            non_essential: false,
         };
         let batches = emit(10, model);
         let table: Vec<_> = batches

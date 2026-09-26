@@ -129,6 +129,11 @@ pub(crate) struct FileModel {
     pub reexports: Vec<Item>,
     /// Admitted top-level declarations, in any order.
     pub decls: Vec<DeclInfo>,
+    /// The file serves its own package rather than its importers, which
+    /// only its content shows (a Go file whose only exports are methods
+    /// on unexported types): its roster opens after every essential
+    /// sibling's, as a non-essential file's does.
+    pub non_essential: bool,
 }
 
 /// One declaration: its rows split into parts (see the module docs).

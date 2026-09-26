@@ -13,7 +13,8 @@
 //! method on a lower-case type) is hidden, unless its file exports
 //! nothing. A file whose only exports are such
 //! methods (an operator's `Evaluate`, an iterator's `Next`) lists those
-//! methods, not its private helpers. An exported struct with no exported
+//! methods, not its private helpers, and is non-essential: interface
+//! plumbing, read after the files that hold the package's API. An exported struct with no exported
 //! field shows its opening and closing rows only. An interface shows
 //! every method, since a lower-case one seals it against outside
 //! implementations.
@@ -102,6 +103,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     } else {
         declares_exported
     };
+    model.non_essential = api_only && !reaches_something;
     if let Some(package) = package {
         (model.module_doc, _) = doc_and_directives(package, file);
     }
@@ -491,6 +493,8 @@ func NewPool() (*pool, error) { return nil, nil }
             describe(&methods_on_internal_type),
             ["Callable name [7] head [7] doc [] body []"]
         );
+        assert!(methods_on_internal_type.non_essential);
+        assert!(!model.non_essential && !internal.non_essential);
     }
 
     /// A bare `//` row splits a doc, so its summary can show alone.

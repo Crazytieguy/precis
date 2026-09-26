@@ -539,10 +539,11 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             None => file_stem(path).into_iter().map(str::to_owned).collect(),
         };
         let is_entrypoint = language.is_entrypoint.is_some_and(|test| test(path, ctx));
+        let non_essential = model.non_essential || ctx.non_essential_factor(path) < 1.0;
         emitted.push(EmittedFile {
             batches: emit::emit_file(language, &file, model, is_entrypoint, ctx),
             chained: !is_entrypoint,
-            non_essential: ctx.non_essential_factor(path) < 1.0,
+            non_essential,
             bytes,
             names,
             mentions: language
