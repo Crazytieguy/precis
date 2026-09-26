@@ -30,14 +30,14 @@ Score(3000)=0.791 I=0.901 C=0.695 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 1275 |  | 239 | Name-only roster of every public member of PQueue (24 declarations, complete) | 2.1 |  | 0.644 |
 | walker |  | 1345 | 185 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
 | ns | 1436 |  | 161 | Readme Usage: the canonical concurrency-1 example | 2.2 |  | 0.635 |
-| walker |  | 1521 | 176 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.635 |
+| walker |  | 1516 | 171 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.635 |
 | ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.598 |
-| walker |  | 1706 | 185 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 2, sub: 1, line: 16 } |  |  | 0.628 |
-| walker |  | 1746 | 40 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 9, sub: 0, line: 581 } |  |  | 0.641 |
-| walker |  | 1788 | 42 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 10, sub: 0, line: 585 } |  |  | 0.641 |
+| walker |  | 1701 | 185 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 2, sub: 1, line: 16 } |  |  | 0.628 |
+| walker |  | 1741 | 40 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 9, sub: 0, line: 581 } |  |  | 0.641 |
+| walker |  | 1783 | 42 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 10, sub: 0, line: 585 } |  |  | 0.641 |
 | ns | 1792 |  | 172 | Readme .add() semantics and its two warnings | 2.4 |  | 0.618 |
 | ns | 1897 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.594 |
-| walker |  | 1994 | 206 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 2, sub: 2, line: 16 } |  |  | 0.687 |
+| walker |  | 1994 | 211 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 2, sub: 2, line: 16 } |  |  | 0.687 |
 | ns | 2002 |  | 105 | Readme warning: .clear() leaves queued .add() promises unsettled | 2.6 |  | 0.677 |
 | walker |  | 2046 | 52 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 27, sub: 0, line: 952 } |  |  | 0.678 |
 | walker |  | 2064 | 18 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.696 |

@@ -28,13 +28,13 @@ Score(3000)=0.649 I=0.838 C=0.502 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 1169 | 98 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.651 |
 | ns | 1229 |  | 168 | src/node.js — the node adapter's export contract | 2.4 |  | 0.582 |
 | ns | 1343 |  | 114 | src/browser.js — the browser adapter's export contract | 2.5 |  | 0.574 |
-| walker |  | 1375 | 206 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 0, line: 27 } |  |  | 0.574 |
+| walker |  | 1368 | 199 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 0, line: 27 } |  |  | 0.574 |
 | ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.544 |
-| walker |  | 1584 | 209 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 1, line: 27 } |  |  | 0.544 |
+| walker |  | 1577 | 209 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 1, line: 27 } |  |  | 0.544 |
 | ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.552 |
-| walker |  | 1792 | 208 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 2, line: 27 } |  |  | 0.552 |
+| walker |  | 1785 | 208 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 2, line: 27 } |  |  | 0.552 |
 | ns | 1802 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.573 |
-| walker |  | 1930 | 138 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 3, line: 27 } |  |  | 0.573 |
+| walker |  | 1930 | 145 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 3, line: 27 } |  |  | 0.573 |
 | ns | 1988 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.551 |
 | walker |  | 2045 | 115 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.552 |
 | ns | 2155 |  | 167 | README: wildcard and exclusion syntax for `DEBUG` | 3.3 |  | 0.535 |

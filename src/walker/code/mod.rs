@@ -771,6 +771,24 @@ mod tests {
         assert_eq!(claimed("x.cpp"), None);
     }
 
+    /// A program's `main` renders with its body, chunked when long: the
+    /// closing brace ends its last chunk, so an excerpt of its opening
+    /// statements doesn't close the function early.
+    #[test]
+    fn code_mod_long_main_closes_with_its_last_chunk() {
+        let dir = tempfile::tempdir().unwrap();
+        let statements: String = (0..400)
+            .map(|index| format!("\tfmt.Println(\"step {index} of the program\")\n"))
+            .collect();
+        let source = format!("package main\n\nimport \"fmt\"\n\nfunc main() {{\n{statements}}}\n");
+        std::fs::write(dir.path().join("main.go"), source).unwrap();
+        let out = crate::render(dir.path(), 3000, None).unwrap();
+        assert!(out.contains("5→func main() {"), "{out}");
+        assert!(out.contains("step 0 of the program"), "{out}");
+        assert!(!out.contains("step 399 of the program"), "{out}");
+        assert!(!out.contains("406→}"), "{out}");
+    }
+
     /// Each file's `Names` head chunk and its predecessor's file name, for
     /// `files` written to a fresh directory.
     fn roster_chain(files: &[(&str, &str)]) -> Vec<(String, Option<String>)> {

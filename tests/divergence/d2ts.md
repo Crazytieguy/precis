@@ -89,11 +89,11 @@ Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | ns | 3981 |  | 325 | d2.ts — D2Options and the complete D2 class method roster | 4.2 |  | 0.753 |
 | walker |  | 3985 | 21 | Code::CodeKey { rung: Names, file: packages/d2ql/src/query-builder/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.756 |
 | ns | 4171 |  | 190 | README: what versions and frontiers actually mean | 4.3 | 1.10 | 0.751 |
-| walker |  | 4343 | 358 | Code::CodeKey { rung: Decl, file: eslint.base.mjs, decl: 1, sub: 0, line: 6 } |  |  | 0.751 |
+| walker |  | 4337 | 352 | Code::CodeKey { rung: Decl, file: eslint.base.mjs, decl: 1, sub: 0, line: 6 } |  |  | 0.751 |
 | ns | 4517 |  | 346 | order.ts — v() factory and the complete Version method roster | 4.4 |  | 0.724 |
-| walker |  | 4526 | 183 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.724 |
+| walker |  | 4520 | 183 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.724 |
 | ns | 4807 |  | 290 | order.ts — Antichain method roster and Frontier | 4.5 | 4.4 | 0.703 |
-| walker |  | 4876 | 350 | Code::CodeKey { rung: Decl, file: eslint.base.mjs, decl: 1, sub: 1, line: 6 } |  |  | 0.703 |
+| walker |  | 4876 | 356 | Code::CodeKey { rung: Decl, file: eslint.base.mjs, decl: 1, sub: 1, line: 6 } |  |  | 0.703 |
 | ns | 4952 |  | 145 | README: MultiSet as a changeset, and keyed multisets | 4.6 | 1.10 | 0.700 |
 | walker |  | 4981 | 105 | Markdown::Section { file: README.md, section_index: 18, keeps_default_concavity: false } |  |  | 0.700 |
 | walker |  | 5096 | 115 | Fs::DirListing { dir: packages/d2ql/tests } |  |  | 0.741 |
@@ -175,4 +175,4 @@ Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | ns | 9827 |  | 144 | README: what each example demonstrates | 9.1 | 1.10 | 0.662 |
 | walker |  | 9885 | 86 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 9, sub: 0, line: 43 } |  |  | 0.662 |
 | ns | 9977 |  | 150 | examples/electric — what the demo app does | 9.2 | 2.13 | 0.659 |
-| walker |  | 9997 | 112 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 10, sub: 0, line: 52 } |  |  | 0.659 |
+| walker |  | 9992 | 107 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 10, sub: 0, line: 52 } |  |  | 0.659 |

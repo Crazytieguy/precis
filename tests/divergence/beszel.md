@@ -250,4 +250,4 @@ Score(3000)=0.642 I=0.802 C=0.514 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | ns | 9755 |  | 54 | internal/site/src/lib listing (complete) | 6.5 |  | 0.545 |
 | ns | 9885 |  | 130 | agent/ test files and the shared test harness (completes agent/) | 7.1 |  | 0.555 |
 | walker |  | 9944 | 271 | Code::CodeKey { rung: Names, file: agent/systemd.go, decl: 0, sub: 0, line: 0 } |  |  | 0.555 |
-| walker |  | 9993 | 49 | Code::CodeKey { rung: Decl, file: agent/systemd.go, decl: 2, sub: 0, line: 25 } |  |  | 0.555 |
+| walker |  | 9997 | 53 | Code::CodeKey { rung: Decl, file: agent/systemd.go, decl: 2, sub: 0, line: 25 } |  |  | 0.555 |

@@ -1,4 +1,4 @@
-Score(3000)=0.583 I=0.795 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.634/0.620/0.602/0.583/0.671/0.668/0.536
+Score(3000)=0.583 I=0.796 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.634/0.620/0.602/0.583/0.671/0.668/0.536
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -41,24 +41,24 @@ Score(3000)=0.583 I=0.795 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 1758 | 53 | Code::CodeKey { rung: Names, file: lib/command.js, decl: 0, sub: 0, line: 0 } |  |  | 0.587 |
 | ns | 1767 |  | 110 | Command roster 2/10 — command-arguments, help command, hooks, action (316-556) | 2.2 | 2.1 | 0.564 |
 | ns | 1851 |  | 84 | Command roster 3/10 — option creation and registration (585-805) | 2.3 | 2.2 | 0.548 |
-| walker |  | 1964 | 206 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 0, line: 13 } |  |  | 0.597 |
+| walker |  | 1956 | 198 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 0, line: 13 } |  |  | 0.597 |
 | ns | 1998 |  | 147 | Command roster 4/10 — parsing-behaviour toggles and the option-value store (826-983) | 2.4 | 2.3 | 0.574 |
 | ns | 2128 |  | 130 | Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380) | 2.5 | 2.4 | 0.556 |
-| walker |  | 2171 | 207 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 1, line: 13 } |  |  | 0.593 |
+| walker |  | 2163 | 207 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 1, line: 13 } |  |  | 0.593 |
 | ns | 2284 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.574 |
 | ns | 2358 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.564 |
-| walker |  | 2394 | 223 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 2, line: 13 } |  |  | 0.603 |
+| walker |  | 2386 | 223 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 2, line: 13 } |  |  | 0.603 |
 | ns | 2443 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.591 |
 | ns | 2595 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.570 |
 | ns | 2703 |  | 108 | Command roster 10/10 — help output and help-option API (2450-2686) | 2.10 | 2.9 | 0.558 |
-| walker |  | 2708 | 314 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 3, line: 13 } |  |  | 0.610 |
+| walker |  | 2708 | 322 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 3, line: 13 } |  |  | 0.610 |
 | walker |  | 2751 | 43 | Code::CodeKey { rung: Names, file: lib/help.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
 | ns | 2755 |  | 52 | lib/command.js module-level helpers and exports | 2.11 | 2.10 | 0.610 |
 | ns | 2851 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.596 |
-| walker |  | 2969 | 218 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 0, line: 12 } |  |  | 0.599 |
+| walker |  | 2962 | 211 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 0, line: 12 } |  |  | 0.599 |
 | ns | 2994 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.582 |
 | ns | 3122 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.569 |
-| walker |  | 3313 | 344 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 1, line: 12 } |  |  | 0.573 |
+| walker |  | 3313 | 351 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 1, line: 12 } |  |  | 0.573 |
 | ns | 3353 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.554 |
 | walker |  | 3355 | 42 | Code::CodeKey { rung: Names, file: lib/option.js, decl: 0, sub: 0, line: 0 } |  |  | 0.556 |
 | walker |  | 3388 | 33 | Code::CodeKey { rung: Decl, file: lib/option.js, decl: 17, sub: 0, line: 268 } |  |  | 0.559 |
@@ -103,46 +103,46 @@ Score(3000)=0.583 I=0.795 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 5425 | 451 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 15, sub: 0, line: 95 } |  |  | 0.629 |
 | ns | 5478 |  | 237 | examples/ listing (complete, 45 entries) | 3.11 |  | 0.650 |
 | ns | 5609 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.655 |
-| walker |  | 5617 | 192 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 0, line: 376 } |  |  | 0.662 |
-| walker |  | 5651 | 34 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 84, sub: 0, line: 420 } |  |  | 0.662 |
-| walker |  | 5691 | 40 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 85, sub: 0, line: 442 } |  |  | 0.662 |
+| walker |  | 5611 | 186 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 0, line: 376 } |  |  | 0.662 |
+| walker |  | 5645 | 34 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 84, sub: 0, line: 420 } |  |  | 0.662 |
+| walker |  | 5685 | 40 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 85, sub: 0, line: 442 } |  |  | 0.662 |
 | ns | 5748 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.666 |
 | ns | 5869 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.668 |
-| walker |  | 5894 | 203 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 1, line: 376 } |  |  | 0.668 |
-| walker |  | 5948 | 54 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 89, sub: 0, line: 487 } |  |  | 0.668 |
-| walker |  | 6006 | 58 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 98, sub: 0, line: 542 } |  |  | 0.668 |
-| walker |  | 6218 | 212 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 2, line: 376 } |  |  | 0.668 |
-| walker |  | 6256 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 110, sub: 0, line: 648 } |  |  | 0.668 |
-| walker |  | 6294 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 113, sub: 0, line: 673 } |  |  | 0.668 |
-| walker |  | 6344 | 50 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 112, sub: 0, line: 660 } |  |  | 0.668 |
-| walker |  | 6394 | 50 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 115, sub: 0, line: 685 } |  |  | 0.668 |
-| walker |  | 6450 | 56 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 111, sub: 0, line: 653 } |  |  | 0.668 |
-| walker |  | 6506 | 56 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 114, sub: 0, line: 678 } |  |  | 0.668 |
+| walker |  | 5888 | 203 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 1, line: 376 } |  |  | 0.668 |
+| walker |  | 5942 | 54 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 89, sub: 0, line: 487 } |  |  | 0.668 |
+| walker |  | 6000 | 58 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 98, sub: 0, line: 542 } |  |  | 0.668 |
+| walker |  | 6203 | 203 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 0, line: 210 } |  |  | 0.668 |
+| walker |  | 6241 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 32, sub: 0, line: 226 } |  |  | 0.668 |
+| walker |  | 6418 | 177 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 1, line: 210 } |  |  | 0.668 |
+| walker |  | 6606 | 188 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 2, line: 210 } |  |  | 0.668 |
 | ns | 6682 |  | 813 | tests/ listing (complete, 113 entries) | 3.15 |  | 0.602 |
-| walker |  | 6687 | 181 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 3, line: 376 } |  |  | 0.602 |
-| walker |  | 6706 | 19 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 119, sub: 0, line: 715 } |  |  | 0.602 |
-| walker |  | 6743 | 37 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 123, sub: 0, line: 733 } |  |  | 0.602 |
+| walker |  | 6764 | 158 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 3, line: 210 } |  |  | 0.602 |
+| walker |  | 6809 | 45 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 67, sub: 0, line: 316 } |  |  | 0.602 |
 | ns | 6810 |  | 128 | tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete) | 3.16 |  | 0.590 |
 | ns | 6840 |  | 30 | .github/ and .github/workflows/ listings | 3.17 |  | 0.593 |
+| walker |  | 6858 | 49 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 69, sub: 0, line: 331 } |  |  | 0.593 |
 | ns | 6900 |  | 60 | Help's five data properties | 4.1 |  | 0.590 |
-| walker |  | 6945 | 202 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 4, line: 376 } |  |  | 0.590 |
-| walker |  | 6975 | 30 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 132, sub: 0, line: 840 } |  |  | 0.590 |
-| walker |  | 6982 | 7 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 103, sub: 0, line: 572 } |  |  | 0.590 |
-| walker |  | 6989 | 7 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 105, sub: 0, line: 592 } |  |  | 0.590 |
+| walker |  | 7070 | 212 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 2, line: 376 } |  |  | 0.590 |
+| walker |  | 7108 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 110, sub: 0, line: 648 } |  |  | 0.590 |
 | ns | 7143 |  | 243 | parseOptions()'s documented contract | 4.2 |  | 0.582 |
-| walker |  | 7197 | 208 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 0, line: 210 } |  |  | 0.582 |
-| walker |  | 7235 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 32, sub: 0, line: 226 } |  |  | 0.582 |
-| walker |  | 7412 | 177 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 1, line: 210 } |  |  | 0.582 |
+| walker |  | 7146 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 113, sub: 0, line: 673 } |  |  | 0.582 |
+| walker |  | 7196 | 50 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 112, sub: 0, line: 660 } |  |  | 0.582 |
+| walker |  | 7246 | 50 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 115, sub: 0, line: 685 } |  |  | 0.582 |
+| walker |  | 7302 | 56 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 111, sub: 0, line: 653 } |  |  | 0.582 |
+| walker |  | 7358 | 56 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 114, sub: 0, line: 678 } |  |  | 0.582 |
 | ns | 7538 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.571 |
-| walker |  | 7600 | 188 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 2, line: 210 } |  |  | 0.571 |
-| walker |  | 7753 | 153 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 30, sub: 3, line: 210 } |  |  | 0.571 |
-| walker |  | 7798 | 45 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 67, sub: 0, line: 316 } |  |  | 0.571 |
-| walker |  | 7847 | 49 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 69, sub: 0, line: 331 } |  |  | 0.571 |
+| walker |  | 7539 | 181 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 3, line: 376 } |  |  | 0.571 |
+| walker |  | 7558 | 19 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 119, sub: 0, line: 715 } |  |  | 0.571 |
+| walker |  | 7595 | 37 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 123, sub: 0, line: 733 } |  |  | 0.571 |
+| walker |  | 7797 | 202 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 4, line: 376 } |  |  | 0.571 |
+| walker |  | 7827 | 30 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 132, sub: 0, line: 840 } |  |  | 0.571 |
+| walker |  | 7834 | 7 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 103, sub: 0, line: 572 } |  |  | 0.571 |
+| walker |  | 7841 | 7 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 105, sub: 0, line: 592 } |  |  | 0.571 |
 | ns | 7892 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.560 |
 | ns | 8051 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.556 |
-| walker |  | 8066 | 219 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 5, line: 376 } |  |  | 0.556 |
+| walker |  | 8060 | 219 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 5, line: 376 } |  |  | 0.556 |
 | ns | 8270 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.550 |
-| walker |  | 8346 | 280 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 6, line: 376 } |  |  | 0.550 |
+| walker |  | 8346 | 286 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 80, sub: 6, line: 376 } |  |  | 0.550 |
 | walker |  | 8387 | 41 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 168, sub: 0, line: 1083 } |  |  | 0.550 |
 | walker |  | 8397 | 10 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 51, sub: 0, line: 275 } |  |  | 0.550 |
 | walker |  | 8408 | 11 | Code::CodeKey { rung: Doc, file: typings/index.d.ts, decl: 57, sub: 0, line: 284 } |  |  | 0.550 |

@@ -1,4 +1,4 @@
-Score(3000)=0.672 I=0.779 C=0.579 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.725/0.595/0.633/0.672/0.633/0.585/0.588
+Score(3000)=0.673 I=0.779 C=0.581 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.725/0.595/0.633/0.673/0.633/0.585/0.588
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -219,9 +219,9 @@ Score(3000)=0.672 I=0.779 C=0.579 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | walker |  | 7609 | 134 | Fs::DirListing { dir: tests/testsuite } |  |  | 0.601 |
 | walker |  | 7662 | 53 | Toml::Dependencies { file: guide/guide-helper/Cargo.toml } |  |  | 0.601 |
 | ns | 7726 |  | 246 | Loading a book from disk, and `BookBuilder` | 7.4 |  | 0.594 |
-| walker |  | 7903 | 241 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.594 |
+| walker |  | 7898 | 236 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.594 |
 | ns | 7970 |  | 244 | The `links` preprocessor's helper syntax | 7.5 |  | 0.588 |
-| walker |  | 8221 | 318 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 1, line: 13 } |  |  | 0.588 |
+| walker |  | 8221 | 323 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 1, line: 13 } |  |  | 0.588 |
 | walker |  | 8271 | 50 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/tokenizer.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
 | ns | 8271 |  | 301 | The other built-in plugins | 7.6 |  | 0.581 |
 | walker |  | 8340 | 69 | Toml::Dependencies { file: crates/mdbook-core/Cargo.toml } |  |  | 0.581 |

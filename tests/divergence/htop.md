@@ -136,4 +136,5 @@ Score(3000)=0.702 I=0.934 C=0.527 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 9667 | 176 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 2, line: 0 } |  |  | 0.529 |
 | walker |  | 9821 | 154 | Code::CodeKey { rung: Names, file: Settings.c, decl: 0, sub: 3, line: 0 } |  |  | 0.529 |
 | ns | 9847 |  | 225 | pcp/: the Performance Co-Pilot back-end and its dynamic definition trees | 5.6 |  | 0.554 |
+| walker |  | 9848 | 27 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 0, line: 708 } |  |  | 0.554 |
 | ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.550 |

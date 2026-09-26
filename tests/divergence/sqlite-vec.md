@@ -200,11 +200,11 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 8750 | 47 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 143, sub: 0, line: 3026 } |  |  | 0.417 |
 | ns | 8811 |  | 144 | tests/ listing (complete) | 5.1 |  | 0.439 |
 | ns | 8898 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.436 |
-| walker |  | 8980 | 230 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 140, sub: 0, line: 2887 } |  |  | 0.436 |
-| walker |  | 9200 | 220 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 140, sub: 1, line: 2887 } |  |  | 0.426 |
+| walker |  | 8974 | 224 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 140, sub: 0, line: 2887 } |  |  | 0.436 |
+| walker |  | 9194 | 220 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 140, sub: 1, line: 2887 } |  |  | 0.436 |
 | ns | 9200 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.426 |
 | ns | 9280 |  | 80 | examples/ listing (complete) | 5.4 |  | 0.438 |
-| walker |  | 9332 | 132 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 140, sub: 2, line: 2887 } |  |  | 0.438 |
+| walker |  | 9332 | 138 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 140, sub: 2, line: 2887 } |  |  | 0.438 |
 | ns | 9451 |  | 171 | Python example, end to end | 5.5 |  | 0.432 |
 | ns | 9499 |  | 48 | bindings/ listings (complete) | 5.6 |  | 0.440 |
 | walker |  | 9517 | 185 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 17, line: 0 } |  |  | 0.442 |

@@ -115,40 +115,40 @@ Score(3000)=0.566 I=0.806 C=0.397 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 3663 | 76 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 5, sub: 0, line: 22 } |  |  | 0.517 |
 | ns | 3737 |  | 282 | Concrete default values | 3.2 | 3.1 | 0.497 |
 | ns | 3797 |  | 60 | transitional flags and their default values | 3.3 |  | 0.493 |
-| walker |  | 3854 | 191 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 0, line: 231 } |  |  | 0.493 |
-| walker |  | 4051 | 197 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 1, line: 231 } |  |  | 0.493 |
+| walker |  | 3849 | 186 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 0, line: 231 } |  |  | 0.493 |
+| walker |  | 4046 | 197 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 1, line: 231 } |  |  | 0.493 |
 | ns | 4166 |  | 369 | AxiosRequestConfig keys, part 1 of 3 (url … maxRate) | 3.4 |  | 0.475 |
-| walker |  | 4244 | 193 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 2, line: 231 } |  |  | 0.475 |
-| walker |  | 4384 | 140 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 3, line: 231 } |  |  | 0.475 |
+| walker |  | 4239 | 193 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 2, line: 231 } |  |  | 0.475 |
+| walker |  | 4384 | 145 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 69, sub: 3, line: 231 } |  |  | 0.475 |
 | ns | 4437 |  | 271 | AxiosRequestConfig keys, part 2 of 3 (beforeRedirect … env) | 3.5 | 3.4 | 0.462 |
 | ns | 4639 |  | 202 | AxiosRequestConfig keys, part 3 of 3 (formSerializer … redact) | 3.6 | 3.5 | 0.454 |
 | walker |  | 4767 | 383 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 50, sub: 0, line: 123 } |  |  | 0.454 |
 | walker |  | 4828 | 61 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 51, sub: 0, line: 124 } |  |  | 0.454 |
 | walker |  | 4907 | 79 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 52, sub: 0, line: 141 } |  |  | 0.454 |
 | ns | 4942 |  | 303 | Config validation inside _request | 3.7 | 2.8 | 0.439 |
+| walker |  | 5083 | 176 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 0, line: 42 } |  |  | 0.439 |
 | ns | 5084 |  | 142 | mergeConfig: the five merge strategies | 3.8 |  | 0.436 |
-| walker |  | 5088 | 181 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 0, line: 42 } |  |  | 0.436 |
-| walker |  | 5132 | 44 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 11, sub: 0, line: 47 } |  |  | 0.436 |
-| walker |  | 5326 | 194 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 1, line: 42 } |  |  | 0.436 |
-| walker |  | 5357 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 19, sub: 0, line: 65 } |  |  | 0.436 |
-| walker |  | 5388 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 23, sub: 0, line: 75 } |  |  | 0.436 |
+| walker |  | 5127 | 44 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 11, sub: 0, line: 47 } |  |  | 0.436 |
+| walker |  | 5321 | 194 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 1, line: 42 } |  |  | 0.436 |
+| walker |  | 5352 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 19, sub: 0, line: 65 } |  |  | 0.436 |
+| walker |  | 5383 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 23, sub: 0, line: 75 } |  |  | 0.436 |
 | ns | 5520 |  | 436 | mergeConfig: the per-key strategy table | 3.9 |  | 0.421 |
-| walker |  | 5552 | 164 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 2, line: 42 } |  |  | 0.421 |
-| walker |  | 5586 | 34 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 28, sub: 0, line: 84 } |  |  | 0.421 |
+| walker |  | 5547 | 164 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 2, line: 42 } |  |  | 0.421 |
+| walker |  | 5581 | 34 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 28, sub: 0, line: 84 } |  |  | 0.421 |
+| walker |  | 5747 | 166 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 3, line: 42 } |  |  | 0.421 |
 | ns | 5750 |  | 230 | mergeConfig: prototype-pollution-safe application | 3.10 | 3.8 | 0.416 |
-| walker |  | 5752 | 166 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 3, line: 42 } |  |  | 0.416 |
-| walker |  | 5786 | 34 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 40, sub: 0, line: 102 } |  |  | 0.416 |
-| walker |  | 5916 | 130 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 4, line: 42 } |  |  | 0.416 |
+| walker |  | 5781 | 34 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 40, sub: 0, line: 102 } |  |  | 0.416 |
+| walker |  | 5916 | 135 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 9, sub: 4, line: 42 } |  |  | 0.416 |
 | walker |  | 5950 | 34 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 44, sub: 0, line: 110 } |  |  | 0.416 |
 | ns | 6011 |  | 261 | Defaults-side config types | 3.11 |  | 0.407 |
 | ns | 6107 |  | 96 | AxiosResponse shape | 4.1 |  | 0.403 |
-| walker |  | 6129 | 179 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 0, line: 167 } |  |  | 0.403 |
-| walker |  | 6151 | 22 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 57, sub: 0, line: 175 } |  |  | 0.403 |
+| walker |  | 6124 | 174 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 0, line: 167 } |  |  | 0.403 |
+| walker |  | 6146 | 22 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 57, sub: 0, line: 175 } |  |  | 0.403 |
 | ns | 6172 |  | 65 | AxiosError: class surface | 4.2 |  | 0.401 |
-| walker |  | 6182 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 58, sub: 0, line: 178 } |  |  | 0.401 |
-| walker |  | 6215 | 33 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 59, sub: 0, line: 182 } |  |  | 0.401 |
+| walker |  | 6177 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 58, sub: 0, line: 178 } |  |  | 0.401 |
+| walker |  | 6210 | 33 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 59, sub: 0, line: 182 } |  |  | 0.401 |
 | ns | 6274 |  | 102 | AxiosError instance fields | 4.3 | 4.2 | 0.397 |
-| walker |  | 6441 | 226 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 1, line: 167 } |  |  | 0.397 |
+| walker |  | 6441 | 231 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 1, line: 167 } |  |  | 0.397 |
 | ns | 6444 |  | 170 | Error-code constant roster | 4.4 |  | 0.392 |
 | walker |  | 6472 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 60, sub: 0, line: 186 } |  |  | 0.392 |
 | walker |  | 6503 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 61, sub: 0, line: 190 } |  |  | 0.392 |
@@ -175,17 +175,17 @@ Score(3000)=0.566 I=0.806 C=0.397 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 7283 | 56 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 50, sub: 0, line: 112 } |  |  | 0.365 |
 | ns | 7316 |  | 168 | Navigation map for the 1312-line Node adapter | 5.3 | 5.2 | 0.362 |
 | walker |  | 7356 | 73 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 49, sub: 0, line: 103 } |  |  | 0.362 |
-| walker |  | 7552 | 196 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.362 |
+| walker |  | 7547 | 191 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.362 |
 | ns | 7573 |  | 257 | Platform selection: node and browser variants | 5.4 |  | 0.355 |
-| walker |  | 7593 | 41 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 9, sub: 0, line: 28 } |  |  | 0.355 |
+| walker |  | 7588 | 41 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 9, sub: 0, line: 28 } |  |  | 0.355 |
 | ns | 7634 |  | 61 | Environment capability flags | 5.5 |  | 0.353 |
-| walker |  | 7779 | 186 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 1, line: 23 } |  |  | 0.353 |
-| walker |  | 7809 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 17, sub: 0, line: 46 } |  |  | 0.353 |
-| walker |  | 7839 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 21, sub: 0, line: 56 } |  |  | 0.353 |
-| walker |  | 8002 | 163 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 2, line: 23 } |  |  | 0.353 |
+| walker |  | 7774 | 186 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 1, line: 23 } |  |  | 0.353 |
+| walker |  | 7804 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 17, sub: 0, line: 46 } |  |  | 0.353 |
+| walker |  | 7834 | 30 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 21, sub: 0, line: 56 } |  |  | 0.353 |
+| walker |  | 7997 | 163 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 2, line: 23 } |  |  | 0.353 |
 | ns | 8065 |  | 431 | Conditional exports map and browser file aliasing | 5.6 | 1.6 | 0.344 |
-| walker |  | 8169 | 167 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 3, line: 23 } |  |  | 0.344 |
-| walker |  | 8285 | 116 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 4, line: 23 } |  |  | 0.344 |
+| walker |  | 8164 | 167 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 3, line: 23 } |  |  | 0.344 |
+| walker |  | 8285 | 121 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 7, sub: 4, line: 23 } |  |  | 0.344 |
 | walker |  | 8297 | 12 | Code::CodeKey { rung: Doc, file: index.d.ts, decl: 1, sub: 0, line: 2 } |  |  | 0.344 |
 | walker |  | 8506 | 209 | Code::CodeKey { rung: Names, file: index.d.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.344 |
 | walker |  | 8525 | 19 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 59, sub: 0, line: 154 } |  |  | 0.344 |
@@ -198,11 +198,11 @@ Score(3000)=0.566 I=0.806 C=0.397 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 8776 | 65 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 65, sub: 0, line: 251 } |  |  | 0.330 |
 | ns | 8842 |  | 242 | Helper signatures: URL, params and form-data | 6.2 |  | 0.327 |
 | walker |  | 8875 | 99 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 63, sub: 0, line: 236 } |  |  | 0.327 |
-| walker |  | 9066 | 191 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 0, line: 170 } |  |  | 0.327 |
+| walker |  | 9061 | 186 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 0, line: 170 } |  |  | 0.327 |
 | ns | 9254 |  | 412 | Helper signatures: streaming, progress, security and validation | 6.3 |  | 0.322 |
-| walker |  | 9263 | 197 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 1, line: 170 } |  |  | 0.322 |
-| walker |  | 9456 | 193 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 2, line: 170 } |  |  | 0.322 |
-| walker |  | 9596 | 140 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 3, line: 170 } |  |  | 0.322 |
+| walker |  | 9258 | 197 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 1, line: 170 } |  |  | 0.322 |
+| walker |  | 9451 | 193 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 2, line: 170 } |  |  | 0.322 |
+| walker |  | 9596 | 145 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 62, sub: 3, line: 170 } |  |  | 0.322 |
 | ns | 9620 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.316 |
 | walker |  | 9634 | 38 | Fs::DirListing { dir: tests/module/cjs/tests } |  |  | 0.316 |
 | walker |  | 9665 | 31 | Fs::DirListing { dir: tests/module/cjs/tests/helpers } |  |  | 0.316 |

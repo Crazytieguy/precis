@@ -103,7 +103,17 @@ impl Emitter<'_> {
         let mut head_items = vec![Item::new(decl.head.clone())];
         let mut decl_value = value;
         if decl.shape == Shape::Whole {
+            // Head rows past the last entry (the closing `}`) close the
+            // last chunk rather than the first.
+            let body_end = decl.body.iter().filter_map(|item| item.rows.last()).max();
+            let closing = head_items[0].rows.split_off(
+                decl.head
+                    .partition_point(|row| body_end.is_none_or(|end| row < end)),
+            );
             head_items.extend(decl.body.iter().cloned());
+            if !closing.is_empty() {
+                head_items.push(Item::new(closing));
+            }
             decl_value *= roster_mass(decl.body.len());
         }
         let decl_gate = self

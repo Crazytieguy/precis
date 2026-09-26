@@ -67,30 +67,30 @@ Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 2818 | 91 | Code::CodeKey { rung: Names, file: sps/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.770 |
 | walker |  | 2905 | 87 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.770 |
 | ns | 2948 |  | 261 | PipelineEvent: all 23 variant names | 2.3 |  | 0.736 |
-| walker |  | 3034 | 129 | Code::CodeKey { rung: Names, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.736 |
-| walker |  | 3068 | 34 | Code::CodeKey { rung: Decl, file: sps/src/cli.rs, decl: 3, sub: 0, line: 56 } |  |  | 0.736 |
-| walker |  | 3166 | 98 | Code::CodeKey { rung: Decl, file: sps/src/cli.rs, decl: 2, sub: 0, line: 43 } |  |  | 0.748 |
-| ns | 3170 |  | 222 | Pipeline runner: CommandType, PipelineFlags and the run_pipeline signature | 2.4 |  | 0.723 |
-| walker |  | 3280 | 114 | Code::CodeKey { rung: Decl, file: sps/src/cli.rs, decl: 1, sub: 0, line: 32 } |  |  | 0.752 |
-| walker |  | 3304 | 24 | Code::CodeKey { rung: Names, file: sps/src/pipeline.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.752 |
-| ns | 3342 |  | 172 | Core worker pool manager and its sizing rule | 2.5 |  | 0.739 |
-| walker |  | 3537 | 233 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 0, line: 56 } |  |  | 0.740 |
-| ns | 3553 |  | 211 | Worker job execution entry points | 2.6 |  | 0.726 |
-| ns | 3752 |  | 199 | OperationPlanner and plan_operations | 2.7 |  | 0.708 |
-| ns | 3892 |  | 140 | DownloadCoordinator | 2.8 |  | 0.697 |
-| ns | 4151 |  | 259 | JobProcessingState: the runner's per-job state machine | 2.9 |  | 0.679 |
-| walker |  | 4283 | 746 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 1, line: 56 } |  |  | 0.679 |
+| walker |  | 3133 | 228 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 0, line: 56 } |  |  | 0.737 |
+| ns | 3170 |  | 222 | Pipeline runner: CommandType, PipelineFlags and the run_pipeline signature | 2.4 |  | 0.712 |
+| ns | 3342 |  | 172 | Core worker pool manager and its sizing rule | 2.5 |  | 0.700 |
+| ns | 3553 |  | 211 | Worker job execution entry points | 2.6 |  | 0.686 |
+| ns | 3752 |  | 199 | OperationPlanner and plan_operations | 2.7 |  | 0.670 |
+| walker |  | 3879 | 746 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 1, line: 56 } |  |  | 0.670 |
+| ns | 3892 |  | 140 | DownloadCoordinator | 2.8 |  | 0.660 |
+| walker |  | 4008 | 129 | Code::CodeKey { rung: Names, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.660 |
+| walker |  | 4042 | 34 | Code::CodeKey { rung: Decl, file: sps/src/cli.rs, decl: 3, sub: 0, line: 56 } |  |  | 0.660 |
+| walker |  | 4140 | 98 | Code::CodeKey { rung: Decl, file: sps/src/cli.rs, decl: 2, sub: 0, line: 43 } |  |  | 0.671 |
+| ns | 4151 |  | 259 | JobProcessingState: the runner's per-job state machine | 2.9 |  | 0.653 |
+| walker |  | 4254 | 114 | Code::CodeKey { rung: Decl, file: sps/src/cli.rs, decl: 1, sub: 0, line: 32 } |  |  | 0.679 |
+| walker |  | 4278 | 24 | Code::CodeKey { rung: Names, file: sps/src/pipeline.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
 | ns | 4285 |  | 134 | PlannedOperations: the planner's output | 2.10 |  | 0.672 |
 | ns | 4412 |  | 127 | Terminal status display: JobStatus states and the event-loop entry | 2.11 |  | 0.661 |
-| walker |  | 4521 | 238 | Toml::Dependencies { file: sps-common/Cargo.toml } |  |  | 0.661 |
+| walker |  | 4516 | 238 | Toml::Dependencies { file: sps-common/Cargo.toml } |  |  | 0.661 |
 | ns | 4564 |  | 152 | main(): the init special-case and the auto-update gate | 2.12 |  | 0.658 |
-| walker |  | 4759 | 238 | Toml::Dependencies { file: sps-net/Cargo.toml } |  |  | 0.658 |
+| walker |  | 4754 | 238 | Toml::Dependencies { file: sps-net/Cargo.toml } |  |  | 0.658 |
 | ns | 4768 |  | 204 | Auto-update behaviour and its environment variables | 2.13 | 2.12 | 0.648 |
 | ns | 4869 |  | 101 | Logging: SPS_LOG env filter and the rolling log file | 2.14 |  | 0.652 |
-| walker |  | 5028 | 269 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 2, line: 56 } |  |  | 0.662 |
+| walker |  | 5023 | 269 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 2, line: 56 } |  |  | 0.662 |
 | ns | 5124 |  | 255 | `sps install` flags | 3.1 |  | 0.645 |
 | ns | 5341 |  | 217 | `sps upgrade` and `sps reinstall` flags | 3.2 |  | 0.629 |
-| walker |  | 5431 | 403 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 3, line: 56 } |  |  | 0.629 |
+| walker |  | 5431 | 408 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 3, line: 56 } |  |  | 0.629 |
 | ns | 5660 |  | 319 | `sps uninstall` and `sps list` flags | 3.3 |  | 0.613 |
 | ns | 5940 |  | 280 | `sps search`, `sps info`, `sps init` and `sps update` flags | 3.4 |  | 0.598 |
 | walker |  | 6007 | 576 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.598 |
@@ -112,11 +112,11 @@ Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 6962 | 16 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 31, sub: 0, line: 193 } |  |  | 0.566 |
 | walker |  | 7062 | 100 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 3, sub: 0, line: 14 } |  |  | 0.578 |
 | ns | 7128 |  | 207 | Formula: the complete field list | 4.5 |  | 0.570 |
-| walker |  | 7248 | 186 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 4, sub: 0, line: 24 } |  |  | 0.573 |
+| walker |  | 7243 | 181 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 4, sub: 0, line: 24 } |  |  | 0.573 |
 | ns | 7390 |  | 262 | Cask: the complete field list | 4.6 |  | 0.564 |
-| walker |  | 7425 | 177 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 4, sub: 1, line: 24 } |  |  | 0.573 |
+| walker |  | 7420 | 177 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 4, sub: 1, line: 24 } |  |  | 0.573 |
 | ns | 7596 |  | 206 | Dependency tags and Requirement | 4.7 |  | 0.566 |
-| walker |  | 7645 | 220 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 4, sub: 2, line: 24 } |  |  | 0.582 |
+| walker |  | 7645 | 225 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 4, sub: 2, line: 24 } |  |  | 0.582 |
 | walker |  | 7697 | 52 | Code::CodeKey { rung: Decl, file: sps-common/src/config.rs, decl: 26, sub: 0, line: 144 } |  |  | 0.582 |
 | walker |  | 7799 | 102 | Code::CodeKey { rung: Names, file: sps-common/src/pipeline.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.582 |
 | ns | 7828 |  | 232 | Resolver outputs: install strategy, resolution status, resolved graph | 4.8 |  | 0.572 |
@@ -132,14 +132,14 @@ Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | ns | 8439 |  | 139 | Bottle install path: download, platform check, install, link, Mach-O patch | 5.1 |  | 0.599 |
 | walker |  | 8553 | 230 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 9, sub: 0, line: 162 } |  |  | 0.616 |
 | ns | 8668 |  | 229 | Cask install path: private store, download, install_cask, manifests, DMG handling | 5.2 |  | 0.609 |
-| walker |  | 8749 | 196 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 0, line: 49 } |  |  | 0.612 |
-| ns | 8815 |  | 147 | CaskInstallManifest: the on-disk record of a cask install | 5.3 |  | 0.608 |
-| walker |  | 8962 | 213 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 1, line: 49 } |  |  | 0.612 |
-| walker |  | 8978 | 16 | Code::CodeKey { rung: Doc, file: sps-common/src/pipeline.rs, decl: 11, sub: 0, line: 190 } |  |  | 0.614 |
-| ns | 9065 |  | 250 | Installed / outdated checks | 5.4 |  | 0.605 |
-| walker |  | 9223 | 245 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 2, line: 49 } |  |  | 0.615 |
+| walker |  | 8744 | 191 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 0, line: 49 } |  |  | 0.612 |
+| ns | 8815 |  | 147 | CaskInstallManifest: the on-disk record of a cask install | 5.3 |  | 0.607 |
+| walker |  | 8957 | 213 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 1, line: 49 } |  |  | 0.612 |
+| walker |  | 8973 | 16 | Code::CodeKey { rung: Doc, file: sps-common/src/pipeline.rs, decl: 11, sub: 0, line: 190 } |  |  | 0.614 |
+| ns | 9065 |  | 250 | Installed / outdated checks | 5.4 |  | 0.604 |
+| walker |  | 9218 | 245 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 2, line: 49 } |  |  | 0.614 |
 | ns | 9224 |  | 159 | Archive extraction, toolchain discovery and macOS-only helpers | 5.5 |  | 0.610 |
-| walker |  | 9417 | 194 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 3, line: 49 } |  |  | 0.618 |
+| walker |  | 9417 | 199 | Code::CodeKey { rung: Decl, file: sps-common/src/pipeline.rs, decl: 5, sub: 3, line: 49 } |  |  | 0.618 |
 | walker |  | 9434 | 17 | Code::CodeKey { rung: Doc, file: sps-common/src/pipeline.rs, decl: 9, sub: 0, line: 162 } |  |  | 0.620 |
 | walker |  | 9443 | 9 | Code::CodeKey { rung: Body, file: sps-common/src/keg.rs, decl: 4, sub: 0, line: 26 } |  |  | 0.620 |
 | ns | 9471 |  | 247 | Network endpoints, user agents and timeouts | 6.1 |  | 0.616 |
