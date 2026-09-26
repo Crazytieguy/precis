@@ -1640,22 +1640,27 @@ fn root_makefile_targets(
     let source = ctx.read_source_within(file, SOURCE_TEXT_BYTE_GATE)?;
     let mut rows = Vec::new();
     let mut shown_targets = HashSet::new();
-    let mut in_shown_recipe = false;
+    let mut in_shown_rule = false;
+    let mut shows_recipe = false;
     let mut continued = false;
     for (index, line) in source.lines().enumerate() {
         let continues_previous = std::mem::replace(&mut continued, line.ends_with('\\'));
-        if in_shown_recipe && (continues_previous || line.starts_with('\t')) {
+        if in_shown_rule && (continues_previous || shows_recipe && line.starts_with('\t')) {
             rows.push(index + 1);
             continue;
         }
-        in_shown_recipe = false;
+        if in_shown_rule && (line.trim().is_empty() || line.starts_with('#')) {
+            continue;
+        }
+        in_shown_rule = false;
         if !line.starts_with('\t')
             && let Some(target) = recipe_name(line)
             && CANONICAL_MAKE_TARGETS.contains(&target)
             && shown_targets.insert(target)
         {
             rows.push(index + 1);
-            in_shown_recipe = target != "help" && !is_housekeeping_target(target);
+            in_shown_rule = true;
+            shows_recipe = target != "help" && !is_housekeeping_target(target);
         }
     }
     single_file_lines_content(file, &source, rows)
@@ -2530,6 +2535,15 @@ mod tests {
                     ".PHONY: $(PHONY)\nall: vmlinux\nall: dtbs\nPHONY += help\nhelp:\n\t@echo\nbuild: FLAGS := -O2\n",
                 ),
                 vec![(2, 2), (5, 5)],
+                vec![],
+            ),
+            (
+                "Makefile",
+                recipes(
+                    "test:\n# Run the suite\n\t./run-tests\n\n\t./run-lint\nFLAGS = -O2\n\
+                     install: app \\\n  docs\n\tcp app /usr/bin\n",
+                ),
+                vec![(1, 1), (3, 5), (7, 8)],
                 vec![],
             ),
             (
