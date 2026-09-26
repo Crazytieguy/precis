@@ -1034,51 +1034,86 @@ fn fence_closes(trimmed: &str, open: (char, usize)) -> bool {
 }
 
 /// Tags whose raw-HTML block (CommonMark type 1) runs verbatim to its
-/// closing tag rather than to a blank line, so a blank row inside one is
-/// not a block boundary and cutting a chunk there severs the construct.
+/// closing tag.
 const RAW_HTML_VERBATIM_TAGS: [&str; 4] = ["script", "pre", "style", "textarea"];
 
-/// Whether an already-trimmed line opens a verbatim raw-HTML block.
-fn opens_raw_html_block(trimmed: &str) -> bool {
-    let Some(rest) = trimmed.strip_prefix('<').map(str::as_bytes) else {
-        return false;
-    };
-    RAW_HTML_VERBATIM_TAGS.iter().any(|tag| {
-        let tag = tag.as_bytes();
-        rest.len() >= tag.len()
-            && rest[..tag.len()].eq_ignore_ascii_case(tag)
-            && rest
-                .get(tag.len())
-                .is_none_or(|b| b.is_ascii_whitespace() || *b == b'>')
-    })
+/// A raw-HTML block whose end condition is a closing token rather than
+/// a blank line — CommonMark block types 1–5. Types 6 and 7 do end at
+/// a blank line and need no tracking. Inside one of these a blank row
+/// is *not* a block boundary, so cutting a chunk there severs the
+/// construct, silently, at render time.
+#[derive(Clone, Copy)]
+enum RawHtmlBlock {
+    /// `<script` / `<pre` / `<style` / `<textarea` (type 1).
+    Verbatim,
+    /// `<!--` (2), `<?` (3), `<!DECL` (4), `<![CDATA[` (5).
+    Token(&'static str),
 }
 
-/// Whether an already-trimmed line closes a verbatim raw-HTML block. The
-/// opening line can close it itself.
-fn closes_raw_html_block(trimmed: &str) -> bool {
-    let lowered = trimmed.to_ascii_lowercase();
-    RAW_HTML_VERBATIM_TAGS
-        .iter()
-        .any(|tag| lowered.contains(&format!("</{tag}>")))
+impl RawHtmlBlock {
+    /// The block an already-trimmed line opens, if any.
+    fn opened_by(trimmed: &str) -> Option<Self> {
+        if trimmed.starts_with("<!--") {
+            return Some(Self::Token("-->"));
+        }
+        if trimmed.starts_with("<?") {
+            return Some(Self::Token("?>"));
+        }
+        if trimmed.starts_with("<![CDATA[") {
+            return Some(Self::Token("]]>"));
+        }
+        if let Some(rest) = trimmed.strip_prefix("<!")
+            && rest.starts_with(|c: char| c.is_ascii_alphabetic())
+        {
+            return Some(Self::Token(">"));
+        }
+        let rest = trimmed.strip_prefix('<')?.as_bytes();
+        RAW_HTML_VERBATIM_TAGS
+            .iter()
+            .any(|tag| {
+                let tag = tag.as_bytes();
+                rest.len() >= tag.len()
+                    && rest[..tag.len()].eq_ignore_ascii_case(tag)
+                    && rest
+                        .get(tag.len())
+                        .is_none_or(|b| b.is_ascii_whitespace() || *b == b'>')
+            })
+            .then_some(Self::Verbatim)
+    }
+
+    /// Whether an already-trimmed line meets the block's end condition.
+    /// The opening line can meet it itself.
+    fn closed_by(self, trimmed: &str) -> bool {
+        let lowered = trimmed.to_ascii_lowercase();
+        match self {
+            Self::Verbatim => RAW_HTML_VERBATIM_TAGS
+                .iter()
+                .any(|tag| lowered.contains(&format!("</{tag}>"))),
+            Self::Token(end) => lowered.contains(end),
+        }
+    }
 }
 
 /// 1-based `(first, last)` rows of every multi-row fence (see
-/// [`fence_closes`]) and verbatim raw-HTML block (see
-/// [`RAW_HTML_VERBATIM_TAGS`]) that `lines` open, in order; one still
-/// open at the end runs to the last line.
+/// [`fence_closes`]) and raw-HTML block (see [`RawHtmlBlock`]) that
+/// `lines` open, in order; one still open at the end runs to the last
+/// line.
 fn verbatim_blocks<'a>(lines: impl IntoIterator<Item = (usize, &'a str)>) -> Vec<(usize, usize)> {
+    enum Opener {
+        Fence((char, usize)),
+        Html(RawHtmlBlock),
+    }
     let mut blocks = Vec::new();
-    // The open block's first row and, for a fence, its marker.
-    let mut open: Option<(usize, Option<(char, usize)>)> = None;
+    let mut open: Option<(usize, Opener)> = None;
     let mut last_row = 0;
     for (row, line) in lines {
         last_row = row;
         let trimmed = line.trim_start();
         match &open {
-            Some((first, fence)) => {
-                let closes = match fence {
-                    Some(marker) => fence_closes(trimmed, *marker),
-                    None => closes_raw_html_block(trimmed),
+            Some((first, opener)) => {
+                let closes = match opener {
+                    Opener::Fence(marker) => fence_closes(trimmed, *marker),
+                    Opener::Html(block) => block.closed_by(trimmed),
                 };
                 if closes {
                     blocks.push((*first, row));
@@ -1087,9 +1122,11 @@ fn verbatim_blocks<'a>(lines: impl IntoIterator<Item = (usize, &'a str)>) -> Vec
             }
             None => {
                 if let Some(marker) = fence_marker(trimmed) {
-                    open = Some((row, Some(marker)));
-                } else if opens_raw_html_block(trimmed) && !closes_raw_html_block(trimmed) {
-                    open = Some((row, None));
+                    open = Some((row, Opener::Fence(marker)));
+                } else if let Some(block) = RawHtmlBlock::opened_by(trimmed)
+                    && !block.closed_by(trimmed)
+                {
+                    open = Some((row, Opener::Html(block)));
                 }
             }
         }
@@ -1859,6 +1896,26 @@ mod tests {
                 prose_block(300),
             );
             assert_no_chunk_starts_in(&source, rows_of(&source, open).0, rows_of(&source, close).0);
+        }
+    }
+
+    /// A multi-row HTML comment or CDATA section is bought as one unit
+    /// of its opening and closing rows, so a partial that stops inside
+    /// it still shows where the commented-out material ends.
+    #[test]
+    fn markdown_lines_content_pairs_token_delimited_html_block_rows() {
+        for (open, close) in [("<!--", "-->"), ("<![CDATA[", "]]>")] {
+            let text = format!("intro\n{open}\nhidden\n\nmore\n{close}\nafter\n");
+            let source = Source::new(text.into());
+            let Some(BatchContent::Lines { units, .. }) =
+                lines_content(Path::new("a.md"), &source, (1..=7).collect())
+            else {
+                panic!("expected line content");
+            };
+            assert_eq!(
+                units,
+                [vec![1], vec![2, 6], vec![3], vec![4], vec![5], vec![7]]
+            );
         }
     }
 
