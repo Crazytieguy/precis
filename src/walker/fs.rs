@@ -226,31 +226,59 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    LISTING_VALUE * depth * fanout * catalog_child_factor * media_roster_factor(children)
+    LISTING_VALUE * depth * fanout * catalog_child_factor * roster_factor(children)
 }
 
-/// Fewest media files for a listing to count as a media roster.
-const MEDIA_ROSTER_MIN_FILES: usize = 11;
+/// Fewest files for a media roster or a name catalog.
+const ROSTER_MIN_FILES: usize = 11;
 
-/// A listing of many images, fonts, audio or video files is priced by
-/// its share of other entries: the media names say what the pictures
-/// are, not what the project is, and a roster of nothing but media is
-/// never bought. A few media files, a logo and a screenshot, cost little
-/// and keep full value.
-fn media_roster_factor(children: &BTreeMap<String, EntryKind>) -> f64 {
+/// A listing is priced by its share of entries outside its rosters: many
+/// images, fonts, audio or video files, whose names say what the
+/// pictures are, not what the project is, and catalogs, many files
+/// sharing an extension and a name prefix (`issue-*.md`,
+/// `messages_*.properties`), whose names past the first say there are
+/// more of the same. A listing
+/// of nothing but rosters is never bought. A few media files, a logo and
+/// a screenshot, cost little and keep full value.
+fn roster_factor(children: &BTreeMap<String, EntryKind>) -> f64 {
     let listed: Vec<&String> = listed_entries(children).collect();
-    let media = listed
-        .iter()
-        .filter(|name| {
-            matches!(children[name.as_str()], EntryKind::File)
-                && has_extension_in(name, MEDIA_EXTENSIONS)
-        })
-        .count();
-    if media < MEDIA_ROSTER_MIN_FILES {
-        return 1.0;
+    let mut media = 0;
+    let mut catalogs: HashMap<(&str, &str), usize> = HashMap::new();
+    for name in &listed {
+        if !matches!(children[name.as_str()], EntryKind::File) {
+            continue;
+        }
+        if has_extension_in(name, MEDIA_EXTENSIONS) {
+            media += 1;
+        } else if let Some(key) = catalog_key(name) {
+            *catalogs.entry(key).or_default() += 1;
+        }
     }
-    1.0 - media as f64 / listed.len() as f64
+    let roster: usize = std::iter::once(media)
+        .chain(catalogs.into_values())
+        .filter(|&count| count >= ROSTER_MIN_FILES)
+        .sum();
+    1.0 - roster as f64 / listed.len() as f64
 }
+
+/// The name prefix and extension a catalog entry shares with its
+/// siblings. A module's source files share a prefix by convention
+/// (`libpff_*.c`, `kubelet_*.go`), and a roster of scripts names the
+/// project's commands (`scoop-*.ps1`), so neither is a catalog.
+fn catalog_key(name: &str) -> Option<(&str, &str)> {
+    let path = Path::new(name);
+    let extension = path.extension()?.to_str()?;
+    if super::language_group(path).is_some() || has_extension_in(path, SCRIPT_EXTENSIONS) {
+        return None;
+    }
+    let (prefix_end, _) = name
+        .char_indices()
+        .skip(1)
+        .find(|(_, char)| matches!(char, '-' | '_' | '.'))?;
+    Some((&name[..prefix_end], extension))
+}
+
+const SCRIPT_EXTENSIONS: &[&str] = &["sh", "bash", "zsh", "fish", "ps1", "psm1"];
 
 const MEDIA_EXTENSIONS: &[&str] = &[
     "png", "jpg", "jpeg", "gif", "webp", "svg", "ico", "icns", "bmp", "tif", "tiff", "psd", "ttf",
@@ -636,7 +664,7 @@ mod tests {
     }
 
     #[test]
-    fn fs_media_rosters_are_priced_by_their_other_entries() {
+    fn fs_media_and_catalog_rosters_are_priced_by_their_other_entries() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         let write = |dir: &str, names: &[String]| {
@@ -645,7 +673,7 @@ mod tests {
                 std::fs::write(root.join(dir).join(name), "").unwrap();
             }
         };
-        let shots: Vec<String> = (0..MEDIA_ROSTER_MIN_FILES)
+        let shots: Vec<String> = (0..ROSTER_MIN_FILES)
             .map(|index| format!("shot{index}.png"))
             .collect();
         write("gallery", &shots);
@@ -656,6 +684,14 @@ mod tests {
             &["logo.svg".to_string(), "screenshot.png".to_string()],
         );
         write("notes", &["a.txt".to_string(), "b.txt".to_string()]);
+        let issues: Vec<String> = (0..ROSTER_MIN_FILES)
+            .map(|index| format!("issue-{index}.md"))
+            .collect();
+        write("issues", &issues);
+        let hooks: Vec<String> = (0..ROSTER_MIN_FILES)
+            .map(|index| format!("hook_{index}.sh"))
+            .collect();
+        write("hooks", &hooks);
         let ctx = WalkCtx::new(root.to_path_buf());
         let value = |dir: &str| {
             dir_listing_batches(root.join(dir), &ctx)
@@ -665,6 +701,8 @@ mod tests {
         assert_eq!(value("gallery"), None);
         assert!(value("screens").unwrap() < value("notes").unwrap() / 10.0);
         assert_eq!(value("branding"), value("notes"));
+        assert_eq!(value("issues"), None);
+        assert!(value("hooks").is_some());
     }
 
     #[test]

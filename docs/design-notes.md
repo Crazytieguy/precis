@@ -474,7 +474,12 @@ breadth pressure on them after 1000 to 4000 spine tokens 3000 −0.004 to
   Moving that trade needs an answer-key revision, not a walker tweak.
   The exception is size-gated: pricing a listing by its non-media share
   cost the grid while it reached a three-file `media/`, and was neutral
-  once it applied only from eleven media files up.
+  once it applied only from eleven media files up. Catalogs (eleven or
+  more non-source, non-script files sharing a name prefix and
+  extension) share that pricing: keying them on name homogeneity rather
+  than directory names moved the grid by +0.0001 at 3000. Source and
+  scripts are exempt because module files share a prefix by convention
+  and a script roster names the project's commands.
   No answer key ranks a listing past the split size, so the long-listing
   split (`fs::listing_parts`) is invisible to the grid; it is judged on
   real repositories, where a big source directory delivered whole
