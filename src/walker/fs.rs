@@ -591,11 +591,11 @@ fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
         crate::fs_util::should_skip_dir(&name)
     };
     !(heavy
-        || is_locale_mirror(dir, &name, ctx)
-        || is_generated_doc_site(dir, ctx)
-        || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx)
         || ctx.fs_state.is_declared_vendored(dir, ctx)
-            && !crate::value::is_third_party_dir(dir, ctx.root()))
+            && !crate::value::is_third_party_dir(dir, ctx.root())
+        || is_locale_mirror(dir, &name, ctx)
+        || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx)
+        || is_generated_doc_site(dir, ctx))
 }
 
 /// A copy of another project as its release archive unpacks, named for
