@@ -1189,9 +1189,10 @@ fn is_command_title_core(core: &str) -> bool {
         .any(|word| COMMAND_TITLE_WORDS.contains(&word))
 }
 
-/// The first shell block (see [`is_shell_block`]) that sits under a
-/// heading titled by [`is_command_title_core`] in `section`, extended
-/// through the shell blocks after it before the next subsection, all
+/// The first shell block (see [`is_shell_block`]), at any depth in lists
+/// and quotes, that sits under a heading titled by
+/// [`is_command_title_core`] in `section`, extended through the shell
+/// blocks after it before the next subsection, all
 /// within [`OVERSIZE_CHUNK_TARGET_TOKENS`]; paired with the innermost
 /// such heading (`command_heading` is the enclosing one). Back matter is
 /// skipped.
@@ -1201,15 +1202,17 @@ fn command_block(
     source: &str,
     src_lines: &[&str],
 ) -> Option<CommandBlockRows> {
-    fn first_shell_block<'a>(node: Node<'a>, source: &str) -> Option<Node<'a>> {
+    fn collect_shell_blocks<'a>(node: Node<'a>, source: &str, out: &mut Vec<Node<'a>>) {
         if matches!(node.kind(), "fenced_code_block" | "indented_code_block") {
-            return is_shell_block(node, source).then_some(node);
+            if is_shell_block(node, source) {
+                out.push(node);
+            }
+            return;
         }
         let mut cursor = node.walk();
-        let children: Vec<Node> = node.children(&mut cursor).collect();
-        children
-            .into_iter()
-            .find_map(|child| first_shell_block(child, source))
+        for child in node.children(&mut cursor) {
+            collect_shell_blocks(child, source, out);
+        }
     }
     let title = section_title_core(section, source);
     if is_appendix_title_core(&title) {
@@ -1224,44 +1227,39 @@ fn command_block(
             node_end_row_trimmed(node, source) + 1,
         )
     };
-    let mut cursor = section.walk();
-    let children: Vec<Node> = section.children(&mut cursor).collect();
     let tokens = |start: usize, end: usize| -> usize {
         (start..=end).map(|row| row_tokens(src_lines, row)).sum()
     };
-    for (idx, child) in children.iter().enumerate() {
-        if child.kind() == "section" {
-            if let Some(found) = command_block(*child, command_heading, source, src_lines) {
-                return Some(found);
-            }
-            continue;
+    let mut cursor = section.walk();
+    let children: Vec<Node> = section.children(&mut cursor).collect();
+    let (content, subsections): (Vec<Node>, Vec<Node>) = children
+        .into_iter()
+        .partition(|child| child.kind() != "section");
+    if let Some(heading) = command_heading {
+        let mut blocks = Vec::new();
+        for child in content {
+            collect_shell_blocks(child, source, &mut blocks);
         }
-        let (Some(heading), Some(block)) = (command_heading, first_shell_block(*child, source))
-        else {
-            continue;
-        };
-        let (start, mut end) = rows(block);
-        if tokens(start, end) > OVERSIZE_CHUNK_TARGET_TOKENS {
-            continue;
-        }
-        for sibling in children[idx + 1..]
-            .iter()
-            .take_while(|sibling| sibling.kind() != "section")
-        {
-            if let Some(next) = first_shell_block(*sibling, source) {
-                let next_end = rows(next).1;
+        let mut spans = blocks
+            .into_iter()
+            .map(rows)
+            .skip_while(|&(start, end)| tokens(start, end) > OVERSIZE_CHUNK_TARGET_TOKENS);
+        if let Some((start, mut end)) = spans.next() {
+            for (_, next_end) in spans {
                 if tokens(start, next_end) > OVERSIZE_CHUNK_TARGET_TOKENS {
                     break;
                 }
                 end = next_end;
             }
+            return Some(CommandBlockRows {
+                heading: rows(heading),
+                block: (start, end),
+            });
         }
-        return Some(CommandBlockRows {
-            heading: rows(heading),
-            block: (start, end),
-        });
     }
-    None
+    subsections
+        .into_iter()
+        .find_map(|child| command_block(child, command_heading, source, src_lines))
 }
 
 /// Fence languages of shell commands.
@@ -2381,6 +2379,32 @@ mod tests {
                 ..
             }))
         ));
+    }
+
+    /// Shell blocks in the steps of a numbered list all join the command
+    /// block, not just the first step's.
+    #[test]
+    fn markdown_command_block_spans_list_steps() {
+        use std::fs;
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let body = "# Tool\n\nDoes things.\n\n\
+                    ## Usage\n\nRun it.\n\n\
+                    ## Building\n\n\
+                    1. Clone:\n\n   ```sh\n   git clone repo\n   ```\n\n\
+                    2. Install:\n\n   ```sh\n   npm ci\n   ```\n\n\
+                    3. Build:\n\n   ```sh\n   npm run build\n   ```\n";
+        fs::write(root.join("README.md"), body).unwrap();
+        let batches = expand_in_dir(root, &WalkCtx::new(root.to_path_buf()));
+        let command = batches
+            .iter()
+            .find(|b| matches!(&b.key, BatchKey::Markdown(MarkdownKey::CommandBlock { .. })))
+            .unwrap();
+        let crate::content::BatchContent::Lines { spans, .. } = &command.content else {
+            panic!("expected Lines content");
+        };
+        let rows: Vec<(usize, usize)> = spans.iter().map(|span| (span.start, span.end)).collect();
+        assert_eq!(rows, vec![(9, 9), (13, 27)]);
     }
 
     /// A root README in any recognized markup is read — Markdown first,
