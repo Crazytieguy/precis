@@ -64,7 +64,12 @@ listing row, including the files the host harness already loads
 case: an NS that ranks their content as primary is an NS-author error.
 Pricing other docs' sections or outlines at any tier bought the wrong
 pages (translations, migration guides, nested package READMEs) and
-never reached the ones answer keys rank.
+never reached the ones answer keys rank. The one exception is a root
+Markdown build guide (`BUILDING.md`, `INSTALL.md`, `TESTING.md`, …),
+the document a README sends builders to: it yields one `CommandBlock`
+at 0.75× a README section, nothing else. No fixture has one (grid
+byte-identical); on the robustness corpus guides with rows went 1 → 6
+of 18 in plugin mode and 1 → 9 at 8000 tokens.
 A README section titled for building, testing, running or development
 sells its leading shell blocks as a separate `CommandBlock` batch behind
 the outline, one per top-level section, and the section gates on it

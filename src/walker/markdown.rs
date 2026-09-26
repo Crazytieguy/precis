@@ -1,8 +1,10 @@
 //! README walker: the one root README (see [`root_readme`]). Markdown is
 //! parsed with `tree-sitter-md`'s block grammar; reST and AsciiDoc (and an
 //! extensionless README without ATX headings) are line-scanned into the
-//! same shapes (see [`line_scanned_readme`]). Every other document is left
-//! to the listing, which names it.
+//! same shapes (see [`line_scanned_readme`]). A root Markdown build guide
+//! (`BUILDING.md`, `INSTALL.md`, …) yields one `CommandBlock` (see
+//! [`build_guide_command_blocks`]). Every other document is left to the
+//! listing, which names it.
 //!
 //! In document order:
 //! - `ReadmeHeadline` — the first heading plus the lede: the first
@@ -96,10 +98,16 @@ const PRELUDE_MAX_BYTES: usize = 2_500;
 const MAX_CONTAINER_DEPTH: usize = 200;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
-    let mut out = Vec::new();
     if dir != ctx.root() {
-        return out;
+        return Vec::new();
     }
+    let mut out = readme_batches(dir, ctx);
+    out.extend(build_guide_command_blocks(dir, ctx));
+    out
+}
+
+fn readme_batches(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
+    let mut out = Vec::new();
     let Some((file, markup)) = root_readme(dir, ctx) else {
         return out;
     };
@@ -256,6 +264,12 @@ const HEADINGS_OUTLINE_VALUE: f64 = 974.0;
 /// heading.
 const README_SECTION_VALUE: f64 = 1181.0;
 
+/// A root build guide's command block, below the README's own. No
+/// fixture has a root build guide, so the factor was judged on the
+/// robustness corpus: of its 17 unread guides, 0.5 showed 4 at 8000
+/// tokens, 0.75 showed 8 and 1.0 showed 10.
+const BUILD_GUIDE_COMMAND_VALUE: f64 = README_SECTION_VALUE * 0.75;
+
 /// Boost for README usage/reference sections (see
 /// [`SectionRange::is_reference_usage_section`]) so they clear the
 /// early budget instead of sinking below the README index decay.
@@ -368,6 +382,71 @@ enum ReadmeMarkup {
     Markdown,
     Rst,
     AsciiDoc,
+}
+
+/// Stems of the root documents a README sends a builder to ("see
+/// BUILDING.md").
+fn is_build_guide_stem(stem: &str) -> bool {
+    matches!(
+        stem.to_ascii_lowercase().as_str(),
+        "build"
+            | "building"
+            | "install"
+            | "installation"
+            | "installing"
+            | "compile"
+            | "compiling"
+            | "testing"
+            | "hacking"
+            | "development"
+            | "developing"
+            | "developer"
+    )
+}
+
+/// One `CommandBlock` per root Markdown build guide: its first run of
+/// shell blocks (see [`command_block`]), under the innermost
+/// command-titled heading, else the guide's first heading. The rest of
+/// the guide stays a listing row.
+fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
+    if ctx.dir_filter().named_file().is_some() {
+        return Vec::new();
+    }
+    list_dir(dir, ctx.dir_filter())
+        .iter()
+        .filter(|(name, kind)| {
+            matches!(kind, EntryKind::File)
+                && name.split_once('.').is_some_and(|(stem, extension)| {
+                    is_build_guide_stem(stem)
+                        && matches!(extension.to_ascii_lowercase().as_str(), "md" | "markdown")
+                })
+        })
+        .filter_map(|(name, _)| {
+            let file = dir.join(name);
+            let (source, tree) = ctx.parse_tree_prefix(
+                &file,
+                &tree_sitter_md::LANGUAGE.into(),
+                parse_safe_prefix_len,
+            )?;
+            let root = tree.root_node();
+            let title = headed_sections(root).next().and_then(first_heading_child)?;
+            let src_lines: Vec<&str> = source.lines().collect();
+            let CommandBlockRows { heading, block } =
+                command_block(root, None, &source, &src_lines)
+                    .or_else(|| command_block(root, Some(title), &source, &src_lines))?;
+            let content = single_file_lines_content(
+                &file,
+                &source,
+                (heading.0..=heading.1).chain(block.0..=block.1).collect(),
+            )?;
+            Some(Batch {
+                key: MarkdownKey::CommandBlock { file, row: block.0 }.into(),
+                predecessor: None,
+                content,
+                value: BUILD_GUIDE_COMMAND_VALUE,
+            })
+        })
+        .collect()
 }
 
 /// The root README, preferring Markdown, then reST, then AsciiDoc, and a
@@ -2430,6 +2509,53 @@ mod tests {
                     | MarkdownKey::Section { file, .. }
             ) if *file == root.join("README.md")
         )));
+        assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
+    }
+
+    /// A root build guide yields one `CommandBlock`: the first under a
+    /// command-titled heading, else the first under its title. Nothing
+    /// else of it is read, and a nested guide not at all.
+    #[test]
+    fn markdown_root_build_guides_yield_one_command_block() {
+        use std::fs;
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        fs::create_dir(root.join("docs")).unwrap();
+        let building = "# Hacking on Tool\n\nNeeds a compiler.\n\n\
+                        ## Prerequisites\n\n```sh\napt install gcc\n```\n\n\
+                        ## Running tests\n\n```sh\nmake test\n```\n";
+        fs::write(root.join("BUILDING.md"), building).unwrap();
+        fs::write(root.join("docs/BUILDING.md"), building).unwrap();
+        fs::write(
+            root.join("INSTALL.md"),
+            "# Installation\n\nFrom source:\n\n```\n./configure && make install\n```\n",
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let mut command_rows: Vec<(String, Vec<(usize, usize)>)> = expand_in_dir(root, &ctx)
+            .into_iter()
+            .map(|batch| {
+                let BatchKey::Markdown(MarkdownKey::CommandBlock { file, .. }) = batch.key else {
+                    panic!("{:?}", batch.key);
+                };
+                let crate::content::BatchContent::Lines { spans, .. } = batch.content else {
+                    panic!("expected Lines content");
+                };
+                let name = file.file_name().unwrap().to_string_lossy().into_owned();
+                (
+                    name,
+                    spans.iter().map(|span| (span.start, span.end)).collect(),
+                )
+            })
+            .collect();
+        command_rows.sort();
+        assert_eq!(
+            command_rows,
+            [
+                ("BUILDING.md".to_string(), vec![(11, 15)]),
+                ("INSTALL.md".to_string(), vec![(1, 1), (5, 7)]),
+            ]
+        );
         assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
     }
 
