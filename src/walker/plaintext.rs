@@ -50,10 +50,6 @@ const BUILD_BYTE_GATE: usize = BUILD_LINE_CAP * 80;
 /// see `git show 6a5c9887`.
 const SMALL_BUILD_FILE_PROMOTION: f64 = 2.0;
 
-/// Rows in the dotenv head batch — samples lead with the
-/// mandatory-settings block by convention.
-const DOTENV_MANDATORY_HEAD_LINES: usize = 12;
-
 /// Selection budget for a [`Class::LanguageSource`] declaration surface,
 /// per line class. Comments are damped so a 15-line license banner cannot
 /// consume the whole slice before the first declaration; declarations get
@@ -88,10 +84,6 @@ const SOURCE_TEXT_MAX_MEAN_LINE_BYTES: usize = 200;
 /// declaration. Skipped rather than truncated.
 const SOURCE_TEXT_MAX_LINE_CHARS: usize = 200;
 
-/// Pre-flight byte gate for dotenv samples — generous (only the head
-/// renders) but bounded.
-const DOTENV_BYTE_GATE: usize = 64 * 1024;
-
 /// Plaintext file class — drives the (filename → signal preset) table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
@@ -100,7 +92,8 @@ pub(crate) enum Class {
     /// shows its flat surface, as [`Class::FlatText`] does.
     Build,
     /// Checked-in dotenv sample/template (`.env.sample`) — the
-    /// deploy-facing config-key documentation, head-sampled when long.
+    /// deploy-facing config-key documentation. Rendered like
+    /// [`Class::FlatText`], priced like a build file.
     DotenvSample,
     /// The project's manifest or build script in a format no walker parses
     /// ([`is_unparsed_manifest`]). Rendered like [`Class::FlatText`],
@@ -1245,22 +1238,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         else {
             continue;
         };
-        if matches!(
-            class,
-            Class::Manifest | Class::LanguageSource | Class::FlatText
-        ) {
+        if class != Class::Build {
             push_source_text_batches(&mut out, &file, ctx, class);
             continue;
         }
-        let content = match class {
-            Class::DotenvSample => {
-                head_sampled_content(&file, ctx, DOTENV_BYTE_GATE, DOTENV_MANDATORY_HEAD_LINES)
-            }
-            // With headroom over the generic cap: a Makefile's head is
-            // mostly variable preamble, not its targets.
-            Class::Build if is_recipe_file_name(name) => recipe_roster_content(&file, ctx),
-            Class::Build => gated_whole_file_content(&file, ctx, BUILD_BYTE_GATE, BUILD_LINE_CAP),
-            _ => head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
+        // With headroom over the generic cap: a Makefile's head is mostly
+        // variable preamble, not its targets.
+        let content = if is_recipe_file_name(name) {
+            recipe_roster_content(&file, ctx)
+        } else {
+            gated_whole_file_content(&file, ctx, BUILD_BYTE_GATE, BUILD_LINE_CAP)
         };
         let (content, value) = match content {
             Some(content) => (
@@ -1270,7 +1257,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             None => match root_makefile_targets(&file, name, ctx) {
                 Some(content) => (content, class_value(class, &file, ctx, 0)),
                 None => {
-                    if class == Class::Build && ctx.depth_from_root(&file) == 1 {
+                    if ctx.depth_from_root(&file) == 1 {
                         push_source_text_batches(&mut out, &file, ctx, class);
                     }
                     continue;
@@ -1613,19 +1600,6 @@ fn root_makefile_targets(
             .map(|(_, row)| row),
     );
     rows.sort_unstable();
-    single_file_lines_content(file, &source, rows)
-}
-
-/// The first `head_line_cap` rows — the whole file when it fits, so a
-/// file one line over the cap renders its head rather than nothing.
-fn head_sampled_content(
-    file: &Path,
-    ctx: &WalkCtx,
-    byte_gate: usize,
-    head_line_cap: usize,
-) -> Option<crate::content::BatchContent> {
-    let source = gated_read_source(file, ctx, byte_gate)?;
-    let rows = (1..=source.line_count().min(head_line_cap)).collect();
     single_file_lines_content(file, &source, rows)
 }
 
