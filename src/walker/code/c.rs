@@ -137,6 +137,7 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         | "enum_specifier"
         | "preproc_function_def" => Shape::Whole,
         "preproc_def" if !is_header_guard_define(node, file) => Shape::Whole,
+        "ERROR" if misparsed_prototype_declarator(node).is_some() => Shape::Whole,
         _ => return None,
     };
     // A header's `static inline` definition is the header-only accessor
@@ -242,12 +243,28 @@ fn name_rows(node: Node) -> Vec<usize> {
     let mut cursor = node.walk();
     rows.extend(
         node.children_by_field_name("declarator", &mut cursor)
+            .chain(misparsed_prototype_declarator(node))
             .filter_map(declared_name)
             .map(|name| name.start_position().row + 1),
     );
     rows.sort_unstable();
     rows.dedup();
     rows
+}
+
+/// The function declarator of a prototype that tree-sitter-c misparses
+/// because an attribute macro follows it (`int f(void) NOEXCEPT;`): an
+/// `ERROR` holding the return type and the declarator, then a bare `;`.
+fn misparsed_prototype_declarator(node: Node) -> Option<Node> {
+    if node.kind() != "ERROR" || node.named_child_count() < 2 {
+        return None;
+    }
+    let declarator = node.named_child(node.named_child_count() as u32 - 1)?;
+    let semicolon = node.next_named_sibling()?;
+    (declarator.kind() == "function_declarator"
+        && semicolon.kind() == "expression_statement"
+        && semicolon.named_child_count() == 0)
+        .then_some(declarator)
 }
 
 fn declared_name(declarator: Node) -> Option<Node> {
@@ -803,6 +820,29 @@ enum color { RED } paint(void);
                 .iter()
                 .all(|decl| decl.body.is_empty() && decl.shape == Shape::Whole)
         );
+    }
+
+    #[test]
+    fn c_prototypes_followed_by_an_attribute_macro_are_listed() {
+        let source = "\
+#ifndef R1_H
+#define R1_H
+/* doc 1 */
+int api_1(int x) NOEXCEPT;
+int
+api_2(struct s *ring,
+      int flags) NOEXCEPT;
+struct s *ok_api(void) NOEXCEPT;
+#endif
+";
+        let model = model("r1.h", source);
+        assert_eq!(name_rows_of(&model), vec![vec![4], vec![5, 6], vec![8]]);
+        let [api_1, api_2, _] = &model.decls[..] else {
+            panic!("{:?}", model.decls);
+        };
+        assert_eq!(rows(&api_1.doc), vec![vec![3]]);
+        assert_eq!(api_2.head, vec![5, 6, 7]);
+        assert!(api_2.body.is_empty() && api_2.shape == Shape::Whole);
     }
 
     #[test]
