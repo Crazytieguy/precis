@@ -437,32 +437,18 @@ pub(crate) fn is_refused_by_name(path: &Path) -> bool {
 /// then key material — a base64 run at least one armor line (64
 /// characters, RFC 7468 and RFC 4880) long — then the closing armor. A
 /// header alone (a parser's constant, a documented placeholder) holds
-/// no key, whatever long token (a SHA-256 hex digest) follows it. A block
-/// whose closing armor is missing (a head read cut short of it) counts
-/// when its first line past the armor headers is a whole base64 armor
-/// line, less any quote or comment marks around it (`> `, `// `).
+/// no key, whatever long token (a SHA-256 hex digest) follows it.
 pub(crate) fn holds_private_key(text: &str) -> bool {
-    let is_base64 = |ch: char| ch.is_ascii_alphanumeric() || ch == '+' || ch == '/';
     text.split("-----BEGIN ").skip(1).any(|block| {
-        let Some((label, body)) = block.split_once("-----") else {
+        let Some((block, _)) = block.split_once("-----END ") else {
             return false;
         };
-        if !label.contains("PRIVATE KEY") {
-            return false;
-        }
-        match body.split_once("-----END ") {
-            Some((body, _)) => body
-                .split(|ch: char| !is_base64(ch))
-                .any(|run| run.len() >= 64),
-            None => body
-                .lines()
-                .skip(1)
-                .map(|line| line.trim_matches(|ch: char| !is_base64(ch) && ch != '='))
-                .find(|line| !line.is_empty() && !line.contains(':'))
-                .is_some_and(|line| {
-                    line.len() >= 64 && line.chars().all(|ch| is_base64(ch) || ch == '=')
-                }),
-        }
+        block.split_once("-----").is_some_and(|(label, body)| {
+            label.contains("PRIVATE KEY")
+                && body
+                    .split(|ch: char| !(ch.is_ascii_alphanumeric() || ch == '+' || ch == '/'))
+                    .any(|run| run.len() >= 64)
+        })
     })
 }
 
@@ -606,7 +592,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_mod_private_keys_need_key_material_after_their_armor() {
+    fn walker_mod_private_keys_need_key_material_between_their_armor() {
         let body = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7VJTUt9Us8cKj";
         for text in [
             format!("-----BEGIN RSA PRIVATE KEY-----\n{body}\n-----END RSA PRIVATE KEY-----\n"),
@@ -616,18 +602,6 @@ mod tests {
             format!(
                 "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n{body}\n=ab12\n-----END PGP PRIVATE KEY BLOCK-----\n"
             ),
-            format!(
-                "-----BEGIN RSA PRIVATE KEY-----\n{body}\n{body}\n{}",
-                &body[..20]
-            ),
-            format!(
-                "-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: GnuPG v2\n\n{body}\n{}",
-                &body[..20]
-            ),
-            format!(
-                "> -----BEGIN RSA PRIVATE KEY-----\n> {body}\n> {}",
-                &body[..20]
-            ),
         ] {
             assert!(holds_private_key(&text), "{text}");
         }
@@ -636,8 +610,6 @@ mod tests {
             "-----BEGIN PRIVATE KEY-----\n<your key here>\n-----END PRIVATE KEY-----\n".to_string(),
             "if line == \"-----BEGIN RSA PRIVATE KEY-----\" {\n    parse(line)\n}\n".to_string(),
             format!("-----BEGIN CERTIFICATE-----\n{body}\n-----END CERTIFICATE-----\n"),
-            format!("-----BEGIN CERTIFICATE-----\n{body}\n{}", &body[..20]),
-            "-----BEGIN PRIVATE KEY-----\n<your key here>\n".to_string(),
             format!(
                 "const HEADER = \"-----BEGIN RSA PRIVATE KEY-----\";\nconst EMPTY_SHA256 = \"{}\";\n",
                 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -649,12 +621,22 @@ mod tests {
 
     #[test]
     fn walker_mod_a_head_cut_inside_a_private_key_holds_one() {
+        let body = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7VJTUt9Us8cKj";
         let head = format!("-----BEGIN RSA PRIVATE KEY-----\n{}", "MIIE".repeat(8));
         assert!(!holds_private_key(&head));
-        assert!(head_holds_private_key(&head));
-        assert!(!head_holds_private_key(
-            "-----BEGIN CERTIFICATE-----\nMIIE\n-----END CERTIFICATE-----\n# notes\n"
-        ));
+        for head in [
+            head,
+            format!("-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: GnuPG v2\n\n{body}\n"),
+            format!("> -----BEGIN RSA PRIVATE KEY-----\n> {body}\n> "),
+        ] {
+            assert!(head_holds_private_key(&head), "{head}");
+        }
+        for head in [
+            "-----BEGIN CERTIFICATE-----\nMIIE\n-----END CERTIFICATE-----\n# notes\n".to_string(),
+            format!("-----BEGIN CERTIFICATE-----\n{body}\n"),
+        ] {
+            assert!(!head_holds_private_key(&head), "{head}");
+        }
     }
 
     #[test]

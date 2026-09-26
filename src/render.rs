@@ -8,7 +8,7 @@
 //! records, and `render()` reads source to produce the final text.
 
 use std::cell::RefCell;
-use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::fmt::Write as _;
 use std::io::Read as _;
 use std::ops::Range;
@@ -119,10 +119,6 @@ struct CachedSources {
     by_path: HashMap<PathBuf, Arc<Source>>,
     /// Summed [`Source::held_bytes`] of `by_path`.
     held_bytes: usize,
-    /// Paths whose whole text held a private key, so a later
-    /// [`SourceCache::insert`] of a head cut short of the key's closing
-    /// armor can't admit it.
-    refused: HashSet<PathBuf>,
 }
 
 impl SourceCache {
@@ -141,7 +137,7 @@ impl SourceCache {
         if let Some(cached) = self.cached(path) {
             return Some(cached);
         }
-        if crate::walker::is_refused_by_name(path) || self.0.borrow().refused.contains(path) {
+        if crate::walker::is_refused_by_name(path) {
             return None;
         }
         let metadata = std::fs::metadata(path).ok()?;
@@ -162,7 +158,6 @@ impl SourceCache {
         }
         let text = String::from_utf8_lossy(&bytes);
         if crate::walker::holds_private_key(&text) {
-            self.0.borrow_mut().refused.insert(path.to_path_buf());
             return None;
         }
         self.admit(path.to_path_buf(), Source::new(Arc::from(text)))
@@ -179,7 +174,6 @@ impl SourceCache {
     pub fn insert(&self, path: PathBuf, source: Arc<str>) {
         if self.cached(&path).is_some()
             || source.len() > self.bytes_left()
-            || self.0.borrow().refused.contains(&path)
             || crate::walker::is_refused(&path, &source)
         {
             return;
