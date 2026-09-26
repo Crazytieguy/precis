@@ -180,9 +180,8 @@ pub(crate) fn is_unparsed_manifest_name(name: &str) -> bool {
             | "deps.edn"
             | "pubspec.yaml"
             | "shard.yml"
-    ) || [".cabal", ".csproj", ".fsproj", ".nimble"]
-        .iter()
-        .any(|extension| name.ends_with(extension))
+    ) || name.ends_with(".cabal")
+        || name.ends_with(".nimble")
 }
 
 /// The root, or a first-level directory that holds the project itself:

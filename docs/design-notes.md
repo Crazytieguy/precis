@@ -103,7 +103,7 @@ code to a single language.**
   not emitted. A workspace's primary member is the member directory
   named after the repository, for Cargo and JS alike.
 - A root manifest in any other format (Maven, Composer, Cabal, sbt,
-  CMake, MSBuild, GitHub Actions, …) gets no walker of its own: the
+  CMake, GitHub Actions, …) gets no walker of its own: the
   plaintext fallback renders its flat surface, which in these formats is
   the identity block, at the build-file tier. Besides the root, only
   `src/` and the directory named after the repository count as the
