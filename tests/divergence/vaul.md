@@ -96,7 +96,7 @@ Score(3000)=0.876 I=0.932 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 5385 | 77 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 7, sub: 0, line: 94 } |  |  | 0.780 |
 | ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.762 |
 | walker |  | 5665 | 280 | Plaintext::DeclSurface { file: src/style.css } |  |  | 0.763 |
-| walker |  | 5724 | 59 | Code::CodeKey { rung: Body, file: src/context.ts, decl: 2, sub: 0, line: 69 } |  |  | 0.774 |
+| walker |  | 5724 | 59 | Code::CodeKey { rung: Body, file: src/context.ts, decl: 11, sub: 0, line: 69 } |  |  | 0.774 |
 | ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.756 |
 | ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.746 |
 | walker |  | 5871 | 147 | Code::CodeKey { rung: Doc, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.760 |

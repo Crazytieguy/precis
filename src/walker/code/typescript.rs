@@ -12,11 +12,13 @@
 //! Everything else is hidden. `export … from` and the statements that
 //! export a name without declaring it are re-exports, listed on the roster.
 //!
-//! Classes are containers: methods (and arrow-function fields) are
-//! members, other fields are body items, and `#name` / `private` /
-//! `protected` members are hidden. Interfaces, enums, object-literal
-//! values and namespaces are `Whole` declarations whose entries are body
-//! items. Imports and `require` declarations are not modeled.
+//! Classes and object-literal values (including the object a call ends
+//! its arguments with, `X.extend({ … })`) are containers: methods (and
+//! function-valued fields or entries) are members, other fields and
+//! entries are body items, and `#name` / `private` / `protected` members
+//! are hidden. Interfaces, enums, array literals and namespaces are
+//! `Whole` declarations whose entries are body items. Imports and
+//! `require` declarations are not modeled.
 
 use std::cell::RefCell;
 use std::collections::{HashMap, HashSet};
@@ -637,13 +639,17 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
 
 /// A declaration shaped by the value it binds: a function (possibly
 /// wrapped, `memo(forwardRef(() => { … }))`) is `Callable`; a class is a
-/// container; an object or array literal lists its entries; anything
-/// else is all head.
+/// container, as is an object literal, bare or ending a call's
+/// arguments; an array literal lists its entries; anything else is all
+/// head.
 fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node) -> DeclInfo {
     if is_class_kind(value.kind()) {
         return class(file, span, name_row, value.child_by_field_name("body"));
     }
-    if matches!(value.kind(), "object" | "array") {
+    if value.kind() == "object" {
+        return class(file, span, name_row, Some(value));
+    }
+    if value.kind() == "array" {
         return whole(file, span, vec![name_row], Some(value));
     }
     if let Some(block) = wrapped_function_block(value) {
@@ -652,7 +658,10 @@ fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node
     if is_function_kind(value.kind()) {
         return callable(file, span, name_row, None);
     }
-    whole(file, span, vec![name_row], last_object_argument(value))
+    match last_object_argument(value) {
+        Some(object) => class(file, span, name_row, Some(object)),
+        None => whole(file, span, vec![name_row], None),
+    }
 }
 
 /// The object literal a call or `new` ends its arguments with:
@@ -786,9 +795,10 @@ fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Nod
     }
 }
 
-/// A class as a container: the header and closing row as head, each
-/// visible field (with its comments) as a body item, and each visible
-/// method or arrow-function field as a member listed by its name row.
+/// A class or object literal as a container: the header and closing row
+/// as head, each visible field or entry (with its comments) as a body
+/// item, and each visible method or function-valued field or entry as a
+/// member listed by its name row.
 fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Node>) -> DeclInfo {
     let Some(block) = block else {
         return whole(file, span, vec![class_name_row], None);
@@ -828,7 +838,12 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
         );
         let is_field = matches!(
             child.kind(),
-            "public_field_definition" | "property_signature" | "index_signature"
+            "public_field_definition"
+                | "property_signature"
+                | "index_signature"
+                | "pair"
+                | "shorthand_property_identifier"
+                | "spread_element"
         );
         if (is_member || is_field) && !is_hidden_member(file, child) {
             let function_block = child
@@ -1112,7 +1127,7 @@ export type Picked = {
     }
 
     #[test]
-    fn code_typescript_object_literal_const_lists_entries_with_their_comments() {
+    fn code_typescript_object_literal_const_lists_entries_and_methods() {
         let model = extract_source(
             "src/config.js",
             "\
@@ -1128,7 +1143,10 @@ export const config = {
         );
         assert_eq!(
             describe(&model),
-            ["Whole name [1] head [1, 8] doc [] body [[2], [3, 4], [5, 6, 7]]"]
+            [
+                "Whole name [1] head [1, 8] doc [] body [[2], [3, 4], [5]]",
+                "  Callable name [5] head [5] doc [] body [[6]]",
+            ]
         );
     }
 
@@ -1148,6 +1166,11 @@ export const store = new Store({
   path: '/tmp',
 });
 export const plain = z.object(shape);
+module.exports = Area = Base.extend({
+  init: function(id) {
+    this.id = id;
+  },
+});
 ",
         );
         assert_eq!(
@@ -1157,6 +1180,8 @@ export const plain = z.object(shape);
                 "Whole name [5] head [5, 7] doc [] body [[6]]",
                 "Whole name [8] head [8, 10] doc [] body [[9]]",
                 "Whole name [11] head [11] doc [] body []",
+                "Whole name [12] head [12, 16] doc [] body [[13]]",
+                "  Callable name [13] head [13] doc [] body [[14]]",
             ]
         );
     }

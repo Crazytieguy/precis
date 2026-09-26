@@ -1,4 +1,4 @@
-Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.687/0.544/0.775/0.752/0.691/0.627
+Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.687/0.544/0.775/0.752/0.681/0.656
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -200,94 +200,108 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | ns | 3962 |  | 144 | server/libs roster: 35 vendored third-party packages | 2.12 |  | 0.762 |
 | walker |  | 3987 | 167 | Fs::DirListing { dir: client/strings } |  |  | 0.762 |
 | walker |  | 4035 | 48 | Code::CodeKey { rung: Names, file: client/store/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.762 |
+| walker |  | 4068 | 33 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 7, sub: 0, line: 67 } |  |  | 0.762 |
 | ns | 4142 |  | 180 | Server.js: how the three routers are mounted | 3.1 |  | 0.752 |
-| walker |  | 4319 | 284 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 1, sub: 0, line: 5 } |  |  | 0.752 |
-| walker |  | 4416 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.752 |
-| walker |  | 4422 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.752 |
+| walker |  | 4255 | 187 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 0, line: 130 } |  |  | 0.752 |
 | ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.735 |
-| walker |  | 4428 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.735 |
-| walker |  | 4438 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.735 |
-| walker |  | 4456 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.735 |
-| walker |  | 4554 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.736 |
-| walker |  | 4657 | 103 | Fs::DirListing { dir: server/libs/watcher } |  |  | 0.736 |
-| walker |  | 4669 | 12 | Fs::DirListing { dir: server/libs/watcher/atomically } |  |  | 0.736 |
-| walker |  | 4682 | 13 | Fs::DirListing { dir: server/libs/watcher/ripstat } |  |  | 0.736 |
-| walker |  | 4690 | 8 | Fs::DirListing { dir: server/libs/watcher/aborter } |  |  | 0.736 |
-| walker |  | 4727 | 37 | Fs::DirListing { dir: server/libs/watcher/atomically/utils } |  |  | 0.736 |
-| walker |  | 4755 | 28 | Fs::DirListing { dir: test/server } |  |  | 0.738 |
-| walker |  | 4760 | 5 | Fs::DirListing { dir: test/server/providers } |  |  | 0.738 |
-| walker |  | 4766 | 6 | Fs::DirListing { dir: test/server/finders } |  |  | 0.739 |
-| walker |  | 4773 | 7 | Fs::DirListing { dir: test/server/objects } |  |  | 0.739 |
-| walker |  | 4786 | 13 | Fs::DirListing { dir: test/server/controllers } |  |  | 0.741 |
-| ns | 4806 |  | 380 | API routes: libraries | 3.3 | 3.2 | 0.720 |
-| walker |  | 4808 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.724 |
-| walker |  | 4852 | 44 | Plaintext::DeclSurface { file: client/layouts/blank.vue } |  |  | 0.724 |
-| walker |  | 4896 | 44 | Plaintext::DeclSurface { file: client/layouts/error.vue } |  |  | 0.724 |
-| walker |  | 4940 | 44 | Plaintext::DeclSurface { file: client/pages/account.vue } |  |  | 0.724 |
-| walker |  | 4984 | 44 | Plaintext::DeclSurface { file: client/pages/index.vue } |  |  | 0.724 |
-| walker |  | 5028 | 44 | Plaintext::DeclSurface { file: client/pages/login.vue } |  |  | 0.724 |
-| walker |  | 5072 | 44 | Plaintext::DeclSurface { file: client/pages/oops.vue } |  |  | 0.724 |
-| ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.707 |
-| walker |  | 5280 | 208 | Fs::DirListing { dir: server/migrations } |  |  | 0.724 |
-| walker |  | 5394 | 114 | Fs::DirListing { dir: client/components/cards } |  |  | 0.724 |
-| walker |  | 5427 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.730 |
-| walker |  | 5450 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.734 |
-| walker |  | 5484 | 34 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.734 |
-| ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.716 |
-| walker |  | 5729 | 245 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 0, line: 34 } |  |  | 0.716 |
-| ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.700 |
-| walker |  | 5953 | 224 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 1, line: 34 } |  |  | 0.700 |
-| walker |  | 5987 | 34 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers/zip } |  |  | 0.700 |
-| ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.689 |
-| walker |  | 6306 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.696 |
-| walker |  | 6306 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.696 |
-| walker |  | 6340 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.696 |
-| walker |  | 6368 | 28 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.696 |
-| walker |  | 6442 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.696 |
-| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.682 |
-| walker |  | 6814 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.713 |
-| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.698 |
-| ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.690 |
-| walker |  | 6996 | 182 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 4, sub: 0, line: 130 } |  |  | 0.690 |
-| ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.686 |
-| walker |  | 7187 | 191 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
+| walker |  | 4556 | 301 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 1, line: 130 } |  |  | 0.735 |
+| ns | 4806 |  | 380 | API routes: libraries | 3.3 | 3.2 | 0.715 |
+| walker |  | 4840 | 284 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 1, sub: 0, line: 5 } |  |  | 0.715 |
+| walker |  | 5154 | 314 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 0, line: 34 } |  |  | 0.715 |
+| ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.698 |
+| walker |  | 5251 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.698 |
+| walker |  | 5257 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.698 |
+| walker |  | 5263 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.698 |
+| walker |  | 5273 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.698 |
+| walker |  | 5291 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.698 |
+| walker |  | 5389 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.699 |
+| walker |  | 5492 | 103 | Fs::DirListing { dir: server/libs/watcher } |  |  | 0.699 |
+| walker |  | 5504 | 12 | Fs::DirListing { dir: server/libs/watcher/atomically } |  |  | 0.699 |
+| ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.682 |
+| walker |  | 5517 | 13 | Fs::DirListing { dir: server/libs/watcher/ripstat } |  |  | 0.682 |
+| walker |  | 5525 | 8 | Fs::DirListing { dir: server/libs/watcher/aborter } |  |  | 0.682 |
+| walker |  | 5562 | 37 | Fs::DirListing { dir: server/libs/watcher/atomically/utils } |  |  | 0.682 |
+| walker |  | 5590 | 28 | Fs::DirListing { dir: test/server } |  |  | 0.683 |
+| walker |  | 5595 | 5 | Fs::DirListing { dir: test/server/providers } |  |  | 0.684 |
+| walker |  | 5601 | 6 | Fs::DirListing { dir: test/server/finders } |  |  | 0.684 |
+| walker |  | 5608 | 7 | Fs::DirListing { dir: test/server/objects } |  |  | 0.685 |
+| walker |  | 5621 | 13 | Fs::DirListing { dir: test/server/controllers } |  |  | 0.686 |
+| walker |  | 5643 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.690 |
+| walker |  | 5687 | 44 | Plaintext::DeclSurface { file: client/layouts/blank.vue } |  |  | 0.690 |
+| walker |  | 5731 | 44 | Plaintext::DeclSurface { file: client/layouts/error.vue } |  |  | 0.690 |
+| walker |  | 5775 | 44 | Plaintext::DeclSurface { file: client/pages/account.vue } |  |  | 0.690 |
+| walker |  | 5819 | 44 | Plaintext::DeclSurface { file: client/pages/index.vue } |  |  | 0.690 |
+| walker |  | 5863 | 44 | Plaintext::DeclSurface { file: client/pages/login.vue } |  |  | 0.690 |
+| ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.674 |
+| walker |  | 5907 | 44 | Plaintext::DeclSurface { file: client/pages/oops.vue } |  |  | 0.674 |
+| walker |  | 6115 | 208 | Fs::DirListing { dir: server/migrations } |  |  | 0.691 |
+| ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.680 |
+| walker |  | 6229 | 114 | Fs::DirListing { dir: client/components/cards } |  |  | 0.680 |
+| walker |  | 6262 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.685 |
+| walker |  | 6285 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.689 |
+| walker |  | 6319 | 34 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.689 |
+| walker |  | 6353 | 34 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers/zip } |  |  | 0.689 |
+| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.675 |
+| walker |  | 6672 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.682 |
+| walker |  | 6672 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.682 |
+| walker |  | 6706 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.682 |
+| walker |  | 6734 | 28 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.682 |
+| walker |  | 6808 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.682 |
+| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.668 |
+| ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.660 |
+| ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.656 |
+| walker |  | 7180 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.686 |
 | ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.681 |
-| walker |  | 7334 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.681 |
-| walker |  | 7339 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.681 |
-| walker |  | 7344 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.681 |
-| walker |  | 7349 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.681 |
-| walker |  | 7355 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.681 |
-| walker |  | 7363 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.681 |
-| walker |  | 7375 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.681 |
-| walker |  | 7387 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.681 |
-| walker |  | 7402 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.681 |
-| walker |  | 7418 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.681 |
-| walker |  | 7435 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.681 |
-| walker |  | 7470 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.681 |
-| walker |  | 7480 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.681 |
-| walker |  | 7517 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.681 |
-| walker |  | 7549 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.681 |
+| walker |  | 7371 | 191 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
+| walker |  | 7518 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.681 |
+| walker |  | 7523 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.681 |
+| walker |  | 7528 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.681 |
+| walker |  | 7533 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.681 |
+| walker |  | 7539 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.681 |
+| walker |  | 7547 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.681 |
+| walker |  | 7559 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.681 |
+| walker |  | 7571 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.681 |
+| walker |  | 7586 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.681 |
+| walker |  | 7602 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.681 |
+| walker |  | 7619 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.681 |
 | ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.666 |
-| walker |  | 7861 | 312 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 4, sub: 1, line: 130 } |  |  | 0.666 |
-| ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.654 |
-| walker |  | 8068 | 207 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 4, sub: 2, line: 130 } |  |  | 0.654 |
-| walker |  | 8252 | 184 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 4, sub: 3, line: 130 } |  |  | 0.654 |
-| ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.643 |
-| walker |  | 8470 | 218 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 4, sub: 4, line: 130 } |  |  | 0.643 |
-| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.633 |
-| walker |  | 8746 | 276 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 4, sub: 5, line: 130 } |  |  | 0.633 |
-| ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.624 |
-| walker |  | 8900 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.627 |
-| walker |  | 8915 | 15 | Code::CodeKey { rung: Body, file: server/utils/index.js, decl: 5, sub: 0, line: 53 } |  |  | 0.627 |
-| ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.621 |
-| walker |  | 9131 | 216 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.621 |
-| ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.635 |
-| walker |  | 9330 | 199 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 2, line: 0 } |  |  | 0.635 |
-| walker |  | 9349 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.635 |
-| walker |  | 9371 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.635 |
-| walker |  | 9415 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.635 |
-| ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.629 |
-| ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.626 |
-| walker |  | 9796 | 381 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
-| ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.645 |
-| walker |  | 9960 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.655 |
+| walker |  | 7654 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.666 |
+| walker |  | 7664 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.666 |
+| walker |  | 7701 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.666 |
+| walker |  | 7733 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.666 |
+| walker |  | 7887 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.668 |
+| walker |  | 7902 | 15 | Code::CodeKey { rung: Body, file: server/utils/index.js, decl: 5, sub: 0, line: 53 } |  |  | 0.668 |
+| ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.657 |
+| walker |  | 8118 | 216 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.657 |
+| walker |  | 8317 | 199 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 2, line: 0 } |  |  | 0.645 |
+| ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.645 |
+| walker |  | 8336 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.645 |
+| walker |  | 8358 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.645 |
+| walker |  | 8402 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.645 |
+| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.635 |
+| walker |  | 8783 | 381 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
+| ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.645 |
+| walker |  | 8947 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.656 |
+| ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.650 |
+| walker |  | 9253 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 6, sub: 0, line: 22 } |  |  | 0.650 |
+| ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.663 |
+| walker |  | 9297 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.663 |
+| walker |  | 9341 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.663 |
+| walker |  | 9385 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.663 |
+| walker |  | 9429 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.663 |
+| walker |  | 9473 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.663 |
+| walker |  | 9517 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.663 |
+| walker |  | 9561 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.663 |
+| ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.657 |
+| walker |  | 9605 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.657 |
+| walker |  | 9649 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.657 |
+| walker |  | 9693 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.657 |
+| walker |  | 9737 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.657 |
+| walker |  | 9781 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.657 |
+| ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.654 |
+| walker |  | 9825 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.654 |
+| walker |  | 9869 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.654 |
+| ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.655 |
+| walker |  | 9913 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.655 |
+| walker |  | 9957 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.655 |
+| walker |  | 9994 | 37 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.655 |
