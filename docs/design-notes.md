@@ -187,6 +187,18 @@ must not undo:
   `crate::`/`mod` and TS/JS relative imports ranked no better than size
   (C's most-included headers are utility headers) and were dropped.
 
+## Copies are named, not listed
+
+A directory whose entries repeat names kept elsewhere appears in its
+parent's listing but is never expanded: a translated mirror
+(`pages.ar/` beside `pages/`), an unpacked upstream release
+(`prism-master/` with its own license), and each project under a
+third-party directory. Wide siblings that repeat an earlier sibling's
+entry names are deferred rather than cut, and declared workspace
+members are exempt, because a workspace's crates share a layout but not
+their code. These rules came from the robustness corpus; the grid was
+neutral or better for each once workspace members were exempt.
+
 ## Threads and resource bounds
 
 - **Only parsing is parallel.** Everything that decides output runs on
