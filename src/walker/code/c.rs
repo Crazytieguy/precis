@@ -571,7 +571,7 @@ fn cplusplus_wrapped_linkage_specification<'a>(
     found
 }
 
-/// The `#ifndef X` (or `#if !defined(X)`) / `#define X` / `#endif` block
+/// The `#ifndef X` / `#define X` / `#endif` block
 /// wrapping the whole file (comments aside), whose children are the
 /// effective top level.
 fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
@@ -579,9 +579,7 @@ fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
     for child in root.children(&mut root.walk()) {
         match child.kind() {
             "comment" => {}
-            "preproc_if" | "preproc_ifdef"
-                if candidate.is_none() && is_header_guard(child, file) =>
-            {
+            "preproc_ifdef" if candidate.is_none() && is_header_guard(child, file) => {
                 candidate = Some(child);
             }
             _ => return None,
@@ -590,28 +588,13 @@ fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
     candidate
 }
 
-/// The `X` that `guard` tests as `#ifndef X` or `#if !defined(X)`.
+/// The `X` that `guard` tests as `#ifndef X`.
 fn guarded_name(guard: Node) -> Option<Node> {
-    match guard.kind() {
-        "preproc_ifdef" => guard
-            .child(0)
-            .is_some_and(|token| token.kind() == "#ifndef")
-            .then(|| guard.child_by_field_name("name"))
-            .flatten(),
-        "preproc_if" => {
-            let condition = guard
-                .child_by_field_name("condition")
-                .filter(|condition| condition.kind() == "unary_expression")?;
-            condition
-                .child_by_field_name("operator")
-                .is_some_and(|operator| operator.kind() == "!")
-                .then(|| condition.child_by_field_name("argument"))
-                .flatten()
-                .filter(|argument| argument.kind() == "preproc_defined")?
-                .named_child(0)
-        }
-        _ => None,
-    }
+    (guard.kind() == "preproc_ifdef")
+        .then(|| guard.child(0))
+        .flatten()
+        .filter(|token| token.kind() == "#ifndef")
+        .and_then(|_| guard.child_by_field_name("name"))
 }
 
 /// True iff `guard` tests `X` as in [`guarded_name`], its first child
@@ -621,11 +604,10 @@ fn is_header_guard(guard: Node, file: &SourceFile) -> bool {
     let Some(name) = guarded_name(guard) else {
         return false;
     };
-    let condition = guard.child_by_field_name("condition");
     let mut cursor = guard.walk();
     let mut body = guard
         .named_children(&mut cursor)
-        .filter(|child| *child != name && Some(*child) != condition && child.kind() != "comment");
+        .filter(|child| *child != name && child.kind() != "comment");
     body.next()
         .is_some_and(|define| is_define_of(define, name, file))
         && body.next().is_some()
@@ -697,16 +679,6 @@ int foo(void);
 ";
         let guarded = model("version.h", guarded);
         assert_eq!(name_rows_of(&guarded), vec![vec![3], vec![4]]);
-
-        let if_guarded = "\
-#if !defined(DECCONTEXT)
-#define DECCONTEXT
-#define DEC_INIT_BASE 0
-int dec_init(void);
-#endif
-";
-        let if_guarded = model("decContext.h", if_guarded);
-        assert_eq!(name_rows_of(&if_guarded), vec![vec![3], vec![4]]);
 
         let wrapped = "\
 #ifdef __cplusplus
