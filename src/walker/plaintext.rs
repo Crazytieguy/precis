@@ -1151,7 +1151,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let (content, value) = match content {
             Some(content) => (
                 content,
-                class_value(class, &file, ctx, 0) * small_build_file_factor(class, &file, ctx),
+                class_value(class, &file, ctx, 0) * small_build_file_factor(name, &file, ctx),
             ),
             None => match root_makefile_targets(&file, name, ctx) {
                 Some(content) => (content, class_value(class, &file, ctx, 0)),
@@ -1394,16 +1394,8 @@ fn is_in_primary_language(file: &Path, ctx: &WalkCtx) -> bool {
 /// in the first screenful, while the class's own preset prices it as one
 /// config file among many. A nested one is one component's build step, and
 /// deploy / CI / linter config describes the contributor's toolchain.
-fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
-    let name = file
-        .file_name()
-        .and_then(|name| name.to_str())
-        .unwrap_or_default();
-    if class == Class::Build
-        && matches!(
-            name,
-            "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "justfile" | "Justfile" | ".justfile"
-        )
+fn small_build_file_factor(name: &str, file: &Path, ctx: &WalkCtx) -> f64 {
+    if (is_recipe_file_name(name) || name.starts_with("Taskfile."))
         && ctx.depth_from_root(file) == 1
     {
         SMALL_BUILD_FILE_PROMOTION
@@ -2175,8 +2167,8 @@ mod tests {
         }
     }
 
-    /// The root build-file promotion fires on the build class only, and
-    /// each of its gates (name, depth) can veto it.
+    /// Each of the root build-file promotion's gates (name, depth) can veto
+    /// it.
     #[test]
     fn plaintext_small_build_file_factor_gates() {
         let tmp = tempfile::tempdir().unwrap();
@@ -2188,14 +2180,15 @@ mod tests {
         }
         let ctx = WalkCtx::new(root.to_path_buf());
 
-        let factor = |path: &str, class| small_build_file_factor(class, &root.join(path), &ctx);
-        assert_eq!(factor("Makefile", Class::Build), SMALL_BUILD_FILE_PROMOTION);
+        let factor = |path: &str| {
+            let file = root.join(path);
+            small_build_file_factor(file.file_name().unwrap().to_str().unwrap(), &file, &ctx)
+        };
+        assert_eq!(factor("Makefile"), SMALL_BUILD_FILE_PROMOTION);
         // Name gate: deploy config is not the build surface.
-        assert_eq!(factor("Dockerfile", Class::Build), 1.0);
+        assert_eq!(factor("Dockerfile"), 1.0);
         // Depth gate: a nested Makefile is one component's build step.
-        assert_eq!(factor("packages/api/Makefile", Class::Build), 1.0);
-        // Class gate: the fallback tiers never receive the promotion.
-        assert_eq!(factor("Makefile", Class::FlatText), 1.0);
+        assert_eq!(factor("packages/api/Makefile"), 1.0);
     }
 
     /// The rows each build file renders at the root and one level down. A
