@@ -734,11 +734,15 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
         .take(SOURCE_TEXT_MAX_INDENT_LEVELS)
         .enumerate()
     {
-        // A deeper level that heads no declaration is statement bodies.
-        let heads_a_declaration = rows.iter().any(|&(indent, _, kind, rank)| {
-            indent == level && kind == SurfaceLine::Decl && rank == DeclarationRank::Heading
-        });
-        if is_language && depth > 0 && !heads_a_declaration {
+        // A deeper level whose code lines are all statements is function
+        // bodies; a level of only comments or imports does not decide.
+        let mut level_declarations = rows
+            .iter()
+            .filter(|&&(indent, _, kind, _)| indent == level && kind == SurfaceLine::Decl)
+            .peekable();
+        let is_statement_body = level_declarations.peek().is_some()
+            && level_declarations.all(|&(.., rank)| rank >= DeclarationRank::Statement);
+        if is_language && depth > 0 && is_statement_body {
             break;
         }
         for &(_, line, kind, _) in rows.iter().filter(|(indent, ..)| *indent == level) {
@@ -1717,6 +1721,25 @@ mod tests {
                 "Status BuildTable(const std::string& dbname, Env* env,"
             ]
         );
+    }
+
+    /// A class whose members are all expression-bodied still descends to
+    /// them.
+    #[test]
+    fn plaintext_source_text_surface_descends_to_one_liner_members() {
+        let kotlin = "object Config {\n    fun host() = \"localhost\"\n    fun port() = 8080\n}\n";
+        assert_eq!(surface_of(kotlin), vec![1, 2, 3]);
+    }
+
+    /// A doc comment's ` * ` lines form an indentation level of their own
+    /// that does not stop descent to the members below it.
+    #[test]
+    fn plaintext_source_text_surface_descends_past_a_doc_comment_level() {
+        let java = "/**\n * A client.\n */\npublic class Client {\n    public void open() {\n\
+                    \x20       connect();\n    }\n}\n";
+        let lines: Vec<&str> = java.lines().collect();
+        let text: Vec<&str> = surface_of(java).iter().map(|n| lines[n - 1]).collect();
+        assert!(text.contains(&"    public void open() {"), "{text:?}");
     }
 
     #[test]
