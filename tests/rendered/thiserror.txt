@@ -96,6 +96,8 @@ README.md
   63→    - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
   64→
   65→  These shorthands can be used together with any additional format args, which
+  66→  may be arbitrary expressions. For example:
+  67→
   …
   211→## Comparison to anyhow
   212→
@@ -131,7 +133,6 @@ build/
     …
     30→}
     …
-    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 build.rs
   …
   10→const PRIVATE: &str = "\

@@ -89,6 +89,26 @@ README.md
   22→* Parameterized benchmarks (e.g. vary the number of threads).
   23→* Cross-platform
   25→## Usage
+  26→
+  27→### Basic benchmarks
+  28→
+  29→To run a benchmark, you can simply call `hyperfine <command>...`. The argument(s) can be any
+  30→shell command. For example:
+  31→```sh
+  32→hyperfine 'sleep 0.3'
+  33→```
+  34→
+  35→Hyperfine will automatically determine the number of runs to perform for each command. By default,
+  36→it will perform *at least* 10 benchmarking runs and measure for at least 3 seconds. To change this,
+  37→you can use the `-r`/`--runs` option:
+  38→```sh
+  39→hyperfine --runs 5 'sleep 0.3'
+  40→```
+  41→
+  42→If you want to compare the runtimes of different programs, you can pass multiple commands:
+  43→```sh
+  44→hyperfine 'hexdump file' 'xxd file'
+  45→```
   …
   164→## Installation
   …
@@ -137,16 +157,6 @@ src/
     scheduler.rs
     timing_result.rs
   cli.rs
-    …
-    8→pub fn get_cli_arguments<'a, I, T>(args: I) -> ArgMatches
-    9→where
-    10→    I: IntoIterator<Item = T>,
-    11→    T: Into<OsString> + Clone + 'a,
-    12→{
-    …
-    17→/// Build the clap command for parsing command line arguments
-    18→fn build_command() -> Command {
-    …
   command.rs
     …
     20→/// A command that should be benchmarked.
@@ -257,29 +267,6 @@ src/
     60→    }
     61→}
   options.rs
-    …
-    17→pub const DEFAULT_SHELL: &str = "sh";
-    …
-    20→pub const DEFAULT_SHELL: &str = "cmd.exe";
-    …
-    24→pub enum Shell {
-    …
-    32→impl Default for Shell {
-    …
-    38→impl fmt::Display for Shell {
-    …
-    47→impl Shell {
-    …
-    71→pub enum CmdFailureAction {
-    …
-    84→pub enum OutputStyleOption {
-    …
-    102→pub enum SortOrder {
-    …
-    108→pub struct RunBounds {
-    …
-    116→impl Default for RunBounds {
-    …
   outlier_detection.rs
     1→//! A module for statistical outlier detection.
     2→//!

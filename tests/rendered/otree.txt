@@ -90,8 +90,12 @@ src/
   clipboard.rs
   cmd.rs
     …
+    10→#[expect(clippy::struct_excessive_bools)] // bearable, just commandline args constructed once
+    11→#[derive(Parser, Debug)]
+    12→#[command(disable_version_flag = true)]
     13→pub struct CommandArgs {
     …
+    109→}
     111→impl CommandArgs {
     112→    pub fn parse() -> Result<Option<Self>> {
     …
@@ -148,9 +152,6 @@ src/
     94→    data: RefCell<Option<Vec<u8>>>,
     95→    err: RefCell<Option<String>>,
     96→}
-    …
-    117→#[expect(clippy::needless_pass_by_value)] // want to explicitly show "hey, this function takes care of the arc"
-    118→fn watch_file(path: &Path, data: Arc<Mutex<Data>>) -> Result<()> {
     …
   main.rs
     1→mod clipboard;

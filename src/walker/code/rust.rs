@@ -13,9 +13,12 @@
 //!   declares items (see `item_macro`) are `Whole`; `trait` and `impl` are
 //!   `Whole` containers whose members are their functions.
 //! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
-//!   items, inline `mod test` / `mod tests`, and an inherent-impl
-//!   function without a visibility modifier.
-//!   An inherent impl with no admitted function is hidden.
+//!   items, inline `mod test` / `mod tests`, `const _`, and an
+//!   inherent-impl function without a visibility modifier. An inherent
+//!   impl with no admitted function is hidden. Outside `main.rs`, a module
+//!   that declares some visible item (a visibility modifier, or
+//!   `#[macro_export]` on a `macro_rules!`) hides its private functions
+//!   and macros; its private types, constants and statics stay.
 
 use std::collections::HashSet;
 use std::path::Path;
@@ -58,6 +61,10 @@ fn extract_items(
     mut program_functions: Option<&mut Vec<ProgramFunction>>,
 ) {
     let mut cursor = scope.walk();
+    let hides_private = program_functions.is_none()
+        && scope.named_children(&mut cursor).any(|node| {
+            has_visibility_rule(node) && is_visible(node, &Leading::above(node, file), file)
+        });
     for node in scope.named_children(&mut cursor) {
         if matches!(
             node.kind(),
@@ -66,7 +73,11 @@ fn extract_items(
             continue;
         }
         let leading = Leading::above(node, file);
-        if leading.hidden {
+        if leading.hidden || is_anonymous_const(node, file) {
+            continue;
+        }
+        let is_helper = matches!(node.kind(), "function_item" | "macro_definition");
+        if hides_private && is_helper && !is_visible(node, &leading, file) {
             continue;
         }
         match node.kind() {
@@ -118,6 +129,35 @@ fn extract_items(
             _ => {}
         }
     }
+}
+
+/// An item that is private to its module unless it says otherwise.
+fn has_visibility_rule(node: Node) -> bool {
+    matches!(
+        node.kind(),
+        "function_item"
+            | "struct_item"
+            | "enum_item"
+            | "union_item"
+            | "type_item"
+            | "const_item"
+            | "static_item"
+            | "trait_item"
+            | "macro_definition"
+    )
+}
+
+/// A visibility modifier, or `#[macro_export]` on a `macro_rules!`.
+fn is_visible(node: Node, leading: &Leading, file: &SourceFile) -> bool {
+    visibility_modifier(node, file).is_some() || leading.exported
+}
+
+/// `const _: () = …;`, a compile-time check rather than a declaration.
+fn is_anonymous_const(node: Node, file: &SourceFile) -> bool {
+    node.kind() == "const_item"
+        && node
+            .child_by_field_name("name")
+            .is_some_and(|name| file.text(name) == "_")
 }
 
 /// Keywords that, at the top level of a macro's token tree, mark the
@@ -203,6 +243,8 @@ struct Leading {
     doc_rows: Vec<usize>,
     /// `#[cfg(test)]`, `#[test]` / `#[tokio::test]`-style or `#[doc(hidden)]`.
     hidden: bool,
+    /// `#[macro_export]`.
+    exported: bool,
 }
 
 impl Leading {
@@ -220,6 +262,7 @@ impl Leading {
                     let is_test = path.rsplit("::").next() == Some("test");
                     leading.hidden |=
                         is_test || attribute == "cfg(test)" || attribute == "doc(hidden)";
+                    leading.exported |= attribute == "macro_export";
                     if attribute.starts_with("doc=") {
                         leading.doc_rows.extend(file.node_rows(sibling));
                     } else {
@@ -625,6 +668,34 @@ pub fn latest() {}
     }
 
     #[test]
+    fn rust_extract_private_helpers_hide_behind_a_visible_item() {
+        let source = "\
+static STATE: AtomicUsize = AtomicUsize::new(0);
+const _: () = assert!(size_of::<u8>() == 1);
+macro_rules! debug {
+    ($($t:tt)*) => {};
+}
+fn new_regex(pattern: &str) -> Regex {
+    todo!()
+}
+pub fn escape(text: &str) -> String {
+    todo!()
+}
+";
+        let (file, model) = extract_source("glob.rs", source);
+        assert_eq!(
+            roster(&file, &model.decls),
+            vec![
+                "static STATE: AtomicUsize = AtomicUsize::new(0);",
+                "pub fn escape(text: &str) -> String {",
+            ]
+        );
+        let private_only = "fn a() {}\nfn b() {}\n";
+        let (_, model) = extract_source("util.rs", private_only);
+        assert_eq!(model.decls.len(), 2);
+    }
+
+    #[test]
     fn rust_extract_callable_splits_attributes_signature_and_statements() {
         let source = "\
 /// Runs it.
@@ -637,7 +708,7 @@ pub fn run(
     b
 }
 
-fn one_line() -> u8 { 1 }
+pub fn one_line() -> u8 { 1 }
 ";
         let (_, model) = extract_source("a.rs", source);
         let run = &model.decls[0];
@@ -874,10 +945,7 @@ macro_rules! __private {
 }
 ";
         let (file, model) = extract_source("a.rs", source);
-        assert_eq!(
-            roster(&file, &model.decls),
-            vec!["macro_rules! bail {", "macro_rules! local {",]
-        );
+        assert_eq!(roster(&file, &model.decls), vec!["macro_rules! bail {"]);
         let bail = &model.decls[0];
         assert_eq!(sorted(bail.head.clone()), vec![2, 3, 10]);
         assert_eq!(rows(&bail.body), vec![vec![4, 5, 6], vec![7, 8, 9]]);

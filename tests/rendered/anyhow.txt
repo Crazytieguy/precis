@@ -43,42 +43,9 @@ README.md
   18→
   19→<br>
   21→## Details
-  22→
-  23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
-  24→  return type of any fallible function.
-  25→
-  26→  Within the function, use `?` to easily propagate any error that implements the
-  27→  [`std::error::Error`] trait.
-  28→
-  29→  ```rust
-  30→  use anyhow::Result;
-  31→
-  32→  fn get_cluster_info() -> Result<ClusterMap> {
-  33→      let config = std::fs::read_to_string("cluster.json")?;
-  34→      let map: ClusterMap = serde_json::from_str(&config)?;
-  35→      Ok(map)
-  36→  }
-  37→  ```
-  38→
-  39→  [`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
   …
   126→## No-std support
-  127→
-  128→In no_std mode, almost all of the same API is available and works the same way.
-  129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
-  130→Cargo.toml. A global allocator is required.
-  131→
-  132→```toml
-  133→[dependencies]
-  134→anyhow = { version = "1.0", default-features = false }
-  135→```
-  136→
-  137→With versions of Rust older than 1.81, no_std mode may require an additional
-  138→`.map_err(Error::msg)` when working with a non-Anyhow error type inside a
-  139→function that returns Anyhow's error type, as the trait that `?`-based error
-  140→conversions are defined by is only available in std in those old versions.
-  141→
-  142→<br>
+  …
   144→## Comparison to failure
   145→
   146→The `anyhow::Error` type works something like `failure::Error`, but unlike
@@ -141,21 +108,11 @@ src/
     59→    fn write_str(&mut self, s: &str) -> fmt::Result {
     …
     79→}
-    81→fn render(msg: &'static str, lhs: &dyn Debug, rhs: &dyn Debug) -> Error {
     …
   error.rs
     …
     19→impl Error {
     …
-    30→    pub fn new<E>(error: E) -> Self
-    …
-    77→    pub fn msg<M>(message: M) -> Self
-    …
-    140→    pub fn from_boxed(boxed_error: Box<dyn StdError + Send + Sync + 'static>) -> Self {
-    …
-    147→    pub(crate) fn construct_from_std<E>(error: E, backtrace: Option<Backtrace>) -> Self
-    …
-    689→}
     691→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     692→impl<E> From<E> for Error
     693→where
@@ -191,21 +148,75 @@ src/
     738→}
     740→struct ErrorVTable {
     …
-    757→unsafe fn object_drop<E>(e: Own<ErrorImpl>) {
+    933→#[repr(C)]
+    934→pub(crate) struct ErrorImpl<E = ()> {
+    935→    vtable: &'static ErrorVTable,
+    936→    backtrace: Option<Backtrace>,
     …
-    765→unsafe fn object_drop_front<E>(e: Own<ErrorImpl>, target: TypeId) {
+    940→}
     …
-    775→unsafe fn object_ref<E>(e: Ref<ErrorImpl>) -> Ref<dyn StdError + Send + Sync + 'static>
-    776→where
-    777→    E: StdError + Send + Sync + 'static,
-    778→{
+    951→#[repr(C)]
+    952→pub(crate) struct ContextError<C, E> {
+    953→    pub context: C,
+    954→    pub error: E,
+    955→}
     …
-    787→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    788→unsafe fn object_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
-    789→where
-    790→    E: StdError + Send + Sync + 'static,
-    791→{
+    966→impl ErrorImpl {
     …
+    1015→impl<E> StdError for ErrorImpl<E>
+    1016→where
+    1017→    E: StdError,
+    1018→{
+    1019→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+    …
+    1023→    #[cfg(error_generic_member_access)]
+    1024→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    …
+    1027→}
+    1029→impl<E> Debug for ErrorImpl<E>
+    1030→where
+    1031→    E: Debug,
+    1032→{
+    1033→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    …
+    1036→}
+    1038→impl<E> Display for ErrorImpl<E>
+    1039→where
+    1040→    E: Display,
+    1041→{
+    1042→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    …
+    1045→}
+    1047→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    1048→impl From<Error> for Box<dyn StdError + Send + Sync + 'static> {
+    1049→    #[cold]
+    1050→    fn from(error: Error) -> Self {
+    …
+    1053→}
+    1055→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    1056→impl From<Error> for Box<dyn StdError + Send + 'static> {
+    1057→    #[cold]
+    1058→    fn from(error: Error) -> Self {
+    …
+    1061→}
+    1063→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    1064→impl From<Error> for Box<dyn StdError + 'static> {
+    1065→    #[cold]
+    1066→    fn from(error: Error) -> Self {
+    …
+    1069→}
+    1071→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    1072→impl AsRef<dyn StdError + Send + Sync> for Error {
+    1073→    fn as_ref(&self) -> &(dyn StdError + Send + Sync + 'static) {
+    …
+    1076→}
+    1078→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    1079→impl AsRef<dyn StdError> for Error {
+    1080→    fn as_ref(&self) -> &(dyn StdError + 'static) {
+    …
+    1083→}
+    1085→impl UnwindSafe for Error {}
+    1086→impl RefUnwindSafe for Error {}
   fmt.rs
   kind.rs
   lib.rs
