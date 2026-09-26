@@ -1018,7 +1018,7 @@ fn redact_secrets(line: &str) -> std::borrow::Cow<'_, str> {
             r#"(?i)(?<open>["']?)"#,
             r"(?<key>[\w.-]*(?:password|passwd|pwd|secret|token|(?:api|access|secret|private|auth)[_-]?key))",
             r#"(?<close>["']?)\s*(?:=>|:=|:|=)\s*"#,
-            r#"(?<literal>"[^"{}()$<%\s]*[a-z][^"{}()$<%\s]*"|'[^'{}()$<%\s]*[a-z][^'{}()$<%\s]*')"#,
+            r#"(?<literal>"(?:[^"\\{}()$<%\s]|\\.)*[a-z](?:[^"\\{}()$<%\s]|\\.)*"|'(?:[^'\\{}()$<%\s]|\\.)*[a-z](?:[^'\\{}()$<%\s]|\\.)*')"#,
         ))
         .unwrap()
     });
@@ -1343,6 +1343,13 @@ mod tests {
             (r#""parse-passwd": "^1.0.0""#, r#""parse-passwd": "^1.0.0""#),
             (r#"githubToken: "ghp_abc""#, r#"githubToken: "…""#),
             (r#""Password": "密码""#, r#""Password": "密码""#),
+            (r#"password = "ab\"cd123""#, r#"password = "…""#),
+            (r#"password = "\"hunter2""#, r#"password = "…""#),
+            (r#"password = 'a\\' + b"#, r#"password = '…' + b"#),
+            (
+                r#"user_token="t1" api_key='k2'"#,
+                r#"user_token="…" api_key='…'"#,
+            ),
             (
                 r#""Save password": "Tallenna salasana""#,
                 r#""Save password": "Tallenna salasana""#,
