@@ -619,6 +619,25 @@ fn robustness_unreadable_directory_is_not_marked_empty() {
     assert!(out.lines().any(|row| row == "locked/"), "{out}");
 }
 
+/// A link to a file beside it lists as a row, its text shown once, under
+/// the target's own row.
+#[cfg(unix)]
+#[test]
+fn robustness_link_to_a_sibling_file_renders_only_its_row() {
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path();
+    write(&root.join("AGENTS.md"), "# Agents\n\nBuild with make.\n");
+    std::os::unix::fs::symlink("AGENTS.md", root.join("CLAUDE.md")).unwrap();
+    std::os::unix::fs::symlink("AGENTS.md", root.join("README.md")).unwrap();
+    for budget in [3000, 100_000] {
+        let out = render(root, budget).unwrap();
+        assert_eq!(out.matches("Build with make.").count(), 1, "{out}");
+        for row in ["CLAUDE.md\n", "README.md\n"] {
+            assert!(out.contains(row), "no `{row}` in:\n{out}");
+        }
+    }
+}
+
 /// A private key too long for the head a directory's floor reads, its
 /// closing armor past the head, renders as a row only.
 #[test]

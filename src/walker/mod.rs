@@ -416,9 +416,10 @@ pub(crate) fn single_file_lines_content(
 
 /// Whether precis refuses to show any of `text`, read from `path`: a
 /// credential file, by its own name or its link target's
-/// ([`plaintext::is_credential_name`]), or text holding a private key.
-/// [`SourceCache`] applies it to everything it holds, so no walker can
-/// show such a file.
+/// ([`plaintext::is_credential_name`]), text holding a private key, or a
+/// link to a file in its own directory (`CLAUDE.md -> AGENTS.md`), whose
+/// text shows under the target's row. [`SourceCache`] applies it to
+/// everything it holds, so no walker can show such a file.
 pub(crate) fn is_refused(path: &Path, text: &str) -> bool {
     is_refused_by_name(path) || holds_private_key(text)
 }
@@ -426,9 +427,10 @@ pub(crate) fn is_refused(path: &Path, text: &str) -> bool {
 /// The half of [`is_refused`] that needs no read.
 pub(crate) fn is_refused_by_name(path: &Path) -> bool {
     plaintext::is_credential_name(path)
-        || path
-            .canonicalize()
-            .is_ok_and(|target| plaintext::is_credential_name(&target))
+        || path.canonicalize().is_ok_and(|target| {
+            plaintext::is_credential_name(&target)
+                || (target != path && target.parent() == path.parent())
+        })
 }
 
 /// A PEM or PGP private-key block: an armor header naming a private key,

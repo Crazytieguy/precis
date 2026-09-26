@@ -125,7 +125,12 @@ never reached the ones answer keys rank.
   it. A link lists only when its resolved target is inside the root and
   nothing on the way down to it is internal or ignored; only regular
   files and directories list; a non-UTF-8 name doesn't list, since
-  consumers reopen entries by their listed name.
+  consumers reopen entries by their listed name. A link to a file in its
+  own directory (`CLAUDE.md -> AGENTS.md`) lists but is never read
+  through (`walker::is_refused_by_name`): its text shows under the
+  target's row, not twice. A link to a file elsewhere in the tree
+  (`readme.md -> packages/next/README.md`) still reads, since the
+  target's row may be deep below anything the budget reaches.
 - **Every content read is admitted and bounded.** `WalkCtx::read_source`
   reads a path only when its directory's listing admits it as a file,
   which holds the manifests workspace discovery and Python's
