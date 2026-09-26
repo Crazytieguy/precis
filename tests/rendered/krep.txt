@@ -8,8 +8,6 @@
 LICENSE
 Makefile
   …
-  63→.PHONY: all clean install uninstall test test-directory ci bench-rg
-  64→
   65→all: $(TARGET)
   …
   90→test: $(TEST_TARGET)
@@ -210,6 +208,7 @@ krep.h
   122→} thread_data_t;
   …
   125→typedef struct task
+  126→{
   …
   130→} task_t;
   131→
@@ -225,6 +224,8 @@ krep.h
   161→int search_file(const search_params_t *params, const char *filename, int requested_thread_count);
   …
   170→int search_string(const search_params_t *params, const char *text);
+  …
+  180→int search_directory_recursive(const char *base_dir, const search_params_t *params, int thread_count);
   …
 test/
   benchmark_krep_vs_rg.sh

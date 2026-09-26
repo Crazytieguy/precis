@@ -16,7 +16,6 @@
   zlib/ (empty)
 LICENSE
 Makefile
-  1→.PHONY : all clean shader
   …
   35→all : $(BIN)/$(APPNAME)
   …
@@ -159,6 +158,9 @@ docs/
     28→
     29→return font
   font_system.lua
+    …
+    15→function font_system.ttfdata(name) end
+    …
   image.lua
     …
     17→function image.load(data) end

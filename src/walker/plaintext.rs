@@ -1628,11 +1628,7 @@ fn recipe_name(line: &str) -> Option<&str> {
 
 /// A root Makefile too long to render whole still shows how to build and
 /// test: the first rule of each [`CANONICAL_MAKE_TARGETS`] target, with its
-/// recipe unless the target is `help` or [housekeeping](is_housekeeping_target), and
-/// each `.PHONY` declaration naming several targets, the author's own list
-/// of commands, through its backslash-continued lines. A declaration of one
-/// target only marks the rule under it, and one of only variables or
-/// patterns (`.PHONY: $(PHONY)`) names nothing.
+/// recipe unless the target is `help` or [housekeeping](is_housekeeping_target).
 fn root_makefile_targets(
     file: &Path,
     name: &str,
@@ -1643,8 +1639,6 @@ fn root_makefile_targets(
     }
     let source = ctx.read_source_within(file, SOURCE_TEXT_BYTE_GATE)?;
     let mut rows = Vec::new();
-    let mut declaration = Vec::new();
-    let mut declaration_targets = 0;
     let mut shown_targets = HashSet::new();
     let mut in_shown_recipe = false;
     let mut continued = false;
@@ -1655,22 +1649,7 @@ fn root_makefile_targets(
             continue;
         }
         in_shown_recipe = false;
-        if !declaration.is_empty() || line.starts_with(".PHONY") {
-            declaration.push(index + 1);
-            declaration_targets += line
-                .strip_prefix(".PHONY:")
-                .unwrap_or(line)
-                .split_whitespace()
-                .filter(|target| *target != "\\" && !target.contains(['$', '%']))
-                .count();
-            if !line.ends_with('\\') {
-                if declaration_targets > 1 {
-                    rows.append(&mut declaration);
-                }
-                declaration.clear();
-                declaration_targets = 0;
-            }
-        } else if !line.starts_with('\t')
+        if !line.starts_with('\t')
             && let Some(target) = recipe_name(line)
             && CANONICAL_MAKE_TARGETS.contains(&target)
             && shown_targets.insert(target)
@@ -2479,9 +2458,8 @@ mod tests {
     /// small Makefile or justfile renders whole anywhere but for its
     /// housekeeping recipes' bodies; a Makefile too long, or too wide for
     /// the byte gate, renders at the root only its canonical targets' rules
-    /// (a housekeeping or `help` one's head alone) and its `.PHONY`
-    /// declarations (through their continuation lines) that name several
-    /// targets, and a long root Dockerfile only its head.
+    /// (a housekeeping or `help` one's head alone), and a long root
+    /// Dockerfile only its head.
     #[test]
     fn plaintext_build_file_rows() {
         let recipes = |prefix: &str| -> String {
@@ -2534,7 +2512,7 @@ mod tests {
                     "BUILD_DEPS = common-a common-b\n.PHONY: build test\nSHELL = /bin/sh\n\
                      build: $(BUILD_DEPS)\n\tcc main.c \\\n  -o app\n\tcc test.c\nFLAGS = -O2\n",
                 ),
-                vec![(2, 2), (4, 7)],
+                vec![(4, 7)],
                 vec![],
             ),
             (
@@ -2552,14 +2530,6 @@ mod tests {
                     ".PHONY: $(PHONY)\nall: vmlinux\nall: dtbs\nPHONY += help\nhelp:\n\t@echo\nbuild: FLAGS := -O2\n",
                 ),
                 vec![(2, 2), (5, 5)],
-                vec![],
-            ),
-            (
-                "Makefile",
-                recipes(
-                    ".PHONY: build \\\n\ttest lint\nSHELL = /bin/sh\n.PHONY: \\\n\trelease \\\n\tdocs\n\n",
-                ),
-                vec![(1, 2), (4, 6)],
                 vec![],
             ),
             (

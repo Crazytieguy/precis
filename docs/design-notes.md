@@ -222,14 +222,15 @@ code to a single language.**
   …). Keeping only build/test/run bodies lost 0.001 at 3000: NS keys buy
   dev-workflow recipes with arbitrary names (init, serve, e2e), and
   format recipes too.
-- A root Makefile too long to render whole shows the rules of its
+- A root Makefile too long to render whole shows only the rules of its
   conventional targets (`all`, `build`, `test`, `check`, …) with their
-  recipes, and only the `.PHONY` declarations that name several targets.
-  A one-target declaration marks the rule under it: keeping those gave
-  one large runtime's Makefile 130 rows of target names, though it
-  scored Score(3000) +0.0003, where a small file's target names are
-  bought. A `help` recipe is left at its head: with its `echo` lines,
-  three repositories' Makefiles went from read to unread.
+  recipes, not its `.PHONY` declarations. Keeping the one-target ones
+  gave one large runtime's Makefile 130 rows of target names, though
+  it scored Score(3000) +0.0003, where a small file's target names are
+  bought; keeping those that name several targets, the author's command
+  list in some files, scored no better (1000 −0.0005, 3000 ±0, avg7 −0.0001) than
+  dropping them. A `help` recipe is left at its head: with its `echo`
+  lines, three repositories' Makefiles went from read to unread.
 - A root manifest in any other format (Maven, Composer, Cabal, sbt,
   CMake, GitHub Actions, …) gets no walker of its own: the
   plaintext fallback renders its flat surface, which in these formats is
