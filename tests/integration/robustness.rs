@@ -306,6 +306,73 @@ fn robustness_unicode_and_control_character_names_render_on_their_rows() {
     assert!(!out.lines().any(|row| row == "line.txt"), "{out}");
 }
 
+/// A credential file's content never renders, whichever walker would read
+/// it: one named as a credential file, a link to one, or anything holding
+/// a private key. Dotenv samples and code about credentials still render.
+#[cfg(unix)]
+#[test]
+fn robustness_credential_files_render_only_their_rows() {
+    const SECRET: &str = "precis-credential-marker-51c7";
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path();
+    let key = format!(
+        "-----BEGIN RSA PRIVATE KEY-----\n{SECRET}{}\n-----END RSA PRIVATE KEY-----\n",
+        "A".repeat(64)
+    );
+    for (path, text) in [
+        ("README.md", "# demo\n".to_string()),
+        (
+            "credentials.json",
+            format!("{{\"private_key\": \"{SECRET}\"}}\n"),
+        ),
+        ("secrets.json", format!("{{\"token\": \"{SECRET}\"}}\n")),
+        (
+            "service-account.json",
+            format!("{{\"key\": \"{SECRET}\"}}\n"),
+        ),
+        ("production.env", format!("API_KEY={SECRET}\n")),
+        ("docker.env", format!("API_KEY={SECRET}\n")),
+        (".env", format!("API_KEY={SECRET}\n")),
+        (".env.local.sh", format!("export API_KEY={SECRET}\n")),
+        (
+            "scripts/secrets.prod.sh",
+            format!("export TOKEN={SECRET}\n"),
+        ),
+        (
+            "scripts/secrets",
+            format!("#!/bin/sh\nexport TOKEN={SECRET}\n"),
+        ),
+        (
+            "config/credentials-dev.ini",
+            format!("[auth]\npassword={SECRET}\n"),
+        ),
+        ("config/creds_staging.conf", format!("password={SECRET}\n")),
+        ("infra/prod.tfvars", format!("db_password = \"{SECRET}\"\n")),
+        ("notes.txt", key.clone()),
+        ("src/keys.rs", format!("pub const KEY: &str = \"{key}\";\n")),
+        (".env.example", "API_KEY=changeme\n".to_string()),
+        (
+            "src/credentials.py",
+            "def load_credentials():\n    return {}\n".to_string(),
+        ),
+    ] {
+        write(&root.join(path), text);
+    }
+    std::os::unix::fs::symlink(".env", root.join("deploy.conf")).unwrap();
+
+    for budget in [3000, 100_000] {
+        let out = render(root, budget).unwrap();
+        assert!(!out.contains(SECRET), "{out}");
+        for shown in [
+            "API_KEY=changeme",
+            "def load_credentials():",
+            "credentials.json",
+        ] {
+            assert!(out.contains(shown), "no `{shown}` in:\n{out}");
+        }
+    }
+}
+
 /// Distinctive enough that finding it anywhere in the output is proof,
 /// not coincidence.
 #[cfg(unix)]

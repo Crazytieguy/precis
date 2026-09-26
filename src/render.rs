@@ -106,8 +106,9 @@ impl SourceCache {
     }
 
     /// Read `path`, caching. `None` unless it is a regular file of at
-    /// most [`MAX_SOURCE_BYTES`] of UTF-8 text: nothing else is source,
-    /// and a FIFO or device named by a link could block or read forever.
+    /// most [`MAX_SOURCE_BYTES`] of UTF-8 text, and not
+    /// [refused](crate::walker::is_refused): nothing else is source, and a
+    /// FIFO or device named by a link could block or read forever.
     pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
         if let Some(cached) = self.cached(path) {
             return Some(cached);
@@ -126,6 +127,9 @@ impl SourceCache {
             return None;
         }
         let text = String::from_utf8(bytes).ok()?;
+        if crate::walker::is_refused(path, &text) {
+            return None;
+        }
         let source = Arc::new(Source::new(Arc::from(text)));
         self.0
             .borrow_mut()
@@ -138,8 +142,12 @@ impl SourceCache {
         self.0.borrow().get(path).cloned()
     }
 
-    /// Insert a pre-loaded source. Idempotent.
+    /// Insert a pre-loaded source, unless it is
+    /// [refused](crate::walker::is_refused). Idempotent.
     pub fn insert(&self, path: PathBuf, source: Arc<str>) {
+        if crate::walker::is_refused(&path, &source) {
+            return;
+        }
         self.0
             .borrow_mut()
             .entry(path)

@@ -131,7 +131,7 @@ pub(crate) enum Class {
 }
 
 /// Classify a file by name. `None` for files the walker doesn't own
-/// (other walkers' formats, out-of-scope variants, credential names).
+/// (other walkers' formats, out-of-scope variants).
 pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     let lower = name.to_ascii_lowercase();
     match name {
@@ -196,28 +196,50 @@ fn is_docker_compose_name(lower: &str) -> bool {
     })
 }
 
-/// File stems that never render regardless of extension — they
-/// commonly hold real tokens for local tooling.
-fn is_credential_stem(stem: &str) -> bool {
-    matches!(
-        stem,
-        "env" | ".env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
-    )
-}
-
-/// A name led by a credential stem (`secrets.yml`,
-/// `secrets.production.yaml`, `credentials-local.json`), a real
-/// (non-sample) dotenv file, or a tool's auth file.
-fn is_credential_name(name: &str) -> bool {
+/// A file named for the credentials it holds: a dotenv file (`.env`,
+/// `.env.local`, `production.env`), a name led by a credential word
+/// (`secrets.yml`, `credentials-dev.ini`, `creds_staging.conf`, an
+/// extensionless `secrets` script), a tool's auth file, Terraform
+/// variable values, or a service-account key. Samples (`.env.example`,
+/// `secrets.yml.sample`) hold placeholders, and source code and
+/// documents (`credentials.py`, `secrets.md`) are about credentials
+/// rather than holding them.
+pub(crate) fn is_credential_name(path: &Path) -> bool {
+    let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
+        return false;
+    };
     let lower = name.to_ascii_lowercase();
+    let is_exempt = [
+        ".example",
+        ".sample",
+        ".template",
+        ".dist",
+        ".md",
+        ".mdx",
+        ".rst",
+        ".adoc",
+    ]
+    .iter()
+    .any(|suffix| lower.ends_with(suffix))
+        || super::language_group(path).is_some();
     let leading = lower.split(['.', '-', '_']).next().unwrap_or_default();
-    is_credential_stem(&lower)
-        || is_credential_stem(leading)
-        || (lower.starts_with(".env.") && !crate::value::is_dotenv_sample_filename(name))
-        || matches!(
-            lower.as_str(),
-            ".npmrc" | ".netrc" | ".pypirc" | ".git-credentials" | ".htpasswd"
-        )
+    !is_exempt
+        && (matches!(
+            leading,
+            "env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
+        ) || lower == ".env"
+            || lower.starts_with(".env.")
+            || lower.ends_with(".env")
+            || lower.ends_with(".tfvars")
+            || lower.ends_with(".tfvars.json")
+            || (lower.ends_with(".json")
+                && ["service-account", "service_account", "serviceaccount"]
+                    .iter()
+                    .any(|prefix| lower.starts_with(prefix)))
+            || matches!(
+                lower.as_str(),
+                ".npmrc" | ".netrc" | ".pypirc" | ".git-credentials" | ".htpasswd"
+            ))
 }
 
 /// Programming-language extensions the fallback claims. A directory
@@ -265,8 +287,8 @@ pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
 /// value as a language file, no source-inventory promotion: promoting
 /// them buys stacks of asset-tree listings.
 const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
-    "proto", "thrift", "graphql", "gql", "capnp", "fbs", "tf", "tfvars", "hcl", "nix", "dhall",
-    "cue", "gradle", "gemspec", "podspec", "rake",
+    "proto", "thrift", "graphql", "gql", "capnp", "fbs", "tf", "hcl", "nix", "dhall", "cue",
+    "gradle", "gemspec", "podspec", "rake",
 ];
 
 /// Extensions with no *program* structure to surface: plain text, flat
@@ -290,16 +312,16 @@ const SOURCE_TEXT_FILENAMES: &[&str] = &[
 
 /// The fallback class `name` falls into on name evidence alone, or
 /// `None` when the fallback doesn't own it. Rejects derived artifacts
-/// (minified/bundled output, lockfiles, source maps) and credential
-/// stems before the extension check — these are the text files whose
-/// content makes the output worse, not better.
+/// (minified/bundled output, lockfiles, source maps) before the
+/// extension check — these are the text files whose content makes the
+/// output worse, not better.
 fn classify_source_text(name: &str) -> Option<Class> {
     let lower = name.to_ascii_lowercase();
     if SOURCE_TEXT_FILENAMES.contains(&name) {
         return Some(Class::LanguageSource);
     }
-    let (stem, ext) = lower.rsplit_once('.')?;
-    if is_credential_stem(stem) || is_derived_artifact_name(&lower) {
+    let (_, ext) = lower.rsplit_once('.')?;
+    if is_derived_artifact_name(&lower) {
         return None;
     }
     if SOURCE_TEXT_LANGUAGE_EXTENSIONS.contains(&ext)
@@ -1144,9 +1166,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 /// and configs rather than their names alone. The head is
 /// [`PLAINTEXT_BYTE_GATE`] long. The file a single-file walk names instead
 /// renders whatever of its first [`SOURCE_TEXT_BYTE_GATE`] no batch shows;
-/// any other file stays a name when it is hidden, a license text,
-/// credential-bearing (by name, or private-key armor), derived or
-/// machine-generated.
+/// any other file stays a name when it is hidden, a license text, derived
+/// or machine-generated (and, like every read, when it is
+/// [refused](super::is_refused)).
 pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
     let mut shown: HashMap<&Path, HashSet<usize>> = HashMap::new();
     let mut listed: Vec<(&Path, &str)> = Vec::new();
@@ -1186,7 +1208,6 @@ pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
             && (shown.contains_key(file.as_path())
                 || is_hidden(&file, ctx)
                 || is_license_file_name(name)
-                || is_credential_name(name)
                 || is_derived_artifact_name(&name.to_ascii_lowercase()))
         {
             continue;
@@ -1199,9 +1220,7 @@ pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
         let Some(source) = file_head(&file, ctx, head_bytes) else {
             continue;
         };
-        if has_nul_byte(&source)
-            || (!is_named && (is_machine_generated_text(&source) || source.contains("PRIVATE KEY")))
-        {
+        if has_nul_byte(&source) || (!is_named && is_machine_generated_text(&source)) {
             continue;
         }
         let shown = shown.get(file.as_path());
@@ -1708,7 +1727,7 @@ mod tests {
     }
 
     #[test]
-    fn plaintext_source_text_classification_rejects_derived_and_credential_files() {
+    fn plaintext_source_text_classification_rejects_derived_files() {
         let language = Some(Class::LanguageSource);
         let flat = Some(Class::FlatText);
         #[rustfmt::skip]
@@ -1716,9 +1735,9 @@ mod tests {
             ("Gson.java", language), ("Session.swift", language), ("Layout.vue", language),
             ("Gemfile", language), ("schema.proto", language), ("guide.rst", None),
             ("app.css", flat), ("build.sh", flat),
-            // Derived artifacts and credentials never render.
+            // Derived artifacts never render.
             ("app.min.css", None), ("vendor.bundle.css", None), ("main.js.map", None),
-            ("pnpm-lock.yaml", None), ("secrets.sh", None), ("credentials.txt", None),
+            ("pnpm-lock.yaml", None),
             // `.md` files stay with the markdown walker, and formats an owning
             // walker already claims stay with it.
             ("LICENSE.md", None), ("lib.rs", None), ("main.py", None), ("app.ts", None),
@@ -1726,6 +1745,31 @@ mod tests {
         ];
         for (name, expected) in cases {
             assert_eq!(classify_source_text(name), expected, "{name}");
+        }
+    }
+
+    #[test]
+    fn plaintext_credential_names_are_data_and_config_files() {
+        #[rustfmt::skip]
+        let cases = [
+            (".env", true), (".env.local", true), (".env.local.sh", true), ("production.env", true),
+            ("docker.env", true), ("env.sh", true), ("secrets.yml", true), ("secrets.prod.sh", true),
+            ("secret.txt", true), ("credentials.json", true), ("credentials-dev.ini", true),
+            ("creds_staging.conf", true), ("secrets", true), ("prod.tfvars", true),
+            ("prod.tfvars.json", true), ("service-account.json", true),
+            ("serviceAccountKey.json", true), (".npmrc", true), (".netrc", true),
+            (".pypirc", true), (".git-credentials", true), (".htpasswd", true),
+            // Samples document keys with placeholder values.
+            (".env.example", false), (".env.sample", false), (".env.template", false),
+            (".env.dist", false),
+            // Code and docs about credentials hold none.
+            ("credentials.py", false), ("secrets.rs", false), ("credentials.go", false),
+            ("env.d.ts", false), ("secrets.md", false), ("credentials.rst", false),
+            (".env.local.example", false), ("secrets.yml.sample", false),
+            ("service-account.yaml", false), ("environment.yml", false), ("config.json", false),
+        ];
+        for (name, expected) in cases {
+            assert_eq!(is_credential_name(Path::new(name)), expected, "{name}");
         }
     }
 
@@ -1765,8 +1809,7 @@ mod tests {
     #[test]
     fn plaintext_classify_table_drives_predicate() {
         // (name, expected). `None` rows assert names the walker must
-        // refuse — owned by other walkers, out of scope, or
-        // credential-bearing.
+        // refuse — owned by other walkers, or out of scope.
         let cases: &[(&str, Option<Class>)] = &[
             // Dotfiles by class.
             (".gitignore", None),
@@ -1800,17 +1843,6 @@ mod tests {
             (".prettierrc.json", None),
             (".eslintrc.js", None),
             (".prettierrc.js", None),
-            // Credential-bearing — must not be classified.
-            (".npmrc", None),
-            (".netrc", None),
-            (".env", None),
-            (".pypirc", None),
-            ("env.sh", None),
-            (".env.sh", None),
-            ("secrets.sh", None),
-            ("secret.sh", None),
-            ("credentials.sh", None),
-            ("creds.sh", None),
             // Out of scope by design.
             ("LICENSE-HEADER", None),
             ("README", None),
@@ -2013,11 +2045,17 @@ mod tests {
             ("secrets.yml", "api_token: abc\n"),
             ("secrets.production.yaml", "db_password: hunter2\n"),
             ("config/credentials.local.json", "{\"token\": \"t0k\"}\n"),
-            ("deploy_key", "-----BEGIN PRIVATE KEY-----\n"),
+            (
+                "deploy_key",
+                &format!("-----BEGIN PRIVATE KEY-----\n{}\n", "MIIEv".repeat(13)),
+            ),
             (
                 "signing-key.asc",
-                "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\nlQVYBGXpayloadAAAA\n=ab12\n\
-                 -----END PGP PRIVATE KEY BLOCK-----\n",
+                &format!(
+                    "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\nlQVYBGXpayload{}\n=ab12\n\
+                     -----END PGP PRIVATE KEY BLOCK-----\n",
+                    "A".repeat(50)
+                ),
             ),
             (".github/labels.yml", "- name: bug\n"),
             ("sprite.png.meta", "guid: 0123\n"),

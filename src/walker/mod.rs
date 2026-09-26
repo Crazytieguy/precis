@@ -406,6 +406,36 @@ pub(crate) fn single_file_lines_content(
     })
 }
 
+/// Whether precis refuses to show any of `text`, read from `path`: a
+/// credential file, by its own name or its link target's
+/// ([`plaintext::is_credential_name`]), or text holding a private key.
+/// [`SourceCache`] applies it to everything it holds, so no walker can
+/// show such a file.
+pub(crate) fn is_refused(path: &Path, text: &str) -> bool {
+    plaintext::is_credential_name(path)
+        || path
+            .canonicalize()
+            .is_ok_and(|target| plaintext::is_credential_name(&target))
+        || holds_private_key(text)
+}
+
+/// A PEM or PGP private-key block: an armor header naming a private key,
+/// then key material — a base64 run at least one armor line (64
+/// characters, RFC 7468 and RFC 4880) long before the closing armor. A
+/// header alone (a parser's constant, a documented placeholder) holds
+/// no key.
+fn holds_private_key(text: &str) -> bool {
+    text.split("-----BEGIN ").skip(1).any(|block| {
+        let block = block.split("-----END ").next().unwrap_or_default();
+        block.split_once("-----").is_some_and(|(label, body)| {
+            label.contains("PRIVATE KEY")
+                && body
+                    .split(|ch: char| !(ch.is_ascii_alphanumeric() || ch == '+' || ch == '/'))
+                    .any(|run| run.len() >= 64)
+        })
+    })
+}
+
 /// Cached read behind an FS-metadata byte pre-flight — skips the read
 /// (and returns `None`) when the size hint alone disqualifies the
 /// file. Bytes-per-line multipliers are per-format — callers keep
@@ -527,6 +557,26 @@ mod tests {
         ctx.parse_each(&files, |index, _, _| visited.push(index));
         assert_eq!(visited, [0, 2]);
         assert!(ctx.parse_tree(&paths[3], &language).is_none());
+    }
+
+    #[test]
+    fn walker_mod_private_keys_need_key_material_under_their_armor() {
+        let body = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7VJTUt9Us8cKj";
+        for text in [
+            format!("-----BEGIN RSA PRIVATE KEY-----\n{body}\n-----END RSA PRIVATE KEY-----\n"),
+            format!("const KEY = \"-----BEGIN EC PRIVATE KEY-----\\n{body}\\n\";\n"),
+            format!("-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n{body}\n=ab12\n"),
+        ] {
+            assert!(holds_private_key(&text), "{text}");
+        }
+        for text in [
+            "Paste your PRIVATE KEY into the settings page.\n".to_string(),
+            "-----BEGIN PRIVATE KEY-----\n<your key here>\n-----END PRIVATE KEY-----\n".to_string(),
+            "if line == \"-----BEGIN RSA PRIVATE KEY-----\" {\n    parse(line)\n}\n".to_string(),
+            format!("-----BEGIN CERTIFICATE-----\n{body}\n-----END CERTIFICATE-----\n"),
+        ] {
+            assert!(!holds_private_key(&text), "{text}");
+        }
     }
 
     #[test]
