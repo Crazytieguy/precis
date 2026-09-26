@@ -1641,7 +1641,8 @@ fn extend_lede(
 /// Top-level blocks above the first headed section.
 fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
     let mut cursor = root.walk();
-    root.children(&mut cursor)
+    let mut blocks: Vec<Node> = root
+        .children(&mut cursor)
         .take_while(|c| *c != first_headed)
         .flat_map(|c| {
             // The prelude is itself a `section` node wrapping the
@@ -1654,7 +1655,16 @@ fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
                 vec![c]
             }
         })
-        .collect()
+        .collect();
+    // A setext heading opens no `section`, so the blocks above it sit in
+    // the section it heads.
+    let mut inner = first_headed.walk();
+    blocks.extend(
+        first_headed
+            .children(&mut inner)
+            .take_while(|c| !matches!(c.kind(), "atx_heading" | "setext_heading")),
+    );
+    blocks
 }
 
 /// Prelude rows `ReadmeHeadline` left behind — the substantive blocks
@@ -2182,6 +2192,19 @@ mod tests {
                    Widget renders gadgets.\n",
             &[5, 7],
             &[1, 2, 3],
+        ),
+        // A setext heading opens no `section`: the lede above it still
+        // reads as the prelude.
+        (
+            "markdown_lede_above_a_setext_heading",
+            "<p align=\"center\"><img src=\"logo.png\"></p>\n\
+                   \n\
+                   Widget renders gadgets.\n\
+                   \n\
+                   Installation\n\
+                   ------------\n",
+            &[3, 5],
+            &[1],
         ),
     ];
 
