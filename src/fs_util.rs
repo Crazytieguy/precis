@@ -8,7 +8,7 @@
 //! resolves outside the walk root. See [`resolved_kind`].
 
 use std::cell::RefCell;
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::ffi::{OsStr, OsString};
 use std::fs::FileType;
 use std::path::{Component, Path, PathBuf};
@@ -95,9 +95,8 @@ pub struct DirFilter {
     /// Memo for [`list_dir`]: every walker and every scheduler cost
     /// probe lists the same directories again.
     listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
-    /// Memo for [`lists_nothing`] on directories not listed in full, and
-    /// on unreadable ones, whose listing is empty.
-    emptiness: RefCell<HashMap<PathBuf, bool>>,
+    /// Directories [`list_dir`] could not read, whose listing is empty.
+    unreadable: RefCell<HashSet<PathBuf>>,
     /// Entries [`DirFilter::hides_everything_in`] read from a directory it
     /// found visible, until [`list_dir`] lists them: a listing probes each
     /// directory it names, and that directory's own listing usually follows.
@@ -210,7 +209,7 @@ impl DirFilter {
             canonical_root: root.canonicalize().unwrap_or_else(|_| root.to_path_buf()),
             repo: None,
             listings: RefCell::new(HashMap::new()),
-            emptiness: RefCell::new(HashMap::new()),
+            unreadable: RefCell::new(HashSet::new()),
             probed_entries: RefCell::new(HashMap::new()),
             only_file: None,
         }
@@ -600,29 +599,10 @@ pub(crate) fn listed_from_root(path: &Path, filter: &DirFilter) -> bool {
     dir != filter.root()
 }
 
-/// Whether [`list_dir`] lists nothing for `path`, reading only as far
-/// as the first entry it would list. Rendering asks this of every child
-/// directory in a listing to mark the empty ones; a full listing of each
-/// child would read two levels below every listing. An unreadable
-/// directory is not empty: something may be there.
+/// Whether [`list_dir`] lists nothing for `path` because nothing there
+/// lists. An unreadable directory is not empty: something may be there.
 pub(crate) fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
-    if let Some(&known) = filter.emptiness.borrow().get(path) {
-        return known;
-    }
-    if let Some(listing) = filter.listings.borrow().get(path) {
-        return listing.is_empty();
-    }
-    let empty = filter.is_linked_subdirectory(path)
-        || std::fs::read_dir(path).is_ok_and(|entries| {
-            !entries.flatten().any(|entry| {
-                listed_entry(path, &entry.file_name(), entry.file_type().ok(), filter).is_some()
-            })
-        });
-    filter
-        .emptiness
-        .borrow_mut()
-        .insert(path.to_path_buf(), empty);
-    empty
+    list_dir(path, filter).is_empty() && !filter.unreadable.borrow().contains(path)
 }
 
 fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> {
@@ -631,10 +611,7 @@ fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> 
     }
     let probed = filter.probed_entries.borrow_mut().remove(path);
     let Some(entries) = probed.or_else(|| read_entries(path)) else {
-        filter
-            .emptiness
-            .borrow_mut()
-            .insert(path.to_path_buf(), false);
+        filter.unreadable.borrow_mut().insert(path.to_path_buf());
         return BTreeMap::new();
     };
     entries
