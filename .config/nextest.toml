@@ -1,4 +1,7 @@
 [profile.default]
 fail-fast = false
 slow-timeout = { period = "60s", terminate-after = 2 }
+# Several agents often run the suite at once from their own worktrees; a
+# per-run thread count multiplies across them and oversubscribes the host.
+# The suite passes in parallel, so raise this for a solo run if wanted.
 test-threads = 1
