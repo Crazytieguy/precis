@@ -27,7 +27,7 @@ use super::workspace::{
 };
 use super::{
     WalkCtx, first_child_of_kind, fs::files_with_any_extension, gated_whole_file_content,
-    parser_for, path_depth_factor, single_file_lines_content,
+    path_depth_factor, single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering — generated files
@@ -48,23 +48,23 @@ pub struct JsonState {
 
 impl JsonState {
     /// `true` iff `file` is a workspace-member `package.json`.
-    pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
+    pub fn is_workspace_member(&self, file: &Path, ctx: &WalkCtx) -> bool {
         self.membership
-            .is_member(file, || collect_workspace_members(root))
+            .is_member(file, || collect_workspace_members(ctx))
     }
 
     /// `true` iff `file` is the primary workspace member — see
     /// [`member_named_after_root`]. That member is the only one in a
     /// directory of its name, so the name and membership identify it.
-    pub fn is_primary_workspace_member(&self, file: &Path, root: &Path) -> bool {
+    pub fn is_primary_workspace_member(&self, file: &Path, ctx: &WalkCtx) -> bool {
         let primary = self.primary_member.get_or_init(|| {
             member_named_after_root(
-                root,
-                self.membership.members(|| collect_workspace_members(root)),
+                ctx.root(),
+                self.membership.members(|| collect_workspace_members(ctx)),
             )
         });
         primary.as_deref().is_some_and(|primary| {
-            dir_name(file) == dir_name(primary) && self.is_workspace_member(file, root)
+            dir_name(file) == dir_name(primary) && self.is_workspace_member(file, ctx)
         })
     }
 }
@@ -453,15 +453,16 @@ const PACKAGE_JSON_FILENAME: &str = "package.json";
 /// JS/TS workspace members — union of `package.json#workspaces` and
 /// `pnpm-workspace.yaml`'s `packages:` list. Only trailing-`/*` globs
 /// are honored. Any pnpm `!` negation opts the repo out entirely.
-pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
+pub(super) fn collect_workspace_members(ctx: &WalkCtx) -> HashSet<PathBuf> {
+    let root = ctx.root();
     let Ok(canonical_root) = root.canonicalize() else {
         return HashSet::new();
     };
-    let Some(pnpm) = read_pnpm_workspaces(root) else {
+    let Some(pnpm) = read_pnpm_workspaces(ctx) else {
         return HashSet::new();
     };
     let mut out = HashSet::new();
-    for entry in npm_workspaces_entries(root).into_iter().chain(pnpm) {
+    for entry in npm_workspaces_entries(ctx).into_iter().chain(pnpm) {
         for dir in expand_member_entry(root, &entry) {
             if let Some(member) = canonical_member(&canonical_root, &dir, PACKAGE_JSON_FILENAME) {
                 out.insert(member);
@@ -475,19 +476,13 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     out
 }
 
-/// Parse `<dir>/package.json` into its source text + tree. The caller
-/// re-derives the root object node (tree-sitter nodes borrow the tree,
-/// so it can't be returned from here).
-fn parse_manifest(dir: &Path) -> Option<(String, tree_sitter::Tree)> {
-    let text = std::fs::read_to_string(dir.join(PACKAGE_JSON_FILENAME)).ok()?;
-    let tree = parser_for(&tree_sitter_json::LANGUAGE.into()).parse(text.as_bytes(), None)?;
-    Some((text, tree))
-}
-
 /// Raw entries from the `workspaces` field on `<root>/package.json`.
 /// Supports both array and object (`{"packages": […]}`) forms.
-fn npm_workspaces_entries(root: &Path) -> Vec<String> {
-    let Some((text, tree)) = parse_manifest(root) else {
+fn npm_workspaces_entries(ctx: &WalkCtx) -> Vec<String> {
+    let Some((text, tree)) = ctx.parse_tree(
+        &ctx.root().join(PACKAGE_JSON_FILENAME),
+        &tree_sitter_json::LANGUAGE.into(),
+    ) else {
         return Vec::new();
     };
     let Some(object) = first_child_of_kind(tree.root_node(), "object") else {
@@ -546,8 +541,8 @@ fn collect_string_array(array: Node, source: &str) -> Vec<String> {
 /// `None` on any `!`-prefixed entry — half-supported negation parsing is
 /// unsafe across the npm/pnpm union, so the caller treats this as a
 /// repo-wide opt-out.
-fn read_pnpm_workspaces(root: &Path) -> Option<Vec<String>> {
-    let Ok(text) = std::fs::read_to_string(root.join("pnpm-workspace.yaml")) else {
+fn read_pnpm_workspaces(ctx: &WalkCtx) -> Option<Vec<String>> {
+    let Some(text) = ctx.read_source(&ctx.root().join("pnpm-workspace.yaml")) else {
         return Some(Vec::new());
     };
     let mut entries = Vec::new();
@@ -762,7 +757,7 @@ mod tests {
             root,
             &["packages/a", "packages/b", "apps/web", "apps/native"],
         );
-        let members = collect_workspace_members(root);
+        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         for hit in ["packages/a", "packages/b", "apps/web"] {
             let pkg = member_path(root, hit);
             assert!(members.contains(&pkg), "expected member: {}", pkg.display());
@@ -789,14 +784,14 @@ mod tests {
             r#"{"name":"workspace-shell","workspaces":["packages/*", "apps/*"]}"#,
         );
         seed_members(&root, &["packages/primary-package", "packages/satellite"]);
-        let members = collect_workspace_members(&root);
+        let members = collect_workspace_members(&WalkCtx::new(root.clone()));
         assert_eq!(
             member_named_after_root(&root, &members),
             Some(member_path(&root, "packages/primary-package"))
         );
 
         seed_members(&root, &["apps/primary-package"]);
-        let members = collect_workspace_members(&root);
+        let members = collect_workspace_members(&WalkCtx::new(root.clone()));
         assert_eq!(member_named_after_root(&root, &members), None);
     }
 
@@ -812,7 +807,7 @@ mod tests {
             }"#,
         );
         seed_members(root, &["pkg/foo"]);
-        let members = collect_workspace_members(root);
+        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         let expected = member_path(root, "pkg/foo");
         assert!(members.contains(&expected));
     }
@@ -828,7 +823,7 @@ mod tests {
         )
         .unwrap();
         seed_members(root, &["packages/a", "examples/foo", "examples/bar"]);
-        let members = collect_workspace_members(root);
+        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         for hit in ["packages/a", "examples/foo"] {
             let pkg = member_path(root, hit);
             assert!(members.contains(&pkg), "expected member: {}", pkg.display());
@@ -854,7 +849,7 @@ mod tests {
         )
         .unwrap();
         seed_members(root, &["packages/a", "packages/excluded"]);
-        let members = collect_workspace_members(root);
+        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         assert!(
             members.is_empty(),
             "pnpm negation present → empty member set (got {members:?})"
@@ -882,7 +877,7 @@ mod tests {
         )
         .unwrap();
         seed_members(root, &["packages/a", "packages/excluded"]);
-        let members = collect_workspace_members(root);
+        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         assert!(
             members.is_empty(),
             "mixed npm+pnpm-with-negation must opt out fully (got {members:?})"
@@ -894,7 +889,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(root, r#"{"name": "single-package"}"#);
-        let members = collect_workspace_members(root);
+        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         assert!(members.is_empty(), "no workspaces field → empty member set");
     }
 
@@ -912,7 +907,7 @@ mod tests {
             }"#,
         );
         seed_members(root, &["packages/mdbook-core"]);
-        let members = collect_workspace_members(root);
+        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         assert!(
             members.is_empty(),
             "mid-name globs must not match (got {members:?})"

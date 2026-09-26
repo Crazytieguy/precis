@@ -371,9 +371,13 @@ const CARGO_MANIFEST_FILENAME: &str = "Cargo.toml";
 /// Union of `[workspace].members` (literals + trailing-`/*` globs) and
 /// `[dependencies]`-table `path = "..."` entries; `[workspace].exclude`
 /// applies to the union. Empty on parse error.
-pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
+pub(super) fn collect_workspace_members(ctx: &WalkCtx) -> HashSet<PathBuf> {
+    let root = ctx.root();
     let root_manifest = root.join(CARGO_MANIFEST_FILENAME);
-    let Some(value) = parse_manifest(&root_manifest) else {
+    let Some(value) = ctx
+        .read_source(&root_manifest)
+        .and_then(|source| toml::from_str::<toml::Value>(&source).ok())
+    else {
         return HashSet::new();
     };
     // Path-dep auto-promotion only applies inside a Cargo workspace. Without
@@ -433,10 +437,6 @@ fn dep_path(spec: &toml::Value) -> Option<&str> {
     spec.as_table()?.get("path")?.as_str()
 }
 
-fn parse_manifest(path: &Path) -> Option<toml::Value> {
-    toml::from_str(&std::fs::read_to_string(path).ok()?).ok()
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -481,7 +481,7 @@ mod tests {
             fs::create_dir_all(&manifest_dir).unwrap();
             fs::write(manifest_dir.join("Cargo.toml"), body).unwrap();
         }
-        let members = collect_workspace_members(dir.path());
+        let members = collect_workspace_members(&WalkCtx::new(dir.path().to_path_buf()));
         (dir, members)
     }
 
@@ -668,7 +668,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
     #[test]
     fn toml_workspace_members_mdbook_fixture() {
         let root = fixture_path("mdbook");
-        let members = collect_workspace_members(&root);
+        let members = collect_workspace_members(&WalkCtx::new(root.clone()));
 
         // All 9 crates/* directories are members.
         let expected_crates = [

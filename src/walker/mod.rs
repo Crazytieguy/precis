@@ -18,8 +18,8 @@ use tree_sitter::{Language, Node, Tree};
 
 use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, Render, Span};
-use crate::fs_util::DirFilter;
-use crate::render::{Source, SourceCache};
+use crate::fs_util::{DirFilter, lists_file};
+use crate::render::{MAX_SOURCE_BYTES, Source, SourceCache};
 
 pub(crate) mod code;
 mod fs;
@@ -235,9 +235,14 @@ impl WalkCtx {
             .as_ref()
     }
 
-    /// Read `path` into memory, caching the result.
+    /// Read `path` into memory, caching the result. `None` unless its
+    /// directory's listing admits it as a file, so a path a walker names
+    /// without listing it (a workspace manifest, an `__init__.py`) is held
+    /// to the listing's rules — and see [`SourceCache::get`].
     pub fn read_source(&self, path: &Path) -> Option<Arc<Source>> {
-        self.source_cache.get(path)
+        lists_file(path, &self.dir_filter)
+            .then(|| self.source_cache.get(path))
+            .flatten()
     }
 
     /// Parse `path` with `language`. The tree is not cached: a file is
@@ -252,7 +257,7 @@ impl WalkCtx {
     /// [`Self::parse_tree`] for each of `files`, handing each parse to
     /// `visit` in index order. Files parse on one worker per core, and a
     /// file starts parsing only while the sources of the parses not yet
-    /// visited total at most [`PARSE_BYTE_CAP`] (or none are pending), so
+    /// visited total at most [`MAX_SOURCE_BYTES`] (or none are pending), so
     /// the trees alive at once stay within what one capped file costs.
     pub fn parse_each(
         &self,
@@ -293,7 +298,7 @@ impl WalkCtx {
             for (index, source) in sources.iter().enumerate() {
                 while next_job < files.len()
                     && (pending_bytes == 0
-                        || pending_bytes + source_len(next_job) <= PARSE_BYTE_CAP)
+                        || pending_bytes + source_len(next_job) <= MAX_SOURCE_BYTES)
                 {
                     pending_bytes += source_len(next_job);
                     job_sender
@@ -325,7 +330,7 @@ impl WalkCtx {
     /// read, so directories expanded later in the run parse less.
     fn read_for_parse(&self, path: &Path) -> Option<Arc<Source>> {
         let left = self.parse_bytes_left.get();
-        let source = gated_read_source(path, self, PARSE_BYTE_CAP.min(left))?;
+        let source = gated_read_source(path, self, left)?;
         self.parse_bytes_left.set(left.saturating_sub(source.len()));
         Some(source)
     }
@@ -333,18 +338,17 @@ impl WalkCtx {
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
     pub fn is_cargo_workspace_member(&self, file: &Path) -> bool {
         self.cargo_workspace
-            .is_member(file, || toml::collect_workspace_members(&self.root))
+            .is_member(file, || toml::collect_workspace_members(self))
     }
 
     /// `true` iff `file` is a JS/TS workspace-member `package.json`.
     pub fn is_js_workspace_member(&self, file: &Path) -> bool {
-        self.json_state.is_workspace_member(file, &self.root)
+        self.json_state.is_workspace_member(file, self)
     }
 
     /// `true` iff `file` is the unique primary JS/TS workspace member.
     pub fn is_primary_js_workspace_member(&self, file: &Path) -> bool {
-        self.json_state
-            .is_primary_workspace_member(file, &self.root)
+        self.json_state.is_primary_workspace_member(file, self)
     }
 }
 
@@ -356,17 +360,10 @@ fn parser_for(language: &Language) -> tree_sitter::Parser {
     parser
 }
 
-/// Largest file precis parses. Past it a file is treated like a
-/// generated or minified one and yields no batches: the 186-repo
-/// robustness sweep's largest hand-written single-file library is
-/// 4.1 MB (`miniaudio.h`), while a 25.9 MB generated `parser.c` cost
-/// 900 MB and seconds to parse.
-const PARSE_BYTE_CAP: usize = 8 * 1024 * 1024;
-
 /// Most source bytes one run parses, over every file. Sources stay cached
 /// for the whole run and a parse costs several times its source in memory
 /// and time, so without it a directory of generated sources each under
-/// [`PARSE_BYTE_CAP`] runs to gigabytes. The 186-repo robustness sweep's
+/// [`MAX_SOURCE_BYTES`] runs to gigabytes. The 186-repo robustness sweep's
 /// largest run parses 19.8 MB at an 8000-token budget; the training
 /// corpus's at most 4.5 MB at 9000.
 const RUN_PARSE_BYTE_CAP: usize = 32 * 1024 * 1024;

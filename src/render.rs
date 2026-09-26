@@ -10,6 +10,7 @@
 use std::cell::RefCell;
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::fmt::Write as _;
+use std::io::Read as _;
 use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
@@ -89,6 +90,12 @@ impl Source {
     }
 }
 
+/// Largest file precis reads. Past it a file is treated like a generated
+/// or minified one and yields no batches: the 186-repo robustness sweep's
+/// largest hand-written single-file library is 4.1 MB (`miniaudio.h`),
+/// while a 25.9 MB generated `parser.c` cost 900 MB and seconds to parse.
+pub(crate) const MAX_SOURCE_BYTES: usize = 8 * 1024 * 1024;
+
 /// Shared source-file cache — read and index each file at most once per run.
 #[derive(Clone, Debug, Default)]
 pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<Source>>>>);
@@ -98,12 +105,27 @@ impl SourceCache {
         Self::default()
     }
 
-    /// Read `path`, caching. Returns `None` on I/O error.
+    /// Read `path`, caching. `None` unless it is a regular file of at
+    /// most [`MAX_SOURCE_BYTES`] of UTF-8 text: nothing else is source,
+    /// and a FIFO or device named by a link could block or read forever.
     pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
         if let Some(cached) = self.cached(path) {
             return Some(cached);
         }
-        let text = std::fs::read_to_string(path).ok()?;
+        let metadata = std::fs::metadata(path).ok()?;
+        if !metadata.is_file() || metadata.len() > MAX_SOURCE_BYTES as u64 {
+            return None;
+        }
+        let mut bytes = Vec::new();
+        std::fs::File::open(path)
+            .ok()?
+            .take(MAX_SOURCE_BYTES as u64 + 1)
+            .read_to_end(&mut bytes)
+            .ok()?;
+        if bytes.len() > MAX_SOURCE_BYTES {
+            return None;
+        }
+        let text = String::from_utf8(bytes).ok()?;
         let source = Arc::new(Source::new(Arc::from(text)));
         self.0
             .borrow_mut()

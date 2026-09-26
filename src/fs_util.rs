@@ -519,6 +519,17 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> Rc<BTreeMap<String, EntryKin
     listing
 }
 
+/// Whether the listing of `path`'s directory admits it as a file.
+pub(crate) fn lists_file(path: &Path, filter: &DirFilter) -> bool {
+    let (Some(dir), Some(name)) = (
+        path.parent(),
+        path.file_name().and_then(|name| name.to_str()),
+    ) else {
+        return false;
+    };
+    list_dir(dir, filter).get(name) == Some(&EntryKind::File)
+}
+
 /// Whether [`list_dir`] lists nothing for `path`, reading only as far
 /// as the first entry it would list. Rendering asks this of every child
 /// directory in a listing to mark the empty ones; a full listing of each

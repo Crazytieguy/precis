@@ -94,6 +94,43 @@ fn robustness_special_files_are_never_read() {
     }
 }
 
+/// Workspace discovery opens manifests by fixed name rather than from a
+/// listing. A FIFO or a link to a device wearing such a name reads as no
+/// workspace declaration, not a read that blocks or never ends.
+#[cfg(unix)]
+#[test]
+fn robustness_special_files_named_like_workspace_manifests_are_never_read() {
+    use std::os::unix::fs::symlink;
+
+    for (manifest, is_fifo) in [
+        ("pnpm-workspace.yaml", true),
+        ("pnpm-workspace.yaml", false),
+        ("Cargo.toml", false),
+    ] {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        write(
+            &root.join("package.json"),
+            "{\"name\": \"shell\", \"workspaces\": [\"packages/*\"]}\n",
+        );
+        write(
+            &root.join("packages/member/package.json"),
+            "{\"name\": \"member\"}\n",
+        );
+        write(
+            &root.join("crates/member/Cargo.toml"),
+            "[package]\nname = \"member\"\n",
+        );
+        if is_fifo {
+            mkfifo(&root.join(manifest));
+        } else {
+            symlink("/dev/zero", root.join(manifest)).unwrap();
+        }
+        let out = render_within(root, 3000, Duration::from_secs(20)).unwrap();
+        assert!(out.contains("\"member\""), "{out}");
+    }
+}
+
 #[test]
 fn robustness_binary_files_render_only_their_rows() {
     let temp = tempfile::tempdir().unwrap();
