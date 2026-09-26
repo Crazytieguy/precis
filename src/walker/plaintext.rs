@@ -209,26 +209,17 @@ pub(crate) fn is_credential_name(path: &Path) -> bool {
         return false;
     };
     let lower = name.to_ascii_lowercase();
-    let is_exempt = [
-        ".example",
-        ".sample",
-        ".template",
-        ".dist",
-        ".md",
-        ".mdx",
-        ".rst",
-        ".adoc",
-    ]
-    .iter()
-    .any(|suffix| lower.ends_with(suffix))
+    #[rustfmt::skip]
+    const EXEMPT_SUFFIXES: &[&str] =
+        &[".example", ".sample", ".template", ".dist", ".md", ".mdx", ".rst", ".adoc"];
+    let is_exempt = EXEMPT_SUFFIXES.iter().any(|suffix| lower.ends_with(suffix))
         || super::language_group(path).is_some();
     let leading = lower.split(['.', '-', '_']).next().unwrap_or_default();
     !is_exempt
         && (matches!(
             leading,
             "env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
-        ) || lower == ".env"
-            || lower.starts_with(".env.")
+        ) || lower.starts_with(".env.")
             || lower.ends_with(".env")
             || lower.ends_with(".tfvars")
             || lower.ends_with(".tfvars.json")
