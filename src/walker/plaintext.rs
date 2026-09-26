@@ -809,13 +809,17 @@ const CONTINUED_OPERATORS: &[char] = &['=', '+', '-', '&', ','];
 /// at or above the indentation that opened the bracket ends it, so a
 /// miscounted bracket cannot swallow the rest of the file.
 fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
-    let mut continues = vec![false; lines.len()];
+    let mut continues = string_interiors(lines);
     let mut depth = 0;
     let mut head_indent = 0;
     let mut previous_carries_on = false;
     for (index, line) in lines.iter().enumerate() {
         let trimmed = line.trim();
-        if trimmed.is_empty() || in_block_comment[index] || is_comment_line(trimmed) {
+        if continues[index]
+            || trimmed.is_empty()
+            || in_block_comment[index]
+            || is_comment_line(trimmed)
+        {
             continue;
         }
         let indent = indentation(line);
@@ -834,6 +838,59 @@ fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
         previous_carries_on = trimmed.ends_with(CONTINUED_OPERATORS);
     }
     continues
+}
+
+/// Per line, whether it sits inside a multi-line string opened on an
+/// earlier line — a `"""` or `'''` literal, or a heredoc (`<<<'EOF'`,
+/// `<<~SQL`) — through the line that closes it. Its text is data, however
+/// much it looks like code. A string that never closes marks nothing.
+fn string_interiors(lines: &[&str]) -> Vec<bool> {
+    let mut inside = vec![false; lines.len()];
+    let mut index = 0;
+    while index < lines.len() {
+        if let Some((end, is_heredoc)) = multiline_string_end(lines[index])
+            && let Some(offset) = lines[index + 1..].iter().position(|line| {
+                if is_heredoc {
+                    line.trim()
+                        .strip_prefix(end)
+                        .is_some_and(|after| !after.starts_with(is_identifier_char))
+                } else {
+                    line.contains(end)
+                }
+            })
+        {
+            let last = index + 1 + offset;
+            inside[index + 1..=last].fill(true);
+            index = last;
+        }
+        index += 1;
+    }
+    inside
+}
+
+fn is_identifier_char(c: char) -> bool {
+    c.is_alphanumeric() || c == '_'
+}
+
+/// For a line that opens a multi-line string, the token that ends it and
+/// whether that token is a heredoc identifier, which ends it only at the
+/// start of a line. A heredoc's identifier must start upper-case, so a
+/// shift (`a << b`) or a stream insertion is not read as one.
+fn multiline_string_end(line: &str) -> Option<(&str, bool)> {
+    if let Some(delimiter) = ["\"\"\"", "'''"]
+        .into_iter()
+        .find(|delimiter| line.matches(delimiter).count() % 2 == 1)
+    {
+        return Some((delimiter, false));
+    }
+    let (_, rest) = line.split_once("<<")?;
+    let rest = rest
+        .trim_start_matches(['<', '~', '-'])
+        .trim_start_matches(['\'', '"']);
+    let identifier = &rest[..rest.find(|c| !is_identifier_char(c)).unwrap_or(rest.len())];
+    identifier
+        .starts_with(|c: char| c.is_ascii_uppercase())
+        .then_some((identifier, true))
 }
 
 /// Opening minus closing round and square brackets on a line, outside
@@ -1466,6 +1523,32 @@ mod tests {
         ] {
             assert_eq!(declaration_rank(line, false), rank, "{line}");
         }
+    }
+
+    /// Code inside a heredoc or a triple-quoted string is data, not the
+    /// file's declarations.
+    #[test]
+    fn plaintext_source_text_surface_skips_multiline_string_interiors() {
+        let php = "<?php\nclass A {\n    function f() { return <<<'EOF'\nif (x) {\n    y();\n}\nEOF;\n    }\n}\n";
+        let lines: Vec<&str> = php.lines().collect();
+        let text: Vec<&str> = surface_of(php).iter().map(|n| lines[n - 1]).collect();
+        assert_eq!(
+            text,
+            vec!["<?php", "class A {", "    function f() { return <<<'EOF'"]
+        );
+
+        let elixir = "defmodule Router do\n  @doc \"\"\"\n  ## Examples\n\n  from any scope.\n  \"\"\"\n  def pipeline(plug) do\n    plug\n  end\nend\n";
+        let lines: Vec<&str> = elixir.lines().collect();
+        let text: Vec<&str> = surface_of(elixir).iter().map(|n| lines[n - 1]).collect();
+        assert!(!text.contains(&"  ## Examples"), "{text:?}");
+        assert!(text.contains(&"  def pipeline(plug) do"), "{text:?}");
+
+        let shift = "int mask = 1<<BITS;\nint next() {\n  return 1;\n}\n";
+        assert!(
+            string_interiors(&shift.lines().collect::<Vec<_>>())
+                .iter()
+                .all(|inside| !inside)
+        );
     }
 
     #[test]
