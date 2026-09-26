@@ -83,25 +83,29 @@ fn load_ranks(rank_file: &str) -> FxHashMap<&'static [u8], u32> {
     ranks
 }
 
+/// Padded base64: whole 4-symbol groups, `=` decoding as zero bits
+/// that are dropped at the end.
 fn decode_base64(text: &[u8], out: &mut Vec<u8>) {
-    let mut bits = 0u32;
-    let mut bit_count = 0;
-    for &symbol in text {
-        let value = match symbol {
-            b'A'..=b'Z' => symbol - b'A',
-            b'a'..=b'z' => symbol - b'a' + 26,
-            b'0'..=b'9' => symbol - b'0' + 52,
-            b'+' => 62,
-            b'/' => 63,
-            _ => break,
-        };
-        bits = bits << 6 | u32::from(value);
-        bit_count += 6;
-        if bit_count >= 8 {
-            bit_count -= 8;
-            out.push((bits >> bit_count) as u8);
-        }
+    let value = |symbol: u8| match symbol {
+        b'A'..=b'Z' => symbol - b'A',
+        b'a'..=b'z' => symbol - b'a' + 26,
+        b'0'..=b'9' => symbol - b'0' + 52,
+        b'+' => 62,
+        b'/' => 63,
+        _ => 0,
+    };
+    for group in text.chunks(4) {
+        let bits = group
+            .iter()
+            .fold(0u32, |bits, &symbol| bits << 6 | u32::from(value(symbol)));
+        out.extend_from_slice(&bits.to_be_bytes()[1..]);
     }
+    let padding = text
+        .iter()
+        .rev()
+        .take_while(|&&symbol| symbol == b'=')
+        .count();
+    out.truncate(out.len() - padding);
 }
 
 impl Encoding {
