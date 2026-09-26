@@ -278,3 +278,8 @@ once workspace members were exempt.
   `PRECIS_SESSION_HOOK`, yet their update script installs the latest
   binary, and uncapped output overflows the hook cap. Drop that branch
   once those plugin installs have had time to update.
+- **Python parsing is quadratic in a run of comment lines.** A `def`
+  followed by 20,000 `#` rows takes 2 s and 40,000 take 7 s, all of it
+  inside tree-sitter-python's parse (lexer re-advancing over the run);
+  the same padding costs 0.1 s in the other grammars. Fixing it means
+  a grammar patch or a pre-parse guard on the source.
