@@ -35,8 +35,8 @@ const MODEL_SPLIT_MIN_ROWS: usize = 32;
 enum DeclKind {
     Model,
     Enum,
-    /// `datasource` / `generator` header block.
-    Header,
+    /// `datasource` / `generator` block.
+    Config,
 }
 
 /// One top-level Prisma declaration: its opener line and the inclusive
@@ -50,9 +50,9 @@ struct Decl {
 }
 
 impl Decl {
-    /// Body rows excluding the opener and closer brace lines.
-    fn field_rows(&self) -> usize {
-        (self.close_line.saturating_sub(self.open_line) + 1).saturating_sub(2)
+    /// Rows of the block, opener and closing brace included.
+    fn rows(&self) -> usize {
+        self.close_line.saturating_sub(self.open_line) + 1
     }
 }
 
@@ -70,16 +70,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let Some(content) = single_file_lines_content(&file, &source, toc_line_nums) else {
             continue;
         };
-        // Multi-file Prisma layouts and generated copies ship
-        // `schema.prisma` files holding only `datasource` / `generator`
-        // config. Those are build wiring, not the application's data
-        // model, and earn no root pin.
-        //
-        // A schema that does declare the application's persistent
-        // entities is application spine: every backend question resolves
-        // against it, and where it sits in the tree records only which
-        // workspace package owns the ORM client. It takes the same
-        // root-tier depth pin an entrypoint gets.
+        // A config-only schema is build wiring and earns no root pin.
         let declares_data_model = decls
             .iter()
             .any(|d| matches!(d.kind, DeclKind::Model | DeclKind::Enum));
@@ -111,8 +102,8 @@ fn push_decl_batches(
     depth: f64,
     toc_key: &BatchKey,
 ) {
-    let body_rows = decl.close_line.saturating_sub(decl.open_line) + 1;
-    let value = decl_value(decl.field_rows(), depth);
+    let body_rows = decl.rows();
+    let value = decl_value(body_rows.saturating_sub(2), depth);
     let head_key: BatchKey = PrismaKey::Decl {
         file: file.to_path_buf(),
         start_line: decl.open_line,
@@ -123,7 +114,9 @@ fn push_decl_batches(
         .then(|| model_split_line(decl));
 
     let head_end = split_at.map_or(decl.close_line, |s| s - 1);
-    let Some(head_content) = block_content(file, source, decl.open_line, head_end) else {
+    let Some(head_content) =
+        single_file_lines_content(file, source, (decl.open_line..=head_end).collect())
+    else {
         return;
     };
     out.push(Batch {
@@ -136,7 +129,9 @@ fn push_decl_batches(
     let Some(tail_start) = split_at else {
         return;
     };
-    let Some(tail_content) = block_content(file, source, tail_start, decl.close_line) else {
+    let Some(tail_content) =
+        single_file_lines_content(file, source, (tail_start..=decl.close_line).collect())
+    else {
         return;
     };
     out.push(Batch {
@@ -158,16 +153,6 @@ fn push_decl_batches(
 /// edges. Strictly interior for any block past `MODEL_SPLIT_MIN_ROWS`.
 fn model_split_line(decl: &Decl) -> usize {
     decl.open_line + (decl.close_line - decl.open_line) / 2
-}
-
-fn block_content(
-    file: &Path,
-    source: &Source,
-    start_line: usize,
-    end_line: usize,
-) -> Option<crate::content::BatchContent> {
-    let rows: Vec<usize> = (start_line..=end_line).collect();
-    single_file_lines_content(file, source, rows)
 }
 
 /// Top-level Prisma declarations with their brace-block row ranges,
@@ -234,7 +219,7 @@ fn decl_keyword(line: &str) -> Option<DeclKind> {
     } else if line.starts_with("enum ") {
         Some(DeclKind::Enum)
     } else if line.starts_with("datasource ") || line.starts_with("generator ") {
-        Some(DeclKind::Header)
+        Some(DeclKind::Config)
     } else {
         None
     }
@@ -294,8 +279,8 @@ enum Theme {
         assert_eq!(
             kinds,
             vec![
-                DeclKind::Header,
-                DeclKind::Header,
+                DeclKind::Config,
+                DeclKind::Config,
                 DeclKind::Model,
                 DeclKind::Enum,
             ]
@@ -327,8 +312,8 @@ model Real {
         assert_eq!(decl_keyword("modeling.foo"), None);
         assert_eq!(decl_keyword("model User {"), Some(DeclKind::Model));
         assert_eq!(decl_keyword("enum Theme {"), Some(DeclKind::Enum));
-        assert_eq!(decl_keyword("datasource db {"), Some(DeclKind::Header));
-        assert_eq!(decl_keyword("generator client {"), Some(DeclKind::Header));
+        assert_eq!(decl_keyword("datasource db {"), Some(DeclKind::Config));
+        assert_eq!(decl_keyword("generator client {"), Some(DeclKind::Config));
     }
 
     /// The root pin belongs to the application's data model. A nested
