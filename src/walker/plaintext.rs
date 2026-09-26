@@ -915,9 +915,9 @@ fn bracket_balance(trimmed: &str) -> isize {
 
 /// A line of annotations or attributes alone (`@Deprecated(`,
 /// `@MainActor`, `[Fact]`, `#[Route("/")]`): it qualifies the declaration
-/// below it and names nothing itself. Whitespace outside brackets means a
-/// declaration follows on the same line (`@Override public void run()`,
-/// Objective-C's `@interface Foo`).
+/// below it and names nothing itself. Whitespace outside brackets and
+/// literals means a declaration follows on the same line (`@Override
+/// public void run()`, Objective-C's `@interface Foo`).
 fn is_annotation_only(trimmed: &str) -> bool {
     let body = trimmed
         .strip_prefix('#')
@@ -927,16 +927,9 @@ fn is_annotation_only(trimmed: &str) -> bool {
     if !matches!(chars.next(), Some('@' | '[')) || !chars.next().is_some_and(char::is_alphabetic) {
         return false;
     }
-    let mut depth = 0;
-    for c in body.chars() {
-        match c {
-            '(' | '[' => depth += 1,
-            ')' | ']' => depth -= 1,
-            c if c.is_whitespace() && depth <= 0 => return false,
-            _ => {}
-        }
-    }
-    true
+    !body
+        .char_indices()
+        .any(|(index, c)| c.is_whitespace() && bracket_balance(&body[..index]) <= 0)
 }
 
 /// A fallback file's declaration surface, then — when the surface
