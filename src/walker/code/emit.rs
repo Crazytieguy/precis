@@ -49,6 +49,12 @@ fn file_prior(language: &Language, path: &Path, ctx: &WalkCtx) -> f64 {
         * language.file_weight.map_or(1.0, |weight| weight(path, ctx))
 }
 
+/// Re-export rows past this many add nothing to a roster's value. A
+/// barrel of hundreds of re-exported names otherwise ranks like a roster
+/// of the declarations they name, chunk after chunk, ahead of the modules
+/// that implement them.
+const MAX_REEXPORT_ENTRIES: usize = 40;
+
 struct Emitter<'a> {
     file: &'a SourceFile,
     file_prior: f64,
@@ -69,7 +75,9 @@ impl Emitter<'_> {
                 .map(|decl| Item::new(decl.name_rows.clone())),
         );
         roster.sort_by_key(|item| item.rows.first().copied());
-        let entries: usize = roster.iter().map(|item| item.rows.len()).sum();
+        let reexport_rows: usize = model.reexports.iter().map(|item| item.rows.len()).sum();
+        let decl_rows: usize = model.decls.iter().map(|decl| decl.name_rows.len()).sum();
+        let entries = decl_rows + reexport_rows.min(MAX_REEXPORT_ENTRIES);
         let names_value = self.file_prior * (entries as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
         self.part(self.key(Rung::Names, 0, 0), &roster, None, names_value);
 

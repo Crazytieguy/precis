@@ -82,7 +82,11 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     for (statement, top_level) in classified {
         let node = match top_level {
             TopLevel::Reexport => {
-                let comments = doc_items(file, statement)
+                let doc = doc_items(file, statement);
+                if is_internal(file, &doc) {
+                    continue;
+                }
+                let comments = doc
                     .into_iter()
                     .filter(|doc| file.line(doc.rows[0]).trim_start().starts_with("//"))
                     .flat_map(|doc| doc.rows);
@@ -1249,6 +1253,9 @@ export class Client {
   reset() {}
   send() {}
 }
+/** @internal */
+export { assertNumber } from './warning';
+export { warn } from './warning';
 ",
         );
         assert_eq!(
@@ -1258,6 +1265,7 @@ export class Client {
                 "  Callable name [9] head [9] doc [] body []",
             ]
         );
+        assert_eq!(rows(&model.reexports), [[13]]);
     }
 
     #[test]

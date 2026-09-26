@@ -192,18 +192,7 @@ peepdb/
       7→from .firebase import FirebaseDatabase
       8→from .mssql import MSSQLDatabase
       9→from .oracle import OracleDatabase
-      10→
-      11→__all__ = [
-      12→    'BaseDatabase',
-      13→    'MySQLDatabase',
-      14→    'PostgreSQLDatabase',
-      15→    'MariaDBDatabase',
-      16→    'MongoDBDatabase',
-      17→    'SQLiteDatabase',
-      18→    'FirebaseDatabase',
-      19→    'MSSQLDatabase',
-      20→    'OracleDatabase'
-      21→]
+      …
     base.py
       …
       5→class BaseDatabase(ABC):
@@ -228,6 +217,17 @@ peepdb/
     firebase.py
       …
       7→logger = logging.getLogger(__name__)
+      8→
+      9→class FirebaseDatabase(BaseDatabase):
+      10→    def __init__(self, service_account_path: str, **kwargs):
+      …
+      15→    def connect(self):
+      …
+      26→    def disconnect(self):
+      …
+      30→    def fetch_tables(self) -> List[str]:
+      …
+      39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
       …
     mariadb.py
     mongodb.py

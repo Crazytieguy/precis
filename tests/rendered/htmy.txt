@@ -186,7 +186,11 @@ htmy/
     23→
     24→    def __init__(self, *children: ComponentType) -> None:
     …
+    33→    def htmy(self, context: Context) -> Component:
+    …
     38→class WithContext(Fragment):
+    …
+    43→    __slots__ = ("_context",)
     …
     64→class ContextAware:
     …
@@ -233,8 +237,7 @@ htmy/
   py.typed (empty)
   renderer/
     __init__.py
-      1→from .baseline import Renderer as _BaselineRenderer
-      2→from .default import Renderer as _DefaultRenderer
+      …
       3→from .typing import is_renderer as is_renderer
       4→from .typing import is_streaming_renderer as is_streaming_renderer
       5→

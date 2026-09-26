@@ -148,27 +148,7 @@ microbootstrap/
     21→    InstrumentsSetupperSettings,
     22→    LitestarSettings,
     23→)
-    24→
-    25→
-    26→__all__ = (
-    27→    "CorsConfig",
-    28→    "FastApiPrometheusConfig",
-    29→    "FastApiSettings",
-    30→    "FastStreamOpentelemetryConfig",
-    31→    "FastStreamPrometheusConfig",
-    32→    "FastStreamPrometheusMiddlewareProtocol",
-    33→    "FastStreamSettings",
-    34→    "FastStreamTelemetryMiddlewareProtocol",
-    35→    "HealthChecksConfig",
-    36→    "InstrumentsSetupperSettings",
-    37→    "LitestarPrometheusConfig",
-    38→    "LitestarSettings",
-    39→    "LoggingConfig",
-    40→    "OpentelemetryConfig",
-    41→    "PyroscopeConfig",
-    42→    "SentryConfig",
-    43→    "SwaggerConfig",
-    44→)
+    …
   bootstrappers/
     __init__.py (empty)
     base.py
@@ -197,6 +177,32 @@ microbootstrap/
     sentry_instrument.py
     swagger_instrument.py
   instruments_setupper.py
+    …
+    19→class InstrumentsSetupper:
+    20→    console_writer: ConsoleWriter
+    21→    instrument_box: InstrumentBox
+    22→
+    23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
+    …
+    28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
+    …
+    32→    def configure_instruments(
+    …
+    35→    ) -> typing_extensions.Self:
+    …
+    40→    @classmethod
+    41→    def use_instrument(
+    …
+    46→    ]:
+    …
+    51→    def setup(self) -> None:
+    …
+    57→    def teardown(self) -> None:
+    …
+    62→    def __enter__(self) -> None:
+    …
+    65→    def __exit__(self, *args: object) -> None:
+    …
   middlewares/
     __init__.py (empty)
     fastapi.py

@@ -91,23 +91,7 @@ beets/
       31→    sort_from_strings,
       32→)
       33→from .types import Type
-      34→
-      35→__all__ = [
-      36→    "AndQuery",
-      37→    "Database",
-      38→    "FieldQuery",
-      39→    "Index",
-      40→    "InvalidQueryError",
-      41→    "MatchQuery",
-      42→    "Model",
-      43→    "OrQuery",
-      44→    "Query",
-      45→    "Results",
-      46→    "Type",
-      47→    "parse_sorted_query",
-      48→    "query_from_strings",
-      49→    "sort_from_strings",
-      50→]
+      …
     db.py
     pathutils.py
     query.py
@@ -128,46 +112,12 @@ beets/
       25→    SingletonImportTask,
       26→)
       …
-      30→__all__ = [
-      31→    "Action",
-      32→    "ArchiveImportTask",
-      33→    "ImportAbortError",
-      34→    "ImportSession",
-      35→    "ImportTask",
-      36→    "SentinelImportTask",
-      37→    "SingletonImportTask",
-      38→]
     session.py
     stages.py
     state.py
     tasks.py
   library/
     __init__.py
-      1→from beets.util.deprecation import deprecate_imports
-      2→
-      3→from .exceptions import FileOperationError, ReadError, WriteError
-      4→from .library import Library
-      5→from .models import Album, Item, LibModel
-      6→from .queries import parse_query_parts, parse_query_string
-      7→
-      8→NEW_MODULE_BY_NAME = dict.fromkeys(
-      9→    ("DateType", "DurationType", "MusicalKey", "PathType"), "beets.dbcore.types"
-      10→) | dict.fromkeys(
-      11→    ("BLOB_TYPE", "SingletonQuery", "PathQuery"), "beets.dbcore.query"
-      12→)
-      15→def __getattr__(name: str):
-      …
-      19→__all__ = [
-      20→    "Album",
-      21→    "FileOperationError",
-      22→    "Item",
-      23→    "LibModel",
-      24→    "Library",
-      25→    "ReadError",
-      26→    "WriteError",
-      27→    "parse_query_parts",
-      28→    "parse_query_string",
-      29→]
     exceptions.py
     fields.py
     library.py
@@ -191,6 +141,8 @@ beets/
       17→CLI commands are implemented in the ui.commands module.
       18→"""
       …
+      36→from beets import config, library, logging, plugins, util
+      …
     commands/
       __init__.py
         …
@@ -202,7 +154,37 @@ beets/
         21→from .completion import completion_cmd
         22→from .config import config_cmd
         23→from .fields import fields_cmd
+        24→from .help import HelpCommand
+        25→from .import_ import import_cmd
+        26→from .list import list_cmd
+        27→from .modify import modify_cmd
+        28→from .move import move_cmd
+        29→from .remove import remove_cmd
+        30→from .stats import stats_cmd
+        31→from .update import update_cmd
+        32→from .version import version_cmd
+        33→from .write import write_cmd
+        34→
+        35→
+        36→def __getattr__(name: str):
+        37→    """Handle deprecated imports."""
         …
+        50→default_commands = [
+        51→    fields_cmd,
+        52→    HelpCommand(),
+        53→    import_cmd,
+        54→    list_cmd,
+        55→    update_cmd,
+        56→    remove_cmd,
+        57→    stats_cmd,
+        58→    version_cmd,
+        59→    modify_cmd,
+        60→    move_cmd,
+        61→    write_cmd,
+        62→    config_cmd,
+        63→    completion_cmd,
+        64→]
+        67→__all__ = ["default_commands"]
       completion.py
       completion_base.sh
       config.py
@@ -269,6 +251,27 @@ beetsplug/
       16→Beets library. Attempts to implement a compatible protocol to allow
       17→use of the wide range of MPD clients.
       18→"""
+      …
+      37→from beetsplug._utils import vfs
+      …
+      51→PROTOCOL_VERSION = "0.16.0"
+      52→BUFSIZE = 1024
+      53→
+      54→HELLO = f"OK MPD {PROTOCOL_VERSION}"
+      55→CLIST_BEGIN = "command_list_begin"
+      56→CLIST_VERBOSE_BEGIN = "command_list_ok_begin"
+      57→CLIST_END = "command_list_end"
+      58→RESP_OK = "OK"
+      59→RESP_CLIST_VERBOSE = "list_OK"
+      60→RESP_ERR = "ACK"
+      61→
+      62→NEWLINE = "\n"
+      63→
+      64→ERROR_NOT_LIST = 1
+      65→ERROR_ARG = 2
+      66→ERROR_PASSWORD = 3
+      67→ERROR_PERMISSION = 4
+      68→ERROR_UNKNOWN = 5
       …
     gstplayer.py
   bpm.py

@@ -1,4 +1,5 @@
-.codex/
+.codex/environments/
+  environment.toml
 .coverage
 .github/
   FUNDING.yml
@@ -104,8 +105,10 @@ README.md
   44→```
   45→
   46→Homebrew and NixOS are not officially supported at the moment.
+  47→
   48→### Prefer `pipx`?
-  …
+  49→
+  50→If you'd prefer to use `pipx`, that works too: `pipx install posting`.
   52→## Contributing
   …
   56→## Learn More
@@ -186,20 +189,7 @@ src/posting/
     19→    Scripts,
     20→)
     21→from .scripts import Posting
-    22→
-    23→
-    24→__all__ = [
-    25→    "Auth",
-    26→    "Cookie",
-    27→    "Header",
-    28→    "QueryParam",
-    29→    "RequestBody",
-    30→    "RequestModel",
-    31→    "FormItem",
-    32→    "Options",
-    33→    "Scripts",
-    34→    "Posting",
-    35→]
+    …
   __main__.py
     1→"""The main entry point for the Posting CLI."""
     …
@@ -260,6 +250,13 @@ src/posting/
     …
   _start_time.py
   app.py
+    …
+    93→class AppHeader(Horizontal):
+    …
+    108→class AppBody(Vertical):
+    …
+    112→class MainScreen(Screen[None]):
+    …
   auth.py
   collection.py
   commands.py
@@ -336,6 +333,7 @@ tests/
   __snapshots__/
   posting_snapshot_app.py
   resources/
+    snapshot_report_template.jinja2
   sample-collections/
     echo-post-01.posting.yaml
     echo.posting.yaml
@@ -345,6 +343,8 @@ tests/
       my_script.py
   sample-configs/
   sample-envs/
+    sample_base.env
+    sample_extra.env
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

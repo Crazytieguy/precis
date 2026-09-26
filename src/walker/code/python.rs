@@ -23,8 +23,10 @@
 //!   `from … import …` of the package's own modules (a relative import, or
 //!   one whose module path starts at a directory above the file) or that
 //!   explicitly re-exports a name (`import X as X`, or a name `__all__`
-//!   lists). Other imports from the standard library and third-party
-//!   packages are in no part.
+//!   lists), unless it imports only private names. Other imports from the
+//!   standard library and third-party packages are in no part. An
+//!   `__init__.py`'s `__all__` is left out when those imports already
+//!   re-export every name it lists, so the roster names each once.
 
 use std::collections::HashSet;
 use std::path::Path;
@@ -71,6 +73,8 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let is_entry = is_entrypoint(&file.path, ctx);
     let root = file.tree.root_node();
     let mut first_statement = true;
+    let mut reexported_names: HashSet<&str> = HashSet::new();
+    let mut all_statements = Vec::new();
     for node in root.named_children(&mut root.walk()) {
         if node.kind() == "comment" {
             continue;
@@ -96,7 +100,12 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                     && (imports_own_module(file, node, ctx)
                         || reexports_explicitly(file, node, &exported_names)) =>
             {
-                model.reexports.push(rows())
+                let names = imported_names(file, node);
+                let public = names.is_empty() || names.iter().any(|name| !is_private(name));
+                if public {
+                    reexported_names.extend(names);
+                    model.reexports.push(rows())
+                }
             }
             "type_alias_statement" => {
                 if node.child_by_field_name("left").is_some() {
@@ -104,13 +113,20 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                 }
             }
             "expression_statement" => match assignment_target(file, node) {
-                Some(("__all__", _)) => model.reexports.push(rows()),
+                Some(("__all__", _)) => all_statements.push(rows()),
                 Some((name, false)) if is_entry && is_dunder(name) => model.module_doc.push(rows()),
                 Some((_, false)) => model.decls.push(constant_or_alias(file, node)),
                 Some((_, true)) | None => {}
             },
             _ => {}
         }
+    }
+    let all_repeats_imports = !exported_names.is_empty()
+        && exported_names
+            .iter()
+            .all(|name| reexported_names.contains(name));
+    if !all_repeats_imports {
+        model.reexports.extend(all_statements);
     }
     model
 }
@@ -194,6 +210,23 @@ fn reexports_explicitly(file: &SourceFile, statement: Node, exported_names: &[&s
             }
             _ => exported_names.contains(&file.text(name)),
         })
+}
+
+/// The names a `from … import …` binds: each alias, else the imported
+/// name. Empty for `from x import *`.
+fn imported_names<'a>(file: &'a SourceFile, statement: Node) -> Vec<&'a str> {
+    statement
+        .children_by_field_name("name", &mut statement.walk())
+        .filter_map(|name| match name.kind() {
+            "aliased_import" => name.child_by_field_name("alias"),
+            _ => Some(name),
+        })
+        .map(|name| file.text(name))
+        .collect()
+}
+
+fn is_private(name: &str) -> bool {
+    name.starts_with('_') && !is_dunder(name)
 }
 
 /// The string contents of the module's top-level `__all__` assignments.
@@ -561,10 +594,32 @@ from typing import Any
 from werkzeug.exceptions import abort as abort
 from markupsafe import Markup, escape
 from json import dumps as to_json
-__all__ = [\"escape\"]
+__all__ = [\"escape\", \"helper\"]
 ",
         );
         assert_eq!(rows(&model.reexports), vec![vec![2], vec![3], vec![5]]);
+    }
+
+    /// A name is listed once: `__all__` goes when the imports above it
+    /// already re-export every name it lists, and an import of private
+    /// names only is not a re-export.
+    #[test]
+    fn python_package_init_lists_each_public_name_once() {
+        let imports = "\
+from .core import Engine, run
+from .html import _SCAN_BUDGET as _SCAN_BUDGET
+from .__about__ import __version__
+";
+        let model = extract_source(
+            "pkg/__init__.py",
+            &format!("{imports}__all__ = [\"Engine\", \"run\", \"__version__\"]\n"),
+        );
+        assert_eq!(rows(&model.reexports), vec![vec![1], vec![3]]);
+        let model = extract_source(
+            "pkg/__init__.py",
+            &format!("{imports}__all__ = [\"Engine\", \"run\", \"helper\"]\n"),
+        );
+        assert_eq!(rows(&model.reexports), vec![vec![1], vec![3], vec![4]]);
     }
 
     #[test]

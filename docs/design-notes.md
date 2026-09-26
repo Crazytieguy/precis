@@ -218,7 +218,11 @@ must not undo:
   member names): it scales by `roster_mass` of its body entries, or a
   large class ranks below its own members' docs. A re-export-only
   roster stays at the `Names` tier, or barrels outrank root listings at
-  small budgets.
+  small budgets, and its re-export rows stop adding value past
+  `MAX_REEXPORT_ENTRIES`: counting every row of a hundreds-of-names
+  barrel ranked each of its chunks like a declaration roster, ahead of
+  the modules it re-exports. Counting a statement as one entry instead
+  cost 3000 −.0024 (answer keys rank short export blocks early).
 - **Per-language pricing enters only through `is_entrypoint`** (a depth
   pin), `file_weight` and what `extract` hides. Entry-file,
   private-declaration, member and front-door file factors, a roster head

@@ -140,7 +140,6 @@ setup.py
 src/tomli/
   __init__.py
     …
-    5→__all__ = ("loads", "load", "TOMLDecodeError")
     6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
     8→from ._parser import TOMLDecodeError, load, loads
   _parser.py
@@ -253,6 +252,10 @@ src/tomli/
     413→def key_value_rule(
     …
     415→) -> Pos:
+    …
+    447→def parse_key_value_pair(
+    …
+    449→) -> tuple[Pos, Key, Any]:
     …
   _re.py
   _types.py
