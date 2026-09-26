@@ -105,6 +105,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "test"
                 | "testing"
                 | "examples"
+                | "hack"
                 | "benches"
                 | "bench"
                 | "spec"
@@ -135,6 +136,13 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
             || is_scaffold_template_dir_name(&lowered)
             // Python under `docs/` is Sphinx config and site builders.
             || name == "docs" && path.extension().is_some_and(|ext| ext == "py");
+        // Past `com/` or `org/` a JVM package is named for its publisher:
+        // `com.example` is the templates' default, `com.google.samples`
+        // an organization, and neither is a sample tree.
+        let is_sample_tree = matches!(role, "example" | "sample" | "samples")
+            && !names[..index]
+                .iter()
+                .any(|name| matches!(name, Some("com" | "org")));
         // A separate documentation-site sub-app at the repo root
         // (axios's `docs/package.json`, dockly's `docs/package.json`) is
         // build-and-publish plumbing, peripheral to the parent library.
@@ -142,6 +150,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
         // package.json) keep full weight.
         if is_dotted
             || is_non_essential_role
+            || is_sample_tree
             || index == 0 && (is_vendor_dir_name(name) || is_docs_site_subtree(name, root))
         {
             return 0.2;
@@ -325,6 +334,20 @@ mod tests {
             (
                 1.0,
                 "contribute/contribute.md contribute/build.sh contribute/conf/demo.json",
+            ),
+            // Example, sample and dev-tooling trees, in either case.
+            (
+                0.2,
+                "Example/AppDelegate.m samples/Polly.Samples/Program.cs \
+                 sample/app.go hack/update-codegen.sh charts/x/hack/sync.py \
+                 app/src/test/java/com/example/FooTest.java",
+            ),
+            // A JVM package named for its publisher.
+            (
+                1.0,
+                "app/src/main/kotlin/com/google/samples/apps/Main.kt \
+                 src/main/java/org/springframework/samples/petclinic/Owner.java \
+                 src/main/java/com/example/demo/DemoApplication.java",
             ),
             // Scaffolder payloads: the prefixed spellings only. A bare
             // `templates/` is the view layer in Django / Flask / Jinja /
