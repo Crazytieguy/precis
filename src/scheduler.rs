@@ -290,15 +290,8 @@ impl<W: Walker> Scheduler<W> {
     }
 
     fn fits(&self, cost: Cost) -> bool {
-        if self.consumed.tokens + cost.tokens > self.token_budget {
-            return false;
-        }
-        if let Some(cap) = self.char_budget
-            && self.consumed.chars + cost.chars > cap
-        {
-            return false;
-        }
-        true
+        let total = self.consumed + cost;
+        total.tokens <= self.token_budget && self.char_budget.is_none_or(|cap| total.chars <= cap)
     }
 
     // ---- scheduling ----
@@ -326,8 +319,7 @@ impl<W: Walker> Scheduler<W> {
         }
         self.dominant_file_entered |= self.dominant_file_batches.contains(&id);
         self.scheduled_log.push((id, cost));
-        self.consumed.tokens += cost.tokens;
-        self.consumed.chars += cost.chars;
+        self.consumed = self.consumed + cost;
         entry_content
     }
 
