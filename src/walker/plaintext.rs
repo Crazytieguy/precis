@@ -11,12 +11,9 @@
 //!    parses ([`is_unparsed_manifest_name`]) is claimed too.
 //! 2. **Every other source-like text file** ([`Class::LanguageSource`],
 //!    [`Class::FlatText`]): the language-agnostic fallback for formats no
-//!    parser claims (Java, C++, Ruby, PHP, Swift, Kotlin, C#, Vue, …),
-//!    rendered as its [`declaration_surface`] — a head slice for flat text
-//!    such as shell, CSS and config — and, when short, whole behind it. Without it those files show only as a filename.
-//!    Markup documents (reST, AsciiDoc, …) are not claimed: like
-//!    markdown beyond the root README, they are left to the listing and
-//!    the floor.
+//!    parser claims, rendered as its [`declaration_surface`] and, when
+//!    short, whole behind it. Markup documents (reST, AsciiDoc, …) are left
+//!    to the listing and the floor.
 //!
 //! Once the walkers' batches are all scheduled, it also renders the head
 //! of every listed file they leave untouched ([`floor_batches`]).
@@ -83,16 +80,13 @@ const SOURCE_TEXT_MAX_INDENT_LEVELS: usize = 4;
 const SOURCE_TEXT_BYTE_GATE: usize = 512 * 1024;
 
 /// Mean bytes per line above which a file is machine-generated rather
-/// than hand-wrapped: minified bundles, single-line JSON-ish dumps and
-/// serialized blobs all sit in the thousands, hand-written source and
-/// prose in the tens. Rejects them without an extension blocklist.
+/// than hand-wrapped: minified bundles and serialized blobs sit in the
+/// thousands, hand-written source and prose in the tens.
 const SOURCE_TEXT_MAX_MEAN_LINE_BYTES: usize = 200;
 
-/// Characters past which an indentation-zero line stops being a
-/// declaration a reader skims and becomes an attribute dump, a data
-/// row, or generated output — a Maven `<project xmlns=…>` opener costs
-/// ~90 tokens and says nothing. Skipped rather than truncated: a
-/// half-line is not more informative than the filename.
+/// Characters past which a surface line is an attribute dump, a data row
+/// or generated output (a Maven `<project xmlns=…>` opener) rather than a
+/// declaration. Skipped rather than truncated.
 const SOURCE_TEXT_MAX_LINE_CHARS: usize = 200;
 
 /// Leading lines scanned for a generated-file banner.
@@ -238,11 +232,7 @@ fn is_credential_name(name: &str) -> bool {
 
 /// Programming-language extensions the fallback claims. A directory
 /// of these files is a source package whether or not this crate can
-/// parse them, so [`crate::walker::fs::is_source_inventory_file`]
-/// reads from this list too — without it a `com/google/gson/` full of
-/// `.java` does not register as source, its listing loses the ratio
-/// race at depth, and the files inside it never even become
-/// candidates.
+/// parse them, so the source inventory reads from this list too.
 ///
 /// An allowlist rather than v0.1's "any extension that decodes as
 /// UTF-8" rule. SVG, source maps, PO catalogs, CSV, armored keys and
@@ -258,20 +248,23 @@ fn is_credential_name(name: &str) -> bool {
 /// has nothing true to say about it and would spend real tokens
 /// saying it — ~27 tokens per page across a generated `docs/` tree.
 /// Markup needs a walker that understands nesting, not this one.
+#[rustfmt::skip]
 pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
     // JVM / .NET
     "java", "kt", "kts", "scala", "sc", "groovy", "clj", "cljs", "cljc", "cs", "fs", "fsx", "vb",
-    // C family (`.c` / `.h` belong to the C walker, but for a `.h`
-    // written in C++)
+    // C family (`.c` / `.h` belong to the C walker, but for a `.h` written in C++)
     "cpp", "cc", "cxx", "hpp", "hh", "hxx", "m", "mm", "cu", "cuh",
     // other compiled languages
     "swift", "zig", "dart", "nim", "cr", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex", "exs",
     "pas", "pp", "dpr", "lpr", "f", "f90", "f95", "f03", "f08", "for", "cob", "cbl", "cpy", "adb",
-    "ads", "sol", // hardware description
-    "v", "sv", "svh", "vhd", "vhdl", // scripting
-    "rb", "php", "pl", "pm", "r", "jl", "tcl", "vim", "gd", "coffee", "el", "lisp", "scm",
-    "rkt", // TeX classes and packages (macro libraries, not documents)
-    "cls", "sty", // component-file web frameworks
+    "ads", "sol",
+    // hardware description
+    "v", "sv", "svh", "vhd", "vhdl",
+    // scripting
+    "rb", "php", "pl", "pm", "r", "jl", "tcl", "vim", "gd", "coffee", "el", "lisp", "scm", "rkt",
+    // TeX classes and packages (macro libraries, not documents)
+    "cls", "sty",
+    // component-file web frameworks
     "vue", "svelte", "astro",
 ];
 
@@ -286,65 +279,22 @@ const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
     "cue", "gradle", "gemspec", "podspec", "rake",
 ];
 
-/// Extensions with no *program* structure to surface. `.bat`/`.cmd`
+/// Extensions with no *program* structure to surface: plain text, flat
+/// config, scripts and build glue, and stylesheets, whose selectors
+/// describe presentation rather than what the program does. `.bat`/`.cmd`
 /// are absent on purpose — in practice they are generated wrappers
 /// (`gradlew.bat`, `mvnw.cmd`), 158 tokens of argument marshalling.
-/// Two shapes, one price:
-///
-/// - plain text, flat config, shell scripts and build glue are sequences
-///   of statements, so every line sits at indentation zero and the
-///   "surface" is just a head slice;
-/// - stylesheets do have declarations at indentation zero, but a
-///   selector list describes presentation, not what the program is
-///   or does — nine 10-token stylesheet slices displacing a
-///   package's parsed decl surfaces is a bad trade.
-///
-/// Claimed either way — a slice beats a bare filename — but priced
-/// near the floor, and never a source inventory.
+#[rustfmt::skip]
 const SOURCE_TEXT_FLAT_EXTENSIONS: &[&str] = &[
-    "txt",
-    "ini",
-    "cfg",
-    "conf",
-    "properties",
-    "sh",
-    "bash",
-    "zsh",
-    "fish",
-    "ps1",
-    "psm1",
-    "awk",
-    "cmake",
-    "mk",
-    "mak",
-    "bzl",
-    "bazel",
-    "gyp",
-    "gni",
-    "ld",
-    "css",
-    "scss",
-    "sass",
-    "less",
-    "styl",
+    "txt", "ini", "cfg", "conf", "properties", "sh", "bash", "zsh", "fish", "ps1", "psm1", "awk",
+    "cmake", "mk", "mak", "bzl", "bazel", "gyp", "gni", "ld", "css", "scss", "sass", "less", "styl",
 ];
 
 /// Extensionless build manifests the fallback claims by exact name.
+#[rustfmt::skip]
 const SOURCE_TEXT_FILENAMES: &[&str] = &[
-    "Gemfile",
-    "Rakefile",
-    "Guardfile",
-    "Brewfile",
-    "Podfile",
-    "Procfile",
-    "Vagrantfile",
-    "Jenkinsfile",
-    "Berksfile",
-    "Appfile",
-    "Fastfile",
-    "BUILD",
-    "WORKSPACE",
-    "SConstruct",
+    "Gemfile", "Rakefile", "Guardfile", "Brewfile", "Podfile", "Procfile", "Vagrantfile",
+    "Jenkinsfile", "Berksfile", "Appfile", "Fastfile", "BUILD", "WORKSPACE", "SConstruct",
     "meson.build",
 ];
 
@@ -389,10 +339,6 @@ fn is_derived_artifact_name(lower: &str) -> bool {
         || ext == "map"
         || ext == "lock"
 }
-
-/// Build-tool wrapper scripts, written by `gradle wrapper` and
-/// `mvn wrapper:wrapper` and the same in every project that has one.
-const GENERATED_WRAPPER_SCRIPTS: &[&str] = &["gradlew", "mvnw"];
 
 /// Whether `file` starts with `#!`: an extensionless script (`bin/deploy`,
 /// a tool shipped as one executable) names its language on its first line
@@ -446,23 +392,10 @@ enum SurfaceLine {
 /// deliberately absent — they name the unit rather than its
 /// dependencies, and are the single most informative line in a Java
 /// or C# file, so they rank as declarations.
+#[rustfmt::skip]
 const SOURCE_TEXT_IMPORT_PREFIXES: &[&str] = &[
-    "import",
-    "#import",
-    "#include",
-    "using ",
-    "require",
-    "from ",
-    "use ",
-    "@use",
-    "@import",
-    "@forward",
-    "open ",
-    "extern crate",
-    "include ",
-    "load(",
-    "export * from",
-    "export {",
+    "import", "#import", "#include", "using ", "require", "from ", "use ", "@use", "@import",
+    "@forward", "open ", "extern crate", "include ", "load(", "export * from", "export {",
 ];
 
 /// Substrings that mark a comment line as boilerplate rather than
@@ -471,28 +404,12 @@ const SOURCE_TEXT_IMPORT_PREFIXES: &[&str] = &[
 /// head-slice fallback rendered the license banner and nothing else
 /// for most Java, C++ and Swift files, and `# frozen_string_literal:
 /// true` is the first line of essentially every modern Ruby file.
+#[rustfmt::skip]
 const SOURCE_TEXT_BOILERPLATE_MARKERS: &[&str] = &[
-    "copyright",
-    "spdx-",
-    "all rights reserved",
-    "licensed under",
-    "license at",
-    "license, version",
-    "permission is hereby granted",
-    "warranties",
-    "frozen_string_literal",
-    "-*-",
-    "vim:",
-    "coding:",
-    "eslint-disable",
-    "prettier-ignore",
-    "stylelint-disable",
-    "clang-format",
-    "shellcheck",
-    "@ts-nocheck",
-    "noqa",
-    "type: ignore",
-    "// mark:",
+    "copyright", "spdx-", "all rights reserved", "licensed under", "license at",
+    "license, version", "permission is hereby granted", "warranties", "frozen_string_literal",
+    "-*-", "vim:", "coding:", "eslint-disable", "prettier-ignore", "stylelint-disable",
+    "clang-format", "shellcheck", "@ts-nocheck", "noqa", "type: ignore", "// mark:",
 ];
 
 /// Classify one trimmed surface line, `in_block_comment` when it sits
@@ -525,27 +442,14 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
 /// A conditional-compilation or compiler-pragma line (`#if`, `#else`,
 /// `#pragma warning disable`): it says how the file builds, not what it
 /// declares, and shown without its `#endif` it reads as an open block.
+const COMPILER_DIRECTIVES: &str =
+    "if ifdef ifndef else elif elseif endif pragma error warning nullable line";
+
 fn is_compiler_directive(trimmed: &str) -> bool {
-    let Some(rest) = trimmed.strip_prefix('#') else {
-        return false;
-    };
-    let word_end = rest
-        .find(|c: char| !c.is_ascii_alphabetic())
-        .unwrap_or(rest.len());
-    matches!(
-        &rest[..word_end],
-        "if" | "ifdef"
-            | "ifndef"
-            | "else"
-            | "elif"
-            | "elseif"
-            | "endif"
-            | "pragma"
-            | "error"
-            | "warning"
-            | "nullable"
-            | "line"
-    )
+    trimmed.strip_prefix('#').is_some_and(|rest| {
+        let word = rest.split(|c: char| !c.is_ascii_alphabetic()).next();
+        word.is_some_and(|word| has_word(COMPILER_DIRECTIVES, word))
+    })
 }
 
 /// A line that only closes a block, or only opens one on the line after
@@ -599,16 +503,12 @@ fn comment_text_is_empty(trimmed: &str) -> bool {
         .any(|c| c.is_alphanumeric() || c == '_' || c == '$')
 }
 
-/// Number of leading lines occupied by a legal/pragma banner — the
-/// license header that opens most Java, C++, Swift and Go-adjacent
-/// source files. Zero when the file's opening comment block carries
-/// no boilerplate marker, so a genuine file-purpose comment survives.
-///
-/// Whole-block, not per-line: a marker matches "Copyright (c) 2014"
-/// but not the eight continuation lines of the same Apache header,
-/// and admitting those is exactly the failure v0.1's head slice had.
-/// A doc comment set off from the banner by a blank line is not part of
-/// it: it is the file's (or its first declaration's) documentation.
+/// Number of leading lines occupied by a legal/pragma banner. Zero when
+/// the file's opening comment block carries no boilerplate marker, so a
+/// genuine file-purpose comment survives. Whole-block, not per-line: a
+/// marker matches "Copyright (c) 2014" but not the continuation lines of
+/// the same header. A doc comment set off from the banner by a blank line
+/// is the file's documentation, not banner.
 fn boilerplate_banner_end(lines: &[&str], in_block_comment: &[bool]) -> usize {
     let mut is_banner = false;
     let mut after_blank = false;
@@ -683,36 +583,23 @@ fn block_comment_interiors(lines: &[&str]) -> Vec<bool> {
         .collect()
 }
 
-/// The file's **declaration surface**: the lines at the shallowest
-/// indentation levels that together yield a non-trivial declaration
-/// roster, capped per line class.
+/// The file's **declaration surface** (its selected rows) and the rows its
+/// [boilerplate banner](boilerplate_banner_end) spans: the lines at the
+/// shallowest indentation levels that together yield a non-trivial
+/// declaration roster, capped per line class.
 ///
-/// Indentation is the one structural signal every text format shares,
-/// and the shallowest level is where a file's declarations live — in
-/// brace languages and indentation languages alike. Column zero alone
-/// answers Java, C#, Swift, PHP, CSS and single-file-component web
-/// frameworks; in a file with no nesting at all (prose, reST, plain
-/// text) every line qualifies, so the same rule degrades to a head
-/// slice, which is the right answer for those.
-///
-/// Descent is what makes it work for the rest. A Ruby file wraps
-/// everything in `module Foo`, a C++ header in a `namespace`, a
-/// Kotlin file in an `object` — column zero there is one line that is
-/// the same in every file of the project. So levels are added,
-/// shallowest first, until the roster has
+/// Indentation is the one structural signal every text format shares, and
+/// the shallowest level is where a file's declarations live. In a file
+/// with no nesting every line qualifies, so the rule degrades to a head
+/// slice. Where column zero is one wrapper line (`module Foo`, a
+/// `namespace`), levels are added, shallowest first, until the roster has
 /// [`SOURCE_TEXT_MIN_DECLS`] declarations or
 /// [`SOURCE_TEXT_MAX_INDENT_LEVELS`] levels have been consumed.
-/// Files that already declare at column zero never descend, so this
-/// costs them nothing.
-///
-/// The result is a *surface*, not a summary: no parse, no signature
-/// reconstruction, no bodies. It is priced accordingly in
-/// [`class_value`].
 ///
 /// `decl_cap` bounds the declarations kept: [`SOURCE_TEXT_DECL_LINES`] for
 /// a roster among many files, unbounded when the file is the whole walk
 /// and the surface is its outline.
-fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize> {
+fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usize>, usize) {
     let lines: Vec<&str> = source.lines().collect();
     let in_block_comment = block_comment_interiors(&lines);
     let banner_end = boilerplate_banner_end(&lines, &in_block_comment);
@@ -803,7 +690,7 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
         }
     }
     selected.sort_unstable();
-    selected
+    (selected, banner_end)
 }
 
 fn indentation(line: &str) -> usize {
@@ -853,6 +740,11 @@ const INTERNAL_LEADERS: &str = "private fileprivate defp static test begin rescu
     elsif elif comptime if unless for foreach while until switch match when try catch finally do \
     return throw raise new await yield";
 
+/// Whether `word` is one of the space-separated words of `table`.
+fn has_word(table: &str, word: &str) -> bool {
+    table.split_whitespace().any(|entry| entry == word)
+}
+
 /// Where a declaration line falls in the roster. A line reads as a
 /// declaration by a keyword followed by a name, by a Haskell `name ::`
 /// signature, or by the C-family `Type name(` shape; it has a body when
@@ -862,21 +754,21 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
         .find(['(', '=', '{', '<', '['])
         .unwrap_or(trimmed.len());
     let words: Vec<&str> = trimmed[..head_end].split_whitespace().collect();
-    if words.first().is_some_and(|first| {
-        INTERNAL_LEADERS
-            .split_whitespace()
-            .any(|leader| leader == *first)
-    }) {
+    if words
+        .first()
+        .is_some_and(|first| has_word(INTERNAL_LEADERS, first))
+    {
         return DeclarationRank::Internal;
     }
     if opens_block {
         return DeclarationRank::Heading;
     }
-    let declares = words.iter().rev().skip(1).any(|word| {
-        DECLARATION_KEYWORDS
-            .split_whitespace()
-            .any(|keyword| keyword == *word)
-    }) || words.get(1) == Some(&"::")
+    let declares = words
+        .iter()
+        .rev()
+        .skip(1)
+        .any(|word| has_word(DECLARATION_KEYWORDS, word))
+        || words.get(1) == Some(&"::")
         || (words.len() >= 2 && trimmed[head_end..].starts_with('('));
     match (declares, has_same_line_body(trimmed)) {
         (true, false) => DeclarationRank::Heading,
@@ -917,9 +809,9 @@ const CONTINUED_OPERATORS: &[char] = &['=', '+', '-', '&', ','];
 /// of a `(` or `[` left open there (wrapped parameters, a multi-line
 /// annotation, a literal), a line led by a closing bracket, or a deeper
 /// line led by an operator or below one that ends in one. It declares
-/// nothing on its own. A line back
-/// at or above the indentation that opened the bracket ends it, so a
-/// miscounted bracket cannot swallow the rest of the file.
+/// nothing on its own. A line back at or above the indentation that opened
+/// the bracket ends it, so a miscounted bracket cannot swallow the rest of
+/// the file.
 fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
     let mut continues = string_interiors(lines);
     let mut depth = 0;
@@ -1079,7 +971,7 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
     } else {
         SOURCE_TEXT_DECL_LINES
     };
-    let selected = declaration_surface(&source, class, decl_cap);
+    let (selected, banner_end) = declaration_surface(&source, class, decl_cap);
     let surface_rows = selected.len();
     let Some(content) = single_file_lines_content(file, &source, selected) else {
         return;
@@ -1095,10 +987,9 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
         content,
         value,
     });
-    let lines: Vec<&str> = source.lines().collect();
-    let banner_end = boilerplate_banner_end(&lines, &block_comment_interiors(&lines));
-    let content_rows = lines[banner_end..]
-        .iter()
+    let content_rows = source
+        .lines()
+        .skip(banner_end)
         .filter(|line| !line.trim().is_empty())
         .count();
     if surface_rows < content_rows
@@ -1190,8 +1081,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                     .flatten()
             })
             .or_else(|| {
+                // `gradlew` and `mvnw` are generated build-tool wrappers, the
+                // same in every project that has one.
                 (!name.contains('.')
-                    && !GENERATED_WRAPPER_SCRIPTS.contains(&name.as_str())
+                    && !matches!(name.as_str(), "gradlew" | "mvnw")
                     && opens_with_shebang(&file))
                 .then_some(Class::FlatText)
             })
@@ -1347,11 +1240,9 @@ fn is_hidden(file: &Path, ctx: &WalkCtx) -> bool {
 }
 
 /// `file`'s source as far as `head_bytes` reach into it: whole when a
-/// walker has already read it or it fits, else only its head, so a
-/// multi-gigabyte log is never read whole. The head runs a few bytes past
-/// `head_bytes`, the longest UTF-8 character, so the line the cut falls in
-/// stays too long to select and still tells the renderer that more of the
-/// file follows.
+/// walker has already read it or it fits, else only its head. The head runs
+/// a few bytes past `head_bytes` so the line the cut falls in stays too long
+/// to select.
 fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source>> {
     if let Some(source) = ctx.source_cache().cached(file) {
         return Some(source);
@@ -1405,17 +1296,11 @@ fn is_in_primary_language(file: &Path, ctx: &WalkCtx) -> bool {
         .is_some_and(|primary| super::language_group(file) == Some(primary))
 }
 
-/// Mild promotion for a root `Makefile` / `Taskfile` / `justfile`. A
-/// compact one is the answer to "how do I build and run this", which
-/// NS authors buy in the first screenful — ahead of most of the source
-/// it builds — while the class's own preset prices it as one config
-/// file among many and it loses the `value/cost^k` race to source.
-/// The build class already renders only files of at most
-/// [`BUILD_LINE_CAP`] lines; a nested one is one
-/// component's build step rather than the project's.
-///
-/// Narrow on purpose: deploy / CI / linter config describes the
-/// contributor's toolchain rather than the project.
+/// Mild promotion for a root `Makefile` / `Taskfile` / `justfile`: a
+/// compact one answers "how do I build and run this", which NS authors buy
+/// in the first screenful, while the class's own preset prices it as one
+/// config file among many. A nested one is one component's build step, and
+/// deploy / CI / linter config describes the contributor's toolchain.
 fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let name = file
         .file_name()
@@ -1481,7 +1366,7 @@ mod tests {
 
     /// Line numbers a surface selects, for readable assertions.
     fn surface_of(source: &str) -> Vec<usize> {
-        declaration_surface(source, Class::LanguageSource, SOURCE_TEXT_DECL_LINES)
+        declaration_surface(source, Class::LanguageSource, SOURCE_TEXT_DECL_LINES).0
     }
 
     #[test]
@@ -1576,6 +1461,7 @@ mod tests {
                    </project>\n";
         let lines: Vec<&str> = xml.lines().collect();
         let text: Vec<&str> = declaration_surface(xml, Class::Manifest, SOURCE_TEXT_DECL_LINES)
+            .0
             .iter()
             .map(|n| lines[n - 1])
             .collect();
@@ -1605,6 +1491,7 @@ mod tests {
         let lines: Vec<&str> = vim.lines().collect();
         let text = |class| -> Vec<&str> {
             declaration_surface(&vim, class, SOURCE_TEXT_DECL_LINES)
+                .0
                 .iter()
                 .map(|n| lines[n - 1])
                 .collect()
