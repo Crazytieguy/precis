@@ -222,12 +222,10 @@ Score(3000)=0.652 I=0.837 C=0.507 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | ns | 9570 |  | 192 | CI commands — the canonical build/test/lint invocations | 7.9 | 7.8 | 0.553 |
 | walker |  | 9573 | 266 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.553 |
 | ns | 9658 |  | 88 | trybuild UI harness — tests/compiletest.rs in full | 8.1 |  | 0.550 |
-| walker |  | 9678 | 105 | Code::CodeKey { rung: Names, file: src/nightly.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
-| walker |  | 9690 | 12 | Code::CodeKey { rung: Body, file: src/nightly.rs, decl: 3, sub: 0, line: 56 } |  |  | 0.552 |
-| walker |  | 9703 | 13 | Code::CodeKey { rung: Body, file: src/nightly.rs, decl: 1, sub: 0, line: 41 } |  |  | 0.552 |
-| walker |  | 9717 | 14 | Code::CodeKey { rung: Body, file: src/nightly.rs, decl: 2, sub: 0, line: 52 } |  |  | 0.552 |
+| walker |  | 9715 | 142 | Code::CodeKey { rung: Names, file: src/nightly.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
+| walker |  | 9726 | 11 | Code::CodeKey { rung: Decl, file: src/nightly.rs, decl: 2, sub: 0, line: 38 } |  |  | 0.552 |
 | ns | 9740 |  | 82 | tests/ui file listing | 8.2 | 8.1 | 0.558 |
 | ns | 9849 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.554 |
-| walker |  | 9918 | 201 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
-| walker |  | 9959 | 41 | Code::CodeKey { rung: Body, file: src/ensure.rs, decl: 7, sub: 0, line: 41 } |  |  | 0.554 |
+| walker |  | 9962 | 236 | Code::CodeKey { rung: Decl, file: src/nightly.rs, decl: 1, sub: 0, line: 12 } |  |  | 0.554 |
+| walker |  | 9974 | 12 | Code::CodeKey { rung: Body, file: src/nightly.rs, decl: 5, sub: 0, line: 56 } |  |  | 0.554 |
 | ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.548 |

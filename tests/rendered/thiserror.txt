@@ -99,8 +99,7 @@ README.md
   69→  #[derive(Error, Debug)]
   70→  pub enum Error {
   71→      #[error("invalid rdo_lookahead_frames {0} (expected < {max})", max = i32::MAX)]
-  72→      InvalidLookahead(u32),
-  73→  }
+  …
   74→  ```
   …
   211→## Comparison to anyhow
@@ -133,6 +132,7 @@ build/
     …
     30→}
     …
+    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 build.rs
   …
   10→const PRIVATE: &str = "\

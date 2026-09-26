@@ -15,7 +15,7 @@
 //!   functions.
 //! - **Hidden**: test (`#[cfg(test)]`, `#[cfg(all(test, …))]`,
 //!   `#[test]`-style) and `#[doc(hidden)]` items, fields and variants,
-//!   inline `mod test` / `mod tests`, and `const _`. Outside `main.rs`,
+//!   inline `mod test` / `mod tests`. Outside `main.rs`,
 //!   a module that declares some unhidden visible item (a visibility
 //!   modifier, or `#[macro_export]` on a `macro_rules!`) hides its
 //!   private functions, macros and inherent-impl items, and an
@@ -94,9 +94,6 @@ fn extract_items(
             scopes.pop();
             continue;
         };
-        if is_anonymous_const(node, file) {
-            continue;
-        }
         let hides_private = scope.hides_private;
         let is_helper = matches!(node.kind(), "function_item" | "macro_definition");
         if hides_private && is_helper && !is_visible(node, &leading, file) {
@@ -202,14 +199,6 @@ fn has_visibility_rule(node: Node) -> bool {
 /// A visibility modifier, or `#[macro_export]` on a `macro_rules!`.
 fn is_visible(node: Node, leading: &Leading, file: &SourceFile) -> bool {
     visibility_modifier(node, file).is_some() || leading.exported
-}
-
-/// `const _: () = …;`, a compile-time check rather than a declaration.
-fn is_anonymous_const(node: Node, file: &SourceFile) -> bool {
-    node.kind() == "const_item"
-        && node
-            .child_by_field_name("name")
-            .is_some_and(|name| file.text(name) == "_")
 }
 
 /// Keywords that, at the top level of a macro's token tree, mark the
@@ -651,7 +640,6 @@ pub fn latest() {}
     fn rust_extract_private_helpers_hide_behind_a_visible_item() {
         let source = "\
 static STATE: AtomicUsize = AtomicUsize::new(0);
-const _: () = assert!(size_of::<u8>() == 1);
 macro_rules! debug {
     ($($t:tt)*) => {};
 }
