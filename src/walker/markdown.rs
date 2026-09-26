@@ -232,8 +232,7 @@ fn push_sections(
         }
         if let Some(rows) = range.command_block
             && headline_end.is_none_or(|end| end < rows.block.0)
-            && let Some(batch) =
-                command_block_batch(file, source, rows, chain_key.clone(), README_SECTION_VALUE)
+            && let Some(batch) = command_block_batch(file, source, rows, chain_key.clone())
         {
             chain_key = Some(batch.key.clone());
             out.push(batch);
@@ -261,7 +260,6 @@ fn command_block_batch(
     source: &Source,
     CommandBlockRows { heading, block }: CommandBlockRows,
     predecessor: Option<BatchKey>,
-    value: f64,
 ) -> Option<Batch> {
     Some(Batch {
         key: MarkdownKey::CommandBlock {
@@ -275,7 +273,7 @@ fn command_block_batch(
             source,
             (heading.0..=heading.1).chain(block.0..=block.1).collect(),
         )?,
-        value,
+        value: README_SECTION_VALUE,
     })
 }
 
@@ -289,12 +287,6 @@ const HEADINGS_OUTLINE_VALUE: f64 = 974.0;
 /// `Prelude`, which is the top of the README body just above the first
 /// heading.
 const README_SECTION_VALUE: f64 = 1181.0;
-
-/// A root build guide's command block, below the README's own. The
-/// factor was judged on the robustness corpus's build guides, before
-/// contributing guides joined them: of its 17 unread guides, 0.5 showed 4
-/// at 8000 tokens, 0.75 showed 8 and 1.0 showed 10.
-const BUILD_GUIDE_COMMAND_VALUE: f64 = README_SECTION_VALUE * 0.75;
 
 /// Boost for README usage/reference sections (see
 /// [`SectionRange::is_reference_usage_section`]) so they clear the
@@ -460,7 +452,7 @@ fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             )?;
             let src_lines: Vec<&str> = source.lines().collect();
             let rows = command_block(tree.root_node(), None, &source, &src_lines)?;
-            command_block_batch(&file, &source, rows, None, BUILD_GUIDE_COMMAND_VALUE)
+            command_block_batch(&file, &source, rows, None)
         })
         .collect()
 }

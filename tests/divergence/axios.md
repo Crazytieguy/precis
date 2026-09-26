@@ -37,60 +37,60 @@ Score(3000)=0.566 I=0.806 C=0.397 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 1282 | 19 | Fs::DirListing { dir: tests } |  |  | 0.714 |
 | walker |  | 1289 | 7 | Fs::DirListing { dir: tests/module } |  |  | 0.714 |
 | walker |  | 1298 | 9 | Fs::DirListing { dir: tests/setup } |  |  | 0.714 |
-| walker |  | 1310 | 12 | Fs::DirListing { dir: tests/module/cjs } |  |  | 0.714 |
-| walker |  | 1324 | 14 | Fs::DirListing { dir: tests/smoke } |  |  | 0.714 |
 | ns | 1331 |  | 131 | Verb aliases without a body: delete/get/head/options | 2.3 |  | 0.687 |
-| walker |  | 1335 | 11 | Fs::DirListing { dir: tests/smoke/bun } |  |  | 0.687 |
-| walker |  | 1347 | 12 | Fs::DirListing { dir: tests/smoke/cjs } |  |  | 0.687 |
-| walker |  | 1360 | 13 | Fs::DirListing { dir: tests/smoke/deno } |  |  | 0.687 |
-| walker |  | 1446 | 86 | Json::Dependencies { file: package.json } |  |  | 0.687 |
-| walker |  | 1483 | 37 | Fs::DirListing { dir: .github } |  |  | 0.687 |
-| walker |  | 1523 | 40 | Fs::DirListing { dir: .github/workflows } |  |  | 0.687 |
+| walker |  | 1458 | 160 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 33 } |  |  | 0.687 |
+| walker |  | 1470 | 12 | Fs::DirListing { dir: tests/module/cjs } |  |  | 0.687 |
+| walker |  | 1484 | 14 | Fs::DirListing { dir: tests/smoke } |  |  | 0.687 |
+| walker |  | 1495 | 11 | Fs::DirListing { dir: tests/smoke/bun } |  |  | 0.687 |
+| walker |  | 1507 | 12 | Fs::DirListing { dir: tests/smoke/cjs } |  |  | 0.687 |
+| walker |  | 1520 | 13 | Fs::DirListing { dir: tests/smoke/deno } |  |  | 0.687 |
 | ns | 1604 |  | 273 | Verb aliases with a body, and the *Form variants | 2.4 | 2.3 | 0.638 |
-| walker |  | 1680 | 157 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
-| walker |  | 1731 | 51 | Fs::DirListing { dir: docs } |  |  | 0.722 |
-| walker |  | 1738 | 7 | Fs::DirListing { dir: docs/es } |  |  | 0.722 |
-| walker |  | 1745 | 7 | Fs::DirListing { dir: docs/fr } |  |  | 0.722 |
-| walker |  | 1752 | 7 | Fs::DirListing { dir: docs/zh } |  |  | 0.722 |
-| walker |  | 1760 | 8 | Fs::DirListing { dir: docs/.vitepress } |  |  | 0.722 |
-| walker |  | 1768 | 8 | Fs::DirListing { dir: docs/.vitepress/theme } |  |  | 0.722 |
-| walker |  | 1778 | 10 | Fs::DirListing { dir: docs/scripts } |  |  | 0.692 |
-| ns | 1778 |  | 174 | dispatchRequest: the adapter hand-off | 2.5 |  | 0.692 |
-| walker |  | 1789 | 11 | Fs::DirListing { dir: docs/es/pages } |  |  | 0.692 |
-| walker |  | 1800 | 11 | Fs::DirListing { dir: docs/fr/pages } |  |  | 0.692 |
-| walker |  | 1811 | 11 | Fs::DirListing { dir: docs/pages } |  |  | 0.693 |
-| walker |  | 1822 | 11 | Fs::DirListing { dir: docs/zh/pages } |  |  | 0.693 |
-| walker |  | 1835 | 13 | Fs::DirListing { dir: docs/es/pages/misc } |  |  | 0.693 |
-| walker |  | 1848 | 13 | Fs::DirListing { dir: docs/fr/pages/misc } |  |  | 0.693 |
-| walker |  | 1861 | 13 | Fs::DirListing { dir: docs/pages/misc } |  |  | 0.693 |
-| walker |  | 1874 | 13 | Fs::DirListing { dir: docs/zh/pages/misc } |  |  | 0.693 |
-| walker |  | 1892 | 18 | Fs::DirListing { dir: docs/es/pages/getting-started } |  |  | 0.693 |
-| walker |  | 1902 | 10 | Fs::DirListing { dir: docs/es/pages/getting-started/examples } |  |  | 0.693 |
-| walker |  | 1920 | 18 | Fs::DirListing { dir: docs/fr/pages/getting-started } |  |  | 0.693 |
-| walker |  | 1930 | 10 | Fs::DirListing { dir: docs/fr/pages/getting-started/examples } |  |  | 0.693 |
+| walker |  | 1606 | 86 | Json::Dependencies { file: package.json } |  |  | 0.638 |
+| walker |  | 1643 | 37 | Fs::DirListing { dir: .github } |  |  | 0.638 |
+| walker |  | 1683 | 40 | Fs::DirListing { dir: .github/workflows } |  |  | 0.638 |
+| ns | 1778 |  | 174 | dispatchRequest: the adapter hand-off | 2.5 |  | 0.612 |
+| walker |  | 1840 | 157 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.692 |
+| walker |  | 1891 | 51 | Fs::DirListing { dir: docs } |  |  | 0.692 |
+| walker |  | 1898 | 7 | Fs::DirListing { dir: docs/es } |  |  | 0.692 |
+| walker |  | 1905 | 7 | Fs::DirListing { dir: docs/fr } |  |  | 0.692 |
+| walker |  | 1912 | 7 | Fs::DirListing { dir: docs/zh } |  |  | 0.692 |
+| walker |  | 1920 | 8 | Fs::DirListing { dir: docs/.vitepress } |  |  | 0.692 |
+| walker |  | 1928 | 8 | Fs::DirListing { dir: docs/.vitepress/theme } |  |  | 0.692 |
+| walker |  | 1938 | 10 | Fs::DirListing { dir: docs/scripts } |  |  | 0.692 |
 | ns | 1942 |  | 164 | settle(): status → resolve or AxiosError | 2.6 |  | 0.669 |
-| walker |  | 1948 | 18 | Fs::DirListing { dir: docs/pages/getting-started } |  |  | 0.669 |
-| walker |  | 1958 | 10 | Fs::DirListing { dir: docs/pages/getting-started/examples } |  |  | 0.669 |
-| walker |  | 1976 | 18 | Fs::DirListing { dir: docs/zh/pages/getting-started } |  |  | 0.669 |
-| walker |  | 1986 | 10 | Fs::DirListing { dir: docs/zh/pages/getting-started/examples } |  |  | 0.669 |
-| walker |  | 2004 | 18 | Fs::DirListing { dir: tests/module/esm } |  |  | 0.669 |
-| walker |  | 2022 | 18 | Fs::DirListing { dir: tests/smoke/esm } |  |  | 0.669 |
-| walker |  | 2072 | 50 | Fs::DirListing { dir: examples } |  |  | 0.669 |
-| walker |  | 2080 | 8 | Fs::DirListing { dir: examples/abort-controller } |  |  | 0.669 |
-| walker |  | 2088 | 8 | Fs::DirListing { dir: examples/get } |  |  | 0.669 |
-| walker |  | 2096 | 8 | Fs::DirListing { dir: examples/post } |  |  | 0.669 |
-| walker |  | 2104 | 8 | Fs::DirListing { dir: examples/postMultipartFormData } |  |  | 0.669 |
+| walker |  | 1949 | 11 | Fs::DirListing { dir: docs/es/pages } |  |  | 0.669 |
+| walker |  | 1960 | 11 | Fs::DirListing { dir: docs/fr/pages } |  |  | 0.669 |
+| walker |  | 1971 | 11 | Fs::DirListing { dir: docs/pages } |  |  | 0.669 |
+| walker |  | 1982 | 11 | Fs::DirListing { dir: docs/zh/pages } |  |  | 0.669 |
+| walker |  | 1995 | 13 | Fs::DirListing { dir: docs/es/pages/misc } |  |  | 0.669 |
+| walker |  | 2008 | 13 | Fs::DirListing { dir: docs/fr/pages/misc } |  |  | 0.669 |
+| walker |  | 2021 | 13 | Fs::DirListing { dir: docs/pages/misc } |  |  | 0.669 |
+| walker |  | 2034 | 13 | Fs::DirListing { dir: docs/zh/pages/misc } |  |  | 0.669 |
+| walker |  | 2052 | 18 | Fs::DirListing { dir: docs/es/pages/getting-started } |  |  | 0.669 |
+| walker |  | 2062 | 10 | Fs::DirListing { dir: docs/es/pages/getting-started/examples } |  |  | 0.669 |
+| walker |  | 2080 | 18 | Fs::DirListing { dir: docs/fr/pages/getting-started } |  |  | 0.669 |
+| walker |  | 2090 | 10 | Fs::DirListing { dir: docs/fr/pages/getting-started/examples } |  |  | 0.669 |
 | ns | 2106 |  | 164 | InterceptorManager: complete method set | 2.7 |  | 0.644 |
-| walker |  | 2112 | 8 | Fs::DirListing { dir: examples/upload } |  |  | 0.644 |
-| walker |  | 2131 | 19 | Code::CodeKey { rung: Names, file: lib/core/Axios.js, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
-| walker |  | 2176 | 45 | Code::CodeKey { rung: Decl, file: lib/core/Axios.js, decl: 1, sub: 0, line: 22 } |  |  | 0.646 |
-| walker |  | 2196 | 20 | Code::CodeKey { rung: Names, file: lib/defaults/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2219 | 23 | Fs::DirListing { dir: tests/module/esm/tests } |  |  | 0.646 |
-| walker |  | 2238 | 19 | Fs::DirListing { dir: tests/module/esm/tests/helpers } |  |  | 0.646 |
-| walker |  | 2249 | 11 | Code::CodeKey { rung: Names, file: lib/platform/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2268 | 19 | Code::CodeKey { rung: Decl, file: lib/platform/index.js, decl: 1, sub: 0, line: 4 } |  |  | 0.646 |
+| walker |  | 2108 | 18 | Fs::DirListing { dir: docs/pages/getting-started } |  |  | 0.644 |
+| walker |  | 2118 | 10 | Fs::DirListing { dir: docs/pages/getting-started/examples } |  |  | 0.644 |
+| walker |  | 2136 | 18 | Fs::DirListing { dir: docs/zh/pages/getting-started } |  |  | 0.644 |
+| walker |  | 2146 | 10 | Fs::DirListing { dir: docs/zh/pages/getting-started/examples } |  |  | 0.644 |
+| walker |  | 2164 | 18 | Fs::DirListing { dir: tests/module/esm } |  |  | 0.644 |
+| walker |  | 2182 | 18 | Fs::DirListing { dir: tests/smoke/esm } |  |  | 0.644 |
+| walker |  | 2232 | 50 | Fs::DirListing { dir: examples } |  |  | 0.644 |
+| walker |  | 2240 | 8 | Fs::DirListing { dir: examples/abort-controller } |  |  | 0.644 |
+| walker |  | 2248 | 8 | Fs::DirListing { dir: examples/get } |  |  | 0.644 |
+| walker |  | 2256 | 8 | Fs::DirListing { dir: examples/post } |  |  | 0.644 |
+| walker |  | 2264 | 8 | Fs::DirListing { dir: examples/postMultipartFormData } |  |  | 0.644 |
+| walker |  | 2272 | 8 | Fs::DirListing { dir: examples/upload } |  |  | 0.644 |
+| walker |  | 2291 | 19 | Code::CodeKey { rung: Names, file: lib/core/Axios.js, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
+| walker |  | 2336 | 45 | Code::CodeKey { rung: Decl, file: lib/core/Axios.js, decl: 1, sub: 0, line: 22 } |  |  | 0.646 |
+| walker |  | 2356 | 20 | Code::CodeKey { rung: Names, file: lib/defaults/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
+| walker |  | 2379 | 23 | Fs::DirListing { dir: tests/module/esm/tests } |  |  | 0.646 |
 | ns | 2395 |  | 289 | _request: config normalization and header flattening | 2.8 |  | 0.613 |
-| walker |  | 2428 | 160 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 33 } |  |  | 0.613 |
+| walker |  | 2398 | 19 | Fs::DirListing { dir: tests/module/esm/tests/helpers } |  |  | 0.613 |
+| walker |  | 2409 | 11 | Code::CodeKey { rung: Names, file: lib/platform/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.613 |
+| walker |  | 2428 | 19 | Code::CodeKey { rung: Decl, file: lib/platform/index.js, decl: 1, sub: 0, line: 4 } |  |  | 0.613 |
 | walker |  | 2602 | 174 | Json::Scripts { file: package.json } |  |  | 0.613 |
 | ns | 2696 |  | 301 | Interceptor chain assembly (incl. the legacy ordering flag) | 2.9 |  | 0.585 |
 | walker |  | 2748 | 146 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.585 |

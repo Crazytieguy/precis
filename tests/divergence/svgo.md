@@ -1,4 +1,4 @@
-Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.641/0.694/0.649/0.520/0.539/0.535
+Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.582/0.694/0.649/0.520/0.539/0.535
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,22 +24,22 @@ Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 581 | 13 | Fs::DirListing { dir: lib/util } |  |  | 0.625 |
 | walker |  | 600 | 19 | Fs::DirListing { dir: lib/svgo } |  |  | 0.694 |
 | walker |  | 649 | 49 | Json::Runtime { file: package.json } |  |  | 0.695 |
-| walker |  | 661 | 12 | Fs::DirListing { dir: .yarn/plugins/@yarnpkg } |  |  | 0.695 |
 | ns | 715 |  | 219 | lib/svgo.js module graph and public re-exports | 1.6 |  | 0.608 |
-| walker |  | 767 | 106 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.694 |
-| walker |  | 822 | 55 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.815 |
-| walker |  | 856 | 34 | Fs::DirListing { dir: test } |  |  | 0.816 |
-| walker |  | 866 | 10 | Fs::DirListing { dir: test/svg2js } |  |  | 0.816 |
-| ns | 875 |  | 160 | Command-line usage (README) | 1.7 |  | 0.736 |
-| walker |  | 879 | 13 | Fs::DirListing { dir: test/cli } |  |  | 0.736 |
-| walker |  | 1163 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.736 |
-| walker |  | 1182 | 19 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.736 |
+| walker |  | 804 | 155 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 30 } |  |  | 0.608 |
+| walker |  | 816 | 12 | Fs::DirListing { dir: .yarn/plugins/@yarnpkg } |  |  | 0.608 |
+| ns | 875 |  | 160 | Command-line usage (README) | 1.7 |  | 0.548 |
+| walker |  | 922 | 106 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.626 |
+| walker |  | 977 | 55 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.735 |
+| walker |  | 1011 | 34 | Fs::DirListing { dir: test } |  |  | 0.736 |
+| walker |  | 1021 | 10 | Fs::DirListing { dir: test/svg2js } |  |  | 0.736 |
+| walker |  | 1034 | 13 | Fs::DirListing { dir: test/cli } |  |  | 0.736 |
 | ns | 1231 |  | 356 | Complete plugins/ listing (all 58 modules) | 1.8 |  | 0.570 |
-| walker |  | 1275 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
+| walker |  | 1318 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.570 |
+| walker |  | 1337 | 19 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.570 |
+| walker |  | 1430 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
 | ns | 1470 |  | 239 | svgo.config.mjs shape (README Configuration) | 1.9 |  | 0.537 |
-| walker |  | 1631 | 356 | Fs::DirListing { dir: plugins } |  |  | 0.768 |
-| ns | 1669 |  | 199 | optimize() body, part 1: multipass loop and plugin resolution | 1.10 | 1.4 | 0.732 |
-| walker |  | 1786 | 155 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 30 } |  |  | 0.732 |
+| ns | 1669 |  | 199 | optimize() body, part 1: multipass loop and plugin resolution | 1.10 | 1.4 | 0.512 |
+| walker |  | 1786 | 356 | Fs::DirListing { dir: plugins } |  |  | 0.732 |
 | ns | 1873 |  | 204 | optimize() body, part 2: overrides, invoke, stringify, datauri | 1.11 | 1.10 | 0.693 |
 | walker |  | 1941 | 155 | Json::Scripts { file: package.json } |  |  | 0.693 |
 | walker |  | 1998 | 57 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.693 |

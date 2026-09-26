@@ -22,6 +22,34 @@
 .gitignore
 .nvmrc
 CONTRIBUTING.md
+  …
+  46→## Development Setup
+  …
+  54→   ```bash
+  55→   git clone https://github.com/CorentinTh/enclosed.git
+  56→   cd enclosed
+  57→   ```
+  58→
+  59→2. Install dependencies:
+  60→
+  61→   ```bash
+  62→   pnpm install
+  63→   ```
+  64→
+  65→3. Start the development server for the backend:
+  66→
+  67→   ```bash
+  68→   cd packages/app-server
+  69→   pnpm dev
+  70→   ```
+  71→
+  72→4. Start the frontend:
+  73→
+  74→   ```bash
+  75→   cd packages/app-client
+  76→   pnpm dev
+  77→   ```
+  …
 Dockerfile
 Dockerfile.rootless
 LICENSE
