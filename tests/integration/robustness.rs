@@ -595,6 +595,30 @@ fn robustness_credential_files_render_only_their_rows() {
     }
 }
 
+/// A directory precis can't read is not marked `(empty)`: something may be
+/// in it.
+#[cfg(unix)]
+#[test]
+fn robustness_unreadable_directory_is_not_marked_empty() {
+    use std::os::unix::fs::PermissionsExt;
+
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path();
+    write(&root.join("locked/inside.txt"), "x\n");
+    write(&root.join("open/inside.txt"), "x\n");
+    std::fs::create_dir(root.join("hollow")).unwrap();
+    let locked = root.join("locked");
+    std::fs::set_permissions(&locked, PermissionsExt::from_mode(0o000)).unwrap();
+    let readable_anyway = std::fs::read_dir(&locked).is_ok();
+    let out = (!readable_anyway).then(|| render(root, 3000).unwrap());
+    std::fs::set_permissions(&locked, PermissionsExt::from_mode(0o755)).unwrap();
+    let Some(out) = out else {
+        return;
+    };
+    assert!(out.contains("hollow/ (empty)\n"), "{out}");
+    assert!(out.lines().any(|row| row == "locked/"), "{out}");
+}
+
 /// A private key too long for the head a directory's floor reads, its
 /// closing armor past the head, renders as a row only.
 #[test]

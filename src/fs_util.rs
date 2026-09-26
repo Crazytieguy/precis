@@ -95,7 +95,8 @@ pub struct DirFilter {
     /// Memo for [`list_dir`]: every walker and every scheduler cost
     /// probe lists the same directories again.
     listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
-    /// Memo for [`lists_nothing`] on directories not listed in full.
+    /// Memo for [`lists_nothing`] on directories not listed in full, and
+    /// on unreadable ones, whose listing is empty.
     emptiness: RefCell<HashMap<PathBuf, bool>>,
     /// Entries [`DirFilter::hides_everything_in`] read from a directory it
     /// found visible, until [`list_dir`] lists them: a listing probes each
@@ -602,16 +603,17 @@ pub(crate) fn listed_from_root(path: &Path, filter: &DirFilter) -> bool {
 /// Whether [`list_dir`] lists nothing for `path`, reading only as far
 /// as the first entry it would list. Rendering asks this of every child
 /// directory in a listing to mark the empty ones; a full listing of each
-/// child would read two levels below every listing.
+/// child would read two levels below every listing. An unreadable
+/// directory is not empty: something may be there.
 pub(crate) fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
-    if let Some(listing) = filter.listings.borrow().get(path) {
-        return listing.is_empty();
-    }
     if let Some(&known) = filter.emptiness.borrow().get(path) {
         return known;
     }
+    if let Some(listing) = filter.listings.borrow().get(path) {
+        return listing.is_empty();
+    }
     let empty = filter.is_linked_subdirectory(path)
-        || std::fs::read_dir(path).map_or(true, |entries| {
+        || std::fs::read_dir(path).is_ok_and(|entries| {
             !entries.flatten().any(|entry| {
                 listed_entry(path, &entry.file_name(), entry.file_type().ok(), filter).is_some()
             })
@@ -629,6 +631,10 @@ fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> 
     }
     let probed = filter.probed_entries.borrow_mut().remove(path);
     let Some(entries) = probed.or_else(|| read_entries(path)) else {
+        filter
+            .emptiness
+            .borrow_mut()
+            .insert(path.to_path_buf(), false);
         return BTreeMap::new();
     };
     entries
