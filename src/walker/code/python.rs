@@ -563,6 +563,37 @@ fn is_definition_kind(kind: &str) -> bool {
     )
 }
 
+/// Most bytes [`has_costly_comment_runs`] lets the grammar's scanner
+/// reread. The largest of the 48 000 Python files in the 186-repo
+/// robustness sweep rereads 2.4e7; 1e8 takes about 0.4 s to parse.
+const MAX_COMMENT_RUN_REREAD_BYTES: u64 = 100_000_000;
+
+/// Whether parsing `source` would stall in the grammar's scanner: below
+/// the first statement, at the end of each comment row it reads ahead over
+/// the comment and blank rows that follow, to find the next statement's
+/// indentation, so a run of n comment rows costs it about n² rows' reading.
+/// A source past [`MAX_COMMENT_RUN_REREAD_BYTES`] is not parsed.
+pub(super) fn has_costly_comment_runs(source: &str) -> bool {
+    let is_comment_or_blank = |row: &str| {
+        let row = row.trim_start();
+        row.is_empty() || row.starts_with('#')
+    };
+    let mut reread_bytes = 0u64;
+    let mut run_comment_rows = 0u64;
+    for row in source.lines().skip_while(|row| is_comment_or_blank(row)) {
+        if !is_comment_or_blank(row) {
+            run_comment_rows = 0;
+            continue;
+        }
+        reread_bytes += run_comment_rows * (row.len() as u64 + 1);
+        if reread_bytes > MAX_COMMENT_RUN_REREAD_BYTES {
+            return true;
+        }
+        run_comment_rows += u64::from(!row.trim_start().is_empty());
+    }
+    false
+}
+
 #[cfg(test)]
 mod tests {
     use super::super::test_support::{describe, rows};
@@ -1079,5 +1110,41 @@ _first = second = 0
         assert!(!entrypoint("src/pkg/main.py"));
         assert!(!entrypoint("src/pkg/sub/__init__.py"));
         assert!(!entrypoint("tools/android/__main__.py"));
+    }
+
+    /// A long run of comment rows below a statement would stall the
+    /// parse, so the file is left to its listing row; the same run above
+    /// the first statement, or comments between statements, parse fast.
+    #[test]
+    fn python_costly_comment_runs_are_not_parsed() {
+        let comment_rows = |count: usize, row: &str| row.repeat(count);
+        let stalling = format!("x = 1\n{}", comment_rows(20_000, "# p\n"));
+        assert!(has_costly_comment_runs(&stalling));
+        assert!(has_costly_comment_runs(&format!(
+            "def f():\n    x = 1\n{}",
+            comment_rows(20_000, "    # p\n\n")
+        )));
+        assert!(!has_costly_comment_runs(&format!(
+            "{}x = 1\n",
+            comment_rows(20_000, "# p\n")
+        )));
+        assert!(!has_costly_comment_runs(&comment_rows(
+            20_000,
+            "x = 1\n# p\n"
+        )));
+        let commented_out_block = format!(
+            "x = 1\n{}",
+            comment_rows(1_000, &format!("# {}\n", "p".repeat(78)))
+        );
+        assert!(!has_costly_comment_runs(&commented_out_block));
+
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("stalling.py"), &stalling).unwrap();
+        std::fs::write(dir.path().join("commented.py"), &commented_out_block).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let extracts =
+            |name: &str| super::super::extracting_language(&dir.path().join(name), &ctx).is_some();
+        assert!(!extracts("stalling.py"));
+        assert!(extracts("commented.py"));
     }
 }

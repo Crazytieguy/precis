@@ -407,7 +407,9 @@ fn show_program_flow(decls: &mut [DeclInfo], functions: &[ProgramFunction]) {
 /// too long to be hand-wrapped and files under a generator's banner are
 /// left there, as the plaintext fallback leaves them: extracting one
 /// renders machine output. They are caught before they parse, since
-/// their tree would be built only to be discarded.
+/// their tree would be built only to be discarded. So is a Python file
+/// whose comment runs would stall the parse
+/// ([`python::has_costly_comment_runs`]).
 fn extracting_language(path: &Path, ctx: &WalkCtx) -> Option<(&'static Language, Arc<Source>)> {
     let language = Language::from_path(path)?;
     let name = path.file_name()?.to_string_lossy().to_ascii_lowercase();
@@ -415,7 +417,10 @@ fn extracting_language(path: &Path, ctx: &WalkCtx) -> Option<(&'static Language,
         return None;
     }
     let source = ctx.read_for_parse(path)?;
-    (!has_minified_lines(&source) && !has_generator_banner(&source)).then_some((language, source))
+    let stalls_the_parser = language.extensions == python::LANGUAGE.extensions
+        && python::has_costly_comment_runs(&source);
+    (!has_minified_lines(&source) && !has_generator_banner(&source) && !stalls_the_parser)
+        .then_some((language, source))
 }
 
 /// Rows from the top of a file that [`has_generator_banner`] reads
