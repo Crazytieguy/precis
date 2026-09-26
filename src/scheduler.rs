@@ -214,16 +214,12 @@ impl<W: Walker> Scheduler<W> {
         self.key_to_id.insert(batch.key.clone(), id);
 
         if let BatchContent::Lines { spans, .. } = &batch.content {
-            let mut last: Option<&PathBuf> = None;
-            for span in spans {
-                // Spans arrive grouped by file; dedup consecutively.
-                if last != Some(&span.path) {
-                    self.batches_by_path
-                        .entry(span.path.clone())
-                        .or_default()
-                        .push(id);
-                    last = Some(&span.path);
-                }
+            // Spans arrive grouped by file.
+            for run in spans.chunk_by(|a, b| a.path == b.path) {
+                self.batches_by_path
+                    .entry(run[0].path.clone())
+                    .or_default()
+                    .push(id);
             }
             let in_dominant_file = self
                 .ctx
@@ -387,13 +383,8 @@ impl<W: Walker> Scheduler<W> {
         // invariants (line-disjoint outside predecessor chains).
         self.cost_cache.remove(&id);
         if let BatchContent::Lines { spans, .. } = &entry_content {
-            let mut last: Option<&PathBuf> = None;
-            for span in spans {
-                if last == Some(&span.path) {
-                    continue;
-                }
-                last = Some(&span.path);
-                for other in self.batches_by_path.get(&span.path).into_iter().flatten() {
+            for run in spans.chunk_by(|a, b| a.path == b.path) {
+                for other in self.batches_by_path.get(&run[0].path).into_iter().flatten() {
                     self.cost_cache.remove(other);
                 }
             }
