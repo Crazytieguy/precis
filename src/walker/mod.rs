@@ -117,8 +117,9 @@ impl Walker for FsWalker {
     }
 }
 
-/// Per-run context: seed root, shared source/parse caches, and per-
-/// walker run state in language-named fields below.
+/// Per-run context: seed root, the listing filter and source cache shared
+/// with the renderer, the run's parse budget, and each walker's own run
+/// state.
 pub struct WalkCtx {
     root: PathBuf,
     /// Built once per run — every listing and file enumeration in the
