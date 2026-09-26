@@ -378,7 +378,11 @@ fn feature_gate_is_declaration_only(node: Node) -> Option<bool> {
         match child.kind() {
             "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
             | "enum_specifier" => declaration_found = true,
-            "preproc_include" | "preproc_def" | "preproc_function_def" | "comment" => {}
+            "preproc_include"
+            | "preproc_def"
+            | "preproc_function_def"
+            | "preproc_call"
+            | "comment" => {}
             "preproc_if" | "preproc_ifdef" | "preproc_else" | "preproc_elif"
             | "preproc_elifdef" => declaration_found |= feature_gate_is_declaration_only(child)?,
             // Condition / name tokens of the `#if` / `#ifdef` itself.
@@ -569,9 +573,16 @@ int gated_linkage(int x);
 #ifdef HAVE_IMPL
 static inline int wraps_code(void) { return 1; }
 #endif
+#ifdef HAVE_PRAGMA
+#pragma pack(push, 1)
+int packed(void);
+#endif
 ";
         for path in ["krep.h", "krep.c"] {
-            assert_eq!(name_rows_of(&model(path, source)), vec![vec![2], vec![4]]);
+            assert_eq!(
+                name_rows_of(&model(path, source)),
+                vec![vec![2], vec![4], vec![19]]
+            );
         }
     }
 
