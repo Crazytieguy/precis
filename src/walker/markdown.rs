@@ -230,24 +230,13 @@ fn push_sections(
         if !range.chained_to_previous {
             chain_key = section_predecessor.clone();
         }
-        if let Some(CommandBlockRows { heading, block }) = range.command_block
-            && headline_end.is_none_or(|end| end < block.0)
-            && let Some(content) = single_file_lines_content(
-                file,
-                source,
-                (heading.0..=heading.1).chain(block.0..=block.1).collect(),
-            )
+        if let Some(rows) = range.command_block
+            && headline_end.is_none_or(|end| end < rows.block.0)
+            && let Some(batch) =
+                command_block_batch(file, source, rows, chain_key.clone(), README_SECTION_VALUE)
         {
-            let key = BatchKey::from(MarkdownKey::CommandBlock {
-                file: file.to_path_buf(),
-                row: block.0,
-            });
-            out.push(Batch {
-                key: key.clone(),
-                predecessor: chain_key.replace(key),
-                content,
-                value: README_SECTION_VALUE,
-            });
+            chain_key = Some(batch.key.clone());
+            out.push(batch);
         }
         if !range.command_only
             && let Some(content) = build_section_content(file, source, range, headline, chrome)
@@ -265,6 +254,29 @@ fn push_sections(
             });
         }
     }
+}
+
+fn command_block_batch(
+    file: &Path,
+    source: &Source,
+    CommandBlockRows { heading, block }: CommandBlockRows,
+    predecessor: Option<BatchKey>,
+    value: f64,
+) -> Option<Batch> {
+    Some(Batch {
+        key: MarkdownKey::CommandBlock {
+            file: file.to_path_buf(),
+            row: block.0,
+        }
+        .into(),
+        predecessor,
+        content: single_file_lines_content(
+            file,
+            source,
+            (heading.0..=heading.1).chain(block.0..=block.1).collect(),
+        )?,
+        value,
+    })
 }
 
 // --- value ---
@@ -424,9 +436,8 @@ fn is_build_guide_stem(stem: &str) -> bool {
 }
 
 /// One `CommandBlock` per root Markdown build guide: its first run of
-/// shell blocks (see [`command_block`]), under the innermost
-/// command-titled heading, else (not in a contributing guide) the
-/// guide's first heading. The rest of the guide stays a listing row.
+/// shell blocks under a command-titled heading (see [`command_block`]).
+/// The rest of the guide stays a listing row.
 fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     if ctx.dir_filter().named_file().is_some() {
         return Vec::new();
@@ -447,27 +458,9 @@ fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 &tree_sitter_md::LANGUAGE.into(),
                 parse_safe_prefix_len,
             )?;
-            let root = tree.root_node();
-            let title = headed_sections(root).next().and_then(first_heading_child)?;
             let src_lines: Vec<&str> = source.lines().collect();
-            // A contributing guide's first block is as often a commit
-            // template or a fork's clone command as a build step.
-            let contributing = name.to_ascii_lowercase().starts_with("contributing.");
-            let CommandBlockRows { heading, block } =
-                command_block(root, None, &source, &src_lines).or_else(|| {
-                    command_block(root, Some(title), &source, &src_lines).filter(|_| !contributing)
-                })?;
-            let content = single_file_lines_content(
-                &file,
-                &source,
-                (heading.0..=heading.1).chain(block.0..=block.1).collect(),
-            )?;
-            Some(Batch {
-                key: MarkdownKey::CommandBlock { file, row: block.0 }.into(),
-                predecessor: None,
-                content,
-                value: BUILD_GUIDE_COMMAND_VALUE,
-            })
+            let rows = command_block(tree.root_node(), None, &source, &src_lines)?;
+            command_block_batch(&file, &source, rows, None, BUILD_GUIDE_COMMAND_VALUE)
         })
         .collect()
 }
@@ -2761,9 +2754,8 @@ mod tests {
     }
 
     /// A root build guide yields one `CommandBlock`: the first under a
-    /// command-titled heading, else the first under its title, which a
-    /// contributing guide never falls back to. Nothing else of it is
-    /// read, and a nested guide not at all.
+    /// command-titled heading. Nothing else of it is read, and a nested
+    /// guide not at all.
     #[test]
     fn markdown_root_build_guides_yield_one_command_block() {
         use std::fs;
@@ -2777,7 +2769,7 @@ mod tests {
         fs::write(root.join("docs/BUILDING.md"), building).unwrap();
         fs::write(
             root.join("INSTALL.md"),
-            "# Installation\n\nFrom source:\n\n```\n./configure && make install\n```\n",
+            "# Installation\n\n```\npip install tool\n```\n\n## Building\n\n```\n./configure && make install\n```\n",
         )
         .unwrap();
         fs::write(
@@ -2807,7 +2799,7 @@ mod tests {
             command_rows,
             [
                 ("BUILDING.md".to_string(), vec![(11, 15)]),
-                ("INSTALL.md".to_string(), vec![(1, 1), (5, 7)]),
+                ("INSTALL.md".to_string(), vec![(7, 11)]),
             ]
         );
         assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
