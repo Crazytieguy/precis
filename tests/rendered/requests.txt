@@ -106,6 +106,8 @@ README.md
   55→- Automatic honoring of `.netrc`
   56→- Chunked HTTP Requests
   58→## Cloning the repository
+  59→
+  60→When cloning the Requests repository, you may need to add the `-c
   …
 docs/
   .nojekyll
@@ -346,7 +348,3 @@ tests/
     server.py
   utils.py
 tox.ini
-  1→[tox]
-  2→envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}
-  3→
-  …

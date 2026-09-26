@@ -24,14 +24,9 @@ Makefile
   13→	--entrypoint "" golang:1.25.6-alpine sh -c "go test -v -count=1 -p 4 -coverprofile=coverage.out ./... && go tool cover -func=coverage.out && go tool cover -html=coverage.out -o coverage.html"
 README.md
   1→# Tock
-  3→[![Release](https://img.shields.io/github/v/release/kriuchkov/tock?style=flat-square)](https://github.com/kriuchkov/tock/releases) [![License](https://img.shields.io/github/license/kriuchkov/tock?style=flat-square)](LICENSE) [![Stars](https://img.shields.io/github/stars/kriuchkov/tock?style=flat-square)](https://github.com/kriuchkov/tock/stargazers) [![Go Version](https://img.shields.io/github/go-mod/go-version/kriuchkov/tock?style=flat-square&logo=go&label=Go)](go.mod) [![CI](https://img.shield…
-  4→
-  5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
-  6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
+  …
   8→## Features
-  9→
-  10→<img src="assets/demo.png" width="820px" />
-  11→
+  …
   12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
   13→
   14→Features include:
@@ -43,8 +38,7 @@ README.md
   20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
   21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
   22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
-  23→
-  24→<hr clear="right"/>
+  …
   26→## Quick Start
   27→
   28→### Installation
@@ -82,10 +76,7 @@ README.md
   61→Download the latest release from the [Releases](https://github.com/kriuchkov/tock/releases) page.
   62→
   63→### Basic Usage
-  64→
-  65→<img src="assets/demo.gif" width="820px" />
-  66→<hr clear="right"/>
-  67→
+  …
   68→Start tracking time:
   69→
   70→```bash
@@ -238,9 +229,21 @@ internal/
     config.go
       …
       12→type Config struct {
+      13→	Backend         string            `mapstructure:"backend"`
+      14→	File            FileConfig        `mapstructure:"file"`
+      15→	Timewarrior     TimewarriorConfig `mapstructure:"timewarrior"`
+      16→	Theme           ThemeConfig       `mapstructure:"theme"`
+      17→	Calendar        CalendarConfig    `mapstructure:"calendar"`
+      18→	TimeFormat      string            `mapstructure:"time_format"`
+      19→	Export          ExportConfig      `mapstructure:"export"`
       …
       25→type CalendarConfig struct {
-      …
+      26→	TimeSpentFormat   string `mapstructure:"time_spent_format"`
+      27→	TimeStartFormat   string `mapstructure:"time_start_format"`
+      28→	TimeEndFormat     string `mapstructure:"time_end_format"`
+      29→	TimeTotalFormat   string `mapstructure:"time_total_format"`
+      30→	AlignDurationLeft bool   `mapstructure:"align_duration_left"`
+      31→}
       33→type ExportConfig struct {
       34→	ICal ICalConfig `mapstructure:"ical"`
       35→}
@@ -254,7 +257,15 @@ internal/
       46→	DataPath string `mapstructure:"data_path"`
       47→}
       49→type ThemeConfig struct {
-      …
+      50→	Name      string `mapstructure:"name"`
+      51→	Primary   string `mapstructure:"primary"`
+      52→	Secondary string `mapstructure:"secondary"`
+      53→	Text      string `mapstructure:"text"`
+      54→	SubText   string `mapstructure:"sub_text"`
+      55→	Faint     string `mapstructure:"faint"`
+      56→	Highlight string `mapstructure:"highlight"`
+      57→	Tag       string `mapstructure:"tag"`
+      58→}
       60→type Option func(*viper.Viper)
       61→
       62→func WithConfigPath(path string) Option {

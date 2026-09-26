@@ -21,9 +21,9 @@
 //!   shell blocks of a build/test/run section inside it (see
 //!   [`command_block`]). Predecessor: the outline, else the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
-//!   an intro plus its H2s); an oversize section splits into a head
-//!   chunk plus chained `OversizeTail` chunks. Predecessor: the
-//!   section's command block, else the outline, else the headline.
+//!   an intro plus its H2s), chrome left out; an oversize section splits
+//!   into a head chunk plus chained `OversizeTail` chunks. Predecessor:
+//!   the section's command block, else the outline, else the headline.
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
@@ -119,7 +119,15 @@ fn readme_batches(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         };
         let (headline, ranges) = line_scanned_readme(&source, markup);
         let headline_emitted = push_headline(&mut out, &file, &source, &headline);
-        push_sections(&mut out, &file, &source, &ranges, None, headline_emitted);
+        push_sections(
+            &mut out,
+            &file,
+            &source,
+            &ranges,
+            None,
+            &BTreeSet::new(),
+            headline_emitted,
+        );
         return out;
     }
 
@@ -174,6 +182,7 @@ fn readme_batches(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         &source,
         &logical_sections(&tree, &source, outline_emits),
         headline.as_ref(),
+        &chrome_rows(tree.root_node(), &source),
         outline_emitted.or(headline_emitted),
     );
     out
@@ -199,16 +208,17 @@ fn push_headline(
     Some(key)
 }
 
-/// Emit one `Section` batch per range, each head preceded by its
-/// `CommandBlock` when it has one past the headline. A head gates on its
-/// command block, else on `section_predecessor`; oversize tails deliver
-/// in source order behind the chunk before them.
+/// Emit one `Section` batch per range, less the `chrome` rows, each head
+/// preceded by its `CommandBlock` when it has one past the headline. A
+/// head gates on its command block, else on `section_predecessor`;
+/// oversize tails deliver in source order behind the chunk before them.
 fn push_sections(
     out: &mut Vec<Batch>,
     file: &Path,
     source: &Source,
     ranges: &[SectionRange],
     headline: Option<&BTreeSet<usize>>,
+    chrome: &BTreeSet<usize>,
     section_predecessor: Option<BatchKey>,
 ) {
     let headline_end = headline.and_then(|spec| spec.iter().next_back().copied());
@@ -237,7 +247,7 @@ fn push_sections(
             });
         }
         if !range.command_only
-            && let Some(content) = build_section_content(file, source, range, headline)
+            && let Some(content) = build_section_content(file, source, range, headline, chrome)
         {
             let key = BatchKey::from(MarkdownKey::Section {
                 file: file.to_path_buf(),
@@ -359,6 +369,7 @@ fn build_section_content(
     source: &Source,
     range: &SectionRange,
     headline: Option<&BTreeSet<usize>>,
+    chrome: &BTreeSet<usize>,
 ) -> Option<BatchContent> {
     let (start, end) = (range.start, range.end);
 
@@ -374,7 +385,9 @@ fn build_section_content(
         return None;
     }
 
-    let lines: Vec<usize> = (effective_start..=end).collect();
+    let lines: Vec<usize> = (effective_start..=end)
+        .filter(|row| !chrome.contains(row))
+        .collect();
     single_file_lines_content(file, source, lines)
 }
 
@@ -1636,7 +1649,7 @@ fn strip_html_entities(text: &str) -> String {
 }
 
 /// Include `blocks` through the first substantive paragraph, stepping
-/// over chrome ([`is_prelude_chrome_block`]); after a short tagline
+/// over chrome ([`is_chrome_block`]); after a short tagline
 /// paragraph, take one more block.
 fn extend_lede(
     spec: &mut BTreeSet<usize>,
@@ -1649,7 +1662,7 @@ fn extend_lede(
         if is_section_boundary(block.kind()) {
             break;
         }
-        if is_prelude_chrome_block(block, source) {
+        if is_chrome_block(block, source) {
             continue;
         }
         extend_headline_block_rows(spec, block, source);
@@ -1702,7 +1715,7 @@ fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
 /// of it, and no section range reaches above the first heading, so
 /// without this the rest of the lede is unreachable at any budget.
 ///
-/// [`is_prelude_chrome_block`] stays excluded: chrome tokenizes almost
+/// [`is_chrome_block`] stays excluded: chrome tokenizes almost
 /// entirely as URLs, and it sits at the very top of the README, so
 /// buying it displaces the earliest-ranked content in the schedule.
 fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &BTreeSet<usize>) -> Vec<usize> {
@@ -1713,7 +1726,7 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &BTreeSet<usize>)
     let mut bytes = 0usize;
     let src_lines: Vec<&str> = source.lines().collect();
     for block in prelude_blocks(tree.root_node(), first_headed) {
-        if is_prelude_chrome_block(block, source) {
+        if is_chrome_block(block, source) {
             continue;
         }
         for row in block_text_rows(block, source) {
@@ -1734,12 +1747,13 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &BTreeSet<usize>)
     rows
 }
 
-/// The chrome/substance line for the whole pre-heading region, stated
-/// once: decoration is image/badge-only paragraphs, tag-only HTML
-/// wrappers, front matter, in-page nav menus and tables of contents.
-/// Everything else above the first heading is substance. Both readers of
-/// that region use this — `ReadmeHeadline` and [`prelude_remainder_rows`].
-fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
+/// The README's chrome/substance line, stated once: decoration is
+/// image/badge-only paragraphs, tag-only HTML wrappers, front matter,
+/// `---` rules, link definitions, in-page nav menus and tables of
+/// contents. Everything else is substance. `ReadmeHeadline`,
+/// [`prelude_remainder_rows`] and the sections ([`chrome_rows`]) all use
+/// it.
+fn is_chrome_block(block: Node, source: &str) -> bool {
     is_decorative_block(block, source)
         || is_html_nav_block(block, source)
         || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
@@ -1794,6 +1808,22 @@ fn closes_link(target: &str) -> bool {
         }
     }
     false
+}
+
+/// 1-based rows of the [`is_chrome_block`] blocks directly under any
+/// section, which no `Section` batch shows: decoration below a heading
+/// is no more substance than above it.
+fn chrome_rows(node: Node, source: &str) -> BTreeSet<usize> {
+    let mut rows = BTreeSet::new();
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        if child.kind() == "section" {
+            rows.extend(chrome_rows(child, source));
+        } else if is_chrome_block(child, source) {
+            extend_rows_inclusive(&mut rows, child, source);
+        }
+    }
+    rows
 }
 
 /// Top-level `section` children with a heading — skips tree-sitter-md's
@@ -1893,6 +1923,35 @@ mod tests {
             let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
             assert_eq!(is_table_of_contents(block, source), expected, "{source}");
         }
+    }
+
+    /// Chrome under a heading is chrome too: a section's contents list,
+    /// badges and rules, but not its prose or its lists of links out.
+    #[test]
+    fn markdown_chrome_rows_reach_into_sections() {
+        let source = concat!(
+            "# Widget\n",
+            "\n",
+            "## Contents\n",
+            "\n",
+            "- [Install](#install)\n",
+            "- [Usage](#usage)\n",
+            "\n",
+            "## Install\n",
+            "\n",
+            "[![ci](https://ci.example/badge.svg)](https://ci.example)\n",
+            "\n",
+            "Run the installer.\n",
+            "\n",
+            "---\n",
+            "\n",
+            "- [Docs](https://docs.example)\n",
+        );
+        let tree = parse(source);
+        assert_eq!(
+            chrome_rows(tree.root_node(), source),
+            BTreeSet::from([5, 6, 10, 14])
+        );
     }
 
     /// A badge wall written as raw HTML inside a markdown paragraph is

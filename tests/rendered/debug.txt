@@ -13,12 +13,14 @@ README.md
   13→$ npm install debug
   14→```
   16→## Usage
-  17→
-  18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
   …
   110→## Namespace Colors
   …
   134→## Millisecond diff
+  135→
+  136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
+  …
+  140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
   …
   145→## Conventions
   146→
@@ -31,9 +33,7 @@ README.md
   154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
   155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
   156→
-  157→You can also exclude specific debuggers by prefixing them with a "-" character.
-  158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
-  159→starting with "connect:".
+  …
   161→## Environment Variables
   162→
   163→When running through Node.js, you can set a few environment variables that will

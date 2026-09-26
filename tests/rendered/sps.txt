@@ -47,15 +47,13 @@ README.md
   28→- **Casks:** desktop applications and related artifacts on macOS
   29→
   30→> _ARM only for now, might add x86 support eventually_
-  31→
-  32→---
+  …
   34→## ⚙️ Project Structure
   35→
   36→- **sps‑core** Core library: fetching, dependency resolution, archive extraction, artifact handling (apps, binaries, pkg installers, fonts, plugins, zap/preflight/uninstall stanzas, etc.)
   37→
   38→- **sps‑cli** Command‑line interface: `sps` executable wrapping the core library.
-  39→
-  40→---
+  …
   42→## 🚧 Current Status
   43→
   44→- Bottle installation and uninstallation
@@ -65,17 +63,20 @@ README.md
   48→- Parallel downloads and installs for speed
   49→- Automatic dependency resolution and installation
   50→- Building Formulae from source (very early impl)
-  51→
-  52→---
+  …
   54→## 🚀 Roadmap
   55→
   56→- **Cleanup** old downloads, versions, caches
   57→- **Prefix isolation:** support `/opt/sps` as standalone layout
   58→- **`sps init`** helper to bootstrap your environment
   59→- **Ongoing** Bug fixes and stability improvements
-  60→
-  61→---
+  …
   63→## Trying it out:
+  64→
+  65→```bash
+  66→cargo install sps
+  67→```
+  68→> due too the amount of work keeping the crates up to date with every change would entail the crates.io published version will only be updated after major changes or fixes (if there are none expect once a week)
   …
   77→## 📦 Usage
   78→
@@ -120,8 +121,7 @@ README.md
   117→sps cleanup
   118→sps init
   119→```
-  120→
-  121→-----
+  …
   123→## 🏗️ Building from Source
   124→
   125→**Prerequisites:** Rust toolchain (stable).
@@ -133,9 +133,7 @@ README.md
   131→```
   132→
   133→The `sps` binary will be at `target/release/sps`. Add it to your `PATH`.
-  134→
-  135→
-  136→-----
+  …
   138→## 📥 Using the Latest Nightly Build
   139→
   140→You can download the latest nightly build from [`actions/workflows/rust.yml`](../../actions/workflows/rust.yml) inside this repository (select a successful build and scroll down to `Artifacts`).
@@ -145,9 +143,7 @@ README.md
   144→```sh
   145→./sps --help
   146→```
-  147→
-  148→
-  149→-----
+  …
   151→## 🤝 Contributing
   …
   164→## 📄 License

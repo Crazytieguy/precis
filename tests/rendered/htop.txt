@@ -124,15 +124,7 @@ ProvideTerm.h
 README
 README.md
   1→# [![htop logo](htop-logo.png)](https://htop.dev)
-  3→[![CI](https://github.com/htop-dev/htop/workflows/CI/badge.svg)](https://github.com/htop-dev/htop/actions)
-  4→[![Coverity Scan Build Status](https://scan.coverity.com/projects/21665/badge.svg)](https://scan.coverity.com/projects/21665)
-  5→[![Mailing List](https://img.shields.io/badge/Mailing%20List-htop-blue.svg)](https://groups.io/g/htop)
-  6→[![IRC #htop](https://img.shields.io/badge/IRC-htop-blue.svg)](https://web.libera.chat/#htop)
-  7→[![GitHub Release](https://img.shields.io/github/release/htop-dev/htop.svg)](https://github.com/htop-dev/htop/releases/latest)
-  8→[![Packaging status](https://repology.org/badge/tiny-repos/htop.svg)](https://repology.org/project/htop/versions)
-  9→[![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2+-blue.svg)](COPYING?raw=true)
-  10→
-  11→![Screenshot of htop](docs/images/screenshot.png?raw=true)
+  …
   13→## Introduction
   14→
   15→`htop` is a cross-platform interactive process viewer.
@@ -173,7 +165,23 @@ README.md
   52→  * `ncurses`
   53→
   54→**Note about `ncurses`:**
-  …
+  55→> `htop` requires `ncurses` 6.0. Be aware the appropriate package is sometimes still called libncurses5 (on Debian/Ubuntu). Also `ncurses` usually comes in two flavours:
+  56→>* With Unicode support.
+  57→>* Without Unicode support.
+  58→>
+  59→> This is also something that is reflected in the package name on Debian/Ubuntu (via the additional 'w' - 'w'ide character support).
+  61→List of additional build-time dependencies (based on feature flags):
+  62→*  `pkg-config`
+  63→*  `sensors`
+  64→*  `hwloc`
+  65→*  `libcap` (v2.21 or later)
+  66→*  `libnl-3` and `libnl-genl-3`
+  67→
+  68→`pkg-config` is optional but recommended. The configure script of `htop` might utilize `pkg-config` to obtain the compiler and linker flags required for a library. Some OS distributions provide `pkg-config` functionalities through an alternative implementation such as `pkgconf`. Look for both names in your package manager.
+  69→
+  70→Install these and other required packages for C development from your package manager.
+  71→
+  72→**Debian/Ubuntu**
   73→~~~ shell
   74→sudo apt install libncursesw5-dev autotools-dev autoconf automake build-essential
   75→~~~
@@ -210,6 +218,7 @@ README.md
   198→## Support
   …
   202→## Bugs, development feedback
+  203→
   …
   211→## History
   212→

@@ -77,22 +77,7 @@ README.md
   52→
   53→Interested? Let's dive right in ⚡
   55→## Table of Contents
-  57→- [Installation](#installation)
-  58→- [Quickstart](#quickstart)
-  59→- [Settings](#settings)
-  60→- [Service settings](#service-settings)
-  61→- [Instruments](#instruments)
-  62→  - [Sentry](#sentry)
-  63→  - [Prometheus](#prometheus)
-  64→  - [Opentelemetry](#opentelemetry)
-  65→  - [Logging](#logging)
-  66→  - [CORS](#cors)
-  67→  - [Swagger](#swagger)
-  68→  - [Health checks](#health-checks)
-  69→- [Configuration](#configuration)
-  70→  - [Instruments configuration](#instruments-configuration)
-  71→  - [Application configuration](#application-configuration)
-  72→- [Advanced](#advanced)
+  …
   74→## Installation
   …
   102→## Quickstart
@@ -222,7 +207,7 @@ microbootstrap/
     23→SettingsT = typing.TypeVar("SettingsT", bound="BaseServiceSettings")
     24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
     25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
-    …
+    28→# TODO: add offline docs and cors support  # noqa: TD002
     29→class BaseServiceSettings(
     30→    pydantic_settings.BaseSettings,
     31→):
@@ -237,7 +222,14 @@ microbootstrap/
     40→        "1.0.0",
     41→        validation_alias=pydantic.AliasChoices("CI_COMMIT_TAG", f"{ENV_PREFIX}SERVICE_VERSION"),
     42→    )
-    …
+    43→
+    44→    model_config = pydantic_settings.SettingsConfigDict(
+    45→        env_file=".env",
+    46→        env_prefix=ENV_PREFIX,
+    47→        env_file_encoding="utf-8",
+    48→        populate_by_name=True,
+    49→        extra="allow",
+    50→    )
     53→class ServerConfig(pydantic.BaseModel):
     54→    server_host: str = "0.0.0.0"  # noqa: S104
     55→    server_port: int = 8000
@@ -255,7 +247,7 @@ microbootstrap/
     69→    HealthChecksConfig,
     70→    PyroscopeConfig,
     71→):
-    …
+    72→    """Settings for a litestar botstrap."""
     75→class FastApiSettings(  # type: ignore[misc]
     76→    BaseServiceSettings,
     77→    ServerConfig,
@@ -268,7 +260,7 @@ microbootstrap/
     84→    HealthChecksConfig,
     85→    PyroscopeConfig,
     86→):
-    …
+    87→    """Settings for a fastapi botstrap."""
     90→class FastStreamSettings(  # type: ignore[misc]
     91→    BaseServiceSettings,
     92→    ServerConfig,
@@ -279,7 +271,7 @@ microbootstrap/
     97→    HealthChecksConfig,
     98→    PyroscopeConfig,
     99→):
-    …
+    100→    """Settings for a faststream bootstrap."""
     102→    asyncapi_path: str | None = "/asyncapi"
     105→class InstrumentsSetupperSettings(  # type: ignore[misc]
     106→    BaseServiceSettings,
@@ -288,7 +280,7 @@ microbootstrap/
     109→    SentryConfig,
     110→    PyroscopeConfig,
     111→):
-    …
+    112→    """Settings for a vanilla service."""
 package-lock.json
 package.json
   …
@@ -327,6 +319,16 @@ tests/
     test_litestar_opentelemetry.py
   conftest.py
   instruments/
+    __init__.py (empty)
+    test_cors.py
+    test_health_checks.py
+    test_instrument_box.py
+    test_logging.py
+    test_opentelemetry.py
+    test_prometheus.py
+    test_pyroscope.py
+    test_sentry.py
+    test_swagger.py
   test_granian_server.py
   test_helpers.py
   test_instruments_setupper.py

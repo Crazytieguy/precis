@@ -92,17 +92,13 @@ Readme.md
   161→Of course, not every validation library suffers from all of these issues, but most of them exhibit at least one. If you've run into this problem before, you might like Superstruct.
   162→
   163→Which brings me to how Superstruct solves these issues...
-  164→
-  165→<br/>
+  …
   167→### Principles
   …
   181→### Demo
   182→
   183→Try out the [live demo on CodeSandbox](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js) to get an idea for how the API works, or to quickly verify your use case:
-  184→
-  185→[![Demo screenshot.](./docs/images/demo-screenshot.png)](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js)
-  186→
-  187→<br/>
+  …
   189→### Examples
   …
   205→### Documentation
@@ -216,6 +212,11 @@ src/
     58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
     …
     67→export function toFailure<T, S>(
+    68→  result: string | boolean | Partial<Failure>,
+    69→  context: Context,
+    70→  struct: Struct<T, S>,
+    71→  value: any
+    72→): Failure | undefined {
     …
     106→export function* toFailures<T, S>(
     107→  result: Result,

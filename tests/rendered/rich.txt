@@ -82,6 +82,13 @@ README.md
   60→## Rich Print
   …
   72→## Rich REPL
+  73→
+  74→Rich can be installed in the Python REPL, so that any data structures will be pretty printed and highlighted.
+  75→
+  76→```python
+  77→>>> from rich import pretty
+  78→>>> pretty.install()
+  79→```
   …
   83→## Using the Console
   …
@@ -90,10 +97,17 @@ README.md
   135→# Rich Library
   …
   427→# Rich CLI
+  428→
+  429→
+  430→See also [Rich CLI](https://github.com/textualize/rich-cli) for a command line application powered by Rich. Syntax highlight code, render markdown, display CSVs in tables, and more, directly from the command prompt.
   …
   435→# Textual
+  436→
+  437→See also Rich's sister project, [Textual](https://github.com/Textualize/textual), which you can use to build sophisticated User Interfaces in the terminal.
   …
   441→# Toad
+  442→
+  443→[Toad](https://github.com/batrachianai/toad) is a unified interface for agentic coding. Built with Rich and Textual.
   …
 README.pl.md
 README.pt-br.md
@@ -308,20 +322,11 @@ rich/
       15→from rich._unicode_data._versions import VERSIONS
       …
       20→VERSION_ORDER = sorted(
-      21→    [
-      22→        tuple(
-      23→            map(int, version.split(".")),
-      24→        )
-      25→        for version in VERSIONS
-      26→    ]
-      27→)
+      …
       28→VERSION_SET = frozenset(VERSIONS)
       29→
       30→
       31→def _parse_version(version: str) -> tuple[int, int, int]:
-      …
-      58→@cache
-      59→def load(unicode_version: str = "auto") -> CellTable:
       …
     _versions.py
     unicode10-0-0.py
@@ -359,18 +364,6 @@ rich/
   color_triplet.py
   columns.py
   console.py
-    …
-    64→JUPYTER_DEFAULT_COLUMNS = 115
-    65→JUPYTER_DEFAULT_LINES = 100
-    66→WINDOWS = sys.platform == "win32"
-    67→
-    68→HighlighterType = Callable[[Union[str, "Text"]], "Text"]
-    69→JustifyMethod = Literal["default", "left", "center", "right", "full"]
-    70→OverflowMethod = Literal["fold", "crop", "ellipsis", "ignore"]
-    71→
-    72→
-    73→class NoChange:
-    …
   constrain.py
   containers.py
   control.py

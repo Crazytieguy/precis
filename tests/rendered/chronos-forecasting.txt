@@ -16,16 +16,7 @@ NOTICE
 README.md
   …
   3→# Chronos: Pretrained Models for Time Series Forecasting
-  5→[![preprint](https://img.shields.io/static/v1?label=Chronos-Paper&message=2403.07815&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2403.07815)
-  6→[![preprint](https://img.shields.io/static/v1?label=Chronos-2-Report&message=2510.15821&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2510.15821)
-  7→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Datasets-FFD21E)](https://huggingface.co/datasets/autogluon/chronos_datasets)
-  8→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Models-FFD21E)](https://huggingface.co/collections/amazon/chronos-models-65f1791d630a8d57cb718444)
-  9→[![fev](https://img.shields.io/static/v1?label=fev&message=Benchmark&color=B31B1B&logo=github)](https://github.com/autogluon/fev)
-  10→[![aws](https://img.shields.io/static/v1?label=SageMaker&message=Deploy&color=FF9900&logo=amazon-web-services)](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
-  11→[![faq](https://img.shields.io/badge/FAQ-Questions%3F-blue)](https://github.com/amazon-science/chronos-forecasting/issues?q=is%3Aissue+label%3AFAQ)
-  12→[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
-  13→
-  14→</div>
+  …
   17→## 🚀 News
   …
   24→## ✨ Introduction
@@ -222,7 +213,12 @@ src/chronos/
     31→
     32→@dataclass
     33→class ChronosBoltConfig:
-    …
+    34→    context_length: int
+    35→    prediction_length: int
+    36→    input_patch_size: int
+    37→    input_patch_stride: int
+    38→    quantiles: List[float]
+    39→    use_reg_token: bool = False
     42→@dataclass
     43→class ChronosBoltOutput(ModelOutput):
     44→    loss: Optional[torch.Tensor] = None
@@ -236,14 +232,46 @@ src/chronos/
     …
     71→class InstanceNorm(nn.Module):
     …
+    76→    def __init__(self, eps: float = 1e-5, use_arcsinh: bool = False) -> None:
+    …
+    81→    def forward(
+    82→        self, x: torch.Tensor, loc_scale: tuple[torch.Tensor, torch.Tensor] | None = None
+    83→    ) -> tuple[torch.Tensor, tuple[torch.Tensor, torch.Tensor]]:
+    …
+    100→    def inverse(self, x: torch.Tensor, loc_scale: tuple[torch.Tensor, torch.Tensor]) -> torch.Tensor:
+    …
     113→class ResidualBlock(nn.Module):
     114→    def __init__(
-    …
+    115→        self,
+    116→        in_dim: int,
+    117→        h_dim: int,
+    118→        out_dim: int,
+    119→        act_fn_name: str,
+    120→        dropout_p: float = 0.0,
+    121→        use_layer_norm: bool = False,
     122→    ) -> None:
     …
     135→    def forward(self, x: torch.Tensor):
     …
     147→class ChronosBoltModelForForecasting(T5PreTrainedModel):
+    148→    _keys_to_ignore_on_load_missing = [  # type: ignore
+    149→        r"input_patch_embedding\.",
+    150→        r"output_patch_embedding\.",
+    151→    ]
+    152→    _keys_to_ignore_on_load_unexpected = [r"lm_head.weight"]  # type: ignore
+    153→    _tied_weights_keys = ["encoder.embed_tokens.weight", "decoder.embed_tokens.weight"]  # type: ignore
+    154→
+    155→    def __init__(self, config: T5Config):
+    …
+    215→    def _init_weights(self, module):
+    …
+    240→    def encode(
+    …
+    242→    ) -> Tuple[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], torch.Tensor, torch.Tensor]:
+    …
+    294→    def forward(
+    …
+    300→    ) -> ChronosBoltOutput:
     …
     403→class ChronosBoltPipeline(BaseChronosPipeline):
     …

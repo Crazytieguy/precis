@@ -341,7 +341,7 @@ fn robustness_long_lines_render_as_a_prefix() {
     );
     write(
         &temp.path().join("README.md"),
-        format!("# Demo\n\n![logo](data:image/png;base64,{blob})\n"),
+        format!("# Demo\n\nLogo: ![logo](data:image/png;base64,{blob})\n"),
     );
     write(
         &temp.path().join("package.json"),
@@ -352,7 +352,7 @@ fn robustness_long_lines_render_as_a_prefix() {
 
     let out = render_within(temp.path(), 3000, Duration::from_secs(10)).unwrap();
     assert!(out.contains("def load():"), "{out}");
-    for prefix in ["1→DATA = \"AAA", "3→![logo]"] {
+    for prefix in ["1→DATA = \"AAA", "3→Logo: ![logo]"] {
         let row = out
             .lines()
             .find(|row| row.contains(prefix))

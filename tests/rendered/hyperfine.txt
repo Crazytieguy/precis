@@ -76,7 +76,7 @@ README.md
   7→
   8→**Demo**: Benchmarking [`fd`](https://github.com/sharkdp/fd) and
   9→[`find`](https://www.gnu.org/software/findutils/):
-  11→![hyperfine](https://i.imgur.com/z19OYxE.gif)
+  …
   13→## Features
   14→
   15→* Statistical analysis across multiple runs.
@@ -89,28 +89,29 @@ README.md
   22→* Parameterized benchmarks (e.g. vary the number of threads).
   23→* Cross-platform
   25→## Usage
-  26→
-  27→### Basic benchmarks
-  28→
-  29→To run a benchmark, you can simply call `hyperfine <command>...`. The argument(s) can be any
-  30→shell command. For example:
-  31→```sh
-  32→hyperfine 'sleep 0.3'
-  33→```
-  34→
-  35→Hyperfine will automatically determine the number of runs to perform for each command. By default,
-  36→it will perform *at least* 10 benchmarking runs and measure for at least 3 seconds. To change this,
-  37→you can use the `-r`/`--runs` option:
-  38→```sh
-  39→hyperfine --runs 5 'sleep 0.3'
-  40→```
-  41→
-  42→If you want to compare the runtimes of different programs, you can pass multiple commands:
-  43→```sh
-  44→hyperfine 'hexdump file' 'xxd file'
-  45→```
   …
   164→## Installation
+  …
+  168→### On Ubuntu
+  169→
+  170→On Ubuntu, hyperfine can be installed [from the official repositories](https://launchpad.net/ubuntu/+source/rust-hyperfine):
+  171→```
+  172→apt install hyperfine
+  173→```
+  174→
+  175→Alternatively, for the latest version, you can download the appropriate `.deb` package from the [Release page](https://github.com/sharkdp/hyperfine/releases) and install it via `dpkg`:
+  176→```
+  177→wget https://github.com/sharkdp/hyperfine/releases/download/v1.20.0/hyperfine_1.20.0_amd64.deb
+  178→sudo dpkg -i hyperfine_1.20.0_amd64.deb
+  179→```
+  181→### On Fedora
+  182→
+  183→On Fedora, hyperfine can be installed from the official repositories:
+  184→
+  185→```sh
+  186→dnf install hyperfine
+  187→```
+  188→
   …
   314→## Alternative tools
   315→

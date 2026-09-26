@@ -42,8 +42,7 @@ README.md
   34→  }
   35→}
   36→```
-  38→<details>
-  39→
+  …
   40→<summary>View db.json5 example</summary>
   41→
   42→```json5
@@ -63,8 +62,7 @@ README.md
   56→```
   57→
   58→You can read more about JSON5 format [here](https://github.com/json5/json5).
-  60→</details>
-  61→
+  …
   62→Start JSON Server
   63→
   64→```bash
@@ -318,6 +316,8 @@ src/
     1→export const WHERE_OPERATORS = [
     …
     14→export type WhereOperator = (typeof WHERE_OPERATORS)[number]
+    15→
+    16→export function isWhereOperator(value: string): value is WhereOperator {
     …
 tsconfig.json
 views/

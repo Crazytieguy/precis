@@ -37,17 +37,12 @@ Makefile
   …
 README.md
   1→# Gin Web Framework
-  3→<img align="right" width="159px" src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png">
-  4→
-  5→[![Build Status](https://github.com/gin-gonic/gin/actions/workflows/gin.yml/badge.svg?branch=master)](https://github.com/gin-gonic/gin/actions/workflows/gin.yml)
-  6→[![Trivy Security Scan](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml)
-  7→[![codecov](https://codecov.io/gh/gin-gonic/gin/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-gonic/gin)
-  8→[![Go Report Card](https://goreportcard.com/badge/github.com/gin-gonic/gin)](https://goreportcard.com/report/github.com/gin-gonic/gin)
-  9→[![Go Reference](https://pkg.go.dev/badge/github.com/gin-gonic/gin?status.svg)](https://pkg.go.dev/github.com/gin-gonic/gin?tab=doc)
-  10→[![Sourcegraph](https://sourcegraph.com/github.com/gin-gonic/gin/-/badge.svg)](https://sourcegraph.com/github.com/gin-gonic/gin?badge)
-  11→[![Open Source Helpers](https://www.codetriage.com/gin-gonic/gin/badges/users.svg)](https://www.codetriage.com/gin-gonic/gin)
-  12→[![Release](https://img.shields.io/github/release/gin-gonic/gin.svg?style=flat-square)](https://github.com/gin-gonic/gin/releases)
+  …
   14→## 📰 Gin 1.12.0 is now available!
+  15→
+  16→We're excited to announce the release of **[Gin 1.12.0](https://gin-gonic.com/en/blog/news/gin-1-12-0-release-announcement/)**! This release brings new features, performance improvements, and important bug fixes. Check out the [release announcement](https://gin-gonic.com/en/blog/news/gin-1-12-0-release-announcement/) on our official blog for the full details.
+  …
+  20→Gin is a high-performance HTTP web framework written in [Go](https://go.dev/). It provides a Martini-like API but with significantly better performance—up to 40 times faster—thanks to [httprouter](https://github.com/julienschmidt/httprouter). Gin is designed for building REST APIs, web applications, and microservices where speed and developer productivity are essential.
   …
   43→## Getting Started
   44→
@@ -320,12 +315,31 @@ response_writer_test.go
 routergroup.go
   …
   27→type IRouter interface {
+  28→	IRoutes
+  29→	Group(string, ...HandlerFunc) *RouterGroup
+  30→}
   …
   33→type IRoutes interface {
+  34→	Use(...HandlerFunc) IRoutes
+  35→
+  36→	Handle(string, string, ...HandlerFunc) IRoutes
   …
   55→type RouterGroup struct {
+  56→	Handlers HandlersChain
+  …
+  60→}
   …
   65→func (group *RouterGroup) Use(middleware ...HandlerFunc) IRoutes {
+  …
+  72→func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
+  …
+  82→func (group *RouterGroup) BasePath() string {
+  …
+  103→func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) IRoutes {
+  …
+  111→func (group *RouterGroup) POST(relativePath string, handlers ...HandlerFunc) IRoutes {
+  …
+  116→func (group *RouterGroup) GET(relativePath string, handlers ...HandlerFunc) IRoutes {
   …
 routergroup_test.go
 routes_test.go

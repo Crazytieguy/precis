@@ -1,4 +1,4 @@
-Score(3000)=0.762 I=0.930 C=0.625 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.643/0.712/0.762/0.821/0.723/0.674
+Score(3000)=0.760 I=0.924 C=0.625 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.643/0.712/0.760/0.833/0.723/0.715
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -68,93 +68,93 @@ Score(3000)=0.762 I=0.930 C=0.625 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | ns | 2068 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.711 |
 | walker |  | 2105 | 53 | Code::CodeKey { rung: Names, file: swarm/repl/repl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.722 |
 | walker |  | 2121 | 16 | Code::CodeKey { rung: Decl, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.731 |
-| walker |  | 2193 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.747 |
-| ns | 2242 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.736 |
-| walker |  | 2256 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.742 |
-| walker |  | 2289 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.752 |
-| walker |  | 2324 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.771 |
-| ns | 2398 |  | 156 | `Response` fields table (complete) | 3.4 |  | 0.759 |
-| walker |  | 2412 | 88 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 2, sub: 0, line: 14 } |  |  | 0.795 |
-| walker |  | 2439 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 3, sub: 0, line: 27 } |  |  | 0.795 |
-| ns | 2603 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.779 |
-| walker |  | 2622 | 183 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.781 |
+| ns | 2242 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.720 |
+| walker |  | 2280 | 159 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.723 |
+| walker |  | 2352 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.739 |
+| ns | 2398 |  | 156 | `Response` fields table (complete) | 3.4 |  | 0.728 |
+| walker |  | 2415 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.734 |
+| walker |  | 2448 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.744 |
+| walker |  | 2483 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.762 |
+| walker |  | 2571 | 88 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 2, sub: 0, line: 14 } |  |  | 0.797 |
+| walker |  | 2598 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 3, sub: 0, line: 27 } |  |  | 0.797 |
+| ns | 2603 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.781 |
 | ns | 2766 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.768 |
-| walker |  | 2774 | 152 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.768 |
+| walker |  | 2886 | 288 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.768 |
 | ns | 2897 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.760 |
-| walker |  | 2976 | 202 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.762 |
-| ns | 3018 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.750 |
-| ns | 3172 |  | 154 | Streaming: the two Swarm-specific event types | 3.9 |  | 0.741 |
+| ns | 3018 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.748 |
+| walker |  | 3038 | 152 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.748 |
+| ns | 3172 |  | 154 | Streaming: the two Swarm-specific event types | 3.9 |  | 0.738 |
+| walker |  | 3240 | 202 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.741 |
 | ns | 3369 |  | 197 | Examples index: what each example directory demonstrates | 3.10 |  | 0.747 |
-| walker |  | 3377 | 401 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.747 |
-| ns | 3481 |  | 112 | Returning from `run()` and resuming a conversation | 3.11 |  | 0.745 |
-| walker |  | 3555 | 178 | Plaintext::Whole { file: setup.cfg } |  |  | 0.747 |
-| walker |  | 3566 | 11 | Fs::DirListing { dir: tests/test_runs } |  |  | 0.747 |
+| walker |  | 3418 | 178 | Plaintext::Whole { file: setup.cfg } |  |  | 0.749 |
+| walker |  | 3429 | 11 | Fs::DirListing { dir: tests/test_runs } |  |  | 0.749 |
+| ns | 3481 |  | 112 | Returning from `run()` and resuming a conversation | 3.11 |  | 0.747 |
 | ns | 3656 |  | 175 | `Agent` definition and `instructions` semantics | 3.12 |  | 0.741 |
-| ns | 3833 |  | 177 | Install, client construction, and the `run_demo_loop` util | 3.13 | 1.1 | 0.751 |
-| walker |  | 3901 | 335 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.783 |
-| walker |  | 3908 | 7 | Fs::DirListing { dir: examples/customer_service_streaming/logs } |  |  | 0.783 |
-| ns | 3978 |  | 145 | "Why Swarm" positioning and the evaluations stance | 3.14 |  | 0.784 |
-| walker |  | 3995 | 87 | Code::CodeKey { rung: Doc, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.787 |
-| walker |  | 4006 | 11 | Fs::DirListing { dir: examples/customer_service_streaming/tests } |  |  | 0.787 |
+| walker |  | 3764 | 335 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.774 |
+| walker |  | 3771 | 7 | Fs::DirListing { dir: examples/customer_service_streaming/logs } |  |  | 0.774 |
+| ns | 3833 |  | 177 | Install, client construction, and the `run_demo_loop` util | 3.13 | 1.1 | 0.783 |
+| walker |  | 3858 | 87 | Code::CodeKey { rung: Doc, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.786 |
+| walker |  | 3869 | 11 | Fs::DirListing { dir: examples/customer_service_streaming/tests } |  |  | 0.786 |
+| ns | 3978 |  | 145 | "Why Swarm" positioning and the evaluations stance | 3.14 |  | 0.787 |
 | ns | 4052 |  | 74 | Listings for the three simple examples (complete) | 4.1 |  | 0.795 |
-| ns | 4308 |  | 256 | Purpose line of all six example READMEs | 4.2 |  | 0.783 |
-| ns | 4431 |  | 123 | `basic/bare_minimum.py` in full | 4.3 |  | 0.763 |
-| walker |  | 4441 | 435 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.811 |
-| ns | 4719 |  | 288 | `triage_agent/agents.py`: three agents and their wiring | 4.4 |  | 0.779 |
-| walker |  | 4785 | 344 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.800 |
+| walker |  | 4304 | 435 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.846 |
+| ns | 4308 |  | 256 | Purpose line of all six example READMEs | 4.2 |  | 0.833 |
+| ns | 4431 |  | 123 | `basic/bare_minimum.py` in full | 4.3 |  | 0.811 |
+| walker |  | 4648 | 344 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.833 |
+| ns | 4719 |  | 288 | `triage_agent/agents.py`: three agents and their wiring | 4.4 |  | 0.800 |
 | ns | 4830 |  | 111 | `airline` example: complete directory tree | 4.5 |  | 0.796 |
 | ns | 4892 |  | 62 | `support_bot` and `personal_shopper` listings (complete) | 4.6 |  | 0.801 |
 | ns | 4930 |  | 38 | The three `customer_service*` directories: what is actually there | 4.7 |  | 0.799 |
-| ns | 5132 |  | 202 | `weather_agent/agents.py`: a complete function-calling agent | 4.8 |  | 0.776 |
-| walker |  | 5224 | 439 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.791 |
-| walker |  | 5231 | 7 | Fs::DirListing { dir: examples/customer_service_streaming/tests/test_runs } |  |  | 0.791 |
-| walker |  | 5292 | 61 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 2, sub: 0, line: 13 } |  |  | 0.792 |
+| walker |  | 5087 | 439 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.814 |
+| walker |  | 5094 | 7 | Fs::DirListing { dir: examples/customer_service_streaming/tests/test_runs } |  |  | 0.814 |
+| ns | 5132 |  | 202 | `weather_agent/agents.py`: a complete function-calling agent | 4.8 |  | 0.791 |
+| walker |  | 5155 | 61 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 2, sub: 0, line: 13 } |  |  | 0.792 |
 | ns | 5318 |  | 186 | `basic/context_variables.py`: callable instructions + injected context | 4.9 |  | 0.772 |
 | ns | 5559 |  | 241 | `airline` agents: the five agents and their instruction sources | 4.10 |  | 0.751 |
-| ns | 5748 |  | 189 | `airline` agents: imports and the five transfer functions | 4.11 | 4.10 | 0.734 |
-| walker |  | 5848 | 556 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.740 |
+| walker |  | 5711 | 556 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.758 |
+| ns | 5748 |  | 189 | `airline` agents: imports and the five transfer functions | 4.11 | 4.10 | 0.740 |
 | ns | 5941 |  | 193 | `airline` agents: per-agent tool lists (the handoff graph) | 4.12 | 4.10 | 0.720 |
 | ns | 6026 |  | 85 | `airline/configs/tools.py`: complete tool roster | 4.13 |  | 0.714 |
-| ns | 6269 |  | 243 | `run()` body: state setup and the completion half of the loop | 5.1 | 2.6 | 0.695 |
-| walker |  | 6396 | 548 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.703 |
+| walker |  | 6259 | 548 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.723 |
+| ns | 6269 |  | 243 | `run()` body: state setup and the completion half of the loop | 5.1 | 2.6 | 0.703 |
 | ns | 6462 |  | 193 | `run()` body: tool dispatch, agent switch, and the returned `Response` | 5.2 | 5.1 | 0.688 |
 | ns | 6555 |  | 93 | `run()` body: the `stream=True` delegation branch | 5.3 | 2.6 | 0.681 |
 | ns | 6766 |  | 211 | `handle_tool_calls` body: dispatch table and the missing-tool path | 5.4 | 2.8 | 0.667 |
-| walker |  | 6919 | 523 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.680 |
-| ns | 7037 |  | 271 | `handle_tool_calls` body: context injection and `Result` merging | 5.5 | 5.4 | 0.663 |
-| walker |  | 7131 | 212 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.670 |
-| walker |  | 7137 | 6 | Fs::DirListing { dir: examples/customer_service_streaming/configs/assistants/user_interface } |  |  | 0.670 |
-| walker |  | 7245 | 108 | Code::CodeKey { rung: Doc, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.670 |
-| ns | 7248 |  | 211 | `get_chat_completion` body: instructions, tool schemas, context hiding | 5.6 | 2.8 | 0.659 |
-| walker |  | 7258 | 13 | Fs::DirListing { dir: examples/airline/evals/eval_cases } |  |  | 0.663 |
-| ns | 7373 |  | 125 | `get_chat_completion` body: the Chat Completions request | 5.7 | 5.6 | 0.655 |
-| walker |  | 7433 | 175 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 5, sub: 0, line: 71 } |  |  | 0.657 |
-| walker |  | 7448 | 15 | Fs::DirListing { dir: examples/airline/evals/eval_results } |  |  | 0.662 |
-| walker |  | 7538 | 90 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 1, sub: 0, line: 5 } |  |  | 0.662 |
-| ns | 7548 |  | 175 | `handle_function_result` body: the return-value coercion rules | 5.8 | 2.8 | 0.670 |
-| walker |  | 7632 | 94 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 3, sub: 0, line: 21 } |  |  | 0.671 |
-| walker |  | 7678 | 46 | Fs::DirListing { dir: examples/customer_service_lite/logs } |  |  | 0.673 |
-| walker |  | 7735 | 57 | Fs::DirListing { dir: examples/customer_service/logs } |  |  | 0.675 |
-| ns | 7877 |  | 329 | `function_to_json` body: type map, signature inspection, `required` | 5.9 | 2.4 | 0.655 |
-| walker |  | 7974 | 239 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.657 |
+| walker |  | 6782 | 523 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.680 |
+| walker |  | 6994 | 212 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.688 |
+| walker |  | 7000 | 6 | Fs::DirListing { dir: examples/customer_service_streaming/configs/assistants/user_interface } |  |  | 0.688 |
+| ns | 7037 |  | 271 | `handle_tool_calls` body: context injection and `Result` merging | 5.5 | 5.4 | 0.670 |
+| walker |  | 7108 | 108 | Code::CodeKey { rung: Doc, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.670 |
+| walker |  | 7121 | 13 | Fs::DirListing { dir: examples/airline/evals/eval_cases } |  |  | 0.675 |
+| ns | 7248 |  | 211 | `get_chat_completion` body: instructions, tool schemas, context hiding | 5.6 | 2.8 | 0.663 |
+| walker |  | 7296 | 175 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 5, sub: 0, line: 71 } |  |  | 0.665 |
+| walker |  | 7311 | 15 | Fs::DirListing { dir: examples/airline/evals/eval_results } |  |  | 0.670 |
+| ns | 7373 |  | 125 | `get_chat_completion` body: the Chat Completions request | 5.7 | 5.6 | 0.662 |
+| walker |  | 7401 | 90 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 1, sub: 0, line: 5 } |  |  | 0.662 |
+| walker |  | 7495 | 94 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 3, sub: 0, line: 21 } |  |  | 0.663 |
+| walker |  | 7541 | 46 | Fs::DirListing { dir: examples/customer_service_lite/logs } |  |  | 0.665 |
+| ns | 7548 |  | 175 | `handle_function_result` body: the return-value coercion rules | 5.8 | 2.8 | 0.673 |
+| walker |  | 7598 | 57 | Fs::DirListing { dir: examples/customer_service/logs } |  |  | 0.675 |
+| walker |  | 7837 | 239 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.678 |
+| ns | 7877 |  | 329 | `function_to_json` body: type map, signature inspection, `required` | 5.9 | 2.4 | 0.657 |
 | ns | 7986 |  | 109 | `function_to_json` body: the emitted schema shape | 5.10 | 5.9 | 0.650 |
 | ns | 8156 |  | 170 | `swarm/util.py`: the streaming merge helpers | 5.11 | 2.4 | 0.655 |
-| walker |  | 8310 | 336 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 4, sub: 0, line: 32 } |  |  | 0.687 |
+| walker |  | 8173 | 336 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 4, sub: 0, line: 32 } |  |  | 0.687 |
 | ns | 8395 |  | 239 | `run_demo_loop` body: the reference conversation loop | 5.12 | 2.5 | 0.697 |
-| walker |  | 8564 | 254 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 2, sub: 0, line: 37 } |  |  | 0.697 |
-| walker |  | 8573 | 9 | Plaintext::DeclSurface { file: examples/support_bot/requirements.txt } |  |  | 0.697 |
+| walker |  | 8427 | 254 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 2, sub: 0, line: 37 } |  |  | 0.697 |
+| walker |  | 8436 | 9 | Plaintext::DeclSurface { file: examples/support_bot/requirements.txt } |  |  | 0.697 |
+| walker |  | 8495 | 59 | Plaintext::Whole { file: examples/support_bot/Makefile } |  |  | 0.697 |
 | ns | 8629 |  | 234 | `run_and_stream` body: the streaming protocol, with elisions marked | 5.13 | 2.7 | 0.683 |
-| walker |  | 8632 | 59 | Plaintext::Whole { file: examples/support_bot/Makefile } |  |  | 0.683 |
 | ns | 8858 |  | 229 | `tests/test_core.py`: complete test roster and the shared fixture | 6.1 |  | 0.673 |
-| ns | 9015 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.668 |
-| walker |  | 9114 | 482 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.709 |
+| walker |  | 8977 | 482 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.715 |
+| ns | 9015 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.709 |
+| walker |  | 9054 | 77 | Plaintext::Whole { file: examples/support_bot/docker-compose.yaml } |  |  | 0.709 |
 | ns | 9117 |  | 102 | `tests/test_util.py`: both schema-conversion tests | 6.3 |  | 0.706 |
-| walker |  | 9191 | 77 | Plaintext::Whole { file: examples/support_bot/docker-compose.yaml } |  |  | 0.706 |
 | ns | 9323 |  | 206 | `setup.cfg`: package metadata and the complete dependency list | 6.4 |  | 0.712 |
-| ns | 9498 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.705 |
-| ns | 9630 |  | 132 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.713 |
-| walker |  | 9632 | 441 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.750 |
-| walker |  | 9722 | 90 | Plaintext::Whole { file: examples/customer_service_streaming/docker-compose.yaml } |  |  | 0.750 |
-| walker |  | 9739 | 17 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 1, sub: 0, line: 6 } |  |  | 0.750 |
+| walker |  | 9495 | 441 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.752 |
+| ns | 9498 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.744 |
+| walker |  | 9585 | 90 | Plaintext::Whole { file: examples/customer_service_streaming/docker-compose.yaml } |  |  | 0.744 |
+| ns | 9630 |  | 132 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.750 |
 | ns | 9850 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.740 |
 | ns | 9875 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.741 |
+| walker |  | 9927 | 342 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 1, sub: 0, line: 6 } |  |  | 0.741 |

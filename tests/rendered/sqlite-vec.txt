@@ -19,26 +19,15 @@ README.md
   …
   5→An extremely small, "fast enough" vector search SQLite extension that runs
   6→anywhere! A successor to [`sqlite-vss`](https://github.com/asg017/sqlite-vss)
-  8→<!-- deno-fmt-ignore-start -->
-  9→
+  …
   10→> [!IMPORTANT]
   11→> _`sqlite-vec` is a pre-v1, so expect breaking changes!_
-  12→
-  13→<!-- deno-fmt-ignore-end -->
-  14→
+  …
   15→- Store and query float, int8, and binary vectors in `vec0` virtual tables
   16→- Written in pure C, no dependencies, runs anywhere SQLite runs
   17→  (Linux/MacOS/Windows, in the browser with WASM, Raspberry Pis, etc.)
   18→- Store non-vector data in metadata, auxiliary, or partition key columns
-  20→<p align="center">
-  21→  <a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">
-  22→  <picture>
-  23→    <source media="(prefers-color-scheme: dark)" srcset="./.github/logos/mozilla.dark.svg">
-  24→    <source media="(prefers-color-scheme: light)" srcset="./.github/logos/mozilla.svg">
-  25→    <img alt="Mozilla Builders logo" width=400>
-  26→  </picture>
-  27→  </a>
-  28→</p>
+  …
   30→<p align="center">
   31→<i>
   32→<code>sqlite-vec</code> is a
@@ -265,12 +254,20 @@ sqlite-dist.toml
   …
 sqlite-vec.c
   …
+  60→#ifndef LONGDOUBLE_TYPE
   61→#define LONGDOUBLE_TYPE long double
-  …
+  62→#endif
+  64→#ifndef _WIN32
+  65→#ifndef __EMSCRIPTEN__
+  66→#ifndef __COSMOPOLITAN__
+  67→#ifndef __wasi__
   68→typedef u_int8_t uint8_t;
   69→typedef u_int16_t uint16_t;
   70→typedef u_int64_t uint64_t;
-  …
+  71→#endif
+  72→#endif
+  73→#endif
+  74→#endif
   76→typedef int8_t i8;
   77→typedef uint8_t u8;
   78→typedef int16_t i16;
@@ -280,10 +277,16 @@ sqlite-vec.c
   82→typedef uint64_t u64;
   83→typedef float f32;
   84→typedef size_t usize;
-  …
+  86→#ifndef UNUSED_PARAMETER
   87→#define UNUSED_PARAMETER(X) (void)(X)
+  88→#endif
   …
+  96→#ifndef SQLITE_SUBTYPE
   97→#define SQLITE_SUBTYPE 0x000100000
+  98→#endif
+  100→#ifndef SQLITE_RESULT_SUBTYPE
+  101→#define SQLITE_RESULT_SUBTYPE 0x001000000
+  102→#endif
   …
 sqlite-vec.h.tmpl
 test.sql
@@ -340,3 +343,6 @@ tests/
   utils.py
   uv.lock
 tmp-static.py
+  …
+  4→db = sqlite3.connect(":memory:")
+  …

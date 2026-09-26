@@ -30,8 +30,7 @@ README.md
   13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
   14→
   15→It is built on top of [sokol](https://github.com/floooh/sokol) and leverages the power of ltask for multithreading.
-  16→
-  17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
+  …
   19→## Documentation
   20→
   21→- [API Reference](./docs)
@@ -158,6 +157,10 @@ docs/
     28→
     29→return font
   font_system.lua
+    …
+    15→function font_system.ttfdata(name) end
+    16→
+    17→return font_system
   image.lua
     …
     17→function image.load(data) end
@@ -177,7 +180,8 @@ docs/
     15→function lfs.attributes(filename) end
     …
     22→function lfs.dir(path) end
-    …
+    23→
+    24→return lfs
   material_mask.lua
     …
     19→function matmask.mask(sprite, color) end

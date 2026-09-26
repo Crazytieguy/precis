@@ -30,7 +30,7 @@ README.md
   1→# Monaco Editor
   …
   8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
-  10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
+  …
   12→## Try it out
   13→
   14→Try out the editor and see various examples [in our interactive playground](https://microsoft.github.io/monaco-editor/playground.html).
@@ -81,6 +81,15 @@ monaco-lsp-client/
   README.md
   generator/
     index.ts
+      …
+      7→class LineWriter {
+      …
+      73→interface MetaModel {
+      …
+      82→interface MetaData {
+      …
+      86→interface Request {
+      …
   package-lock.json
   package.json
     …
@@ -300,7 +309,7 @@ scripts/
   ci/
     build-monaco-editor-core-pkg.ts
     build-monaco-editor-pkg.ts
-    …
+    env.ts
   lib/
     index.ts
 src/

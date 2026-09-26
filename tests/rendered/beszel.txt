@@ -81,6 +81,11 @@ agent/
   handlers_test.go
   health/
     health.go
+      1→// Package health provides functions to check and update the health of the agent.
+      2→// It uses a file in the temp directory to store the timestamp of the last connection attempt.
+      3→// If the timestamp is older than 90 seconds, the agent is considered unhealthy.
+      4→// NB: The agent must be started with the Start() method to be considered healthy.
+      …
     health_test.go
   lhm/
     beszel_lhm.cs
@@ -144,6 +149,16 @@ beszel.go
   1→// Package beszel provides core application constants and version information
   2→// which are used throughout the application.
   …
+  7→const (
+  8→	// Version is the current version of the application.
+  9→	Version = "0.18.7"
+  10→	// AppName is the name of the application.
+  11→	AppName = "beszel"
+  12→)
+  14→// MinVersionCbor is the minimum supported version for CBOR compatibility.
+  15→var MinVersionCbor = semver.MustParse("0.12.0")
+  17→// MinVersionAgentResponse is the minimum supported version for AgentResponse compatibility.
+  18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
 go.mod
   1→module github.com/henrygd/beszel
   2→
@@ -229,6 +244,10 @@ internal/
       expirymap_test.go
     heartbeat/
       heartbeat.go
+        1→// Package heartbeat sends periodic outbound pings to an external monitoring
+        2→// endpoint (e.g. BetterStack, Uptime Kuma, Healthchecks.io) so operators can
+        3→// monitor Beszel without exposing it to the internet.
+        …
       heartbeat_test.go
     hub.go
       1→// Package hub handles updating systems and serving the web UI.
@@ -321,6 +340,14 @@ internal/
         utils.ts
       locales/
       main.tsx
+        …
+        29→const LoginPage = lazy(() => import("@/components/login/login.tsx"))
+        30→const Home = lazy(() => import("@/components/routes/home.tsx"))
+        31→const Containers = lazy(() => import("@/components/routes/containers.tsx"))
+        32→const Smart = lazy(() => import("@/components/routes/smart.tsx"))
+        33→const SystemDetail = lazy(() => import("@/components/routes/system.tsx"))
+        34→const CopyToClipboardDialog = lazy(() => import("@/components/copy-to-clipboard.tsx"))
+        …
       types.d.ts
       vite-env.d.ts
     tsconfig.app.json
@@ -339,13 +366,7 @@ readme.md
   2→
   3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.
   5→It has a friendly web interface, simple configuration, and is ready to use out of the box. It supports automatic backup, multi-user, OAuth authentication, and API access.
-  6→
-  7→[![agent Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel-agent/latest?logo=docker&label=agent%20image%20size)](https://hub.docker.com/r/henrygd/beszel-agent)
-  8→[![hub Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel/latest?logo=docker&label=hub%20image%20size)](https://hub.docker.com/r/henrygd/beszel)
-  9→[![MIT license](https://img.shields.io/github/license/henrygd/beszel?color=%239944ee)](https://github.com/henrygd/beszel/blob/main/LICENSE)
-  10→[![Crowdin](https://badges.crowdin.net/beszel/localized.svg)](https://crowdin.com/project/beszel)
-  11→
-  12→![Screenshot of Beszel dashboard and system page, side by side. The dashboard shows metrics from multiple connected systems, while the system page shows detailed metrics for a single system.](https://henrygd-assets.b-cdn.net/beszel/screenshot-new.png)
+  …
   14→## Features
   15→
   16→- **Lightweight**: Smaller and less resource-intensive than leading solutions.
@@ -355,7 +376,7 @@ readme.md
   20→- **Multi-user**: Users manage their own systems. Admins can share systems across users.
   21→- **OAuth / OIDC**: Supports many OAuth2 providers. Password auth can be disabled.
   22→- **Automatic backups**: Save to and restore from disk or S3-compatible storage.
-  23→<!-- - **REST API**: Use or update your data in your own scripts and applications. -->
+  …
   25→## Architecture
   26→
   27→Beszel consists of two main components: the **hub** and the **agent**.
@@ -366,10 +387,7 @@ readme.md
   33→
   34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
   36→## Screenshots
-  37→
-  38→![Dashboard](https://beszel.dev/image/dashboard.png)
-  39→![System page](https://beszel.dev/image/system-full.png)
-  40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
+  …
   42→## Supported metrics
   …
   56→## Help and discussion

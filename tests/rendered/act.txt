@@ -88,8 +88,7 @@ README.md
   18→When you run `act` it reads in your GitHub Actions from `.github/workflows/` and determines the set of actions that need to be run. It uses the Docker API to either pull or build the necessary images, as defined in your workflow files and finally determines the execution path based on the dependencies that were defined. Once it has the execution path, it then uses the Docker API to run containers for each action based on the images prepared earlier. The [environment variables](https://help.githu…
   19→
   20→Let's see it in action with a [sample repo](https://github.com/cplee/github-actions-demo)!
-  21→
-  22→![Demo](https://raw.githubusercontent.com/wiki/nektos/act/quickstart/act-quickstart-2.gif)
+  …
   24→# Act User Guide
   25→
   26→Please look at the [act user guide](https://nektosact.com) for more documentation.

@@ -32,10 +32,7 @@ README.md
   12→project layout. It is up to the developer to choose the tools and
   13→libraries they want to use. There are many extensions provided by the
   14→community that make adding new functionality easy.
-  15→
-  16→[WSGI]: https://wsgi.readthedocs.io/
-  17→[Werkzeug]: https://werkzeug.palletsprojects.com/
-  18→[Jinja]: https://jinja.palletsprojects.com/
+  …
   20→## A Simple Example
   21→
   22→```python
@@ -285,6 +282,8 @@ src/flask/
     …
     67→T_teardown = t.TypeVar("T_teardown", bound=ft.TeardownCallable)
     68→T_template_filter = t.TypeVar("T_template_filter", bound=ft.TemplateFilterCallable)
+    69→T_template_global = t.TypeVar("T_template_global", bound=ft.TemplateGlobalCallable)
+    70→T_template_test = t.TypeVar("T_template_test", bound=ft.TemplateTestCallable)
     …
   blueprints.py
   cli.py

@@ -34,14 +34,12 @@ README.md
   …
   9→This library provides [`anyhow::Error`][Error], a trait object based error type
   10→for easy idiomatic error handling in Rust applications.
-  12→[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
-  13→
+  …
   14→```toml
   15→[dependencies]
   16→anyhow = "1.0"
   17→```
-  18→
-  19→<br>
+  …
   21→## Details
   …
   126→## No-std support
@@ -52,20 +50,13 @@ README.md
   147→failure ours is built around the standard library's `std::error::Error` trait
   148→rather than a separate trait `failure::Fail`. The standard library has adopted
   149→the necessary improvements for this to be possible as part of [RFC 2504].
-  150→
-  151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
-  152→
-  153→<br>
+  …
   155→## Comparison to thiserror
   156→
   157→Use Anyhow if you don't care what error type your functions return, you just
   158→want it to be easy. This is common in application code. Use [thiserror] if you
   159→are a library that wants to design your own dedicated error type(s) so that on
   160→failures the caller gets exactly the information that you choose.
-  161→
-  162→[thiserror]: https://github.com/dtolnay/thiserror
-  163→
-  164→<br>
   …
 build.rs
   …
@@ -152,6 +143,11 @@ src/
     933→#[repr(C)]
     934→pub(crate) struct ErrorImpl<E = ()> {
     935→    vtable: &'static ErrorVTable,
+    936→    backtrace: Option<Backtrace>,
+    937→    // NOTE: Don't use directly. Use only through vtable. Erased type may have
+    938→    // different alignment.
+    939→    _object: E,
+    940→}
     …
     951→#[repr(C)]
     952→pub(crate) struct ContextError<C, E> {
@@ -160,6 +156,7 @@ src/
     955→}
     …
     966→impl ErrorImpl {
+    967→    pub(crate) unsafe fn error(this: Ref<Self>) -> &(dyn StdError + Send + Sync + 'static) {
     …
     1015→impl<E> StdError for ErrorImpl<E>
     1016→where

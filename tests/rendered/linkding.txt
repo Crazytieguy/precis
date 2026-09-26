@@ -79,8 +79,7 @@ README.md
   34→**Demo:** https://demo.linkding.link/
   35→
   36→**Screenshot:**
-  37→
-  38→![Screenshot](/docs/public/linkding-screenshot.png?raw=true "Screenshot")
+  …
   40→## Getting Started
   …
   47→## Documentation
@@ -179,6 +178,8 @@ bookmarks/
     migrate_tasks.py
   middlewares.py
   migrations/
+    0001_initial.py
+    …
   models.py
   queries.py
   services/
@@ -391,6 +392,8 @@ package.json
   18→    "postcss": "^8.4.45",
   19→    "postcss-cli": "^11.0.0",
   20→    "postcss-import": "^16.1.0",
+  21→    "postcss-nesting": "^13.0.0"
+  22→  },
   …
 postcss.config.js
 pyproject.toml

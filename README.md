@@ -33,13 +33,7 @@ README.md
   18→
   19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
   21→## Table of Contents
-  22→
-  23→-   [Install](#install)
-  24→-   [Usage](#usage)
-  25→-   [Examples & Demos](#examples--demos)
-  26→-   [API](#api)
-  27→-   [Contribute](#contribute)
-  28→-   [License](#license)
+  …
   30→## Install
   …
   56→## Usage
@@ -50,10 +44,18 @@ README.md
   …
   123→## API
   …
+  127→#### Table of Contents
+  …
   138→### mitt
-  …
+  139→
+  140→Mitt: Tiny (~200b) functional event emitter / pubsub.
+  141→
+  142→Returns **Mitt** 
+  143→
   144→### all
-  …
+  145→
+  146→A Map of event names to registered handler functions.
+  147→
   148→### on
   …
   157→### off

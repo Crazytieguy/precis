@@ -15,26 +15,7 @@ README.md
   7→> A lil' TOML parser
   8→
   9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
-  11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
-  12→
-  13→- [Intro](#intro)
-  14→- [Installation](#installation)
-  15→- [Usage](#usage)
-  16→  - [Parse a TOML string](#parse-a-toml-string)
-  17→  - [Parse a TOML file](#parse-a-toml-file)
-  18→  - [Handle invalid TOML](#handle-invalid-toml)
-  19→  - [Construct `decimal.Decimal`s from TOML floats](#construct-decimaldecimals-from-toml-floats)
-  20→  - [Building a `tomli`/`tomllib` compatibility layer](#building-a-tomlitomllib-compatibility-layer)
-  21→- [FAQ](#faq)
-  22→  - [Why this parser?](#why-this-parser)
-  23→  - [Is comment preserving round-trip parsing supported?](#is-comment-preserving-round-trip-parsing-supported)
-  24→  - [Is there a `dumps`, `write` or `encode` function?](#is-there-a-dumps-write-or-encode-function)
-  25→  - [How do TOML types map into Python types?](#how-do-toml-types-map-into-python-types)
-  26→- [Performance](#performance)
-  27→  - [Mypyc generated wheel](#mypyc-generated-wheel)
-  28→  - [Pure Python](#pure-python)
-  29→
-  30→<!-- mdformat-toc end -->
+  …
   32→## Intro<a name="intro"></a>
   33→
   34→Tomli is a Python library for parsing [TOML](https://toml.io).
@@ -202,14 +183,38 @@ src/tomli/
     76→class TOMLDecodeError(ValueError):
     …
     87→    def __init__(
-    …
+    88→        self,
+    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    92→        *args: Any,
     93→    ):
     …
     137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
+    138→    """Parse TOML from a binary file object."""
     …
     149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+    150→    """Parse TOML from a string."""
     …
     220→class Flags:
+    221→    """Flags that map to parsed keys/namespaces."""
+    223→    # Marks an immutable namespace (inline array or inline table).
+    224→    FROZEN: Final = 0
+    225→    # Marks a nest that has been explicitly created and can no longer
+    226→    # be opened using the "[table]" syntax.
+    227→    EXPLICIT_NEST: Final = 1
+    228→
+    229→    def __init__(self) -> None:
+    …
+    233→    def add_pending(self, key: Key, flag: int) -> None:
+    …
+    236→    def finalize_pending(self) -> None:
+    …
+    241→    def unset_all(self, key: Key) -> None:
+    …
+    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
+    …
+    260→    def is_(self, key: Key, flag: int) -> bool:
     …
     278→class NestedDict:
     279→    def __init__(self) -> None:
@@ -240,6 +245,14 @@ src/tomli/
     349→def skip_comment(src: str, pos: Pos) -> Pos:
     …
     361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
+    …
+    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+    …
+    390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+    …
+    413→def key_value_rule(
+    …
+    415→) -> Pos:
     …
   _re.py
   _types.py
