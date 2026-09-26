@@ -595,6 +595,36 @@ fn robustness_credential_files_render_only_their_rows() {
     }
 }
 
+/// A private key too long for the head a directory's floor reads, its
+/// closing armor past the head, renders as a row only.
+#[test]
+fn robustness_private_key_past_the_floors_head_renders_only_its_row() {
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path();
+    let material: String = (0..150)
+        .map(|line| format!("PrecisKeyMaterial{line:047}\n"))
+        .collect();
+    write(&root.join("README.md"), "# demo\n");
+    write(
+        &root.join("key.pem"),
+        format!("-----BEGIN RSA PRIVATE KEY-----\n{material}-----END RSA PRIVATE KEY-----\n"),
+    );
+    write(
+        &root.join("signing-key.asc"),
+        format!(
+            "-----BEGIN PGP PRIVATE KEY BLOCK-----\nComment: signing\n\n{material}\
+             =ab12\n-----END PGP PRIVATE KEY BLOCK-----\n"
+        ),
+    );
+    for budget in [3000, 100_000] {
+        let out = render(root, budget).unwrap();
+        assert!(!out.contains("PrecisKeyMaterial"), "{out}");
+        for row in ["key.pem\n", "signing-key.asc\n"] {
+            assert!(out.contains(row), "no `{row}` in:\n{out}");
+        }
+    }
+}
+
 /// Distinctive enough that finding it anywhere in the output is proof,
 /// not coincidence.
 #[cfg(unix)]
