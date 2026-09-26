@@ -37,30 +37,14 @@ pub struct FsGroup {
 
 /// Children under an [`FsGroup`]'s parent.
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[cfg_attr(feature = "eval", derive(serde::Deserialize))]
+#[cfg_attr(feature = "eval", serde(rename_all = "lowercase"))]
 pub enum FsEntries {
     /// Sentinel for "every immediate child" — `ns_loader` expands to
     /// `Listed`; walker output never carries `All`.
     All,
+    #[cfg_attr(feature = "eval", serde(untagged))]
     Listed(Vec<PathBuf>),
-}
-
-#[cfg(feature = "eval")]
-impl<'de> serde::Deserialize<'de> for FsEntries {
-    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
-        #[derive(serde::Deserialize)]
-        #[serde(untagged)]
-        enum Repr {
-            Str(String),
-            Listed(Vec<PathBuf>),
-        }
-        match Repr::deserialize(d)? {
-            Repr::Str(s) if s == "all" => Ok(FsEntries::All),
-            Repr::Str(s) => Err(serde::de::Error::custom(format!(
-                "invalid entries sentinel {s:?}; expected \"all\" or an array of paths"
-            ))),
-            Repr::Listed(v) => Ok(FsEntries::Listed(v)),
-        }
-    }
 }
 
 /// A contiguous range of source lines in one file plus how to render them.
