@@ -79,14 +79,15 @@ agent/
   handlers_test.go
   health/
     health.go
-      1→// Package health provides functions to check and update the health of the agent.
-      2→// It uses a file in the temp directory to store the timestamp of the last connection attempt.
-      3→// If the timestamp is older than 90 seconds, the agent is considered unhealthy.
-      4→// NB: The agent must be started with the Start() method to be considered healthy.
-      …
     health_test.go
   lhm/
     beszel_lhm.cs
+      1→using System;
+      2→using System.Globalization;
+      3→using LibreHardwareMonitor.Hardware;
+      4→
+      5→class Program
+      …
     beszel_lhm.csproj
   mdraid_linux.go
   mdraid_linux_test.go

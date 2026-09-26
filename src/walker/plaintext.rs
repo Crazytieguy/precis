@@ -681,7 +681,12 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
     } else {
         vec![false; lines.len()]
     };
-    let mut rows: Vec<(usize, usize, SurfaceLine)> = Vec::new();
+    let opens_block = if is_language {
+        block_openers(&lines, &continues)
+    } else {
+        vec![false; lines.len()]
+    };
+    let mut rows: Vec<(usize, usize, SurfaceLine, DeclarationRank)> = Vec::new();
     for (index, (line, &in_block_comment)) in lines
         .iter()
         .zip(&in_block_comment)
@@ -699,7 +704,12 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
         let Some(kind) = classify_surface_line(trimmed, in_block_comment) else {
             continue;
         };
-        rows.push((indentation(line), index + 1, kind));
+        let rank = if is_language && kind == SurfaceLine::Decl {
+            declaration_rank(trimmed, opens_block[index])
+        } else {
+            DeclarationRank::Heading
+        };
+        rows.push((indentation(line), index + 1, kind, rank));
     }
 
     let mut levels: Vec<usize> = rows.iter().map(|(indent, ..)| *indent).collect();
@@ -717,14 +727,21 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
     // statements and directives take the slots they leave. A flat file's
     // surface stays its head.
     if is_language {
-        let opens_block = block_openers(&lines, &continues);
-        rows.sort_by_key(|&(_, line, kind)| match kind {
-            SurfaceLine::Decl => declaration_rank(lines[line - 1].trim(), opens_block[line - 1]),
-            _ => DeclarationRank::Heading,
-        });
+        rows.sort_by_key(|&(.., rank)| rank);
     }
-    for level in levels.into_iter().take(SOURCE_TEXT_MAX_INDENT_LEVELS) {
-        for &(_, line, kind) in rows.iter().filter(|(indent, ..)| *indent == level) {
+    for (depth, level) in levels
+        .into_iter()
+        .take(SOURCE_TEXT_MAX_INDENT_LEVELS)
+        .enumerate()
+    {
+        // A deeper level that heads no declaration is statement bodies.
+        let heads_a_declaration = rows.iter().any(|&(indent, _, kind, rank)| {
+            indent == level && kind == SurfaceLine::Decl && rank == DeclarationRank::Heading
+        });
+        if is_language && depth > 0 && !heads_a_declaration {
+            break;
+        }
+        for &(_, line, kind, _) in rows.iter().filter(|(indent, ..)| *indent == level) {
             let slot = match kind {
                 SurfaceLine::Import => 0,
                 SurfaceLine::Comment => 1,
@@ -1681,6 +1698,24 @@ mod tests {
                 .iter()
                 .any(|line| line.contains("frozen_string_literal")),
             "tooling pragma leaked: {text:?}"
+        );
+    }
+
+    /// A file with few top-level declarations does not descend into a
+    /// function's statements to fill its roster.
+    #[test]
+    fn plaintext_source_text_surface_stops_at_statement_bodies() {
+        let cpp = "namespace leveldb {\n\nStatus BuildTable(const std::string& dbname, Env* env,\n\
+                   \x20                 Iterator* iter) {\n  Status s;\n  if (iter->Valid()) {\n\
+                   \x20   s = Write();\n  }\n  return s;\n}\n\n}  // namespace leveldb\n";
+        let lines: Vec<&str> = cpp.lines().collect();
+        let text: Vec<&str> = surface_of(cpp).iter().map(|n| lines[n - 1]).collect();
+        assert_eq!(
+            text,
+            vec![
+                "namespace leveldb {",
+                "Status BuildTable(const std::string& dbname, Env* env,"
+            ]
         );
     }
 
