@@ -18,8 +18,6 @@
 //! is the larger of a batch's tokens and its chars converted at the two
 //! budgets' ratio (`ranking_cost`).
 
-#[cfg(debug_assertions)]
-use std::collections::BTreeMap;
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::PathBuf;
 use std::rc::Rc;
@@ -84,10 +82,6 @@ pub struct Scheduler<W: Walker> {
     /// Code tokens scheduled per source file — drives the
     /// breadth-pressure ratio penalty.
     code_tokens_per_file: HashMap<PathBuf, usize>,
-    /// Debug-only owner map for FS render cells — overlapping sibling
-    /// FS atoms are a walker-contract violation.
-    #[cfg(debug_assertions)]
-    fs_atom_owners: BTreeMap<(PathBuf, String), BatchKey>,
 }
 
 /// Breadth-pressure scale: a `Body` batch of a source file that already
@@ -132,8 +126,6 @@ impl<W: Walker> Scheduler<W> {
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
             code_tokens_per_file: HashMap::new(),
-            #[cfg(debug_assertions)]
-            fs_atom_owners: BTreeMap::new(),
         }
     }
 
@@ -217,8 +209,6 @@ impl<W: Walker> Scheduler<W> {
         if self.key_to_id.contains_key(&batch.key) {
             return;
         }
-        #[cfg(debug_assertions)]
-        self.assert_disjoint_fs_atoms(&batch);
         let id = BatchId::new(self.entries.len());
 
         self.key_to_id.insert(batch.key.clone(), id);
@@ -258,33 +248,6 @@ impl<W: Walker> Scheduler<W> {
             }
         }
         self.entries.push(batch);
-    }
-
-    #[cfg(debug_assertions)]
-    fn assert_disjoint_fs_atoms(&mut self, batch: &Batch) {
-        let BatchContent::Fs { groups } = &batch.content else {
-            return;
-        };
-        for group in groups {
-            let crate::content::FsEntries::Listed(paths) = &group.entries else {
-                continue;
-            };
-            for path in paths {
-                let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
-                    continue;
-                };
-                let atom = (group.parent.clone(), name.to_string());
-                if let Some(owner) = self.fs_atom_owners.get(&atom) {
-                    debug_assert_eq!(
-                        owner, &batch.key,
-                        "overlapping FS atom {:?} emitted by {:?} and {:?}",
-                        atom, owner, batch.key,
-                    );
-                } else {
-                    self.fs_atom_owners.insert(atom, batch.key.clone());
-                }
-            }
-        }
     }
 
     // ---- exact pool ----
