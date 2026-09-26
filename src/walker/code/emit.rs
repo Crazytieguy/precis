@@ -50,10 +50,10 @@ fn file_prior(language: &Language, path: &Path, is_entrypoint: bool, ctx: &WalkC
         * language.file_weight.map_or(1.0, |weight| weight(path, ctx))
 }
 
-/// Re-export rows past this many add nothing to a roster's value. A
-/// barrel of hundreds of re-exported names otherwise ranks like a roster
-/// of the declarations they name, chunk after chunk, ahead of the modules
-/// that implement them.
+/// Re-export rows past this many, attribute rows aside, add nothing to a
+/// roster's value. A barrel of hundreds of re-exported names otherwise
+/// ranks like a roster of the declarations they name, chunk after chunk,
+/// ahead of the modules that implement them.
 const MAX_REEXPORT_ENTRIES: usize = 40;
 
 struct Emitter<'a> {
@@ -77,8 +77,10 @@ impl Emitter<'_> {
         );
         roster.sort_by_key(|item| item.rows.first().copied());
         let reexport_rows: usize = model.reexports.iter().map(|item| item.rows.len()).sum();
+        let attribute_rows = model.reexport_attribute_rows.min(reexport_rows);
         let decl_rows: usize = model.decls.iter().map(|decl| decl.name_rows.len()).sum();
-        let entries = decl_rows + reexport_rows.min(MAX_REEXPORT_ENTRIES);
+        let entries =
+            decl_rows + attribute_rows + (reexport_rows - attribute_rows).min(MAX_REEXPORT_ENTRIES);
         let names_value = self.file_prior * (entries as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
         self.part(self.key(Rung::Names, 0, 0), &roster, None, names_value);
 
@@ -409,9 +411,8 @@ mod tests {
         whole.doc = vec![rows(6..=6)];
         let model = FileModel {
             module_doc: vec![rows(1..=1)],
-            reexports: Vec::new(),
             decls: vec![whole, callable],
-            non_essential: false,
+            ..FileModel::default()
         };
         let batches = emit(10, model);
         let table: Vec<_> = batches

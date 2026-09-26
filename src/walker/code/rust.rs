@@ -103,11 +103,13 @@ fn extract_items(
         match node.kind() {
             "use_declaration" | "mod_item" => match node.child_by_field_name("body") {
                 None if visibility_modifier(node, file) == Some("pub") => {
+                    model.reexport_attribute_rows += leading.attribute_rows.len();
                     let mut rows = leading.attribute_rows;
                     rows.extend(file.node_rows(node));
                     model.reexports.push(Item::new(rows));
                 }
                 Some(body) if !is_test_module(node, file) => {
+                    model.reexport_attribute_rows += leading.attribute_rows.len();
                     let mut rows = leading.attribute_rows;
                     rows.extend(node.start_position().row + 1..=body.start_position().row + 1);
                     model.reexports.push(Item::new(rows));
@@ -919,6 +921,7 @@ extern crate alloc;
 ";
         let (_, model) = extract_source("lib.rs", source);
         assert_eq!(rows(&model.reexports), vec![vec![4, 5], vec![6, 7, 8, 9]]);
+        assert_eq!(model.reexport_attribute_rows, 1);
         assert!(model.decls.is_empty());
     }
 

@@ -128,6 +128,10 @@ pub(crate) struct FileModel {
     /// the file's `Names` roster alongside the declarations. Ordinary
     /// imports are not modeled.
     pub reexports: Vec<Item>,
+    /// How many `reexports` rows annotate a re-export (Rust attributes)
+    /// rather than list what it exposes: roster entries outside the
+    /// re-export cap.
+    pub reexport_attribute_rows: usize,
     /// Admitted top-level declarations, in any order.
     pub decls: Vec<DeclInfo>,
     /// The file serves its own package rather than its importers, which
