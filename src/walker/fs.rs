@@ -249,9 +249,10 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
 /// True when `dir` is one of many sibling directories and names exactly
 /// the entries an earlier sibling names (`keyboards/*/`, `charts/*/`):
 /// the first of each shape shows what the siblings hold. A declared
-/// workspace member is the project's own package, whatever its layout.
+/// workspace member or a package module is the project's own code,
+/// whatever its layout.
 fn repeats_sibling_shape(dir: &Path, ctx: &WalkCtx) -> bool {
-    if dir == ctx.root() || is_declared_workspace_member(dir, ctx) {
+    if dir == ctx.root() || is_declared_workspace_member(dir, ctx) || is_module_source_dir(dir) {
         return false;
     }
     let (Some(parent), Some(name)) = (dir.parent(), dir.file_name()) else {
@@ -653,17 +654,21 @@ mod tests {
             }
         }
         std::fs::write(root.join("charts/chart9/NOTES.txt"), "").unwrap();
+        for index in 0..CATALOG_PARENT_MIN_CHILD_DIRS {
+            let app = root.join(format!("apps/app{index}"));
+            std::fs::create_dir_all(&app).unwrap();
+            for file in ["__init__.py", "models.py", "views.py"] {
+                std::fs::write(app.join(file), format!("# app {index}")).unwrap();
+            }
+        }
         let ctx = WalkCtx::new(root.to_path_buf());
-        let value = |chart: &str| {
-            dir_listing_batch(root.join("charts").join(chart), &ctx)
-                .unwrap()
-                .value
-        };
+        let value = |dir: &str| dir_listing_batch(root.join(dir), &ctx).unwrap().value;
         assert_eq!(
-            value("chart1"),
-            value("chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
+            value("charts/chart1"),
+            value("charts/chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
         );
-        assert!(value("chart9") > value("chart1"));
+        assert!(value("charts/chart9") > value("charts/chart1"));
+        assert_eq!(value("apps/app1"), value("apps/app0"));
     }
 
     #[test]

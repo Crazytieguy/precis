@@ -1,4 +1,4 @@
-Score(3000)=0.775 I=0.873 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.687/0.544/0.775/0.750/0.694/0.655
+Score(3000)=0.775 I=0.873 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.687/0.544/0.775/0.750/0.689/0.655
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -103,186 +103,207 @@ Score(3000)=0.775 I=0.873 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 2444 | 73 | Fs::DirListing { dir: server/utils/parsers } |  |  | 0.735 |
 | walker |  | 2588 | 144 | Fs::DirListing { dir: server/libs } |  |  | 0.740 |
 | walker |  | 2592 | 4 | Fs::DirListing { dir: server/libs/commandLineArgs } |  |  | 0.740 |
-| walker |  | 2599 | 7 | Fs::DirListing { dir: server/libs/async } |  |  | 0.740 |
-| walker |  | 2609 | 10 | Fs::DirListing { dir: server/libs/jws } |  |  | 0.740 |
-| walker |  | 2620 | 11 | Fs::DirListing { dir: server/libs/passportLocal } |  |  | 0.740 |
-| walker |  | 2632 | 12 | Fs::DirListing { dir: server/libs/imageType } |  |  | 0.740 |
-| walker |  | 2644 | 12 | Fs::DirListing { dir: server/libs/requestIp } |  |  | 0.740 |
-| walker |  | 2657 | 13 | Fs::DirListing { dir: server/libs/xml } |  |  | 0.740 |
-| walker |  | 2671 | 14 | Fs::DirListing { dir: server/libs/busboy } |  |  | 0.740 |
-| walker |  | 2686 | 15 | Fs::DirListing { dir: server/libs/isexe } |  |  | 0.740 |
+| walker |  | 2596 | 4 | Fs::DirListing { dir: server/libs/fusejs } |  |  | 0.740 |
+| walker |  | 2603 | 7 | Fs::DirListing { dir: server/libs/async } |  |  | 0.740 |
+| walker |  | 2610 | 7 | Fs::DirListing { dir: server/libs/bcryptjs } |  |  | 0.740 |
+| walker |  | 2617 | 7 | Fs::DirListing { dir: server/libs/dateAndTime } |  |  | 0.740 |
+| walker |  | 2624 | 7 | Fs::DirListing { dir: server/libs/fastSort } |  |  | 0.740 |
+| walker |  | 2631 | 7 | Fs::DirListing { dir: server/libs/lodash.once } |  |  | 0.740 |
+| walker |  | 2638 | 7 | Fs::DirListing { dir: server/libs/memorystore } |  |  | 0.740 |
+| walker |  | 2645 | 7 | Fs::DirListing { dir: server/libs/nodeFfprobe } |  |  | 0.740 |
+| walker |  | 2652 | 7 | Fs::DirListing { dir: server/libs/nodeStreamZip } |  |  | 0.740 |
+| walker |  | 2659 | 7 | Fs::DirListing { dir: server/libs/recursiveReaddirAsync } |  |  | 0.740 |
+| walker |  | 2666 | 7 | Fs::DirListing { dir: server/libs/rss } |  |  | 0.740 |
+| walker |  | 2673 | 7 | Fs::DirListing { dir: server/libs/sanitizeHtml } |  |  | 0.740 |
+| walker |  | 2680 | 7 | Fs::DirListing { dir: server/libs/streamsearch } |  |  | 0.740 |
+| walker |  | 2687 | 7 | Fs::DirListing { dir: server/libs/uaParser } |  |  | 0.740 |
+| walker |  | 2694 | 7 | Fs::DirListing { dir: server/libs/universalify } |  |  | 0.740 |
 | ns | 2697 |  | 265 | server/utils tree roster (complete, with subdirectories) | 2.5 |  | 0.766 |
-| walker |  | 2704 | 18 | Fs::DirListing { dir: server/libs/readChunk } |  |  | 0.766 |
-| walker |  | 2726 | 22 | Fs::DirListing { dir: server/libs/jsonwebtoken } |  |  | 0.766 |
-| walker |  | 2749 | 23 | Fs::DirListing { dir: server/libs/umzug } |  |  | 0.766 |
-| walker |  | 2773 | 24 | Fs::DirListing { dir: server/libs/jwa } |  |  | 0.766 |
-| walker |  | 2780 | 7 | Fs::DirListing { dir: server/libs/jwa/buffer-equal-constant-time } |  |  | 0.766 |
-| walker |  | 2796 | 16 | Fs::DirListing { dir: server/libs/jwa/ecdsa-sig-formatter } |  |  | 0.766 |
+| walker |  | 2701 | 7 | Fs::DirListing { dir: server/libs/which } |  |  | 0.766 |
+| walker |  | 2711 | 10 | Fs::DirListing { dir: server/libs/jws } |  |  | 0.766 |
+| walker |  | 2722 | 11 | Fs::DirListing { dir: server/libs/passportLocal } |  |  | 0.766 |
+| walker |  | 2734 | 12 | Fs::DirListing { dir: server/libs/imageType } |  |  | 0.766 |
+| walker |  | 2746 | 12 | Fs::DirListing { dir: server/libs/requestIp } |  |  | 0.766 |
+| walker |  | 2759 | 13 | Fs::DirListing { dir: server/libs/xml } |  |  | 0.766 |
+| walker |  | 2773 | 14 | Fs::DirListing { dir: server/libs/busboy } |  |  | 0.766 |
+| walker |  | 2788 | 15 | Fs::DirListing { dir: server/libs/isexe } |  |  | 0.766 |
+| walker |  | 2806 | 18 | Fs::DirListing { dir: server/libs/readChunk } |  |  | 0.766 |
 | ns | 2815 |  | 118 | server/auth + server/objects tree rosters | 2.6 |  | 0.775 |
-| walker |  | 2820 | 24 | Fs::DirListing { dir: server/libs/umzug/storage } |  |  | 0.775 |
-| walker |  | 2857 | 37 | Fs::DirListing { dir: server/libs/fsExtra } |  |  | 0.775 |
-| walker |  | 2861 | 4 | Fs::DirListing { dir: server/libs/fsExtra/empty } |  |  | 0.775 |
-| walker |  | 2865 | 4 | Fs::DirListing { dir: server/libs/fsExtra/fs } |  |  | 0.775 |
-| walker |  | 2869 | 4 | Fs::DirListing { dir: server/libs/fsExtra/path-exists } |  |  | 0.775 |
-| walker |  | 2878 | 9 | Fs::DirListing { dir: server/libs/fsExtra/remove } |  |  | 0.775 |
-| walker |  | 2891 | 13 | Fs::DirListing { dir: server/libs/fsExtra/copy } |  |  | 0.775 |
-| walker |  | 2904 | 13 | Fs::DirListing { dir: server/libs/fsExtra/mkdirs } |  |  | 0.775 |
-| walker |  | 2917 | 13 | Fs::DirListing { dir: server/libs/fsExtra/move } |  |  | 0.775 |
-| walker |  | 2947 | 30 | Fs::DirListing { dir: server/libs/fsExtra/ensure } |  |  | 0.775 |
-| walker |  | 2986 | 39 | Fs::DirListing { dir: server/libs/fluentFfmpeg } |  |  | 0.775 |
+| walker |  | 2828 | 22 | Fs::DirListing { dir: server/libs/jsonwebtoken } |  |  | 0.775 |
+| walker |  | 2851 | 23 | Fs::DirListing { dir: server/libs/umzug } |  |  | 0.775 |
+| walker |  | 2875 | 24 | Fs::DirListing { dir: server/libs/jwa } |  |  | 0.775 |
+| walker |  | 2882 | 7 | Fs::DirListing { dir: server/libs/jwa/buffer-equal-constant-time } |  |  | 0.775 |
+| walker |  | 2898 | 16 | Fs::DirListing { dir: server/libs/jwa/ecdsa-sig-formatter } |  |  | 0.775 |
+| walker |  | 2922 | 24 | Fs::DirListing { dir: server/libs/umzug/storage } |  |  | 0.775 |
+| walker |  | 2959 | 37 | Fs::DirListing { dir: server/libs/fsExtra } |  |  | 0.775 |
+| walker |  | 2963 | 4 | Fs::DirListing { dir: server/libs/fsExtra/empty } |  |  | 0.775 |
+| walker |  | 2967 | 4 | Fs::DirListing { dir: server/libs/fsExtra/fs } |  |  | 0.775 |
+| walker |  | 2971 | 4 | Fs::DirListing { dir: server/libs/fsExtra/path-exists } |  |  | 0.775 |
+| walker |  | 2980 | 9 | Fs::DirListing { dir: server/libs/fsExtra/remove } |  |  | 0.775 |
+| walker |  | 2993 | 13 | Fs::DirListing { dir: server/libs/fsExtra/copy } |  |  | 0.775 |
+| walker |  | 3006 | 13 | Fs::DirListing { dir: server/libs/fsExtra/mkdirs } |  |  | 0.775 |
+| walker |  | 3019 | 13 | Fs::DirListing { dir: server/libs/fsExtra/move } |  |  | 0.775 |
 | ns | 3023 |  | 208 | server/migrations roster (complete, version-named) | 2.7 |  | 0.754 |
-| walker |  | 3031 | 45 | Fs::DirListing { dir: server/libs/nodeCron } |  |  | 0.754 |
-| walker |  | 3039 | 8 | Fs::DirListing { dir: server/libs/nodeCron/background-scheduled-task } |  |  | 0.754 |
-| walker |  | 3082 | 43 | Fs::DirListing { dir: server/libs/nodeCron/convert-expression } |  |  | 0.754 |
-| walker |  | 3130 | 48 | Fs::DirListing { dir: server/libs/expressFileupload } |  |  | 0.754 |
-| walker |  | 3179 | 49 | Fs::DirListing { dir: server/libs/archiver } |  |  | 0.754 |
-| walker |  | 3186 | 7 | Fs::DirListing { dir: server/libs/archiver/buffer-crc32 } |  |  | 0.754 |
-| walker |  | 3193 | 7 | Fs::DirListing { dir: server/libs/archiver/crc32 } |  |  | 0.754 |
-| walker |  | 3200 | 7 | Fs::DirListing { dir: server/libs/archiver/normalize-path } |  |  | 0.754 |
-| walker |  | 3207 | 7 | Fs::DirListing { dir: server/libs/archiver/readdir-glob } |  |  | 0.754 |
-| walker |  | 3214 | 7 | Fs::DirListing { dir: server/libs/archiver/zip-stream } |  |  | 0.767 |
+| walker |  | 3049 | 30 | Fs::DirListing { dir: server/libs/fsExtra/ensure } |  |  | 0.754 |
+| walker |  | 3088 | 39 | Fs::DirListing { dir: server/libs/fluentFfmpeg } |  |  | 0.754 |
+| walker |  | 3133 | 45 | Fs::DirListing { dir: server/libs/nodeCron } |  |  | 0.754 |
+| walker |  | 3141 | 8 | Fs::DirListing { dir: server/libs/nodeCron/background-scheduled-task } |  |  | 0.754 |
+| walker |  | 3184 | 43 | Fs::DirListing { dir: server/libs/nodeCron/convert-expression } |  |  | 0.754 |
 | ns | 3214 |  | 191 | client/pages roster (complete SPA route tree) | 2.8 |  | 0.767 |
-| walker |  | 3228 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons } |  |  | 0.767 |
-| walker |  | 3232 | 4 | Fs::DirListing { dir: server/libs/archiver/compress-commons/util } |  |  | 0.767 |
-| walker |  | 3254 | 22 | Fs::DirListing { dir: server/libs/archiver/crc32-stream } |  |  | 0.767 |
-| walker |  | 3263 | 9 | Fs::DirListing { dir: server/libs/busboy/types } |  |  | 0.767 |
-| walker |  | 3272 | 9 | Fs::DirListing { dir: server/libs/fsExtra/util } |  |  | 0.767 |
-| walker |  | 3344 | 72 | Fs::DirListing { dir: server/libs/archiver/archiverUtils } |  |  | 0.767 |
-| walker |  | 3351 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/balancedMatch } |  |  | 0.767 |
-| walker |  | 3362 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/fsRealpath } |  |  | 0.767 |
-| walker |  | 3373 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream } |  |  | 0.767 |
+| walker |  | 3232 | 48 | Fs::DirListing { dir: server/libs/expressFileupload } |  |  | 0.767 |
+| walker |  | 3281 | 49 | Fs::DirListing { dir: server/libs/archiver } |  |  | 0.767 |
+| walker |  | 3288 | 7 | Fs::DirListing { dir: server/libs/archiver/buffer-crc32 } |  |  | 0.767 |
+| walker |  | 3295 | 7 | Fs::DirListing { dir: server/libs/archiver/crc32 } |  |  | 0.767 |
+| walker |  | 3302 | 7 | Fs::DirListing { dir: server/libs/archiver/normalize-path } |  |  | 0.767 |
+| walker |  | 3309 | 7 | Fs::DirListing { dir: server/libs/archiver/readdir-glob } |  |  | 0.767 |
+| walker |  | 3316 | 7 | Fs::DirListing { dir: server/libs/archiver/zip-stream } |  |  | 0.767 |
+| walker |  | 3330 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons } |  |  | 0.767 |
+| walker |  | 3334 | 4 | Fs::DirListing { dir: server/libs/archiver/compress-commons/util } |  |  | 0.767 |
+| walker |  | 3356 | 22 | Fs::DirListing { dir: server/libs/archiver/crc32-stream } |  |  | 0.767 |
+| walker |  | 3365 | 9 | Fs::DirListing { dir: server/libs/busboy/types } |  |  | 0.767 |
+| walker |  | 3374 | 9 | Fs::DirListing { dir: server/libs/fsExtra/util } |  |  | 0.767 |
 | ns | 3377 |  | 163 | client component categories + store/plugins/players/mixins rosters | 2.9 |  | 0.777 |
-| walker |  | 3388 | 15 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/glob } |  |  | 0.777 |
-| walker |  | 3443 | 55 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream } |  |  | 0.777 |
-| walker |  | 3447 | 4 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/stream } |  |  | 0.777 |
-| walker |  | 3458 | 11 | Fs::DirListing { dir: server/libs/archiver/lib } |  |  | 0.777 |
-| walker |  | 3466 | 8 | Fs::DirListing { dir: server/libs/archiver/lib/plugins } |  |  | 0.777 |
-| walker |  | 3480 | 14 | Fs::DirListing { dir: server/libs/fluentFfmpeg/presets } |  |  | 0.777 |
-| walker |  | 3504 | 24 | Fs::DirListing { dir: server/libs/libarchive } |  |  | 0.777 |
-| walker |  | 3511 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/internal } |  |  | 0.777 |
-| walker |  | 3530 | 19 | Fs::DirListing { dir: server/libs/jws/lib } |  |  | 0.777 |
-| walker |  | 3544 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers } |  |  | 0.777 |
-| walker |  | 3568 | 24 | Fs::DirListing { dir: server/libs/jsonwebtoken/lib } |  |  | 0.777 |
-| walker |  | 3597 | 29 | Fs::DirListing { dir: server/libs/fluentFfmpeg/options } |  |  | 0.777 |
-| walker |  | 3610 | 13 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream } |  |  | 0.777 |
-| walker |  | 3628 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/ours } |  |  | 0.777 |
+| walker |  | 3446 | 72 | Fs::DirListing { dir: server/libs/archiver/archiverUtils } |  |  | 0.777 |
+| walker |  | 3453 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/balancedMatch } |  |  | 0.777 |
+| walker |  | 3460 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/braceExpansion } |  |  | 0.777 |
+| walker |  | 3467 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/inflight } |  |  | 0.777 |
+| walker |  | 3474 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.difference } |  |  | 0.777 |
+| walker |  | 3481 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.flatten } |  |  | 0.777 |
+| walker |  | 3488 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.isplainobject } |  |  | 0.777 |
+| walker |  | 3495 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.union } |  |  | 0.777 |
+| walker |  | 3502 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/minimatch } |  |  | 0.777 |
+| walker |  | 3509 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/safeBuffer } |  |  | 0.777 |
+| walker |  | 3516 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/stringDecoder } |  |  | 0.777 |
+| walker |  | 3523 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/wrappy } |  |  | 0.777 |
+| walker |  | 3534 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/fsRealpath } |  |  | 0.777 |
+| walker |  | 3545 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream } |  |  | 0.777 |
+| walker |  | 3560 | 15 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/glob } |  |  | 0.777 |
+| walker |  | 3615 | 55 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream } |  |  | 0.777 |
+| walker |  | 3619 | 4 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/stream } |  |  | 0.777 |
+| walker |  | 3630 | 11 | Fs::DirListing { dir: server/libs/archiver/lib } |  |  | 0.777 |
+| walker |  | 3638 | 8 | Fs::DirListing { dir: server/libs/archiver/lib/plugins } |  |  | 0.777 |
+| walker |  | 3652 | 14 | Fs::DirListing { dir: server/libs/fluentFfmpeg/presets } |  |  | 0.777 |
 | ns | 3665 |  | 288 | test/ tree roster (complete mocha suite) | 2.10 |  | 0.744 |
-| walker |  | 3795 | 167 | Fs::DirListing { dir: client/strings } |  |  | 0.744 |
+| walker |  | 3676 | 24 | Fs::DirListing { dir: server/libs/libarchive } |  |  | 0.744 |
+| walker |  | 3683 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/internal } |  |  | 0.744 |
+| walker |  | 3702 | 19 | Fs::DirListing { dir: server/libs/jws/lib } |  |  | 0.744 |
+| walker |  | 3716 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers } |  |  | 0.744 |
+| walker |  | 3740 | 24 | Fs::DirListing { dir: server/libs/jsonwebtoken/lib } |  |  | 0.744 |
+| walker |  | 3769 | 29 | Fs::DirListing { dir: server/libs/fluentFfmpeg/options } |  |  | 0.744 |
+| walker |  | 3782 | 13 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream } |  |  | 0.744 |
+| walker |  | 3800 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/ours } |  |  | 0.744 |
 | ns | 3818 |  | 153 | docs/ OpenAPI spec tree roster (complete) | 2.11 |  | 0.752 |
-| walker |  | 3843 | 48 | Code::CodeKey { rung: Names, file: client/store/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.752 |
-| walker |  | 3876 | 33 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 7, sub: 0, line: 67 } |  |  | 0.752 |
 | ns | 3962 |  | 144 | server/libs roster: 35 vendored third-party packages | 2.12 |  | 0.759 |
-| walker |  | 4063 | 187 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 0, line: 130 } |  |  | 0.759 |
+| walker |  | 3967 | 167 | Fs::DirListing { dir: client/strings } |  |  | 0.759 |
+| walker |  | 4015 | 48 | Code::CodeKey { rung: Names, file: client/store/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.759 |
+| walker |  | 4048 | 33 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 7, sub: 0, line: 67 } |  |  | 0.759 |
 | ns | 4142 |  | 180 | Server.js: how the three routers are mounted | 3.1 |  | 0.750 |
-| walker |  | 4364 | 301 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 1, line: 130 } |  |  | 0.750 |
+| walker |  | 4235 | 187 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 0, line: 130 } |  |  | 0.750 |
 | ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.733 |
-| walker |  | 4678 | 314 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 0, line: 34 } |  |  | 0.733 |
-| walker |  | 4775 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.733 |
-| walker |  | 4781 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.733 |
-| walker |  | 4787 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.733 |
-| walker |  | 4797 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.733 |
+| walker |  | 4536 | 301 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 1, line: 130 } |  |  | 0.733 |
 | ns | 4806 |  | 380 | API routes: libraries | 3.3 | 3.2 | 0.713 |
-| walker |  | 4815 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.713 |
-| walker |  | 4913 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.713 |
-| walker |  | 5016 | 103 | Fs::DirListing { dir: server/libs/watcher } |  |  | 0.713 |
-| walker |  | 5028 | 12 | Fs::DirListing { dir: server/libs/watcher/atomically } |  |  | 0.713 |
-| walker |  | 5041 | 13 | Fs::DirListing { dir: server/libs/watcher/ripstat } |  |  | 0.713 |
-| walker |  | 5049 | 8 | Fs::DirListing { dir: server/libs/watcher/aborter } |  |  | 0.713 |
-| walker |  | 5086 | 37 | Fs::DirListing { dir: server/libs/watcher/atomically/utils } |  |  | 0.713 |
-| walker |  | 5114 | 28 | Fs::DirListing { dir: test/server } |  |  | 0.715 |
-| walker |  | 5119 | 5 | Fs::DirListing { dir: test/server/providers } |  |  | 0.716 |
-| walker |  | 5125 | 6 | Fs::DirListing { dir: test/server/finders } |  |  | 0.716 |
-| walker |  | 5132 | 7 | Fs::DirListing { dir: test/server/objects } |  |  | 0.717 |
-| walker |  | 5145 | 13 | Fs::DirListing { dir: test/server/controllers } |  |  | 0.718 |
-| ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.701 |
-| walker |  | 5167 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.705 |
-| walker |  | 5211 | 44 | Plaintext::DeclSurface { file: client/layouts/blank.vue } |  |  | 0.705 |
-| walker |  | 5255 | 44 | Plaintext::DeclSurface { file: client/layouts/error.vue } |  |  | 0.705 |
-| walker |  | 5299 | 44 | Plaintext::DeclSurface { file: client/pages/account.vue } |  |  | 0.705 |
-| walker |  | 5343 | 44 | Plaintext::DeclSurface { file: client/pages/index.vue } |  |  | 0.705 |
-| walker |  | 5387 | 44 | Plaintext::DeclSurface { file: client/pages/login.vue } |  |  | 0.705 |
-| walker |  | 5431 | 44 | Plaintext::DeclSurface { file: client/pages/oops.vue } |  |  | 0.705 |
+| walker |  | 4850 | 314 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 0, line: 34 } |  |  | 0.713 |
+| walker |  | 4947 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.713 |
+| walker |  | 4953 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.713 |
+| walker |  | 4959 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.713 |
+| walker |  | 4969 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.713 |
+| walker |  | 4987 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.713 |
+| walker |  | 5085 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.713 |
+| ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.696 |
+| walker |  | 5188 | 103 | Fs::DirListing { dir: server/libs/watcher } |  |  | 0.696 |
+| walker |  | 5200 | 12 | Fs::DirListing { dir: server/libs/watcher/atomically } |  |  | 0.696 |
+| walker |  | 5213 | 13 | Fs::DirListing { dir: server/libs/watcher/ripstat } |  |  | 0.696 |
+| walker |  | 5221 | 8 | Fs::DirListing { dir: server/libs/watcher/aborter } |  |  | 0.696 |
+| walker |  | 5258 | 37 | Fs::DirListing { dir: server/libs/watcher/atomically/utils } |  |  | 0.696 |
+| walker |  | 5286 | 28 | Fs::DirListing { dir: test/server } |  |  | 0.698 |
+| walker |  | 5291 | 5 | Fs::DirListing { dir: test/server/providers } |  |  | 0.699 |
+| walker |  | 5297 | 6 | Fs::DirListing { dir: test/server/finders } |  |  | 0.699 |
+| walker |  | 5304 | 7 | Fs::DirListing { dir: test/server/objects } |  |  | 0.700 |
+| walker |  | 5317 | 13 | Fs::DirListing { dir: test/server/controllers } |  |  | 0.701 |
+| walker |  | 5339 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.705 |
+| walker |  | 5383 | 44 | Plaintext::DeclSurface { file: client/layouts/blank.vue } |  |  | 0.705 |
+| walker |  | 5427 | 44 | Plaintext::DeclSurface { file: client/layouts/error.vue } |  |  | 0.705 |
+| walker |  | 5471 | 44 | Plaintext::DeclSurface { file: client/pages/account.vue } |  |  | 0.705 |
 | ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.688 |
-| walker |  | 5639 | 208 | Fs::DirListing { dir: server/migrations } |  |  | 0.704 |
-| walker |  | 5753 | 114 | Fs::DirListing { dir: client/components/cards } |  |  | 0.704 |
-| walker |  | 5786 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.710 |
-| walker |  | 5809 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.714 |
-| walker |  | 5843 | 34 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.714 |
-| walker |  | 5877 | 34 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers/zip } |  |  | 0.714 |
-| ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.698 |
+| walker |  | 5515 | 44 | Plaintext::DeclSurface { file: client/pages/index.vue } |  |  | 0.688 |
+| walker |  | 5559 | 44 | Plaintext::DeclSurface { file: client/pages/login.vue } |  |  | 0.688 |
+| walker |  | 5603 | 44 | Plaintext::DeclSurface { file: client/pages/oops.vue } |  |  | 0.688 |
+| walker |  | 5811 | 208 | Fs::DirListing { dir: server/migrations } |  |  | 0.704 |
+| ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.689 |
+| walker |  | 5925 | 114 | Fs::DirListing { dir: client/components/cards } |  |  | 0.689 |
+| walker |  | 5958 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.694 |
+| walker |  | 5981 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.698 |
+| walker |  | 6015 | 34 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.698 |
+| walker |  | 6049 | 34 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers/zip } |  |  | 0.698 |
 | ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.687 |
-| walker |  | 6196 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.694 |
-| walker |  | 6196 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.694 |
-| walker |  | 6230 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.694 |
-| walker |  | 6258 | 28 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.694 |
-| walker |  | 6332 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.694 |
+| walker |  | 6368 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.694 |
+| walker |  | 6368 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.694 |
+| walker |  | 6402 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.694 |
+| walker |  | 6430 | 28 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.694 |
 | ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.680 |
-| walker |  | 6704 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.711 |
-| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.696 |
-| walker |  | 6895 | 191 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.696 |
+| walker |  | 6504 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.680 |
+| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.666 |
+| walker |  | 6876 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.696 |
 | ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.688 |
-| walker |  | 7042 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.688 |
-| walker |  | 7047 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.688 |
-| walker |  | 7052 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.688 |
-| walker |  | 7057 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.688 |
-| walker |  | 7063 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.688 |
-| walker |  | 7071 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.688 |
-| walker |  | 7083 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.688 |
+| walker |  | 7067 | 191 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.688 |
 | ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.684 |
-| walker |  | 7095 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.684 |
-| walker |  | 7110 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.684 |
-| walker |  | 7126 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.684 |
-| walker |  | 7143 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.684 |
-| walker |  | 7178 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.684 |
-| walker |  | 7188 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.684 |
-| walker |  | 7225 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.684 |
-| walker |  | 7257 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.684 |
+| walker |  | 7214 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.684 |
+| walker |  | 7219 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.684 |
+| walker |  | 7224 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.684 |
+| walker |  | 7229 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.684 |
+| walker |  | 7235 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.684 |
+| walker |  | 7243 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.684 |
+| walker |  | 7255 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.684 |
+| walker |  | 7267 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.684 |
+| walker |  | 7282 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.684 |
+| walker |  | 7298 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.684 |
 | ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.679 |
-| walker |  | 7411 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.681 |
-| walker |  | 7627 | 216 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.681 |
+| walker |  | 7315 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.679 |
+| walker |  | 7350 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.679 |
+| walker |  | 7360 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.679 |
+| walker |  | 7397 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.679 |
+| walker |  | 7429 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.679 |
+| walker |  | 7583 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.681 |
 | ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.667 |
-| walker |  | 7826 | 199 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 2, line: 0 } |  |  | 0.667 |
-| walker |  | 7845 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.667 |
-| walker |  | 7867 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.667 |
-| walker |  | 7911 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.667 |
+| walker |  | 7799 | 216 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.667 |
 | ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.655 |
-| walker |  | 8276 | 365 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
-| ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.663 |
-| walker |  | 8440 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.674 |
-| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.663 |
-| walker |  | 8746 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 5, sub: 0, line: 22 } |  |  | 0.663 |
-| walker |  | 8790 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.663 |
-| walker |  | 8834 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.663 |
+| walker |  | 7998 | 199 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 2, line: 0 } |  |  | 0.655 |
+| walker |  | 8017 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.655 |
+| walker |  | 8039 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.655 |
+| walker |  | 8083 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.655 |
+| ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.644 |
+| walker |  | 8448 | 365 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
+| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.652 |
+| walker |  | 8612 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.663 |
 | ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.655 |
-| walker |  | 8878 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.655 |
-| walker |  | 8922 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.655 |
-| walker |  | 8966 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.655 |
-| walker |  | 9010 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.655 |
+| walker |  | 8918 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 5, sub: 0, line: 22 } |  |  | 0.655 |
+| walker |  | 8962 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.655 |
+| walker |  | 9006 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.655 |
 | ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.649 |
-| walker |  | 9054 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.649 |
-| walker |  | 9098 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.649 |
-| walker |  | 9142 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.649 |
-| walker |  | 9186 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.649 |
-| walker |  | 9230 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.649 |
-| walker |  | 9274 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.649 |
+| walker |  | 9050 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.649 |
+| walker |  | 9094 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.649 |
+| walker |  | 9138 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.649 |
+| walker |  | 9182 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.649 |
+| walker |  | 9226 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.649 |
+| walker |  | 9270 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.649 |
 | ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.661 |
-| walker |  | 9318 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.661 |
-| walker |  | 9362 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.661 |
-| walker |  | 9406 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.661 |
-| walker |  | 9450 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.661 |
-| walker |  | 9494 | 44 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.661 |
-| walker |  | 9538 | 44 | Plaintext::DeclSurface { file: client/components/covers/BookCover.vue } |  |  | 0.661 |
+| walker |  | 9314 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.661 |
+| walker |  | 9358 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.661 |
+| walker |  | 9402 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.661 |
+| walker |  | 9446 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.661 |
+| walker |  | 9490 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.661 |
+| walker |  | 9534 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.661 |
 | ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.655 |
-| walker |  | 9582 | 44 | Plaintext::DeclSurface { file: client/components/covers/CollectionCover.vue } |  |  | 0.655 |
-| walker |  | 9626 | 44 | Plaintext::DeclSurface { file: client/components/covers/GroupCover.vue } |  |  | 0.655 |
-| walker |  | 9670 | 44 | Plaintext::DeclSurface { file: client/components/covers/PlaylistCover.vue } |  |  | 0.655 |
-| walker |  | 9714 | 44 | Plaintext::DeclSurface { file: client/components/covers/PreviewCover.vue } |  |  | 0.655 |
-| walker |  | 9758 | 44 | Plaintext::DeclSurface { file: client/components/modals/AccountModal.vue } |  |  | 0.655 |
+| walker |  | 9578 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.655 |
+| walker |  | 9622 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.655 |
+| walker |  | 9666 | 44 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.655 |
+| walker |  | 9710 | 44 | Plaintext::DeclSurface { file: client/components/covers/BookCover.vue } |  |  | 0.655 |
+| walker |  | 9754 | 44 | Plaintext::DeclSurface { file: client/components/covers/CollectionCover.vue } |  |  | 0.655 |
 | ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.653 |
-| walker |  | 9802 | 44 | Plaintext::DeclSurface { file: client/components/modals/AddCustomMetadataProviderModal.vue } |  |  | 0.653 |
-| walker |  | 9846 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyCreatedModal.vue } |  |  | 0.653 |
-| walker |  | 9890 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyModal.vue } |  |  | 0.653 |
+| walker |  | 9798 | 44 | Plaintext::DeclSurface { file: client/components/covers/GroupCover.vue } |  |  | 0.653 |
+| walker |  | 9842 | 44 | Plaintext::DeclSurface { file: client/components/covers/PlaylistCover.vue } |  |  | 0.653 |
+| walker |  | 9886 | 44 | Plaintext::DeclSurface { file: client/components/covers/PreviewCover.vue } |  |  | 0.653 |
 | ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.653 |
-| walker |  | 9934 | 44 | Plaintext::DeclSurface { file: client/components/modals/AudioFileDataModal.vue } |  |  | 0.653 |
-| walker |  | 9978 | 44 | Plaintext::DeclSurface { file: client/components/modals/BackupScheduleModal.vue } |  |  | 0.653 |
-| walker |  | 9996 | 18 | Plaintext::DeclSurface { file: client/components/modals/BatchQuickMatchModel.vue } |  |  | 0.653 |
+| walker |  | 9930 | 44 | Plaintext::DeclSurface { file: client/components/modals/AccountModal.vue } |  |  | 0.653 |
+| walker |  | 9974 | 44 | Plaintext::DeclSurface { file: client/components/modals/AddCustomMetadataProviderModal.vue } |  |  | 0.653 |
+| walker |  | 9997 | 23 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyCreatedModal.vue } |  |  | 0.653 |
