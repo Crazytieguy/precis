@@ -17,7 +17,8 @@
 //!   enumerator.
 //! - A non-`inline` `static` in a header is hidden, whatever the
 //!   spelling of `inline`.
-//! - A declaration's doc is the comment run directly above it.
+//! - A declaration's doc is the comment run directly above it, or above
+//!   the feature gate it opens.
 //!
 //! A header written in C++ ([`is_cpp_header`]) is left to the plaintext
 //! fallback, like a `.hpp`.
@@ -30,7 +31,7 @@ use std::sync::LazyLock;
 use regex::Regex;
 use tree_sitter::Node;
 
-use super::model::{DeclInfo, FileModel, Shape};
+use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{
     Language, MAX_SCOPE_NESTING, SourceFile, has_extension, is_named_after, named_children,
 };
@@ -194,9 +195,30 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         Shape::Whole => file.whole(name_rows(node), rows, aggregate_body(node)),
     };
     Some(DeclInfo {
-        doc: file.comment_paragraphs_above(node),
+        doc: doc_above(node, file),
         ..decl
     })
+}
+
+/// The comment run directly above `node`, or, when `node` opens a
+/// descended feature gate's first branch, the run above that gate.
+fn doc_above(node: Node, file: &SourceFile) -> Vec<Item> {
+    let mut anchor = node;
+    loop {
+        let doc = file.comment_paragraphs_above(anchor);
+        let Some(gate) = anchor.parent() else {
+            return doc;
+        };
+        let opens_gate = matches!(gate.kind(), "preproc_if" | "preproc_ifdef")
+            && anchor.prev_named_sibling().is_some_and(|previous| {
+                Some(previous) == gate.child_by_field_name("condition")
+                    || Some(previous) == gate.child_by_field_name("name")
+            });
+        if !doc.is_empty() || !opens_gate || is_header_guard(gate, file) {
+            return doc;
+        }
+        anchor = gate;
+    }
 }
 
 /// A directive of a descended feature gate: its rows (through the end
@@ -249,9 +271,8 @@ fn attach_directives(decls: &mut [DeclInfo], directives: &[GateDirective]) {
     let spans: Vec<(usize, usize)> = decls
         .iter()
         .map(|decl| {
-            let doc = decl.doc.iter().flat_map(|item| item.rows.iter());
             let body = decl.body.iter().flat_map(|item| item.rows.iter());
-            let rows = doc.chain(&decl.head).chain(body).copied();
+            let rows = decl.head.iter().chain(body).copied();
             (rows.clone().min().unwrap_or(0), rows.max().unwrap_or(0))
         })
         .collect();
@@ -1058,6 +1079,34 @@ int next;
         assert_eq!(rows(&sdsnew.doc), vec![vec![5, 6, 7]]);
         assert_eq!(trailing.head, vec![9]);
         assert!(next.doc.is_empty());
+    }
+
+    #[test]
+    fn c_doc_above_a_feature_gate_documents_its_first_declaration() {
+        let source = "\
+/* Banner. */
+#ifndef CFG_H
+#define CFG_H
+/* Bytes per block. */
+#ifndef BYTES_PER_BLOCK
+#define BYTES_PER_BLOCK (16)
+#endif
+/* Open a channel. */
+#ifdef HAVE_CH
+#if defined(FAST)
+int ch_open(void);
+#endif
+int ch_close(void);
+#endif
+#endif
+";
+        let model = model("cfg.h", source);
+        let docs: Vec<_> = model.decls.iter().map(|decl| rows(&decl.doc)).collect();
+        assert_eq!(
+            heads_of(&model),
+            vec![vec![5, 6, 7], vec![9, 10, 11, 12], vec![13, 14]]
+        );
+        assert_eq!(docs, vec![vec![vec![4]], vec![vec![8]], vec![]]);
     }
 
     #[test]
