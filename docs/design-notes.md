@@ -65,6 +65,15 @@ case: an NS that ranks their content as primary is an NS-author error.
 Pricing other docs' sections or outlines at any tier bought the wrong
 pages (translations, migration guides, nested package READMEs) and
 never reached the ones answer keys rank.
+A README section titled for building, testing, running or development
+sells its leading shell blocks as a separate `CommandBlock` batch behind
+the outline, one per top-level section, and the section gates on it
+(the scheduler allows overlap only with ancestors). Install and setup
+titles stay out: including them cost 1000 −.0048 on the grid, mostly
+library `npm install x` blocks that answer keys rank late, while the
+build/test set is grid-neutral (3000 +.0005) and shows commands in 24
+of the 32 real-world repos whose README has a tagged build/test shell
+block, up from 3 (2026-09-25).
 A repository that exhausts the pool before the budget gets one more
 round: the head of every listed file no batch touches
 (`plaintext::floor_batches`), ranked among themselves only, so it never
