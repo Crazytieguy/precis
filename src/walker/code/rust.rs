@@ -13,10 +13,11 @@
 //!   declares items (see `item_macro`) are `Whole`; `trait`, `impl` and
 //!   `extern` blocks are `Whole` containers whose members are their
 //!   functions.
-//! - **Hidden**: test-only (`#[cfg(test)]`, `#[cfg(all(test, …))]`),
-//!   `#[test]`-style and `#[doc(hidden)]` items, fields and variants, inline `mod test` / `mod tests`, `const _`, and an
-//!   inherent-impl function without a visibility modifier. An inherent
-//!   impl with no admitted function is hidden. Outside `main.rs`, a module
+//! - **Hidden**: test (`#[cfg(test)]`, `#[cfg(all(test, …))]`,
+//!   `#[test]`-style) and `#[doc(hidden)]` items, fields and variants,
+//!   inline `mod test` / `mod tests`, `const _`, and an inherent-impl
+//!   function without a visibility modifier. An inherent impl with no
+//!   admitted function is hidden. Outside `main.rs`, a module
 //!   that declares some visible item (a visibility modifier, or
 //!   `#[macro_export]` on a `macro_rules!`) hides its private functions
 //!   and macros; its private types, constants and statics stay.
@@ -302,7 +303,7 @@ impl Leading {
 }
 
 /// `cfg(test)`, or `cfg(all(…))` / `cfg(any(…))` with a bare `test` among
-/// its predicates: code compiled for tests (and at most test-like builds).
+/// its predicates: test code or test support.
 fn is_test_cfg(compact_attribute: &str) -> bool {
     let Some(predicate) = compact_attribute
         .strip_prefix("cfg(")
