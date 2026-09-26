@@ -271,18 +271,17 @@ impl<W: Walker> Scheduler<W> {
     fn top_ranked(&mut self) -> Option<(BatchId, Cost)> {
         self.rerank_stale();
         let best = self.ranking.last()?.id;
-        if !self.root_identity_read
-            && self.is_listing_below_spine(best)
-            && let Some(identity) = self
-                .eligible
+        let picked = if !self.root_identity_read && self.is_listing_below_spine(best) {
+            self.ranking
                 .iter()
-                .copied()
-                .filter(|&id| self.is_root_identity(id))
-                .max_by(|&a, &b| self.ranking_ratio(a).total_cmp(&self.ranking_ratio(b)))
-        {
-            return Some((identity, self.cost_cache[&identity]));
-        }
-        Some((best, self.cost_cache[&best]))
+                .rev()
+                .map(|ranked| ranked.id)
+                .find(|&id| self.is_root_identity(id))
+                .unwrap_or(best)
+        } else {
+            best
+        };
+        Some((picked, self.cost_cache[&picked]))
     }
 
     /// Ranks every stale eligible batch at its current ratio, costing

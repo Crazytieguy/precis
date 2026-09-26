@@ -8,12 +8,12 @@ Score(3000)=0.774 I=0.910 C=0.658 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 126 |  | 96 | The complete list of built-in instruments | 1.2 |  | 0.246 |
 | walker |  | 131 | 57 | Fs::DirListing { dir: microbootstrap } |  |  | 0.261 |
 | ns | 191 |  | 65 | The four bootstrap targets: fastapi, litestar, faststream, or no framework | 1.3 |  | 0.187 |
-| walker |  | 203 | 72 | Json::Identity { file: package.json } |  |  | 0.187 |
+| walker |  | 203 | 72 | Toml::Identity { file: pyproject.toml } |  |  | 0.187 |
 | walker |  | 221 | 18 | Fs::DirListing { dir: microbootstrap/middlewares } |  |  | 0.187 |
 | ns | 224 |  | 33 | Repository root listing (complete) | 1.4 |  | 0.457 |
 | walker |  | 244 | 23 | Fs::DirListing { dir: microbootstrap/config } |  |  | 0.463 |
 | walker |  | 271 | 27 | Fs::DirListing { dir: microbootstrap/bootstrappers } |  |  | 0.478 |
-| walker |  | 343 | 72 | Toml::Identity { file: pyproject.toml } |  |  | 0.478 |
+| walker |  | 343 | 72 | Json::Identity { file: package.json } |  |  | 0.478 |
 | ns | 353 |  | 129 | `microbootstrap/` and `microbootstrap/instruments/` listings (complete) | 1.5 |  | 0.398 |
 | walker |  | 415 | 72 | Fs::DirListing { dir: microbootstrap/instruments } |  |  | 0.610 |
 | ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.586 |
