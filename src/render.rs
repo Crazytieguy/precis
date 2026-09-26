@@ -683,12 +683,13 @@ impl RenderedTree {
         if anchors.is_empty() {
             return;
         }
-        let source = self.source_cache.get(path);
+        let cached = self.source_cache.get(path);
+        let source = cached.as_deref();
         let marker_row = format_marker_row(indent_depth);
-        walk_anchor_gaps(&anchors, source.as_deref(), |event| match event {
+        walk_anchor_gaps(&anchors, (None, None), source, |event| match event {
             GapWalkEvent::Gap => out.push_str(&marker_row),
             GapWalkEvent::Anchor(number) => {
-                let source_line = source.as_ref().and_then(|s| s.line(number)).unwrap_or("");
+                let source_line = source.and_then(|s| s.line(number)).unwrap_or("");
                 out.push_str(&format_line_row(
                     path,
                     number,
@@ -879,44 +880,16 @@ fn local_gap_marker_delta(
     let shown_before = outer_anchors || !before.is_empty();
     let shown_after = outer_anchors || !after.is_empty();
 
-    source.map_or(0, |source| {
-        let before_count = if shown_before {
-            marker_count_between(left, right, &before, source)
-        } else {
-            0
-        };
-        let after_count = if shown_after {
-            marker_count_between(left, right, &after, source)
-        } else {
-            0
-        };
-        after_count as isize - before_count as isize
-    })
-}
-
-/// Count non-blank gaps between unchanged outer anchors. `inner` contains
-/// every anchor inside those bounds for the tree state being measured.
-fn marker_count_between(
-    left: Option<usize>,
-    right: Option<usize>,
-    inner: &BTreeSet<usize>,
-    source: &Source,
-) -> usize {
-    let mut count = 0;
-    let mut previous = left.unwrap_or(0);
-    for &anchor in inner {
-        if anchor > previous + 1 && source.gap_has_content(previous + 1, anchor - 1) {
-            count += 1;
+    let marker_count = |shown: bool, anchors: &BTreeSet<usize>| {
+        let mut count = 0isize;
+        if shown {
+            walk_anchor_gaps(anchors, (left, right), source, |event| {
+                count += isize::from(matches!(event, GapWalkEvent::Gap));
+            });
         }
-        previous = anchor;
-    }
-    let gap_end = right
-        .map(|anchor| anchor.saturating_sub(1))
-        .unwrap_or_else(|| source.line_count());
-    if gap_end > previous && source.gap_has_content(previous + 1, gap_end) {
-        count += 1;
-    }
-    count
+        count
+    };
+    marker_count(shown_after, &after) - marker_count(shown_before, &before)
 }
 
 enum GapWalkEvent {
@@ -926,15 +899,18 @@ enum GapWalkEvent {
 
 /// The single traversal behind both marker counting and row emission:
 /// visits each anchor in order and each elision gap (leading / between
-/// anchors / trailing) that holds non-blank source. Charged tokens ==
-/// rendered tokens depends on cost and render never walking gaps
-/// differently, so both must go through here.
+/// anchors / trailing) that holds non-blank source. `left` and `right`
+/// are the nearest anchors outside `anchors`, if any, so the cost side
+/// can count one changed window. Charged tokens == rendered tokens
+/// depends on cost and render never walking gaps differently, so both
+/// must go through here.
 fn walk_anchor_gaps(
     anchors: &BTreeSet<usize>,
+    (left, right): (Option<usize>, Option<usize>),
     source: Option<&Source>,
     mut visit: impl FnMut(GapWalkEvent),
 ) {
-    let mut prev = 0usize;
+    let mut prev = left.unwrap_or(0);
     for &a in anchors {
         if a > prev + 1 && source.is_some_and(|s| s.gap_has_content(prev + 1, a - 1)) {
             visit(GapWalkEvent::Gap);
@@ -942,8 +918,11 @@ fn walk_anchor_gaps(
         visit(GapWalkEvent::Anchor(a));
         prev = a;
     }
-    if source.is_some_and(|s| s.gap_has_content(prev + 1, s.line_count())) {
-        visit(GapWalkEvent::Gap);
+    if let Some(s) = source {
+        let gap_end = right.map_or(s.line_count(), |right| right.saturating_sub(1));
+        if s.gap_has_content(prev + 1, gap_end) {
+            visit(GapWalkEvent::Gap);
+        }
     }
 }
 
@@ -1073,13 +1052,7 @@ fn format_line_row(
     let source_line = &*redact_secrets(source_line, in_document);
     let mut s = INDENT_UNIT.repeat(indent_depth);
     match render {
-        Render::Ellipsis => {
-            // Unreachable from render/cost paths — Ellipsis records
-            // never render rows of their own; `render_file` synthesizes
-            // gap markers instead. Defensive marker shape in release.
-            debug_assert!(false, "format_line_row called with Render::Ellipsis");
-            s.push('…');
-        }
+        Render::Ellipsis => debug_assert!(false, "Ellipsis records render no row of their own"),
         Render::Full => {
             let visible = visible_full_line(source_line);
             let _ = write!(s, "{number}→");
