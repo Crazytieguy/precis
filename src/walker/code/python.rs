@@ -11,7 +11,8 @@
 //!   decorators (`@property` and `@overload` say what a `def` is), the
 //!   `def` / `class` row and, when the signature spans rows, the row that
 //!   closes it (`) -> T:`), so a roster never lists an unclosed `def f(`.
-//! - **Doc**: the docstring opening a `def` / `class` body.
+//! - **Doc**: the docstring opening a `def` / `class` body, or else the
+//!   `#` comments directly above the definition.
 //! - **Module doc**: an entry file's (a dunder-named module:
 //!   `__init__.py`, `__main__.py`, `__version__.py`) module docstring and
 //!   dunder assignments other than `__all__`. Other modules' docstrings and
@@ -298,6 +299,9 @@ fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
         let docstring_rows = file.node_rows(statements.remove(index));
         doc = file.paragraphs(docstring_rows.filter(|&row| row > head_end));
     }
+    if doc.is_empty() {
+        doc = file.comment_paragraphs_above(unit);
+    }
     let (body, members) = match shape {
         Shape::Callable => (file.node_items(statements, head_end), Vec::new()),
         Shape::Whole => class_body(file, &statements, head_end),
@@ -406,9 +410,10 @@ fn suite_statements(inner: Node) -> Vec<Node> {
 /// the body by their name rows; every other statement (fields, `if`
 /// blocks) is a body [`Item`] with the comments directly above it. A
 /// nested class is flattened into the suite: its head is one item, its
-/// docstring, fields and member name rows follow, and its methods become
-/// members, so it lists as a roster rather than as its whole source. Comments directly
-/// above a method or nested class belong to no part.
+/// doc, fields and member name rows follow, and its methods become
+/// members, so it lists as a roster rather than as its whole source.
+/// Comments directly above a method or nested class are its doc when it
+/// has no docstring, and otherwise in no part.
 fn class_body(
     file: &SourceFile,
     statements: &[Node],
@@ -881,6 +886,39 @@ class Wikicode:
             .map(|decl| decl.name_rows.clone())
             .collect();
         assert_eq!(stub_names, vec![vec![1, 2], vec![3, 4]]);
+    }
+
+    #[test]
+    fn code_python_comment_above_undocumented_definition_is_its_doc() {
+        let model = extract_source(
+            "tz.py",
+            "\
+# Template tags for time zones.
+
+# Convert a datetime to the current time zone.
+@register.filter
+def localtime(value):
+    return value
+
+class Node:
+    tag = None
+    # Render the node.
+    def render(self):
+        return ''
+
+    # Shadowed by the docstring.
+    def close(self):
+        \"\"\"Close it.\"\"\"
+",
+        );
+        let docs: Vec<_> = model.decls.iter().map(|decl| rows(&decl.doc)).collect();
+        assert_eq!(docs, vec![vec![vec![3]], vec![]]);
+        let member_docs: Vec<_> = model.decls[1]
+            .members
+            .iter()
+            .map(|member| rows(&member.doc))
+            .collect();
+        assert_eq!(member_docs, vec![vec![vec![10]], vec![vec![16]]]);
     }
 
     #[test]
