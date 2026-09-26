@@ -15,7 +15,8 @@ use super::{WalkCtx, fs::files_with_any_extension, single_file_lines_content};
 
 /// Field count at which a declaration body earns full base value. Wide
 /// models carry the schema's relations; scaling value by body size also
-/// offsets the scheduler's small-batch bias (`value / cost^0.35`), so a
+/// offsets the scheduler's small-batch bias (`value / cost^k`,
+/// [`crate::value::DEFAULT_CONCAVITY_EXPONENT`]), so a
 /// thin model doesn't out-rank a wide one purely on cost.
 const FULL_VALUE_FIELD_ROWS: f64 = 24.0;
 
