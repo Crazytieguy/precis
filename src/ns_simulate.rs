@@ -44,7 +44,6 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
     }
     let mut applied: HashMap<&str, BatchId> = HashMap::new();
     let mut left_out: HashSet<&str> = HashSet::new();
-    let mut applied_by: HashMap<BatchId, &str> = HashMap::new();
     let mut fs_owners: BTreeMap<(PathBuf, String), &str> = BTreeMap::new();
     let mut cumulative = 0;
     let mut out = Vec::with_capacity(ns.batches.len());
@@ -124,10 +123,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
         let batch_id = BatchId::new(position);
         let ancestors = collect_ancestors(&batch.id, &by_id, &applied);
         for conflict in tree.apply(&content, batch_id, |id| ancestors.contains(&id)) {
-            let owner = applied_by.get(&conflict.existing_owner).map_or_else(
-                || format!("{:?}", conflict.existing_owner),
-                |id| id.to_string(),
-            );
+            let owner = &ns.batches[conflict.existing_owner.index()].id;
             violations.push(format!(
                 "non-ancestor overlap: {}:{} already owned by {owner} (add a predecessor edge or move the span)",
                 conflict.path.display(),
@@ -135,7 +131,6 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
             ));
         }
         applied.insert(&batch.id, batch_id);
-        applied_by.insert(batch_id, &batch.id);
         out.push(record(violations, cost, cumulative));
     }
     out
