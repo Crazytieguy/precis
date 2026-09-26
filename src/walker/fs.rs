@@ -263,12 +263,16 @@ fn roster_factor(children: &BTreeMap<String, EntryKind>) -> f64 {
 
 /// The name prefix and extension a catalog entry shares with its
 /// siblings. A module's source files share a prefix by convention
-/// (`libpff_*.c`, `kubelet_*.go`), and a roster of scripts names the
-/// project's commands (`scoop-*.ps1`), so neither is a catalog.
+/// (`libpff_*.c`, `kubelet_*.go`), as do a module's declarations
+/// (`aws_*.tf`, `user_*.proto`), and a roster of scripts names the
+/// project's commands (`scoop-*.ps1`), so none is a catalog.
 fn catalog_key(name: &str) -> Option<(&str, &str)> {
     let path = Path::new(name);
     let extension = path.extension()?.to_str()?;
-    if super::language_group(path).is_some() || has_extension_in(path, SCRIPT_EXTENSIONS) {
+    if super::language_group(path).is_some()
+        || has_extension_in(path, super::plaintext::SOURCE_TEXT_DECLARATIVE_EXTENSIONS)
+        || has_extension_in(path, super::plaintext::SCRIPT_EXTENSIONS)
+    {
         return None;
     }
     let (prefix_end, _) = name
@@ -277,8 +281,6 @@ fn catalog_key(name: &str) -> Option<(&str, &str)> {
         .find(|(_, char)| matches!(char, '-' | '_' | '.'))?;
     Some((&name[..prefix_end], extension))
 }
-
-const SCRIPT_EXTENSIONS: &[&str] = &["sh", "bash", "zsh", "fish", "ps1", "psm1"];
 
 const MEDIA_EXTENSIONS: &[&str] = &[
     "png", "jpg", "jpeg", "gif", "webp", "svg", "ico", "icns", "bmp", "tif", "tiff", "psd", "ttf",
@@ -417,8 +419,8 @@ impl FsState {
 
     /// Names of `parent`'s subdirectories whose three or more entry names
     /// repeat an earlier subdirectory's. A leaf of non-source files
-    /// repeats one however few its entries, with its own name matched as
-    /// a wildcard (`aws/aws.plugin.zsh` repeats `git/git.plugin.zsh`).
+    /// repeats one however few its entries, with its own name as a leading
+    /// wildcard (`aws/aws.plugin.zsh` repeats `git/git.plugin.zsh`).
     fn shape_repeats(&self, parent: &Path, filter: &DirFilter) -> Rc<HashSet<String>> {
         if let Some(repeats) = self.shape_repeats.borrow().get(parent) {
             return Rc::clone(repeats);
@@ -431,17 +433,16 @@ impl FsState {
             .filter(|(_, kind)| matches!(kind, EntryKind::Directory));
         for (name, _) in subdirs {
             let entries = list_dir(&parent.join(name), filter);
-            let non_source_leaf = entries.iter().all(|(entry, kind)| {
-                matches!(kind, EntryKind::File) && super::language_group(Path::new(entry)).is_none()
-            });
+            let non_source_leaf = !entries.is_empty()
+                && entries.iter().all(|(entry, kind)| {
+                    matches!(kind, EntryKind::File)
+                        && super::language_group(Path::new(entry)).is_none()
+                });
             let shape: BTreeSet<String> = entries
                 .keys()
-                .map(|entry| {
-                    if non_source_leaf {
-                        entry.replace(name.as_str(), "\0")
-                    } else {
-                        entry.clone()
-                    }
+                .map(|entry| match entry.strip_prefix(name.as_str()) {
+                    Some(rest) if non_source_leaf => format!("\0{rest}"),
+                    _ => entry.clone(),
                 })
                 .collect();
             if (entries.len() > 2 || non_source_leaf) && !shapes.insert(shape) {
@@ -709,6 +710,10 @@ mod tests {
             .map(|index| format!("hook_{index}.sh"))
             .collect();
         write("hooks", &hooks);
+        let resources: Vec<String> = (0..ROSTER_MIN_FILES)
+            .map(|index| format!("aws_{index}.tf"))
+            .collect();
+        write("resources", &resources);
         let ctx = WalkCtx::new(root.to_path_buf());
         let value = |dir: &str| {
             dir_listing_batches(root.join(dir), &ctx)
@@ -720,6 +725,7 @@ mod tests {
         assert_eq!(value("branding"), value("notes"));
         assert_eq!(value("issues"), None);
         assert_eq!(value("hooks"), value("notes"));
+        assert_eq!(value("resources"), value("notes"));
     }
 
     #[test]
@@ -747,6 +753,13 @@ mod tests {
             std::fs::write(root.join("crates").join(chart).join("src/lib.rs"), "").unwrap();
         }
         std::fs::write(root.join("charts/chart9/NOTES.txt"), "").unwrap();
+        let locales = ["ar", "de", "en", "es", "fr", "it", "ja", "ko", "pt", "ru"];
+        for locale in locales {
+            let docs = root.join("docs").join(locale);
+            std::fs::create_dir_all(&docs).unwrap();
+            std::fs::write(docs.join("index.md"), "").unwrap();
+            std::fs::write(docs.join("content.md"), "").unwrap();
+        }
         for index in 0..CATALOG_PARENT_MIN_CHILD_DIRS {
             let app = root.join(format!("apps/app{index}"));
             std::fs::create_dir_all(&app).unwrap();
@@ -764,6 +777,10 @@ mod tests {
         assert_eq!(
             value("plugins/chart1"),
             value("plugins/chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
+        );
+        assert_eq!(
+            value("docs/de"),
+            value("docs/ar") * CATALOG_CHILD_LISTING_SUPPRESSION
         );
         assert_eq!(value("pkg/chart1"), value("pkg/chart0"));
         assert_eq!(value("crates/chart1"), value("crates/chart0"));

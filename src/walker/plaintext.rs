@@ -289,7 +289,7 @@ pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
 /// schema or config trees rather than source packages. Same surface
 /// value as a language file, no source-inventory promotion: promoting
 /// them buys stacks of asset-tree listings.
-const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
+pub(in crate::walker) const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
     "proto", "thrift", "graphql", "gql", "capnp", "fbs", "tf", "hcl", "nix", "dhall", "cue",
     "gradle", "gemspec", "podspec", "rake",
 ];
@@ -301,9 +301,12 @@ const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
 /// (`gradlew.bat`, `mvnw.cmd`), 158 tokens of argument marshalling.
 #[rustfmt::skip]
 const SOURCE_TEXT_FLAT_EXTENSIONS: &[&str] = &[
-    "txt", "ini", "cfg", "conf", "properties", "sh", "bash", "zsh", "fish", "ps1", "psm1", "awk",
-    "cmake", "mk", "mak", "bzl", "bazel", "gyp", "gni", "ld", "css", "scss", "sass", "less", "styl",
+    "txt", "ini", "cfg", "conf", "properties", "awk", "cmake", "mk", "mak", "bzl", "bazel", "gyp",
+    "gni", "ld", "css", "scss", "sass", "less", "styl",
 ];
+
+pub(in crate::walker) const SCRIPT_EXTENSIONS: &[&str] =
+    &["sh", "bash", "zsh", "fish", "ps1", "psm1"];
 
 /// Extensionless build manifests the fallback claims by exact name.
 #[rustfmt::skip]
@@ -332,8 +335,7 @@ fn classify_source_text(name: &str) -> Option<Class> {
     {
         return Some(Class::LanguageSource);
     }
-    SOURCE_TEXT_FLAT_EXTENSIONS
-        .contains(&ext)
+    (SOURCE_TEXT_FLAT_EXTENSIONS.contains(&ext) || SCRIPT_EXTENSIONS.contains(&ext))
         .then_some(Class::FlatText)
 }
 
