@@ -209,7 +209,8 @@ const DECLARATION_KEYWORDS: &[&str] = &[
 
 /// An item-level macro invocation whose tokens declare items: `Whole`,
 /// one body item per declaration (the tokens through a `;`, a `,` or a
-/// `{ … }` group), each declaration's first keyword row a name row.
+/// `{ … }` group). Its name rows are the invocation's first row and each
+/// declaration's first keyword row.
 fn item_macro(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInfo> {
     let invocation = match node.kind() {
         "expression_statement" => node
@@ -222,7 +223,7 @@ fn item_macro(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInf
         .find(|child| child.kind() == "token_tree")?;
     let open_row = tokens.start_position().row + 1;
     let mut entries = Vec::new();
-    let mut name_rows = Vec::new();
+    let mut name_rows = vec![invocation.start_position().row + 1];
     let mut rows = Vec::new();
     let mut declares = false;
     let mut claimed_through = open_row;
@@ -246,9 +247,10 @@ fn item_macro(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInf
             declares = false;
         }
     }
-    if name_rows.is_empty() {
+    if name_rows.len() == 1 {
         return None;
     }
+    name_rows.dedup();
     entries.push(Item::new(rows));
     let body = Some((open_row, tokens));
     let decl = whole(node, leading, file, body, entries, Vec::new());
@@ -430,10 +432,13 @@ fn whole(
     members: Vec<DeclInfo>,
 ) -> DeclInfo {
     let node_rows = file.node_rows(node);
-    let name_field = if node.kind() == "impl_item" {
-        "type"
+    let name_rows = if node.kind() == "impl_item" {
+        let mut rows = vec![*node_rows.start()];
+        rows.extend(name_rows(node, "type"));
+        rows.dedup();
+        rows
     } else {
-        "name"
+        name_rows(node, "name")
     };
     let mut head = match body {
         Some((open_row, list)) => {
@@ -458,7 +463,7 @@ fn whole(
         doc: doc_items(&leading, file),
         body,
         members,
-        ..DeclInfo::new(name_rows(node, name_field), head, Shape::Whole)
+        ..DeclInfo::new(name_rows, head, Shape::Whole)
     }
 }
 
@@ -930,6 +935,15 @@ impl Sealed for Engine {}
                 "Whole name [21] head [21] doc [] body []",
             ]
         );
+        let wrapped = "\
+impl<F> ParallelVisitorBuilder
+    for FnBuilder<F>
+{
+    fn build(&mut self) {}
+}
+";
+        let (_, model) = extract_source("walk.rs", wrapped);
+        assert_eq!(model.decls[0].name_rows, vec![1, 2]);
         let private_module = "\
 struct ServerImpl;
 impl ServerImpl {
@@ -1098,9 +1112,9 @@ thread_local!(static DEPTH: Cell<u8> = Cell::new(0));
         assert_eq!(
             describe(&model),
             [
-                "Whole name [4] head [2, 5] doc [[1]] body [[3, 4]]",
-                "Whole name [8, 9] head [7, 10] doc [] body [[8], [9]]",
-                "Whole name [12] head [11, 15] doc [] body [[12, 13, 14]]",
+                "Whole name [2, 4] head [2, 5] doc [[1]] body [[3, 4]]",
+                "Whole name [7, 8, 9] head [7, 10] doc [] body [[8], [9]]",
+                "Whole name [11, 12] head [11, 15] doc [] body [[12, 13, 14]]",
                 "Whole name [16] head [16] doc [] body []",
             ]
         );
