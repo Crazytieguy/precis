@@ -6,7 +6,7 @@ use std::path::Path;
 use precis::north_star::NorthStar;
 use precis::ns_simulate::simulate_ns;
 
-const LOG_FIXTURE: &str = "tests/fixtures/log";
+const LOG_FIXTURE: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures/log");
 
 /// A `[[batches]]` table with the given `[batches.content]` body.
 fn batch(id: &str, content: &str) -> String {
@@ -119,7 +119,7 @@ fn ns_simulate_detects_overlapping_fs_entries_across_batches() {
         ),
     ]);
     assert!(found[0].is_empty(), "{:?}", found[0]);
-    assert_flags(&found[1], "lists \"src\", already owned by 1");
+    assert_flags(&found[1], ". lists \"src\", already owned by 1");
 }
 
 /// The renderer and the grader read an entry by its last component, so a
@@ -267,7 +267,7 @@ fn ns_simulate_flags_each_remaining_rule_on_its_batch_alone() {
     let cases = [
         (
             vec![lines("1", 1, 3, FULL), lines("2", 3, 5, FULL)],
-            "non-ancestor overlap",
+            "non-ancestor overlap: src/lib.rs:3 already owned by 1",
         ),
         (
             vec![with_predecessor(lines("1", 1, 3, FULL), "9")],

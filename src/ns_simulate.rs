@@ -103,7 +103,13 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
                 "batch resolves to zero atoms — it renders as a no-op, so divergence can never credit it. Delete the batch or point it at real content.".to_string(),
             );
         }
-        check_fs_entries(&content, &batch.id, &mut fs_owners, &mut violations);
+        check_fs_entries(
+            &content,
+            fixture_root,
+            &batch.id,
+            &mut fs_owners,
+            &mut violations,
+        );
 
         let cost = tree.marginal_cost(&content).tokens;
         let max_allowed = envelope_max(cumulative);
@@ -126,7 +132,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
             let owner = &ns.batches[conflict.existing_owner.index()].id;
             violations.push(format!(
                 "non-ancestor overlap: {}:{} already owned by {owner} (add a predecessor edge or move the span)",
-                conflict.path.display(),
+                root_relative(&conflict.path, fixture_root),
                 conflict.line
             ));
         }
@@ -148,6 +154,7 @@ fn is_zero_atom(content: &BatchContent) -> bool {
 
 fn check_fs_entries<'a>(
     content: &BatchContent,
+    fixture_root: &Path,
     batch_id: &'a str,
     owners: &mut BTreeMap<(PathBuf, String), &'a str>,
     violations: &mut Vec<String>,
@@ -166,19 +173,29 @@ fn check_fs_entries<'a>(
             if path.components().count() > 1 {
                 violations.push(format!(
                     "fs entry {path:?} under {} is a path, not a name: it lists and grades as {name:?} there (list it under its own parent)",
-                    group.parent.display()
+                    root_relative(&group.parent, fixture_root)
                 ));
             }
             let atom = (group.parent.clone(), name.to_string());
             if let Some(owner) = owners.get(&atom) {
                 violations.push(format!(
                     "overlapping fs entry: {} lists {name:?}, already owned by {owner} (split-listing rows must partition entries)",
-                    group.parent.display()
+                    root_relative(&group.parent, fixture_root)
                 ));
             } else {
                 owners.insert(atom, batch_id);
             }
         }
+    }
+}
+
+/// `path` as the NS names it: relative to `fixture_root`, `.` for the
+/// root itself.
+fn root_relative(path: &Path, fixture_root: &Path) -> String {
+    match path.strip_prefix(fixture_root) {
+        Ok(relative) if relative.as_os_str().is_empty() => ".".to_string(),
+        Ok(relative) => relative.display().to_string(),
+        Err(_) => path.display().to_string(),
     }
 }
 
