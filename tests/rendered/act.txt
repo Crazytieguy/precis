@@ -285,8 +285,8 @@ pkg/
       16→	Env       map[string]string
       17→	Job       *model.JobContext
       18→	Jobs      *map[string]*model.WorkflowCallResult
-      19→	Steps     map[string]*model.StepResult
       …
+      28→}
       30→type Needs struct {
       31→	Outputs map[string]string `json:"outputs"`
       32→	Result  string            `json:"result"`
