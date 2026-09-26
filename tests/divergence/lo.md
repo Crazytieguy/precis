@@ -182,9 +182,14 @@ Score(3000)=0.600 I=0.653 C=0.551 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 9566 | 43 | Code::CodeKey { rung: Doc, file: slice.go, decl: 51, sub: 0, line: 806 } |  |  | 0.514 |
 | ns | 9606 |  | 326 | golangci-lint: the enabled linter set | 7.2 |  | 0.503 |
 | walker |  | 9609 | 43 | Code::CodeKey { rung: Doc, file: slice.go, decl: 79, sub: 0, line: 1286 } |  |  | 0.503 |
+| walker |  | 9653 | 44 | Code::CodeKey { rung: Doc, file: condition.go, decl: 2, sub: 0, line: 16 } |  |  | 0.503 |
+| walker |  | 9697 | 44 | Code::CodeKey { rung: Doc, file: find.go, decl: 35, sub: 0, line: 857 } |  |  | 0.503 |
+| walker |  | 9741 | 44 | Code::CodeKey { rung: Doc, file: find.go, decl: 37, sub: 0, line: 877 } |  |  | 0.503 |
+| walker |  | 9785 | 44 | Code::CodeKey { rung: Doc, file: find.go, decl: 39, sub: 0, line: 901 } |  |  | 0.503 |
 | ns | 9807 |  | 201 | golangci-lint: thresholds and exclusions | 7.3 |  | 0.498 |
-| walker |  | 9890 | 281 | Fs::DirListing { dir: docs/data } |  |  | 0.498 |
-| walker |  | 9934 | 44 | Code::CodeKey { rung: Doc, file: condition.go, decl: 2, sub: 0, line: 16 } |  |  | 0.498 |
+| walker |  | 9829 | 44 | Code::CodeKey { rung: Doc, file: find.go, decl: 40, sub: 0, line: 908 } |  |  | 0.498 |
+| walker |  | 9873 | 44 | Code::CodeKey { rung: Doc, file: slice.go, decl: 22, sub: 0, line: 336 } |  |  | 0.498 |
+| walker |  | 9917 | 44 | Code::CodeKey { rung: Doc, file: slice.go, decl: 37, sub: 0, line: 607 } |  |  | 0.498 |
+| walker |  | 9961 | 44 | Code::CodeKey { rung: Doc, file: slice.go, decl: 49, sub: 0, line: 766 } |  |  | 0.498 |
 | ns | 9975 |  | 168 | CI: the Go version matrix | 7.4 |  | 0.494 |
-| walker |  | 9978 | 44 | Code::CodeKey { rung: Doc, file: find.go, decl: 35, sub: 0, line: 857 } |  |  | 0.494 |
 | ns | 9990 |  | 15 | Contribution surface: PR templates and the contributor loop | 7.5 |  | 0.495 |

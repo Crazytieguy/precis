@@ -45,11 +45,8 @@ pub enum BatchKey {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum FsKey {
-    /// Listing of immediate children of `dir`: all of them, or a long
-    /// listing's head.
+    /// Listing of immediate children of `dir`.
     DirListing { dir: PathBuf },
-    /// The rest of a long listing. Predecessor: its `DirListing`.
-    DirListingTail { dir: PathBuf },
 }
 
 /// `From<XKey> for BatchKey` for every per-walker key.

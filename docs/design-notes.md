@@ -202,7 +202,8 @@ must not undo:
 - **The answer key favours complete listings more than eval judges do.**
   Judges on fresh repos most often fault budget spent on inventories of
   test files, media and CI directories, but every listing demotion tried
-  lost on the grid because NS authors rank those listings early; the
-  long-listing split starts above the longest complete listing a
-  training answer key ranks. Moving that trade needs an answer-key
-  revision, not a walker tweak.
+  lost on the grid because NS authors rank those listings early.
+  Moving that trade needs an answer-key revision, not a walker tweak.
+  Listings are never split: a head-and-rest split of long listings
+  was grid-neutral and spent real-world budget on the first 40 names
+  of man-page, test-data and generated-code directories.
