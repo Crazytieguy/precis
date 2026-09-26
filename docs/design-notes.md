@@ -166,7 +166,10 @@ never reached the ones answer keys rank.
   every walker and the floor, and for costing as well as output. Only
   a quoted, space-free literal with a letter, or of digits alone,
   counts: an unquoted value can't be told from a variable or a type by
-  the line alone. Documents (`.md`, `.mdx`, `.rst`, `.adoc`) keep their
+  the line alone. Punctuation doesn't exempt a literal (generated
+  passwords hold `$`, `%`, brackets); only a placeholder's whole shape
+  or an interpolation inside it (`${…}`, `{name}`, `{{`, `%s`,
+  `env(…)`, `<…>`) does. Documents (`.md`, `.mdx`, `.rst`, `.adoc`) keep their
   literals, which are placeholders (`API_KEY='your-key'`). Other
   secrets in ordinarily named config are not detected.
 

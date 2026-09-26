@@ -566,6 +566,10 @@ fn robustness_credential_files_render_only_their_rows() {
             ),
         ),
         ("notes.txt", key.clone()),
+        (
+            "config.json",
+            format!("{{\"password\": \"{SECRET}$Value%42!\"}}\n"),
+        ),
         ("certs/server.pem", long_key),
         ("src/keys.rs", format!("pub const KEY: &str = \"{key}\";\n")),
         (".env.example", "API_KEY=changeme\n".to_string()),
@@ -590,6 +594,7 @@ fn robustness_credential_files_render_only_their_rows() {
         assert_eq!(render(&root.join(".env"), budget).unwrap(), ".env\n");
         let linked = render(&root.join("deploy.conf"), budget).unwrap();
         assert!(!linked.contains(SECRET), "{linked}");
+        assert!(out.contains(r#"{"password": "…"}"#), "{out}");
         for shown in [
             "API_KEY=changeme",
             "def load_credentials():",

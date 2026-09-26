@@ -1032,27 +1032,42 @@ pub fn visible_full_line(source_line: &str) -> &str {
 /// `line` with its inline secrets shown as `…`: the password of a URL
 /// (`postgresql://admin:PASSWORD@db/app`) and the quoted literal assigned
 /// to a credential-named key (`password: "hunter2"`,
-/// `"api_key" => 'sk-…'`, `SECRET_KEY = "…"`, `authToken: "…"`). A
-/// placeholder (`{}`, `${DB_PASSWORD}`, `<password>`, `%s`,
-/// `env(DB_PASSWORD)`), a phrase (`"Save password": "Tallenna salasana"`),
+/// `"api_key" => 'sk-…'`, `SECRET_KEY = "…"`, `authToken: "…"`), whatever
+/// punctuation it holds. A placeholder (`{}`, `{password}`, `{{ … }}`,
+/// `${DB_PASSWORD}`, `$DB_PASSWORD`, `<password>`, `%s`,
+/// `env(DB_PASSWORD)`, `%env(DB_PASSWORD)%`), a phrase
+/// (`"Save password": "Tallenna salasana"`),
 /// a version (`"parse-passwd": "^1.0.0"`), a value spelling its
 /// own key (`ACCESS_TOKEN = "access_token"`), and anything unquoted — a
 /// variable, a call, a type — is code or documentation, and shows, as
 /// does every literal in a document (`export API_KEY='your-key'`).
 fn redact_secrets(line: &str, in_document: bool) -> std::borrow::Cow<'_, str> {
     static URL_PASSWORD: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
-        regex::Regex::new(r#"(://[^\s/:@"'`]*:)[^\s/@"'`{}$<>]+@"#).unwrap()
+        regex::Regex::new(r#"(?<before>://[^\s/:@"'`]*:)(?<password>[^\s/@"'`]+)@"#).unwrap()
     });
     static CREDENTIAL_LITERAL: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
         regex::Regex::new(concat!(
             r#"(?i)(?<open>["']?)"#,
             r"(?<key>[\w.-]*(?:password|passwd|pwd|secret|token|(?:api|access|secret|private|auth)[_-]?key))",
             r#"(?<close>["']?)\s*(?:=>|:=|:|=)\s*"#,
-            r#"(?<literal>"(?:[^"\\{}()$<%\s]|\\.)*[a-z](?:[^"\\{}()$<%\s]|\\.)*"|'(?:[^'\\{}()$<%\s]|\\.)*[a-z](?:[^'\\{}()$<%\s]|\\.)*'|"\d+"|'\d+')"#,
+            r#"(?<literal>"(?:[^"\\\s]|\\.)*[a-z](?:[^"\\\s]|\\.)*"|'(?:[^'\\\s]|\\.)*[a-z](?:[^'\\\s]|\\.)*'|"\d+"|'\d+')"#,
         ))
         .unwrap()
     });
-    let line = URL_PASSWORD.replace_all(line, "${1}…@");
+    static PLACEHOLDER: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(concat!(
+            r"^(?:<[^>]*>|\$\w+|[\w.]+\(.*\)|%[\w.()]+%)$",
+            r"|\$\{|\{\{|\{%|\{\w*\}|%(?:\(\w+\))?[sd]",
+        ))
+        .unwrap()
+    });
+    let line = URL_PASSWORD.replace_all(line, |caps: &regex::Captures| {
+        if PLACEHOLDER.is_match(&caps["password"]) {
+            caps[0].to_string()
+        } else {
+            format!("{}…@", &caps["before"])
+        }
+    });
     if in_document {
         return line;
     }
@@ -1066,6 +1081,7 @@ fn redact_secrets(line: &str, in_document: bool) -> std::borrow::Cow<'_, str> {
         let whole = caps.get(0).unwrap();
         let literal = caps.name("literal").unwrap();
         if caps["open"] != caps["close"]
+            || PLACEHOLDER.is_match(&literal.as_str()[1..literal.len() - 1])
             || alphanumerics(&caps["key"]).ends_with(&alphanumerics(literal.as_str()))
         {
             return whole.as_str().to_string();
@@ -1406,6 +1422,32 @@ mod tests {
             (
                 r#""Save password": "Tallenna salasana""#,
                 r#""Save password": "Tallenna salasana""#,
+            ),
+            (
+                r#"{"password": "Fake7$Value%42!", "api_key": "k(e)y<2>!"}"#,
+                r#"{"password": "…", "api_key": "…"}"#,
+            ),
+            ("postgres://app:pa$$w%rd@db/app", "postgres://app:…@db/app"),
+            (
+                "f\"postgres://{user}:{password}@{host}\"",
+                "f\"postgres://{user}:{password}@{host}\"",
+            ),
+            (
+                r#"password = "$DB_PASSWORD""#,
+                r#"password = "$DB_PASSWORD""#,
+            ),
+            (
+                r#"password = "%(password)s""#,
+                r#"password = "%(password)s""#,
+            ),
+            (r#"password = "{password}""#, r#"password = "{password}""#),
+            (
+                r#"password = "{{password}}""#,
+                r#"password = "{{password}}""#,
+            ),
+            (
+                r#"secret: '%env(APP_SECRET)%'"#,
+                r#"secret: '%env(APP_SECRET)%'"#,
             ),
         ] {
             assert_eq!(redact_secrets(line, false), shown);
