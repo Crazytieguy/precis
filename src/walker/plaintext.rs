@@ -1128,7 +1128,7 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
         file: file.to_path_buf(),
     }
     .into();
-    let value = class_value(class, file, ctx);
+    let value = class_value(class, file, ctx, package_directories(file, &source));
     out.push(Batch {
         key: surface_key.clone(),
         predecessor: None,
@@ -1284,10 +1284,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let (content, value) = match content {
             Some(content) => (
                 content,
-                class_value(class, &file, ctx) * small_build_file_factor(class, &file, ctx),
+                class_value(class, &file, ctx, 0) * small_build_file_factor(class, &file, ctx),
             ),
             None => match root_makefile_targets(&file, name, ctx) {
-                Some(content) => (content, class_value(class, &file, ctx)),
+                Some(content) => (content, class_value(class, &file, ctx, 0)),
                 None => {
                     if class == Class::Build && ctx.depth_from_root(&file) == 1 {
                         push_source_text_batches(&mut out, &file, ctx, class);
@@ -1441,8 +1441,9 @@ fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source
 /// parsed declaration's value when it is in the repository's primary
 /// language ([`is_in_primary_language`]); an unparsed manifest prices as a
 /// manifest's identity block. Contributor tooling and unclassified prose /
-/// flat config sit low.
-fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
+/// flat config sit low. The last `package_depth` directories above
+/// `file` are not depth ([`package_directories`]).
+fn class_value(class: Class, file: &Path, ctx: &WalkCtx, package_depth: usize) -> f64 {
     let tier = match class {
         Class::LanguageSource if is_in_primary_language(file, ctx) => {
             crate::value::code_rung_value(crate::batch::Rung::Decl)
@@ -1451,7 +1452,36 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::Tooling | Class::FlatText => 488.0,
     };
-    tier * path_depth_factor(file, ctx)
+    let depth = ctx.depth_from_root(file).saturating_sub(package_depth);
+    tier * crate::value::depth_factor(depth) * ctx.non_essential_factor(file)
+}
+
+/// How many directories above `file` spell the package or namespace its
+/// source declares first (`package com.acme.util;` in
+/// `src/main/java/com/acme/util/`, `namespace App\Http;` in `app/Http/`).
+/// They name the unit, as an import path does, rather than nest it in the
+/// repository.
+fn package_directories(file: &Path, source: &str) -> usize {
+    let Some(declared) = source.lines().find_map(|line| {
+        let line = line.trim_start();
+        line.strip_prefix("package ")
+            .or_else(|| line.strip_prefix("namespace "))
+    }) else {
+        return 0;
+    };
+    let segments = declared
+        .trim_end_matches([';', '{', ' '])
+        .rsplit(['.', '\\']);
+    let directories = file.parent().into_iter().flat_map(Path::components).rev();
+    segments
+        .zip(directories)
+        .take_while(|(segment, directory)| {
+            directory
+                .as_os_str()
+                .to_str()
+                .is_some_and(|directory| directory.eq_ignore_ascii_case(segment))
+        })
+        .count()
 }
 
 /// Whether `file` is in the language the repository is written in. When
@@ -2538,10 +2568,34 @@ mod tests {
         std::fs::write(root.join("tool.rb"), "def tool\nend\n").unwrap();
         let ctx = WalkCtx::new(root.to_path_buf());
         let decl = crate::value::code_rung_value(crate::batch::Rung::Decl);
-        let value = |name: &str| class_value(Class::LanguageSource, &root.join(name), &ctx);
+        let value = |name: &str| class_value(Class::LanguageSource, &root.join(name), &ctx, 0);
         assert_eq!(value("core.ml"), decl);
         assert_eq!(value("core.mli"), decl);
         assert!(value("tool.rb") < decl);
+    }
+
+    /// The directories a file's package declaration spells are not depth.
+    #[test]
+    fn plaintext_package_directories_match_the_declared_package() {
+        let java = Path::new("lib/src/main/java/com/acme/util/Strings.java");
+        let cases = [
+            (java, "/** Doc. */\npackage com.acme.util;\n", 3),
+            (java, "package org.other;\n", 0),
+            (
+                Path::new("src/Acme/Http/Kernel.php"),
+                "<?php\n\nnamespace Acme\\Http;\n",
+                2,
+            ),
+            (
+                Path::new("src/Polly/Retry/Policy.cs"),
+                "namespace Polly.Retry\n{\n",
+                2,
+            ),
+            (java, "public class Strings {}\n", 0),
+        ];
+        for (file, source, expected) in cases {
+            assert_eq!(package_directories(file, source), expected, "{source}");
+        }
     }
 
     /// A small file in an unparsed language renders whole once the budget
