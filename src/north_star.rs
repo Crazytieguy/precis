@@ -29,16 +29,15 @@ pub struct NorthStar {
     /// distribution the ranking serves. Opaque to tooling.
     #[serde(default)]
     pub summary: String,
-    /// Ranked batches. Position = rank. IDs are major.minor strings
-    /// (`"1.1"`, `"2.10"`) with numeric-aware sort for diff stability.
+    /// Ranked batches. Position = rank; ids only label batches.
     pub batches: Vec<NsBatch>,
 }
 
 /// One ranked batch in a North Star.
 #[derive(Debug, Clone, Deserialize)]
 pub struct NsBatch {
-    /// Major.minor id (`"1.1"`, `"2.10"`). Numeric-sortable per `.`-
-    /// separated component; don't mix with pure-numeric or string ids.
+    /// Major.minor id (`"1.1"`, `"2.10"`), named by `predecessor` edges
+    /// and printed in reports. Tooling never sorts by it.
     pub id: String,
     /// Short human-readable label, e.g. `"Crate-doc lede"`.
     pub descriptor: String,
@@ -52,8 +51,8 @@ pub struct NsBatch {
     /// of the other. The simulator validates ancestor closure.
     #[serde(default)]
     pub predecessor: Option<String>,
-    /// The batch's content: filesystem listings (possibly with
-    /// `FsEntries::All` sentinel expanded at load time) or
-    /// source line spans with render specs.
+    /// The batch's content: filesystem listings (an `FsEntries::All`
+    /// sentinel is expanded when the content is resolved against the
+    /// fixture) or source line spans with render specs.
     pub content: BatchContent,
 }

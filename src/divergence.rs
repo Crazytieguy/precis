@@ -37,7 +37,9 @@
 //! walker rows (at `walker_cum`, `marginal` its cost) on one cumulative
 //! token axis, walker rows first on ties. `id` and `predecessor` are the NS
 //! batch's fields. `Score(B=cum)` is `Score` at that row's cum, computed
-//! once all rows sharing the cum are folded in.
+//! once all rows sharing the cum are folded in. Unlike a grid score, it
+//! folds whole walker batches only, never a prefix of the next one, so the
+//! two can differ when a row's cum equals a grid budget.
 
 use std::collections::HashMap;
 use std::fmt::Write as _;

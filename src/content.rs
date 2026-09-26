@@ -64,7 +64,8 @@ impl<'de> Deserialize<'de> for FsEntries {
 /// A contiguous range of source lines in one file plus how to render them.
 #[derive(Debug, Clone, Deserialize)]
 pub struct Span {
-    /// Source file. Relative in NS input; absolutized at load time.
+    /// Source file. Relative in NS input; absolutized by
+    /// [`crate::ns_loader::resolve_content`].
     pub path: PathBuf,
     /// Inclusive, 1-indexed.
     pub start: usize,
