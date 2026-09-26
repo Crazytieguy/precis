@@ -90,16 +90,6 @@ pub(crate) struct SourceFile {
 }
 
 impl SourceFile {
-    #[cfg(test)]
-    fn parse(path: &Path, language: &Language, ctx: &WalkCtx) -> Option<Self> {
-        let (source, tree) = ctx.parse_tree(path, &(language.grammar)(path))?;
-        Some(Self {
-            path: path.to_path_buf(),
-            source,
-            tree,
-        })
-    }
-
     /// Text of 1-based `row` without its line terminator; empty past the
     /// end of the file.
     pub(crate) fn line(&self, row: usize) -> &str {
@@ -223,23 +213,41 @@ fn is_named_after(path: &Path, dir: &Path) -> bool {
     }
 }
 
-/// A top-level function of a program's entry file: its index in the
-/// file's `decls`, its closing row, and whether it is `main`.
-type ProgramFunction = (usize, usize, bool);
+/// A top-level function of a program's entry file.
+struct ProgramFunction {
+    /// Its index in the file's `decls`.
+    index: usize,
+    closing_row: usize,
+    is_main: bool,
+}
+
+impl ProgramFunction {
+    /// The function declared by `node`, extracted as `decls[index]`.
+    fn new(index: usize, node: Node, file: &SourceFile) -> Self {
+        Self {
+            index,
+            closing_row: *file.node_rows(node).end(),
+            is_main: node
+                .child_by_field_name("name")
+                .is_some_and(|name| file.text(name) == "main"),
+        }
+    }
+}
 
 /// A program's control flow is what its entry file is about: its
 /// `main`, and when `main` is short (at most two top-level statements,
 /// however large), the file's other functions. They render with their
 /// bodies, as `Whole` declarations closed by their last row.
 fn show_program_flow(decls: &mut [DeclInfo], functions: &[ProgramFunction]) {
-    let Some(&(main, _, _)) = functions.iter().find(|(_, _, is_main)| *is_main) else {
+    let Some(main) = functions.iter().find(|function| function.is_main) else {
         return;
     };
-    let delegates = decls[main].body.len() <= 2;
-    for &(index, closing_row, is_main) in functions {
-        if is_main || delegates {
-            decls[index].shape = Shape::Whole;
-            decls[index].head.push(closing_row);
+    let delegates = decls[main.index].body.len() <= 2;
+    for function in functions {
+        if function.is_main || delegates {
+            let decl = &mut decls[function.index];
+            decl.shape = Shape::Whole;
+            decl.head.push(function.closing_row);
         }
     }
 }
@@ -277,6 +285,15 @@ pub(super) mod test_support {
     use super::model::{DeclInfo, Shape};
     use super::*;
 
+    pub(crate) fn parse(path: &Path, language: &Language, ctx: &WalkCtx) -> SourceFile {
+        let (source, tree) = ctx.parse_tree(path, &(language.grammar)(path)).unwrap();
+        SourceFile {
+            path: path.to_path_buf(),
+            source,
+            tree,
+        }
+    }
+
     /// Writes `files` under a fresh root and extracts `target` with
     /// `language`, asserting the [`model`] invariants on the normalized
     /// result.
@@ -292,7 +309,7 @@ pub(super) mod test_support {
             std::fs::write(path, content).unwrap();
         }
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&dir.path().join(target), language, &ctx).unwrap();
+        let file = parse(&dir.path().join(target), language, &ctx);
         let model = (language.extract)(&file, &ctx);
         assert_contract(&emit::normalize(model.clone(), &file));
         (file, model)

@@ -9,7 +9,7 @@
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile, show_program_flow};
+use super::{Language, ProgramFunction, SourceFile, show_program_flow};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -43,10 +43,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             "function_declaration" if is_program => {
                 let decl = callable(child, file);
                 if decl.is_some() {
-                    let is_main = child
-                        .child_by_field_name("name")
-                        .is_some_and(|name| file.text(name) == "main");
-                    functions.push((model.decls.len(), *file.node_rows(child).end(), is_main));
+                    functions.push(ProgramFunction::new(model.decls.len(), child, file));
                 }
                 decl
             }
@@ -64,35 +61,12 @@ fn doc_items(node: Node, file: &SourceFile) -> Vec<Item> {
     file.paragraphs(file.comment_rows_above(node))
 }
 
-/// A declaration whose head is every row of `node` outside the span of
-/// its `body` items.
-fn decl_info(
-    node: Node,
-    file: &SourceFile,
-    shape: Shape,
-    name_rows: Vec<usize>,
-    body: Vec<Item>,
-) -> DeclInfo {
-    let rows = file.node_rows(node);
-    let head = match (body.first(), body.last()) {
-        (Some(first), Some(last)) => (*rows.start()..first.rows[0])
-            .chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())
-            .collect(),
-        _ => rows.collect(),
-    };
-    DeclInfo {
-        name_rows,
-        head,
-        doc: doc_items(node, file),
-        body,
-        shape,
-        members: Vec::new(),
-    }
-}
-
+/// A function or method: the head runs through the row opening its
+/// body, or is every row when the body has no statement.
 fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     node.child_by_field_name("name")?;
-    let start = *file.node_rows(node).start();
+    let rows = file.node_rows(node);
+    let start = *rows.start();
     let block = node.child_by_field_name("body");
     let open_row = block.map_or(start, |block| *file.node_rows(block).start());
     let mut statements = Vec::new();
@@ -108,24 +82,32 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
         }
     }
     let body = file.node_items(statements, open_row);
-    let mut decl = decl_info(node, file, Shape::Callable, vec![start], body);
-    if !decl.body.is_empty() {
-        decl.head = (start..=open_row).collect();
-    }
-    Some(decl)
+    let head_end = if body.is_empty() {
+        *rows.end()
+    } else {
+        open_row
+    };
+    Some(DeclInfo {
+        name_rows: vec![start],
+        head: (start..=head_end).collect(),
+        doc: doc_items(node, file),
+        body,
+        shape: Shape::Callable,
+        members: Vec::new(),
+    })
 }
 
 /// `type`, `const` or `var`: a grouped declaration's body is its specs;
-/// a single struct or interface type's body is its fields / methods.
+/// a single struct or interface type's body is its fields / methods. The
+/// head is every row outside the span of the body items.
 fn whole(node: Node, file: &SourceFile) -> Option<DeclInfo> {
-    let start = *file.node_rows(node).start();
+    let rows = file.node_rows(node);
+    let start = *rows.start();
     let mut specs = Vec::new();
     let mut group = None;
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
         match child.kind() {
-            // `const` / `type` groups hold their `(` directly; `var` wraps
-            // its specs in a `var_spec_list`.
             "(" => group = Some(node),
             "var_spec_list" => {
                 group = Some(child);
@@ -167,7 +149,20 @@ fn whole(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     if name_rows.is_empty() {
         return None;
     }
-    Some(decl_info(node, file, Shape::Whole, name_rows, body))
+    let head = match (body.first(), body.last()) {
+        (Some(first), Some(last)) => (start..first.rows[0])
+            .chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())
+            .collect(),
+        _ => rows.collect(),
+    };
+    Some(DeclInfo {
+        name_rows,
+        head,
+        doc: doc_items(node, file),
+        body,
+        shape: Shape::Whole,
+        members: Vec::new(),
+    })
 }
 
 fn is_spec(node: &Node) -> bool {

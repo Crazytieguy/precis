@@ -20,7 +20,7 @@ use std::path::Path;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile, show_program_flow};
+use super::{Language, ProgramFunction, SourceFile, show_program_flow};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -66,10 +66,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             "trait_item" => model.decls.push(container(node, leading, file, |_| true)),
             "function_item" => {
                 if is_program {
-                    let is_main = node
-                        .child_by_field_name("name")
-                        .is_some_and(|name| file.text(name) == "main");
-                    functions.push((model.decls.len(), *file.node_rows(node).end(), is_main));
+                    functions.push(ProgramFunction::new(model.decls.len(), node, file));
                 }
                 model.decls.push(callable(node, leading, file));
             }

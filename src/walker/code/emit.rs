@@ -58,14 +58,7 @@ struct Emitter<'a> {
 
 impl Emitter<'_> {
     fn emit(&mut self, model: &FileModel) {
-        let file_key = |rung| CodeKey {
-            rung,
-            file: self.file.path.clone(),
-            decl: 0,
-            sub: 0,
-            line: 0,
-        };
-        let (module_doc, names) = (file_key(Rung::ModuleDoc), file_key(Rung::Names));
+        let module_doc = self.key(Rung::ModuleDoc, 0, 0);
         self.part(module_doc, &model.module_doc, None, self.file_prior);
 
         let mut roster: Vec<Item> = model.reexports.clone();
@@ -78,7 +71,7 @@ impl Emitter<'_> {
         roster.sort_by_key(|item| item.rows.first().copied());
         let entries: usize = roster.iter().map(|item| item.rows.len()).sum();
         let names_value = self.file_prior * (entries as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
-        self.part(names, &roster, None, names_value);
+        self.part(self.key(Rung::Names, 0, 0), &roster, None, names_value);
 
         let mut index = 0;
         for decl in &model.decls {
@@ -102,13 +95,10 @@ impl Emitter<'_> {
     ) -> Option<CodeKey> {
         let parent = self.ledger.owner(decl.name_rows[0]).or(container).cloned();
         let value = self.file_prior;
-        let path = self.file.path.clone();
+        let decl_key = self.key(Rung::Decl, index, decl.head[0]);
         let key = |rung| CodeKey {
             rung,
-            file: path.clone(),
-            decl: index,
-            sub: 0,
-            line: decl.head[0],
+            ..decl_key.clone()
         };
         let mut head_items = vec![Item::new(decl.head.clone())];
         if decl.shape == Shape::Whole {
@@ -122,6 +112,17 @@ impl Emitter<'_> {
             self.part(key(Rung::Body), &decl.body, decl_gate.as_ref(), value);
         }
         decl_gate
+    }
+
+    /// The head chunk's key of one part of the file.
+    fn key(&self, rung: Rung, decl: u32, line: usize) -> CodeKey {
+        CodeKey {
+            rung,
+            file: self.file.path.clone(),
+            decl,
+            sub: 0,
+            line,
+        }
     }
 
     /// Emits `items` as chained chunks of the part `head` names (its `sub`
@@ -354,7 +355,7 @@ mod tests {
         let source: String = (1..=lines).map(|row| format!("x{row} = {row}\n")).collect();
         std::fs::write(&path, source).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, &super::super::lua::LANGUAGE, &ctx).unwrap();
+        let file = super::super::test_support::parse(&path, &super::super::lua::LANGUAGE, &ctx);
         run(&file)
     }
 
