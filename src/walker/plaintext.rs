@@ -455,23 +455,48 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
 /// A conditional-compilation or compiler-pragma line (`#if`, `#else`,
 /// `#pragma warning disable`): it says how the file builds, not what it
 /// declares, and shown without its `#endif` it reads as an open block.
-const COMPILER_DIRECTIVES: &str =
-    "if ifdef ifndef else elif elseif endif pragma error warning nullable line";
+/// Verilog spells them with a backtick (`` `ifdef ``). A `#define` of a
+/// name alone is an include guard or a build flag.
+const COMPILER_DIRECTIVES: &str = "if ifdef ifndef else elif elsif elseif endif undef pragma \
+    error warning nullable line default_nettype timescale resetall";
 
 fn is_compiler_directive(trimmed: &str) -> bool {
-    trimmed.strip_prefix('#').is_some_and(|rest| {
-        let word = rest.split(|c: char| !c.is_ascii_alphabetic()).next();
-        word.is_some_and(|word| has_word(COMPILER_DIRECTIVES, word))
+    trimmed.strip_prefix(['#', '`']).is_some_and(|rest| {
+        let mut words = rest.split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'));
+        match words.next() {
+            Some("define") => words.filter(|word| !word.is_empty()).count() == 1,
+            Some(word) => has_word(COMPILER_DIRECTIVES, word),
+            None => false,
+        }
     })
 }
 
-/// A line that only closes a block, or only opens one on the line after
-/// its declaration, carries no information the declaration line didn't
-/// already give.
+/// A line that only closes a block, only opens one on the line after its
+/// declaration, or only labels the members below it (`public:`) carries no
+/// information the lines around it don't already give.
 fn is_block_closer(trimmed: &str) -> bool {
-    matches!(trimmed, "end" | "fi" | "done" | "esac" | "#endif" | "*/")
+    let (keyword, rest) = trimmed.split_at(
+        trimmed
+            .find(|c: char| !c.is_ascii_lowercase())
+            .unwrap_or(trimmed.len()),
+    );
+    // `end`, `endmodule`, `endif()`, `end subroutine solve`.
+    let ends_by_keyword = keyword.starts_with("end")
+        && !rest.starts_with(|c: char| c.is_alphanumeric() || c == '_' || c == '.')
+        && !rest.contains('=');
+    ends_by_keyword
+        || matches!(trimmed, "fi" | "done" | "esac" | "#endif" | "*/")
         || trimmed.chars().all(|c| "{}])>;,`".contains(c))
+        || trimmed.strip_suffix(':').is_some_and(|label| {
+            !label.is_empty()
+                && label
+                    .split_whitespace()
+                    .all(|word| has_word(ACCESS_LABELS, word))
+        })
 }
+
+/// Words of a C++ or Qt access label.
+const ACCESS_LABELS: &str = "public private protected signals slots Q_SIGNALS Q_SLOTS";
 
 /// Comment-opener detection across the covered languages. Ambiguous
 /// markers require a following space (or end of line) so CSS `#id {`
@@ -795,7 +820,7 @@ fn head_end(trimmed: &str) -> usize {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum DeclarationRank {
     /// Heads a block, or declares with no body: an interface or protocol
-    /// requirement, a type signature, a forward declaration.
+    /// requirement, a type signature.
     Heading,
     /// A declaration whose body follows on the same line.
     OneLiner,
@@ -839,6 +864,16 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
     }
     if opens_block {
         return DeclarationRank::Heading;
+    }
+    // A type declared without members (`struct Options;`, `extension
+    // Request: Equatable {}`) adds only its name.
+    if words
+        .first()
+        .is_some_and(|first| has_word("class struct union enum extension protocol", first))
+        && !trimmed.contains('(')
+        && (trimmed.ends_with(';') || trimmed.ends_with("{}"))
+    {
+        return DeclarationRank::Statement;
     }
     let declares = words
         .iter()
@@ -1861,6 +1896,54 @@ mod tests {
             for needle in *absent {
                 assert!(!has(needle), "leaked {needle:?}: {text:?}");
             }
+        }
+    }
+
+    /// A C++ header's include guard, access labels and forward
+    /// declarations give up their slots to the declarations they surround.
+    #[test]
+    fn plaintext_source_text_surface_skips_cpp_header_scaffolding() {
+        let header = "#ifndef DB_H_\n#define DB_H_\n#define DB_VERSION 3\nnamespace ns {\n\
+                      struct Options;\nclass DB {\n public:\n  static Status Open();\n\
+                      private:\n  int x_;\n};\n}\n#endif\n";
+        let text = surface(header);
+        for leaked in ["#define DB_H_", " public:", "private:"] {
+            assert!(!text.contains(&leaked), "leaked {leaked:?}: {text:?}");
+        }
+        assert!(text.contains(&"#define DB_VERSION 3"), "{text:?}");
+        assert_eq!(
+            declaration_rank("struct Options;", false),
+            DeclarationRank::Statement
+        );
+        assert_eq!(
+            declaration_rank("extension Request: Equatable {}", false),
+            DeclarationRank::Statement
+        );
+        assert_eq!(
+            declaration_rank("namespace App.Models;", false),
+            DeclarationRank::Heading
+        );
+        let verilog = "`default_nettype none\n`ifdef DEBUG\n`define TRACE 1\n`else\n`endif\n\
+                       module picorv32 #(\n  parameter X = 0\n) (\n  input clk\n);\nendmodule\n";
+        assert_eq!(
+            surface(verilog),
+            vec!["`define TRACE 1", "module picorv32 #("]
+        );
+        for closer in [
+            "end",
+            "endmodule",
+            "endif(NOT WIN32)",
+            "end subroutine solve",
+        ] {
+            assert!(is_block_closer(closer), "{closer}");
+        }
+        for statement in [
+            "endpoint = url",
+            "end_time = now()",
+            "endTime();",
+            "end.join",
+        ] {
+            assert!(!is_block_closer(statement), "{statement}");
         }
     }
 

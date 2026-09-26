@@ -1,4 +1,4 @@
-Score(3000)=0.647 I=0.889 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.791/0.715/0.743/0.647/0.565/0.482/0.392
+Score(3000)=0.646 I=0.887 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.791/0.716/0.744/0.646/0.565/0.482/0.392
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -47,63 +47,63 @@ Score(3000)=0.647 I=0.889 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 991 | 5 | Fs::DirListing { dir: .claude/skills/hil } |  |  | 0.791 |
 | walker |  | 1009 | 18 | Fs::DirListing { dir: .github } |  |  | 0.791 |
 | ns | 1010 |  | 131 | The two fan-out directories: src/class/* and src/portable/* (directory names) | 1.7 |  | 0.802 |
-| walker |  | 1113 | 104 | Plaintext::DeclSurface { file: src/CMakeLists.txt } |  |  | 0.802 |
-| walker |  | 1135 | 22 | Fs::DirListing { dir: .idea } |  |  | 0.802 |
-| walker |  | 1205 | 70 | Fs::DirListing { dir: .github/workflows } |  |  | 0.802 |
-| walker |  | 1229 | 24 | Fs::DirListing { dir: hw/mcu/dialog/da1469x } |  |  | 0.802 |
-| walker |  | 1236 | 7 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include } |  |  | 0.802 |
-| ns | 1237 |  | 227 | README host-stack and Power-Delivery capability lists | 1.8 |  | 0.750 |
-| walker |  | 1241 | 5 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/hal } |  |  | 0.750 |
-| walker |  | 1252 | 11 | Fs::DirListing { dir: hw/mcu/sony/cxd56/tools } |  |  | 0.750 |
-| ns | 1333 |  | 96 | README supported-CPU matrix: heading, elided table body, legend | 1.9 |  | 0.715 |
-| walker |  | 1491 | 239 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: true } |  |  | 0.715 |
-| walker |  | 1525 | 34 | Fs::DirListing { dir: examples } |  |  | 0.715 |
-| walker |  | 1536 | 11 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/SDK_10.0.8.105/sdk/bsp } |  |  | 0.715 |
-| walker |  | 1553 | 17 | Fs::DirListing { dir: examples/typec } |  |  | 0.715 |
-| walker |  | 1571 | 18 | Fs::DirListing { dir: test/unit-test } |  |  | 0.716 |
+| walker |  | 1031 | 22 | Fs::DirListing { dir: .idea } |  |  | 0.802 |
+| walker |  | 1101 | 70 | Fs::DirListing { dir: .github/workflows } |  |  | 0.802 |
+| walker |  | 1125 | 24 | Fs::DirListing { dir: hw/mcu/dialog/da1469x } |  |  | 0.802 |
+| walker |  | 1132 | 7 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include } |  |  | 0.802 |
+| walker |  | 1137 | 5 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/hal } |  |  | 0.802 |
+| walker |  | 1148 | 11 | Fs::DirListing { dir: hw/mcu/sony/cxd56/tools } |  |  | 0.802 |
+| ns | 1237 |  | 227 | README host-stack and Power-Delivery capability lists | 1.8 |  | 0.749 |
+| walker |  | 1288 | 140 | Plaintext::DeclSurface { file: src/CMakeLists.txt } |  |  | 0.750 |
+| ns | 1333 |  | 96 | README supported-CPU matrix: heading, elided table body, legend | 1.9 |  | 0.716 |
+| walker |  | 1527 | 239 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: true } |  |  | 0.716 |
+| walker |  | 1561 | 34 | Fs::DirListing { dir: examples } |  |  | 0.716 |
+| walker |  | 1572 | 11 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/SDK_10.0.8.105/sdk/bsp } |  |  | 0.716 |
 | ns | 1579 |  | 246 | src/tusb.h: the stack-wide entry points | 2.1 |  | 0.677 |
-| walker |  | 1588 | 17 | Fs::DirListing { dir: test/unit-test/test } |  |  | 0.677 |
-| walker |  | 1594 | 6 | Fs::DirListing { dir: test/unit-test/test/support } |  |  | 0.677 |
-| walker |  | 1602 | 8 | Fs::DirListing { dir: test/unit-test/test/device } |  |  | 0.677 |
-| walker |  | 1608 | 6 | Fs::DirListing { dir: test/unit-test/test/device/usbd } |  |  | 0.677 |
-| walker |  | 1615 | 7 | Fs::DirListing { dir: test/unit-test/test/device/msc } |  |  | 0.677 |
+| walker |  | 1589 | 17 | Fs::DirListing { dir: examples/typec } |  |  | 0.677 |
+| walker |  | 1607 | 18 | Fs::DirListing { dir: test/unit-test } |  |  | 0.677 |
+| walker |  | 1624 | 17 | Fs::DirListing { dir: test/unit-test/test } |  |  | 0.677 |
+| walker |  | 1630 | 6 | Fs::DirListing { dir: test/unit-test/test/support } |  |  | 0.677 |
+| walker |  | 1638 | 8 | Fs::DirListing { dir: test/unit-test/test/device } |  |  | 0.677 |
+| walker |  | 1644 | 6 | Fs::DirListing { dir: test/unit-test/test/device/usbd } |  |  | 0.677 |
+| walker |  | 1651 | 7 | Fs::DirListing { dir: test/unit-test/test/device/msc } |  |  | 0.677 |
 | ns | 1791 |  | 212 | src/device/usbd.h: complete roster of the tud_* application API (names only) | 2.2 |  | 0.640 |
 | ns | 1952 |  | 161 | src/device/usbd.h: complete roster of tud_*_cb application callbacks | 2.3 |  | 0.617 |
-| walker |  | 2001 | 386 | Markdown::Section { file: README.rst, section_index: 2, keeps_default_concavity: true } |  |  | 0.743 |
-| walker |  | 2022 | 21 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/mcu } |  |  | 0.743 |
-| walker |  | 2054 | 32 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/src } |  |  | 0.743 |
-| walker |  | 2078 | 24 | Fs::DirListing { dir: examples/typec/power_delivery } |  |  | 0.743 |
-| walker |  | 2088 | 10 | Fs::DirListing { dir: examples/typec/power_delivery/src } |  |  | 0.743 |
-| walker |  | 2124 | 36 | Fs::DirListing { dir: hw/mcu/sony/cxd56/mkspk } |  |  | 0.743 |
+| walker |  | 2037 | 386 | Markdown::Section { file: README.rst, section_index: 2, keeps_default_concavity: true } |  |  | 0.744 |
+| walker |  | 2058 | 21 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/mcu } |  |  | 0.744 |
+| walker |  | 2090 | 32 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/src } |  |  | 0.744 |
+| walker |  | 2114 | 24 | Fs::DirListing { dir: examples/typec/power_delivery } |  |  | 0.744 |
+| walker |  | 2124 | 10 | Fs::DirListing { dir: examples/typec/power_delivery/src } |  |  | 0.744 |
 | ns | 2132 |  | 180 | src/host/usbh.h: host lifecycle API + application callback roster | 2.4 |  | 0.715 |
-| walker |  | 2208 | 84 | Fs::DirListing { dir: tools } |  |  | 0.717 |
-| walker |  | 2242 | 34 | Fs::DirListing { dir: examples/dual } |  |  | 0.717 |
-| walker |  | 2266 | 24 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc } |  |  | 0.717 |
-| walker |  | 2282 | 16 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc/src } |  |  | 0.717 |
-| walker |  | 2306 | 24 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc } |  |  | 0.717 |
+| walker |  | 2160 | 36 | Fs::DirListing { dir: hw/mcu/sony/cxd56/mkspk } |  |  | 0.715 |
+| walker |  | 2244 | 84 | Fs::DirListing { dir: tools } |  |  | 0.717 |
+| walker |  | 2278 | 34 | Fs::DirListing { dir: examples/dual } |  |  | 0.717 |
+| walker |  | 2302 | 24 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc } |  |  | 0.717 |
+| walker |  | 2318 | 16 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc/src } |  |  | 0.690 |
 | ns | 2318 |  | 186 | src/host/usbh.h: per-device query API and endpoint/transfer API rosters | 2.5 |  | 0.690 |
-| walker |  | 2328 | 22 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc/src } |  |  | 0.690 |
-| walker |  | 2356 | 28 | Fs::DirListing { dir: examples/dual/dynamic_switch } |  |  | 0.690 |
-| walker |  | 2378 | 22 | Fs::DirListing { dir: examples/dual/dynamic_switch/src } |  |  | 0.690 |
-| walker |  | 2414 | 36 | Fs::DirListing { dir: test/hil } |  |  | 0.691 |
-| walker |  | 2487 | 73 | Markdown::Section { file: README.rst, section_index: 6, keeps_default_concavity: false } |  |  | 0.696 |
+| walker |  | 2342 | 24 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc } |  |  | 0.690 |
+| walker |  | 2364 | 22 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc/src } |  |  | 0.690 |
+| walker |  | 2392 | 28 | Fs::DirListing { dir: examples/dual/dynamic_switch } |  |  | 0.690 |
+| walker |  | 2414 | 22 | Fs::DirListing { dir: examples/dual/dynamic_switch/src } |  |  | 0.690 |
+| walker |  | 2450 | 36 | Fs::DirListing { dir: test/hil } |  |  | 0.691 |
+| walker |  | 2523 | 73 | Markdown::Section { file: README.rst, section_index: 6, keeps_default_concavity: false } |  |  | 0.696 |
 | ns | 2557 |  | 239 | src/host/usbh.h: descriptor-fetch API, async and blocking variants | 2.6 |  | 0.668 |
-| walker |  | 2564 | 77 | Markdown::Section { file: README.rst, section_index: 12, keeps_default_concavity: false } |  |  | 0.690 |
-| walker |  | 2619 | 55 | Fs::DirListing { dir: test/fuzz } |  |  | 0.691 |
-| walker |  | 2630 | 11 | Fs::DirListing { dir: test/fuzz/device } |  |  | 0.691 |
-| walker |  | 2643 | 13 | Fs::DirListing { dir: test/fuzz/device/net } |  |  | 0.691 |
-| walker |  | 2664 | 21 | Fs::DirListing { dir: test/fuzz/device/cdc } |  |  | 0.691 |
-| walker |  | 2680 | 16 | Fs::DirListing { dir: test/fuzz/device/cdc/src } |  |  | 0.691 |
-| walker |  | 2701 | 21 | Fs::DirListing { dir: test/fuzz/device/msc } |  |  | 0.691 |
-| walker |  | 2717 | 16 | Fs::DirListing { dir: test/fuzz/device/msc/src } |  |  | 0.691 |
-| walker |  | 2742 | 25 | Fs::DirListing { dir: test/fuzz/device/net/src } |  |  | 0.691 |
-| walker |  | 2746 | 4 | Fs::DirListing { dir: test/fuzz/device/net/src/arch } |  |  | 0.691 |
-| ns | 2825 |  | 268 | src/host/usbh.h: the tuh_xfer_t transfer descriptor | 2.7 |  | 0.662 |
-| ns | 2940 |  | 115 | src/host/usbh.h: tuh_itf_info_t and tuh_bus_info_t | 2.8 |  | 0.646 |
-| ns | 3110 |  | 170 | Runtime configure IDs for tud_configure() / tuh_configure() | 2.9 |  | 0.631 |
+| walker |  | 2600 | 77 | Markdown::Section { file: README.rst, section_index: 12, keeps_default_concavity: false } |  |  | 0.690 |
+| ns | 2825 |  | 268 | src/host/usbh.h: the tuh_xfer_t transfer descriptor | 2.7 |  | 0.661 |
+| ns | 2940 |  | 115 | src/host/usbh.h: tuh_itf_info_t and tuh_bus_info_t | 2.8 |  | 0.645 |
+| ns | 3110 |  | 170 | Runtime configure IDs for tud_configure() / tuh_configure() | 2.9 |  | 0.630 |
+| walker |  | 3225 | 625 | Plaintext::Whole { file: src/CMakeLists.txt } |  |  | 0.630 |
 | ns | 3235 |  | 125 | src/tusb_option.h: stack version macros | 3.1 |  | 0.624 |
-| ns | 3391 |  | 156 | src/tusb_option.h: complete section map (headings only) | 3.2 |  | 0.610 |
-| walker |  | 3407 | 661 | Plaintext::Whole { file: src/CMakeLists.txt } |  |  | 0.611 |
+| walker |  | 3280 | 55 | Fs::DirListing { dir: test/fuzz } |  |  | 0.625 |
+| walker |  | 3291 | 11 | Fs::DirListing { dir: test/fuzz/device } |  |  | 0.625 |
+| walker |  | 3304 | 13 | Fs::DirListing { dir: test/fuzz/device/net } |  |  | 0.625 |
+| walker |  | 3325 | 21 | Fs::DirListing { dir: test/fuzz/device/cdc } |  |  | 0.625 |
+| walker |  | 3341 | 16 | Fs::DirListing { dir: test/fuzz/device/cdc/src } |  |  | 0.625 |
+| walker |  | 3362 | 21 | Fs::DirListing { dir: test/fuzz/device/msc } |  |  | 0.625 |
+| walker |  | 3378 | 16 | Fs::DirListing { dir: test/fuzz/device/msc/src } |  |  | 0.625 |
+| ns | 3391 |  | 156 | src/tusb_option.h: complete section map (headings only) | 3.2 |  | 0.611 |
+| walker |  | 3403 | 25 | Fs::DirListing { dir: test/fuzz/device/net/src } |  |  | 0.611 |
+| walker |  | 3407 | 4 | Fs::DirListing { dir: test/fuzz/device/net/src/arch } |  |  | 0.611 |
 | walker |  | 3472 | 65 | Fs::DirListing { dir: examples/host } |  |  | 0.611 |
 | ns | 3486 |  | 95 | src/tusb_option.h: how tusb_config.h is pulled in | 3.3 |  | 0.602 |
 | walker |  | 3500 | 28 | Fs::DirListing { dir: examples/host/bare_api } |  |  | 0.602 |

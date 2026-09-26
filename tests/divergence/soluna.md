@@ -1,4 +1,4 @@
-Score(3000)=0.702 I=0.907 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.777/0.774/0.702/0.648/0.546/0.529
+Score(3000)=0.702 I=0.907 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.779/0.774/0.702/0.648/0.546/0.529
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,15 +57,15 @@ Score(3000)=0.702 I=0.907 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 1239 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.752 |
 | ns | 1256 |  | 118 | Every callback a game may implement (docs/callback.lua roster) | 2.2 |  | 0.733 |
 | walker |  | 1295 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.809 |
-| walker |  | 1373 | 78 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.809 |
-| walker |  | 1383 | 10 | Plaintext::DeclSurface { file: bin/readme.txt } |  |  | 0.809 |
+| walker |  | 1365 | 70 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.809 |
+| walker |  | 1375 | 10 | Plaintext::DeclSurface { file: bin/readme.txt } |  |  | 0.809 |
 | ns | 1412 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.775 |
-| walker |  | 1429 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.776 |
+| walker |  | 1421 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.776 |
 | ns | 1482 |  | 70 | All three .game setting files in test/ | 2.4 | 2.3 | 0.761 |
-| walker |  | 1517 | 88 | Fs::DirListing { dir: test } |  |  | 0.838 |
-| walker |  | 1531 | 14 | Code::CodeKey { rung: Names, file: make.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
+| walker |  | 1509 | 88 | Fs::DirListing { dir: test } |  |  | 0.838 |
+| walker |  | 1523 | 14 | Code::CodeKey { rung: Names, file: make.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
 | ns | 1618 |  | 136 | The `soluna` core module surface (docs/soluna.lua declarations) | 2.5 |  | 0.815 |
-| walker |  | 1780 | 249 | Plaintext::Whole { file: src/yogaone.cpp } |  |  | 0.815 |
+| walker |  | 1780 | 257 | Plaintext::Whole { file: src/yogaone.cpp } |  |  | 0.815 |
 | ns | 1799 |  | 181 | Types and parameter docs for the `soluna` module | 2.6 | 2.5 | 0.790 |
 | ns | 1900 |  | 101 | The `Batch` draw object and the `Args` passed to the entry script | 2.7 |  | 0.774 |
 | walker |  | 2035 | 255 | Code::CodeKey { rung: Names, file: script/build_web.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.774 |

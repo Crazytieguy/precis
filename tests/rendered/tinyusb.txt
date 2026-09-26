@@ -284,13 +284,21 @@ src/
     16→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/midi/midi_device.c
     17→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/msc/msc_device.c
     18→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/mtp/mtp_device.c
+    19→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/net/ecm_rndis_device.c
+    20→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/net/ncm_device.c
+    21→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/printer/printer_device.c
+    22→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/usbtmc/usbtmc_device.c
+    23→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/vendor/vendor_device.c
+    24→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/video/video_device.c
+    25→    # host
+    26→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/host/usbh.c
     …
-    37→endfunction()
-    38→
     39→# Add tinyusb to a existing target
     40→function(tinyusb_target_add TARGET)
+    41→  tinyusb_sources_get(TINYUSB_SRC)
+    42→  target_sources(${TARGET} PRIVATE ${TINYUSB_SRC})
+    43→  target_include_directories(${TARGET} PUBLIC
     …
-    48→endfunction()
   class/
     audio/
     bth/
@@ -371,43 +379,6 @@ src/
     usbc.h
 test/
   fuzz/
-    dcd_fuzz.cc
-    device/
-      cdc/
-        CMakeLists.txt
-        Makefile
-        cdc_seed_corpus.zip
-        src/
-          fuzz.cc
-          tusb_config.h
-          usb_descriptors.cc
-      msc/
-        CMakeLists.txt
-        Makefile
-        msc_seed_corpus.zip
-        src/
-          fuzz.cc
-          tusb_config.h
-          usb_descriptors.cc
-      net/
-        CMakeLists.txt
-        Makefile
-        src/
-          arch/
-            cc.h
-          fuzz.cc
-          lwipopts.h
-          tusb_config.h
-          usb_descriptors.cc
-    dicts/
-    fuzz.cc
-    fuzz.h
-    fuzz_private.h
-    make.mk
-    msc_fuzz.cc
-    net_fuzz.cc
-    rules.mk
-    usbd_fuzz.cc
   hil/
     hfp.json
     hil_ci.sh
