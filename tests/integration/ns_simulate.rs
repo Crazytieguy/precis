@@ -26,6 +26,15 @@ fn lines(id: &str, start: usize, end: usize, render: &str) -> String {
     )
 }
 
+/// `batch` with a `predecessor` edge to `predecessor`.
+fn with_predecessor(batch: String, predecessor: &str) -> String {
+    batch.replacen(
+        "descriptor",
+        &format!("predecessor = \"{predecessor}\"\ndescriptor"),
+        1,
+    )
+}
+
 const FULL: &str = "{ kind = \"full\" }";
 const ELLIPSIS: &str = "{ kind = \"ellipsis\" }";
 
@@ -70,11 +79,19 @@ fn ns_simulate_first_batch_obeys_envelope() {
     );
 }
 
+/// The clash is left out, so it neither claims lines nor stands in for
+/// the first occurrence as a successor's predecessor.
 #[test]
 fn ns_simulate_detects_duplicate_batch_id() {
-    let found = violations(&[lines("1.1", 1, 3, FULL), lines("1.1", 5, 7, FULL)]);
+    let found = violations(&[
+        lines("1.1", 1, 3, FULL),
+        lines("1.1", 1, 3, FULL),
+        with_predecessor(lines("1.2", 3, 3, FULL), "1.1"),
+    ]);
     assert!(found[0].is_empty(), "{:?}", found[0]);
+    assert_eq!(found[1].len(), 1, "{:?}", found[1]);
     assert_flags(&found[1], "duplicate batch id \"1.1\"");
+    assert!(found[2].is_empty(), "{:?}", found[2]);
 }
 
 #[test]
@@ -182,13 +199,6 @@ fn ns_simulate_detects_truncation_eliding_only_punctuation() {
 /// lines it would have inherited.
 #[test]
 fn ns_simulate_left_out_predecessor_does_not_cascade() {
-    let with_predecessor = |batch: String, predecessor: &str| {
-        batch.replacen(
-            "descriptor",
-            &format!("predecessor = \"{predecessor}\"\ndescriptor"),
-            1,
-        )
-    };
     let found = violations(&[
         lines("1", 1, 5, FULL),
         with_predecessor(lines("2", 1, 99999, FULL), "1"),

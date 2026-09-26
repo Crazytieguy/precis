@@ -38,7 +38,6 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
         source_cache.clone(),
         Rc::clone(&filter),
     );
-    let mut seen_ids: HashSet<&str> = HashSet::new();
     let mut by_id: HashMap<&str, &NsBatch> = HashMap::new();
     for batch in &ns.batches {
         by_id.entry(&batch.id).or_insert(batch);
@@ -52,11 +51,22 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
 
     for (position, batch) in ns.batches.iter().enumerate() {
         let mut violations = Vec::new();
-        if !seen_ids.insert(&batch.id) {
+        let record = |violations, cost_tokens, cumulative_tokens| SimulatedBatch {
+            id: batch.id.clone(),
+            descriptor: batch.descriptor.clone(),
+            cost_tokens,
+            cumulative_tokens,
+            violations,
+        };
+        // `predecessor` edges name the first occurrence, so a clash is
+        // left out rather than applied under an id that means another batch.
+        if applied.contains_key(batch.id.as_str()) || left_out.contains(batch.id.as_str()) {
             violations.push(format!(
-                "duplicate batch id {:?} (first occurrence passes; this is the clash)",
+                "duplicate batch id {:?} (the first occurrence is simulated; this one is left out)",
                 batch.id
             ));
+            out.push(record(violations, 0, cumulative));
+            continue;
         }
         if let Some(predecessor) = &batch.predecessor {
             if left_out.contains(predecessor.as_str()) {
@@ -69,13 +79,6 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
                 ));
             }
         }
-        let record = |violations, cost_tokens, cumulative_tokens| SimulatedBatch {
-            id: batch.id.clone(),
-            descriptor: batch.descriptor.clone(),
-            cost_tokens,
-            cumulative_tokens,
-            violations,
-        };
 
         // A span the renderer can't apply (missing file, bad range or
         // regex) leaves the batch out of the simulation. Quality-only
