@@ -22,6 +22,7 @@
 //!   inherent impl with no admitted function; its private types,
 //!   constants and statics stay.
 
+use std::collections::HashSet;
 use std::path::Path;
 
 use tree_sitter::Node;
@@ -479,24 +480,26 @@ fn container(
     let Some(list) = node.child_by_field_name("body") else {
         return whole(node, leading, file, None, Vec::new(), Vec::new());
     };
-    let mut members = Vec::new();
     let is_function =
         |child: Node| matches!(child.kind(), "function_item" | "function_signature_item");
-    for child in list.named_children(&mut list.walk()) {
-        if !is_function(child) {
+    let children: Vec<Node> = list.children(&mut list.walk()).collect();
+    let mut members = Vec::new();
+    let mut admitted_entries = HashSet::new();
+    for (index, &child) in children.iter().enumerate() {
+        if !child.is_named() || is_leading_trivia(child) {
             continue;
         }
-        let member_leading = Leading::above(child, file);
-        if member_leading.hidden {
+        let child_leading = Leading::walking_back(children[..index].iter().rev().copied(), file);
+        if child_leading.hidden || !admit(child) {
             continue;
         }
-        if admit(child) {
-            members.push(callable(child, member_leading, file));
+        if is_function(child) {
+            members.push(callable(child, child_leading, file));
+        } else {
+            admitted_entries.insert(child.id());
         }
     }
-    let entries = file.admitted_items(list, 0, |child| {
-        !is_function(child) && !Leading::above(child, file).hidden && admit(child)
-    });
+    let entries = file.admitted_items(list, 0, |child| admitted_entries.contains(&child.id()));
     let open_row = list.start_position().row + 1;
     whole(
         node,
@@ -509,7 +512,7 @@ fn container(
 }
 
 /// A trait impl admits every function. An inherent impl in a module that
-/// hides its private helpers admits only functions with a visibility
+/// hides its private helpers admits only items with a visibility
 /// modifier (`pub`, `pub(…)`), and is hidden without one.
 fn impl_container(
     node: Node,
@@ -520,16 +523,8 @@ fn impl_container(
     let is_trait_impl = node.child_by_field_name("trait").is_some();
     let admit =
         |child: Node| is_trait_impl || !hides_private || visibility_modifier(child, file).is_some();
-    if !is_trait_impl {
-        let list = node.child_by_field_name("body")?;
-        let admits_any = list
-            .named_children(&mut list.walk())
-            .any(|child| admit(child) && !Leading::above(child, file).hidden);
-        if !admits_any {
-            return None;
-        }
-    }
-    Some(container(node, leading, file, admit))
+    let decl = container(node, leading, file, admit);
+    (is_trait_impl || !decl.body.is_empty()).then_some(decl)
 }
 
 /// The row of the delimiter opening a `macro_rules!` body.
