@@ -173,19 +173,89 @@ fn plugin_hooks_session_start_without_binary() {
         "{exports}"
     );
 
-    let fake_bin = temp.path().join("bin");
-    std::fs::create_dir(&fake_bin).unwrap();
-    let uname = fake_bin.join("uname");
-    std::fs::write(&uname, "#!/bin/sh\necho MINGW64_NT-10.0\n").unwrap();
-    std::fs::set_permissions(&uname, PermissionsExt::from_mode(0o755)).unwrap();
-    let search_path = std::env::var_os("PATH").unwrap();
-    let path =
-        std::env::join_paths(std::iter::once(fake_bin).chain(std::env::split_paths(&search_path)))
-            .unwrap();
+    let path = path_with_fakes(
+        &temp.path().join("bin"),
+        &[("uname", "echo MINGW64_NT-10.0")],
+    );
     let stdout = run_hook(
         "hooks/session-start.sh",
         input,
         &[env[0], env[1], ("PATH", path.as_os_str())],
     );
     assert!(stdout.contains("unsupported platform"), "{stdout}");
+}
+
+/// A directory of executable shell scripts, prepended to PATH.
+fn path_with_fakes(dir: &Path, fakes: &[(&str, &str)]) -> std::ffi::OsString {
+    std::fs::create_dir_all(dir).unwrap();
+    for (name, body) in fakes {
+        let fake = dir.join(name);
+        std::fs::write(&fake, format!("#!/bin/sh\n{body}\n")).unwrap();
+        std::fs::set_permissions(&fake, PermissionsExt::from_mode(0o755)).unwrap();
+    }
+    let search_path = std::env::var_os("PATH").unwrap();
+    std::env::join_paths(
+        std::iter::once(dir.to_path_buf()).chain(std::env::split_paths(&search_path)),
+    )
+    .unwrap()
+}
+
+/// The installer logs why it gave up, since the session hook's only
+/// message on a missing binary points at the log.
+#[test]
+fn plugin_hooks_install_logs_unsupported_arch() {
+    let temp = tempfile::tempdir().unwrap();
+    let plugin_data = temp.path().join("plugin-data");
+    let path = path_with_fakes(
+        &temp.path().join("bin"),
+        &[(
+            "uname",
+            r#"case "$1" in -s) echo Linux ;; -m) echo armv7l ;; esac"#,
+        )],
+    );
+    let status = Command::new("bash")
+        .arg(hook_script("scripts/ensure-precis.sh"))
+        .arg("--install")
+        .env("CLAUDE_PLUGIN_DATA", &plugin_data)
+        .env("PATH", &path)
+        .status()
+        .unwrap();
+    assert!(status.success());
+    let log = std::fs::read_to_string(plugin_data.join("error.log")).unwrap();
+    assert!(log.contains("no release binary for linux-armv7l"), "{log}");
+}
+
+/// Work dirs left by killed updates are cleared once they are old
+/// enough not to belong to an update still running.
+#[test]
+fn plugin_hooks_update_clears_stale_work_dirs() {
+    let temp = tempfile::tempdir().unwrap();
+    let plugin_data = temp.path().join("plugin-data");
+    let stale = plugin_data.join("update.stale");
+    let recent = plugin_data.join("update.recent");
+    std::fs::create_dir_all(&stale).unwrap();
+    std::fs::create_dir_all(&recent).unwrap();
+    let touched = Command::new("touch")
+        .args(["-t", "202001010000"])
+        .arg(&stale)
+        .status()
+        .unwrap();
+    assert!(touched.success());
+    let path = path_with_fakes(
+        &temp.path().join("bin"),
+        &[(
+            "curl",
+            r#"case "$*" in *api.github.com*) echo '{"tag_name":"v9.9.9"}' ;; *) exit 22 ;; esac"#,
+        )],
+    );
+    let status = Command::new("bash")
+        .arg(hook_script("scripts/ensure-precis.sh"))
+        .arg("--install")
+        .env("CLAUDE_PLUGIN_DATA", &plugin_data)
+        .env("PATH", &path)
+        .status()
+        .unwrap();
+    assert!(status.success());
+    assert!(!stale.exists());
+    assert!(recent.exists());
 }

@@ -29,9 +29,7 @@ OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
 
 case "$ARCH" in
-  aarch64|arm64) ARCH="aarch64" ;;
-  x86_64)        ;;
-  *)             exit 0 ;;
+  arm64) ARCH="aarch64" ;;
 esac
 
 case "$OS-$ARCH" in
@@ -39,11 +37,14 @@ case "$OS-$ARCH" in
   darwin-x86_64)   TARGET="x86_64-apple-darwin" ;;
   linux-aarch64)   TARGET="aarch64-unknown-linux-gnu" ;;
   linux-x86_64)    TARGET="x86_64-unknown-linux-gnu" ;;
-  *)               exit 0 ;;
+  *)
+    echo "precis: no release binary for $OS-$ARCH" >&2
+    exit 0
+    ;;
 esac
 
 # Get latest release tag
-RELEASE_JSON=$(curl -fSs https://api.github.com/repos/Crazytieguy/precis/releases/latest 2>/dev/null) || exit 0
+RELEASE_JSON=$(curl -fSs https://api.github.com/repos/Crazytieguy/precis/releases/latest) || exit 0
 
 if [ -n "$JQ" ]; then
   TAG=$(echo "$RELEASE_JSON" | "$JQ" -r '.tag_name // ""')
@@ -51,7 +52,10 @@ else
   TAG=$(echo "$RELEASE_JSON" | grep -o '"tag_name"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | grep -o '"[^"]*"$' | tr -d '"')
 fi
 
-[ -n "$TAG" ] || exit 0
+if [ -z "$TAG" ]; then
+  echo "precis: no tag_name in the latest release response" >&2
+  exit 0
+fi
 
 # Check if already up to date
 if [ -x "$PRECIS_BIN" ] && [ -f "$PLUGIN_DATA/version" ]; then
@@ -64,6 +68,8 @@ fi
 ARCHIVE="precis-${TARGET}.tar.xz"
 DOWNLOAD_URL="https://github.com/Crazytieguy/precis/releases/download/${TAG}/${ARCHIVE}"
 
+# A run killed before its EXIT trap leaves its work dir behind.
+find "$PLUGIN_DATA" -maxdepth 1 -name 'update.*' -mmin +60 -exec rm -rf {} +
 # Unpack beside the binary so the final mv is a rename on one filesystem:
 # the sync session hook may exec the binary while this async hook replaces it.
 WORK_DIR=$(mktemp -d "$PLUGIN_DATA/update.XXXXXXXX")
@@ -91,9 +97,15 @@ if [ -f "$WORK_DIR/precis" ]; then
 else
   NEW_BIN=$(find "$WORK_DIR" -mindepth 2 -maxdepth 2 -type f -name precis | head -1)
 fi
-[ -n "$NEW_BIN" ] || exit 0
+if [ -z "$NEW_BIN" ]; then
+  echo "precis: no precis binary in $DOWNLOAD_URL" >&2
+  exit 0
+fi
 chmod +x "$NEW_BIN"
-"$NEW_BIN" --help >/dev/null 2>&1 || exit 0
+if ! "$NEW_BIN" --help >/dev/null; then
+  echo "precis: the $TARGET binary does not run here" >&2
+  exit 0
+fi
 
 mv -f "$NEW_BIN" "$PRECIS_BIN"
 echo "$TAG" > "$PLUGIN_DATA/version"
