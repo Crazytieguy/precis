@@ -355,7 +355,12 @@ fn head_doc_and_directives(node: Node, file: &SourceFile) -> (Vec<Item>, Vec<usi
             .trim()
             .starts_with("// Deprecated: ");
         if deprecated {
-            directives.extend(&paragraph.rows);
+            directives.extend(
+                paragraph
+                    .rows
+                    .iter()
+                    .filter(|&&row| file.line(row).trim() != "//"),
+            );
         }
         !deprecated
     });
@@ -567,6 +572,13 @@ func Foo() {}
         assert_eq!(
             describe(&deprecated),
             ["Callable name [6] head [5, 6] doc [[3, 4]] body []"]
+        );
+        let deprecated_mid_doc = extract_source(
+            "package p\n\n// Old does X.\n//\n// Deprecated: Use New.\n//\n// More.\nfunc Old() {}\n",
+        );
+        assert_eq!(
+            describe(&deprecated_mid_doc),
+            ["Callable name [8] head [5, 8] doc [[3, 4], [7]] body []"]
         );
     }
 
