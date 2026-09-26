@@ -2,7 +2,7 @@
 //! which single source file, if any, carries a dominant share of it.
 //! One capped walk over the essential source answers both.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::path::{Path, PathBuf};
 
 use crate::fs_util::{DirFilter, PROBE_ENTRY_CAP};
@@ -42,8 +42,10 @@ pub(super) fn enumerate_essential_source(
     let mut per_language: HashMap<&'static str, u64> = HashMap::new();
     let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
     let mut entries_read = 0;
-    let mut stack = vec![root.to_path_buf()];
-    while let Some(dir) = stack.pop() {
+    // Breadth first: the answer doesn't depend on the order, and a tree
+    // past the cap can reach it after opening far fewer directories.
+    let mut queue = VecDeque::from([root.to_path_buf()]);
+    while let Some(dir) = queue.pop_front() {
         let Ok(entries) = std::fs::read_dir(&dir) else {
             continue;
         };
@@ -65,7 +67,7 @@ pub(super) fn enumerate_essential_source(
                 if !crate::fs_util::should_skip_dir(&name)
                     && crate::value::non_essential_factor(&path, root) >= 1.0
                 {
-                    stack.push(path);
+                    queue.push_back(path);
                 }
             } else if file_type.is_file() {
                 let Some(language) = language_group(&path) else {
