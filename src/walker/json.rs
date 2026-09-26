@@ -266,29 +266,13 @@ fn is_identity_key(k: &str) -> bool {
 }
 
 fn is_entry_key(k: &str) -> bool {
-    matches!(
-        k,
-        "main"
-            | "module"
-            | "browser"
-            | "exports"
-            | "imports"
-            | "types"
-            | "typings"
-            | "typesVersions"
-            | "source"
-            | "bin"
-            | "files"
-            | "directories"
-            | "unpkg"
-            | "jsdelivr"
-            | "umd:main"
-            | "jsnext:main"
-            | "react-native"
-            | "svelte"
-            | "sideEffects"
-            | "workspaces"
-    )
+    #[rustfmt::skip]
+    const KEYS: &[&str] = &[
+        "main", "module", "browser", "exports", "imports", "types", "typings", "typesVersions",
+        "source", "bin", "files", "directories", "unpkg", "jsdelivr", "umd:main", "jsnext:main",
+        "react-native", "svelte", "sideEffects", "workspaces",
+    ];
+    KEYS.contains(&k)
 }
 
 fn is_runtime_key(k: &str) -> bool {
@@ -300,15 +284,12 @@ fn is_scripts_key(k: &str) -> bool {
 }
 
 fn is_runtime_dependencies_key(k: &str) -> bool {
-    matches!(
-        k,
-        "dependencies"
-            | "optionalDependencies"
-            | "bundledDependencies"
-            | "bundleDependencies"
-            | "overrides"
-            | "resolutions"
-    )
+    #[rustfmt::skip]
+    const KEYS: &[&str] = &[
+        "dependencies", "optionalDependencies", "bundledDependencies", "bundleDependencies",
+        "overrides", "resolutions",
+    ];
+    KEYS.contains(&k)
 }
 
 fn is_package_section_key(k: &str) -> bool {

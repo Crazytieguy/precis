@@ -218,26 +218,22 @@ pub(crate) fn is_credential_name(path: &Path) -> bool {
     if lower.starts_with(".env.") || lower.ends_with(".env") {
         return true;
     }
+    #[rustfmt::skip]
+    const LEADING_WORDS: &[&str] = &[
+        "env", "secret", "secrets", "credential", "credentials", "creds", "token", "tokens",
+        "password", "passwords", "passwd", "apikey", "auth",
+    ];
+    #[rustfmt::skip]
+    const AUTH_FILE_NAMES: &[&str] = &[
+        ".npmrc", ".netrc", ".pypirc", ".git-credentials", ".htpasswd", ".pgpass", ".my.cnf",
+        "kubeconfig",
+    ];
     let leading = lower.split(['.', '-', '_']).next().unwrap_or_default();
     super::language_group(path).is_none()
-        && (matches!(
-            leading,
-            "env"
-                | "secret"
-                | "secrets"
-                | "credential"
-                | "credentials"
-                | "creds"
-                | "token"
-                | "tokens"
-                | "password"
-                | "passwords"
-                | "passwd"
-                | "apikey"
-                | "auth"
-        ) || ["api_key", "api-key"]
-            .iter()
-            .any(|prefix| lower.starts_with(prefix))
+        && (LEADING_WORDS.contains(&leading)
+            || ["api_key", "api-key"]
+                .iter()
+                .any(|prefix| lower.starts_with(prefix))
             || [".tfvars", ".tfvars.json", ".key", ".pem"]
                 .iter()
                 .any(|suffix| lower.ends_with(suffix))
@@ -245,17 +241,7 @@ pub(crate) fn is_credential_name(path: &Path) -> bool {
                 && ["service-account", "service_account", "serviceaccount"]
                     .iter()
                     .any(|prefix| lower.starts_with(prefix)))
-            || matches!(
-                lower.as_str(),
-                ".npmrc"
-                    | ".netrc"
-                    | ".pypirc"
-                    | ".git-credentials"
-                    | ".htpasswd"
-                    | ".pgpass"
-                    | ".my.cnf"
-                    | "kubeconfig"
-            ))
+            || AUTH_FILE_NAMES.contains(&lower.as_str()))
 }
 
 /// Programming-language extensions the fallback claims. A directory
@@ -480,15 +466,18 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
 /// declares, and shown without its `#endif` it reads as an open block.
 /// Verilog spells them with a backtick (`` `ifdef ``). A `#define` of a
 /// name alone is an include guard or a build flag.
-const COMPILER_DIRECTIVES: &str = "if ifdef ifndef else elif elsif elseif endif undef pragma \
-    error warning nullable line default_nettype timescale resetall";
+#[rustfmt::skip]
+const COMPILER_DIRECTIVES: &[&str] = &[
+    "if", "ifdef", "ifndef", "else", "elif", "elsif", "elseif", "endif", "undef", "pragma",
+    "error", "warning", "nullable", "line", "default_nettype", "timescale", "resetall",
+];
 
 fn is_compiler_directive(trimmed: &str) -> bool {
     trimmed.strip_prefix(['#', '`']).is_some_and(|rest| {
         let mut words = rest.split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'));
         match words.next() {
             Some("define") => words.filter(|word| !word.is_empty()).count() == 1,
-            Some(word) => has_word(COMPILER_DIRECTIVES, word),
+            Some(word) => COMPILER_DIRECTIVES.contains(&word),
             None => false,
         }
     })
@@ -515,12 +504,14 @@ fn is_block_closer(trimmed: &str) -> bool {
             !label.is_empty()
                 && label
                     .split_whitespace()
-                    .all(|word| has_word(ACCESS_LABELS, word))
+                    .all(|word| ACCESS_LABELS.contains(&word))
         })
 }
 
 /// Words of a C++ or Qt access label.
-const ACCESS_LABELS: &str = "public private protected signals slots Q_SIGNALS Q_SLOTS";
+#[rustfmt::skip]
+const ACCESS_LABELS: &[&str] =
+    &["public", "private", "protected", "signals", "slots", "Q_SIGNALS", "Q_SLOTS"];
 
 /// Comment-opener detection across the covered languages. Ambiguous
 /// markers require a following space (or end of line) so CSS `#id {`
@@ -824,7 +815,7 @@ fn declares_type(trimmed: &str) -> bool {
         .split_whitespace()
         .rev()
         .skip(1)
-        .any(|word| has_word(TYPE_KEYWORDS, word))
+        .any(|word| TYPE_KEYWORDS.contains(&word))
 }
 
 /// Where a line's modifiers, keyword and name end: its first bracket or
@@ -850,22 +841,28 @@ enum DeclarationRank {
 
 /// Words that declare a type or namespace named after them, across the
 /// covered languages.
-const TYPE_KEYWORDS: &str = "class interface trait object struct enum protocol extension module \
-    record union namespace defmodule defprotocol defimpl impl instance";
+#[rustfmt::skip]
+const TYPE_KEYWORDS: &[&str] = &[
+    "class", "interface", "trait", "object", "struct", "enum", "protocol", "extension", "module",
+    "record", "union", "namespace", "defmodule", "defprotocol", "defimpl", "impl", "instance",
+];
 
 /// Words that declare any other name after them.
-const MEMBER_KEYWORDS: &str = "type typealias using data newtype def fun func function fn sub defmacro proc val var let const";
+#[rustfmt::skip]
+const MEMBER_KEYWORDS: &[&str] = &[
+    "type", "typealias", "using", "data", "newtype", "def", "fun", "func", "function", "fn", "sub",
+    "defmacro", "proc", "val", "var", "let", "const",
+];
 
 /// First words of a line that is not part of a file's API: a private or
 /// file-local member, a test case, or a control-flow statement.
-const INTERNAL_LEADERS: &str = "private fileprivate internal defp static test begin rescue ensure else \
-    elsif elif comptime if unless for foreach while until switch match when try catch finally do \
-    return throw raise new await yield";
-
-/// Whether `word` is one of the space-separated words of `table`.
-fn has_word(table: &str, word: &str) -> bool {
-    table.split_whitespace().any(|entry| entry == word)
-}
+#[rustfmt::skip]
+const INTERNAL_LEADERS: &[&str] = &[
+    "private", "fileprivate", "internal", "defp", "static", "test", "begin", "rescue", "ensure",
+    "else", "elsif", "elif", "comptime", "if", "unless", "for", "foreach", "while", "until",
+    "switch", "match", "when", "try", "catch", "finally", "do", "return", "throw", "raise", "new",
+    "await", "yield",
+];
 
 /// Where a declaration line falls in the roster. A line reads as a
 /// declaration by a keyword followed by a name, by a Haskell `name ::`
@@ -876,7 +873,7 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
     let words: Vec<&str> = trimmed[..head_end].split_whitespace().collect();
     if words
         .first()
-        .is_some_and(|first| has_word(INTERNAL_LEADERS, first))
+        .is_some_and(|first| INTERNAL_LEADERS.contains(first))
     {
         return DeclarationRank::Internal;
     }
@@ -885,10 +882,9 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
     }
     // A type declared without members (`struct Options;`, `extension
     // Request: Equatable {}`) adds only its name.
-    if words
-        .first()
-        .is_some_and(|first| has_word("class struct union enum extension protocol", first))
-        && !trimmed.contains('(')
+    if words.first().is_some_and(|first| {
+        ["class", "struct", "union", "enum", "extension", "protocol"].contains(first)
+    }) && !trimmed.contains('(')
         && ((trimmed.ends_with(';') && !trimmed.contains('{'))
             || trimmed.trim_end_matches(';').ends_with("{}"))
     {
@@ -898,7 +894,7 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
         .iter()
         .rev()
         .skip(1)
-        .any(|word| has_word(TYPE_KEYWORDS, word) || has_word(MEMBER_KEYWORDS, word))
+        .any(|word| TYPE_KEYWORDS.contains(word) || MEMBER_KEYWORDS.contains(word))
         || words.get(1) == Some(&"::")
         || (words.len() >= 2 && trimmed[head_end..].starts_with('('));
     if !declares {

@@ -115,18 +115,10 @@ fn strip_comment(line: &str) -> &str {
 }
 
 /// The directives of go.mod and go.work.
-const DIRECTIVES: [&str; 11] = [
-    "module",
-    "go",
-    "toolchain",
-    "godebug",
-    "require",
-    "replace",
-    "exclude",
-    "retract",
-    "use",
-    "tool",
-    "ignore",
+#[rustfmt::skip]
+const DIRECTIVES: &[&str] = &[
+    "module", "go", "toolchain", "godebug", "require", "replace", "exclude", "retract", "use",
+    "tool", "ignore",
 ];
 
 fn block_start(code: &str) -> Option<&str> {

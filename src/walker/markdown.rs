@@ -409,22 +409,12 @@ enum ReadmeMarkup {
 /// Stems of the root documents a README sends a builder or contributor
 /// to ("see BUILDING.md").
 fn is_build_guide_stem(stem: &str) -> bool {
-    matches!(
-        stem.to_ascii_lowercase().as_str(),
-        "build"
-            | "building"
-            | "install"
-            | "installation"
-            | "installing"
-            | "compile"
-            | "compiling"
-            | "testing"
-            | "hacking"
-            | "development"
-            | "developing"
-            | "developer"
-            | "contributing"
-    )
+    #[rustfmt::skip]
+    const STEMS: &[&str] = &[
+        "build", "building", "install", "installation", "installing", "compile", "compiling",
+        "testing", "hacking", "development", "developing", "developer", "contributing",
+    ];
+    STEMS.contains(&stem.to_ascii_lowercase().as_str())
 }
 
 /// One `CommandBlock` per root Markdown build guide: its first run of
@@ -1358,51 +1348,21 @@ fn section_title_core(section: Node, source: &str) -> String {
 fn is_appendix_title_core(core: &str) -> bool {
     let core = core.split_once(" to ").map_or(core, |(head, _)| head);
     let core = core.strip_suffix(" this project").unwrap_or(core);
-    matches!(
-        core,
-        "license"
-            | "licence"
-            | "licensing"
-            | "contributing"
-            | "contribute"
-            | "contributors"
-            | "contribution"
-            | "sponsors"
-            | "backers"
-            | "donate"
-            | "donation"
-            | "donations"
-            | "support"
-            | "funding"
-            | "acknowledgements"
-            | "acknowledgments"
-            | "credits"
-            | "thanks"
-            | "authors"
-            | "author"
-            | "maintainers"
-            | "star history"
-            | "code of conduct"
-            | "security"
-            | "citation"
-            | "contact"
-    )
+    #[rustfmt::skip]
+    const TITLES: &[&str] = &[
+        "license", "licence", "licensing", "contributing", "contribute", "contributors",
+        "contribution", "sponsors", "backers", "donate", "donation", "donations", "support",
+        "funding", "acknowledgements", "acknowledgments", "credits", "thanks", "authors", "author",
+        "maintainers", "star history", "code of conduct", "security", "citation", "contact",
+    ];
+    TITLES.contains(&core)
 }
 
 /// Title words naming how to build, test, run or develop the project.
-const COMMAND_TITLE_WORDS: [&str; 12] = [
-    "build",
-    "building",
-    "compile",
-    "compiling",
-    "compilation",
-    "test",
-    "tests",
-    "testing",
-    "develop",
-    "development",
-    "run",
-    "running",
+#[rustfmt::skip]
+const COMMAND_TITLE_WORDS: &[&str] = &[
+    "build", "building", "compile", "compiling", "compilation", "test", "tests", "testing",
+    "develop", "development", "run", "running",
 ];
 
 fn is_command_title_core(core: &str) -> bool {
@@ -1486,18 +1446,9 @@ fn command_block(
 }
 
 /// Fence languages of shell commands.
-const SHELL_LANGUAGES: [&str; 10] = [
-    "sh",
-    "bash",
-    "shell",
-    "console",
-    "zsh",
-    "fish",
-    "powershell",
-    "pwsh",
-    "cmd",
-    "bat",
-];
+#[rustfmt::skip]
+const SHELL_LANGUAGES: &[&str] =
+    &["sh", "bash", "shell", "console", "zsh", "fish", "powershell", "pwsh", "cmd", "bat"];
 
 /// A code block that holds shell commands: indented, untagged, or tagged
 /// with a shell language.
@@ -1512,42 +1463,24 @@ fn is_shell_block(block: Node, source: &str) -> bool {
 
 /// Usage-demo titles; shared with the RST heading path.
 fn is_canonical_usage_title_core(core: &str) -> bool {
-    matches!(
-        core,
-        "usage"
-            | "sample usage"
-            | "basic usage"
-            | "example"
-            | "examples"
-            | "usage example"
-            | "usage examples"
-            | "quick start"
-            | "quickstart"
-            | "getting started"
-            | "demo"
-    )
+    #[rustfmt::skip]
+    const TITLES: &[&str] = &[
+        "usage", "sample usage", "basic usage", "example", "examples", "usage example",
+        "usage examples", "quick start", "quickstart", "getting started", "demo",
+    ];
+    TITLES.contains(&core)
 }
 
 /// Reference titles; shared with the RST heading path. Bare "usage" is
 /// a usage-demo title only: over prose it is a walkthrough.
 fn is_reference_usage_title_core(core: &str) -> bool {
-    matches!(
-        core,
-        "command line usage"
-            | "command-line usage"
-            | "cli usage"
-            | "command line options"
-            | "command-line options"
-            | "options"
-            | "flags"
-            | "key features"
-            | "features"
-            | "configuration"
-            | "config"
-            | "api"
-            | "api usage"
-            | "environment variables"
-    )
+    #[rustfmt::skip]
+    const TITLES: &[&str] = &[
+        "command line usage", "command-line usage", "cli usage", "command line options",
+        "command-line options", "options", "flags", "key features", "features", "configuration",
+        "config", "api", "api usage", "environment variables",
+    ];
+    TITLES.contains(&core)
 }
 
 /// Upper bound (source bytes, heading excluded) on a reference
