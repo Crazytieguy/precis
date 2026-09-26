@@ -81,6 +81,9 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
         children = grandchildren;
     }
     let value = chain_head_value.min(dir_listing_value(&dir, &children, ctx));
+    if value == 0.0 {
+        return None;
+    }
     Some(Batch {
         key: FsKey::DirListing { dir }.into(),
         predecessor: None,
@@ -153,7 +156,43 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    LISTING_VALUE * depth * fanout * catalog_child_factor
+    LISTING_VALUE * depth * fanout * catalog_child_factor * media_roster_factor(children)
+}
+
+/// Fewest media files for a listing to count as a media roster.
+const MEDIA_ROSTER_MIN_FILES: usize = 11;
+
+/// A listing of many images, fonts, audio or video files is priced by
+/// its share of other entries: the media names say what the pictures
+/// are, not what the project is, and a roster of nothing but media is
+/// never bought. A few media files, a logo and a screenshot, cost little
+/// and keep full value.
+fn media_roster_factor(children: &BTreeMap<String, EntryKind>) -> f64 {
+    let listed: Vec<&String> = listed_entries(children).collect();
+    let media = listed
+        .iter()
+        .filter(|name| matches!(children[name.as_str()], EntryKind::File) && is_media_file(name))
+        .count();
+    if media < MEDIA_ROSTER_MIN_FILES {
+        return 1.0;
+    }
+    1.0 - media as f64 / listed.len() as f64
+}
+
+const MEDIA_EXTENSIONS: &[&str] = &[
+    "png", "jpg", "jpeg", "gif", "webp", "svg", "ico", "icns", "bmp", "tif", "tiff", "psd", "ttf",
+    "otf", "woff", "woff2", "eot", "mp3", "ogg", "wav", "mp4", "webm", "mov",
+];
+
+fn is_media_file(name: &str) -> bool {
+    Path::new(name)
+        .extension()
+        .and_then(|ext| ext.to_str())
+        .is_some_and(|ext| {
+            MEDIA_EXTENSIONS
+                .iter()
+                .any(|media| ext.eq_ignore_ascii_case(media))
+        })
 }
 
 /// Min child-directory count for a parent to count as a "catalog" whose
@@ -425,6 +464,34 @@ mod tests {
             .map(PathBuf::from)
             .into();
         assert_eq!(entries, &expected);
+    }
+
+    #[test]
+    fn fs_media_rosters_are_priced_by_their_other_entries() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        let write = |dir: &str, names: &[String]| {
+            std::fs::create_dir_all(root.join(dir)).unwrap();
+            for name in names {
+                std::fs::write(root.join(dir).join(name), "").unwrap();
+            }
+        };
+        let shots: Vec<String> = (0..MEDIA_ROSTER_MIN_FILES)
+            .map(|index| format!("shot{index}.png"))
+            .collect();
+        write("gallery", &shots);
+        write("screens", &shots);
+        write("screens", &["capture.py".to_string()]);
+        write(
+            "branding",
+            &["logo.svg".to_string(), "screenshot.png".to_string()],
+        );
+        write("notes", &["a.txt".to_string(), "b.txt".to_string()]);
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let value = |dir: &str| dir_listing_batch(root.join(dir), &ctx).map(|batch| batch.value);
+        assert_eq!(value("gallery"), None);
+        assert!(value("screens").unwrap() < value("notes").unwrap() / 10.0);
+        assert_eq!(value("branding"), value("notes"));
     }
 
     #[test]

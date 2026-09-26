@@ -211,6 +211,9 @@ must not undo:
   test files, media and CI directories, but every listing demotion tried
   lost on the grid because NS authors rank those listings early.
   Moving that trade needs an answer-key revision, not a walker tweak.
+  The exception is size-gated: pricing a listing by its non-media share
+  cost the grid while it reached a three-file `media/`, and was neutral
+  once it applied only from eleven media files up.
   Listings are never split: a head-and-rest split of long listings
   was grid-neutral and spent real-world budget on the first 40 names
   of man-page, test-data and generated-code directories.

@@ -222,22 +222,6 @@ docs/
   static/
     .nojekyll (empty)
     img/
-      README.md
-      backpacks.svg
-      compass.svg
-      cover.png
-      favicon.ico
-      functional-gopher.png
-      go-community.png
-      icon.png
-      logo-full.png
-      logo-full.xcf
-      logo.png
-      oxygen-tube.svg
-      social-preview-small.png
-      social-preview.png
-      social-preview.xcf
-      sponsors/
     llms.txt
     robots.txt
   tsconfig.json
@@ -374,6 +358,16 @@ tuples_test.go
 type_manipulation.go
   …
   7→func IsNil(x any) bool {
+  …
+  22→func IsNotNil(x any) bool {
+  …
+  28→func ToPtr[T any](x T) *T {
+  …
+  34→func Nil[T any]() *T {
+  …
+  41→func EmptyableToPtr[T any](x T) *T {
+  …
+  53→func FromPtr[T any](x *T) T {
   …
 type_manipulation_test.go
 types.go

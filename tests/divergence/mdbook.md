@@ -269,5 +269,7 @@ Score(3000)=0.672 I=0.779 C=0.579 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | walker |  | 9826 | 6 | Fs::DirListing { dir: tests/gui/books/all-summary/src/part-2 } |  |  | 0.584 |
 | walker |  | 9873 | 47 | Fs::DirListing { dir: tests/gui/books/heading-nav/src } |  |  | 0.584 |
 | ns | 9884 |  | 64 | CI and repository automation listing | 9.6 |  | 0.585 |
+| walker |  | 9918 | 45 | Code::CodeKey { rung: Doc, file: crates/mdbook-core/src/lib.rs, decl: 1, sub: 0, line: 7 } |  |  | 0.585 |
 | ns | 9923 |  | 39 | README tail: licence | 9.7 | 1.1 | 0.585 |
-| walker |  | 9990 | 117 | Fs::DirListing { dir: crates/mdbook-html/front-end/fonts } |  |  | 0.585 |
+| walker |  | 9964 | 46 | Toml::Dependencies { file: guide/src/for_developers/mdbook-wordcount/Cargo.toml } |  |  | 0.585 |
+| walker |  | 9986 | 22 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/tree.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.585 |
