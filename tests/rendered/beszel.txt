@@ -89,10 +89,7 @@ agent/
     health_test.go
   lhm/
     beszel_lhm.cs
-      1→using System;
-      2→using System.Globalization;
-      3→using LibreHardwareMonitor.Hardware;
-      4→
+      …
       5→class Program
       …
     beszel_lhm.csproj
@@ -347,6 +344,10 @@ internal/
         32→const Smart = lazy(() => import("@/components/routes/smart.tsx"))
         33→const SystemDetail = lazy(() => import("@/components/routes/system.tsx"))
         34→const CopyToClipboardDialog = lazy(() => import("@/components/copy-to-clipboard.tsx"))
+        35→
+        36→const App = memo(() => {
+        …
+        87→const Layout = () => {
         …
       types.d.ts
       vite-env.d.ts

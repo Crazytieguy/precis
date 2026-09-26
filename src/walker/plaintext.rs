@@ -55,10 +55,9 @@ const SMALL_BUILD_FILE_PROMOTION: f64 = 2.0;
 const DOTENV_MANDATORY_HEAD_LINES: usize = 12;
 
 /// Selection budget for a [`Class::LanguageSource`] declaration surface,
-/// per line class. Imports and comments are damped so a 40-import
-/// Java file or a 15-line license banner cannot consume the whole
-/// slice before the first declaration; declarations get the bulk.
-const SOURCE_TEXT_IMPORT_LINES: usize = 4;
+/// per line class. Comments are damped so a 15-line license banner cannot
+/// consume the whole slice before the first declaration; declarations get
+/// the bulk.
 const SOURCE_TEXT_COMMENT_LINES: usize = 2;
 const SOURCE_TEXT_DECL_LINES: usize = 8;
 
@@ -383,24 +382,26 @@ pub(crate) fn is_license_file_name(name: &str) -> bool {
         && !lower.contains("header")
 }
 
-/// Line classes inside a declaration surface. The three get separate
-/// selection budgets so a file's declarations survive a long import
-/// block or a long comment banner.
+/// Line classes inside a declaration surface. The two get separate
+/// selection budgets so a file's declarations survive a long comment
+/// banner.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum SurfaceLine {
-    Import,
     Comment,
     Decl,
 }
 
 /// Prefixes of a module/dependency reference in any of the languages
-/// the fallback covers. `package` / `namespace` are
-/// deliberately absent — they name the unit rather than its
-/// dependencies, and are the single most informative line in a Java
-/// or C# file, so they rank as declarations.
+/// the fallback covers. Not surface: a file's imports say what it uses,
+/// not what it offers, and a roster of them costs the rows that would
+/// show the next file. `package` / `namespace` are deliberately absent —
+/// they name the unit rather than its dependencies, and are the single
+/// most informative line in a Java or C# file, so they rank as
+/// declarations. Case-sensitive, so a prose line opening with "Use" or
+/// "From" is not one.
 #[rustfmt::skip]
 const SOURCE_TEXT_IMPORT_PREFIXES: &[&str] = &[
-    "import", "#import", "#include", "using ", "require ", "require(", "require_relative",
+    "import ", "#import", "#include", "using ", "require ", "require(", "require_relative",
     "require_once", "requires ", "from ", "use ", "@use", "@import", "@forward", "extern crate",
     "include ", "load(", "export * from", "export {",
 ];
@@ -425,7 +426,6 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
     if is_block_closer(trimmed) || trimmed.starts_with("#!") || is_compiler_directive(trimmed) {
         return None;
     }
-    let lower = trimmed.to_ascii_lowercase();
     // OCaml and F# `open` a module; Kotlin and Swift `open` a class or member
     // to overriding.
     let opens_module = trimmed
@@ -435,13 +435,14 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
         && (opens_module
             || SOURCE_TEXT_IMPORT_PREFIXES
                 .iter()
-                .any(|prefix| lower.starts_with(prefix)))
+                .any(|prefix| trimmed.starts_with(prefix)))
     {
-        return Some(SurfaceLine::Import);
+        return None;
     }
     if !in_block_comment && !is_comment_line(trimmed) {
         return Some(SurfaceLine::Decl);
     }
+    let lower = trimmed.to_ascii_lowercase();
     if SOURCE_TEXT_BOILERPLATE_MARKERS
         .iter()
         .any(|marker| lower.contains(marker))
@@ -687,12 +688,8 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
     levels.sort_unstable();
     levels.dedup();
 
-    let caps = [
-        SOURCE_TEXT_IMPORT_LINES,
-        SOURCE_TEXT_COMMENT_LINES,
-        decl_cap,
-    ];
-    let mut used = [0usize; 3];
+    let caps = [SOURCE_TEXT_COMMENT_LINES, decl_cap];
+    let mut used = [0usize; 2];
     let mut selected: Vec<usize> = Vec::new();
     let mut is_roster_complete = false;
     // In a language file the roster is for types and functions;
@@ -707,7 +704,7 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
         .enumerate()
     {
         // A deeper level whose code lines are all statements is function
-        // bodies; a level of only comments or imports does not decide.
+        // bodies; a level of only comments does not decide.
         let mut level_declarations = rows
             .iter()
             .filter(|&&(indent, _, kind, _)| indent == level && kind == SurfaceLine::Decl)
@@ -723,9 +720,8 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
                         .is_some_and(|is_member| is_member[line - 1]))
         }) {
             let slot = match kind {
-                SurfaceLine::Import => 0,
-                SurfaceLine::Comment => 1,
-                SurfaceLine::Decl => 2,
+                SurfaceLine::Comment => 0,
+                SurfaceLine::Decl => 1,
             };
             if used[slot] == caps[slot] {
                 continue;
@@ -733,8 +729,8 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
             used[slot] += 1;
             selected.push(line);
         }
-        is_roster_complete |= used[2] >= SOURCE_TEXT_MIN_DECLS;
-        if used[2] == caps[2] || (is_roster_complete && type_members.is_none()) {
+        is_roster_complete |= used[1] >= SOURCE_TEXT_MIN_DECLS;
+        if used[1] == caps[1] || (is_roster_complete && type_members.is_none()) {
             break;
         }
     }
@@ -1657,8 +1653,8 @@ mod tests {
             text.iter()
                 .filter(|line| line.starts_with("import"))
                 .count(),
-            SOURCE_TEXT_IMPORT_LINES,
-            "imports not damped: {text:?}"
+            0,
+            "imports on the surface: {text:?}"
         );
     }
 
@@ -1671,7 +1667,7 @@ mod tests {
                       */\n\n#endregion License Information (GPL v3)\n\n\
                       using System;\n\nnamespace ShareX\n";
         let text = surface(csharp);
-        assert_eq!(text, vec!["using System;", "namespace ShareX"]);
+        assert_eq!(text, vec!["namespace ShareX"]);
     }
 
     /// A license in a Haskell `{- -}` block, or after PHP's `<?php` opener,
@@ -1703,10 +1699,7 @@ mod tests {
         let swift = "#if canImport(Darwin)\nimport Darwin\n#elseif canImport(Glibc)\nimport Glibc\n#endif\n\n\
                      // MARK: - Instant\n\n#pragma warning disable CA1815\npublic struct Instant {\n}\n";
         let text = surface(swift);
-        assert_eq!(
-            text,
-            vec!["import Darwin", "import Glibc", "public struct Instant {"]
-        );
+        assert_eq!(text, vec!["public struct Instant {"]);
         assert!(!is_compiler_directive("#include <stdio.h>"));
         assert!(!is_compiler_directive("#define MAX 3"));
         assert!(is_comment_line("#Region \"Fields\""));
@@ -1723,17 +1716,16 @@ mod tests {
             "open Core",
             "require 'rack'",
             "require_relative 'x'",
+            "import Foundation",
         ] {
-            assert_eq!(
-                classify_surface_line(line, false),
-                Some(SurfaceLine::Import),
-                "{line}"
-            );
+            assert_eq!(classify_surface_line(line, false), None, "{line}");
         }
         for line in [
             "open class Table(name: String) {",
             "open func request()",
             "required init()",
+            "Use the default profile.",
+            "Important: run once.",
         ] {
             assert_eq!(
                 classify_surface_line(line, false),
