@@ -278,6 +278,8 @@ must not undo:
     it);
   - keeping Go methods on an unexported type an exported function
     returns (0 of 572 real-world renders changed).
+- **Lua file-local functions are listed**: hiding `local function`
+  declarations measured 3000 −.0020 (2026-09-25).
 - **Rows that condition or define a file's exports join its roster**:
   a Go `//go:build` constraint, a Lua module's top-level `return` and
   `setmetatable(…)` call.

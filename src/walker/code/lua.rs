@@ -1,7 +1,6 @@
 //! Lua extraction. Declarations are the top-level function forms, all
 //! `Callable`:
-//!  - `function_declaration` (incl. `local function`: hiding file-local
-//!    functions measured -0.0020 at 3000, 2026-09-25),
+//!  - `function_declaration` (incl. `local function`),
 //!  - `assignment_statement` / `variable_declaration` / `return_statement`
 //!    with a `function_definition` right-hand side, and
 //!  - function-valued `field`s inside a top-level table-constructor
@@ -185,19 +184,14 @@ fn rhs_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
 
 /// The function body's `block` node for any declaration shape.
 fn body_block(node: Node) -> Option<Node> {
-    match node.kind() {
-        "function_declaration" => node.child_by_field_name("body"),
-        "assignment_statement" | "variable_declaration" | "return_statement" => {
-            rhs_of_kind(node, "function_definition")?.child_by_field_name("body")
-        }
-        "field" => {
-            let value = node.child_by_field_name("value")?;
-            (value.kind() == "function_definition")
-                .then(|| value.child_by_field_name("body"))
-                .flatten()
-        }
-        _ => None,
-    }
+    let function = match node.kind() {
+        "function_declaration" => node,
+        "field" => node
+            .child_by_field_name("value")
+            .filter(|value| value.kind() == "function_definition")?,
+        _ => rhs_of_kind(node, "function_definition")?,
+    };
+    function.child_by_field_name("body")
 }
 
 /// Head: the declaration's start through the row before its body block
