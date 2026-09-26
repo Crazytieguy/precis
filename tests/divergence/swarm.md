@@ -142,19 +142,20 @@ Score(3000)=0.739 I=0.901 C=0.606 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | ns | 8156 |  | 170 | `swarm/util.py`: the streaming merge helpers | 5.11 | 2.4 | 0.679 |
 | ns | 8395 |  | 239 | `run_demo_loop` body: the reference conversation loop | 5.12 | 2.5 | 0.688 |
 | walker |  | 8406 | 254 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 2, sub: 0, line: 37 } |  |  | 0.688 |
-| walker |  | 8415 | 9 | Plaintext::DeclSurface { file: examples/support_bot/requirements.txt } |  |  | 0.688 |
-| walker |  | 8474 | 59 | Plaintext::Whole { file: examples/support_bot/Makefile } |  |  | 0.688 |
+| walker |  | 8454 | 48 | Plaintext::Whole { file: examples/support_bot/Makefile } |  |  | 0.688 |
+| walker |  | 8463 | 9 | Plaintext::DeclSurface { file: examples/support_bot/requirements.txt } |  |  | 0.688 |
 | ns | 8629 |  | 234 | `run_and_stream` body: the streaming protocol, with elisions marked | 5.13 | 2.7 | 0.675 |
 | ns | 8858 |  | 229 | `tests/test_core.py`: complete test roster and the shared fixture | 6.1 |  | 0.665 |
-| walker |  | 8956 | 482 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.707 |
+| walker |  | 8945 | 482 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.707 |
 | ns | 9015 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.701 |
-| walker |  | 9033 | 77 | Plaintext::Whole { file: examples/support_bot/docker-compose.yaml } |  |  | 0.701 |
+| walker |  | 9022 | 77 | Plaintext::Whole { file: examples/support_bot/docker-compose.yaml } |  |  | 0.701 |
 | ns | 9117 |  | 102 | `tests/test_util.py`: both schema-conversion tests | 6.3 |  | 0.698 |
 | ns | 9323 |  | 206 | `setup.cfg`: package metadata and the complete dependency list | 6.4 |  | 0.704 |
-| walker |  | 9474 | 441 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.744 |
+| walker |  | 9463 | 441 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.744 |
 | ns | 9498 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.736 |
-| walker |  | 9564 | 90 | Plaintext::Whole { file: examples/customer_service_streaming/docker-compose.yaml } |  |  | 0.736 |
+| walker |  | 9553 | 90 | Plaintext::Whole { file: examples/customer_service_streaming/docker-compose.yaml } |  |  | 0.736 |
 | ns | 9630 |  | 132 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.743 |
 | ns | 9850 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.732 |
 | ns | 9875 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.733 |
-| walker |  | 9906 | 342 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 1, sub: 0, line: 6 } |  |  | 0.733 |
+| walker |  | 9895 | 342 | Code::CodeKey { rung: Body, file: swarm/repl/repl.py, decl: 1, sub: 0, line: 6 } |  |  | 0.733 |
+| walker |  | 10000 | 105 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 8, sub: 0, line: 231 } |  |  | 0.742 |

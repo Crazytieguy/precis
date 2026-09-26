@@ -49,10 +49,7 @@ Makefile
   18→	.publishenv/bin/pip install 'twine>=1.5.0' build
   19→
   20→publish: .publishenv
-  21→	.publishenv/bin/python -m build
-  22→	.publishenv/bin/python -m twine upload --skip-existing dist/*
-  23→	rm -fr build dist .egg requests.egg-info
-  24→
+  …
   25→docs:
   26→	cd docs && make html
   27→	@echo "\033[95m\n\nBuild successful! View the docs homepage at docs/_build/html/index.html.\n\033[0m"
@@ -338,9 +335,15 @@ tox.ini
   4→[testenv]
   5→deps = -rrequirements-dev.txt
   6→extras =
-  …
+  7→    security
+  8→    socks
   9→commands =
-  …
+  10→    pytest {posargs:tests}
+  11→
   12→[testenv:default]
   13→
+  14→[testenv:use_chardet_on_py3]
+  15→extras =
+  16→    security
+  17→    socks
   …

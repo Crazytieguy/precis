@@ -6,9 +6,7 @@ Justfile
   1→default: install lint test
   2→
   3→install:
-  4→    uv lock --upgrade
-  5→    uv sync --all-extras --frozen
-  6→
+  …
   7→lint:
   8→    uv run ruff format
   9→    uv run ruff check --fix
@@ -23,11 +21,7 @@ Justfile
   18→    uv run --no-sync pytest {{ args }}
   19→
   20→publish:
-  21→    rm -rf dist
-  22→    uv version $GITHUB_REF_NAME
-  23→    uv build
-  24→    uv publish --token $PYPI_TOKEN
-  25→
+  …
   26→run-faststream-example *args:
   27→    #!/bin/bash
   28→    trap 'echo; docker rm -f microbootstrap-redis' EXIT
@@ -79,6 +73,7 @@ README.md
   55→## Table of Contents
   …
   74→## Installation
+  75→
   …
   102→## Quickstart
   …
@@ -187,12 +182,16 @@ microbootstrap/
     28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
     …
     32→    def configure_instruments(
-    …
+    33→        self,
+    34→        *instrument_configs: InstrumentConfigT,
     35→    ) -> typing_extensions.Self:
     …
     40→    @classmethod
     41→    def use_instrument(
-    …
+    42→        cls,
+    43→    ) -> typing.Callable[
+    44→        [type[Instrument[InstrumentConfigT]]],
+    45→        type[Instrument[InstrumentConfigT]],
     46→    ]:
     …
     51→    def setup(self) -> None:
@@ -200,8 +199,9 @@ microbootstrap/
     57→    def teardown(self) -> None:
     …
     62→    def __enter__(self) -> None:
-    …
+    63→        self.setup()
     65→    def __exit__(self, *args: object) -> None:
+    66→        self.teardown()
     …
   middlewares/
     __init__.py (empty)

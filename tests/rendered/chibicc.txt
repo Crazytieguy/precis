@@ -47,9 +47,7 @@ Makefile
   44→# Misc.
   45→
   46→clean:
-  47→	rm -rf chibicc tmp* $(TESTS) test/*.s test/*.exe stage2
-  48→	find * -type f '(' -name '*~' -o -name '*.o' ')' -exec rm {} ';'
-  49→
+  …
   50→.PHONY: test clean test-stage2
 README.md
   1→# chibicc: A Small C Compiler
@@ -179,6 +177,13 @@ chibicc.h
   137→
   138→  // Global variable or function
   139→  bool is_function;
+  140→  bool is_definition;
+  141→  bool is_static;
+  142→
+  143→  // Global variable
+  144→  bool is_tentative;
+  145→  bool is_tls;
+  146→  char *init_data;
   …
   167→typedef struct Relocation Relocation;
   168→struct Relocation {

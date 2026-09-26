@@ -1297,8 +1297,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             Class::DotenvSample => {
                 head_sampled_content(&file, ctx, DOTENV_BYTE_GATE, DOTENV_MANDATORY_HEAD_LINES)
             }
-            // Whole, with headroom over the generic cap: a Makefile's
-            // head is mostly variable preamble, not its targets.
+            // With headroom over the generic cap: a Makefile's head is
+            // mostly variable preamble, not its targets.
+            Class::Build if is_recipe_file_name(name) => recipe_roster_content(&file, ctx),
             Class::Build => gated_whole_file_content(&file, ctx, BUILD_BYTE_GATE, BUILD_LINE_CAP),
             _ => head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
         };
@@ -1540,6 +1541,65 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
 /// Targets a reader runs first.
 const CANONICAL_MAKE_TARGETS: [&str; 7] =
     ["all", "build", "test", "tests", "check", "install", "help"];
+
+/// A `Makefile` or `justfile`: column-0 recipe headers over indented
+/// bodies.
+fn is_recipe_file_name(name: &str) -> bool {
+    matches!(name, "Makefile" | "justfile" | "Justfile" | ".justfile")
+}
+
+/// A recipe file within [`BUILD_LINE_CAP`], its [housekeeping
+/// recipes](is_housekeeping_target) reduced to their headers: how the
+/// project is released, installed or cleaned says little about how to
+/// build, run and test it.
+fn recipe_roster_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+    let source = gated_read_source(file, ctx, BUILD_BYTE_GATE)?;
+    if source.line_count() > BUILD_LINE_CAP {
+        return None;
+    }
+    let mut rows = Vec::new();
+    let mut keep_body = true;
+    for (index, line) in source.lines().enumerate() {
+        if line.starts_with([' ', '\t']) {
+            if keep_body {
+                rows.push(index + 1);
+            }
+            continue;
+        }
+        if let Some(name) = recipe_name(line) {
+            keep_body = !is_housekeeping_target(name);
+        } else if !line.trim_start().is_empty() && !line.starts_with('#') {
+            keep_body = true;
+        }
+        rows.push(index + 1);
+    }
+    single_file_lines_content(file, &source, rows)
+}
+
+/// A recipe that releases, installs or cleans up after the project, by the
+/// first word of its name (`dist-test-pr`, `uninstall_lib`).
+fn is_housekeeping_target(target: &str) -> bool {
+    #[rustfmt::skip]
+    const WORDS: &[&str] = &[
+        "release", "dist", "distclean", "tgz", "publish", "upload", "sign", "bump", "install",
+        "uninstall", "clean",
+    ];
+    let first_word = target.trim_start_matches('@').split(['-', '_']).next();
+    first_word.is_some_and(|word| WORDS.contains(&word))
+}
+
+/// The first target of a column-0 recipe header (a justfile recipe's
+/// name), `None` for any other line: a variable assignment, a directive
+/// or a comment.
+fn recipe_name(line: &str) -> Option<&str> {
+    let (targets, rest) = line.split_once(':')?;
+    let mut tokens = targets.split_whitespace();
+    let name = tokens.next()?;
+    let is_assignment = rest.starts_with('=')
+        || name.contains('=')
+        || tokens.any(|token| matches!(token, "=" | "?=" | "+=" | "!="));
+    (!line.starts_with('#') && !is_assignment).then_some(name)
+}
 
 /// A root Makefile too long to render whole still names what it can run:
 /// its `.PHONY` declarations, the author's own list of commands, each
@@ -2309,7 +2369,8 @@ mod tests {
     }
 
     /// The rows each build file renders at the root and one level down. A
-    /// small Makefile renders whole anywhere; one too long, or too wide for
+    /// small Makefile or justfile renders whole anywhere but for its
+    /// housekeeping recipes' bodies; a Makefile too long, or too wide for
     /// the byte gate, renders at the root only its `.PHONY` declarations
     /// (through their continuation lines) that name a target and the rule
     /// heads of canonical targets they don't name, and a long root
@@ -2332,6 +2393,21 @@ mod tests {
                 "FLAGS = --all\n\nbuild:\n\ttool $(FLAGS)\n".to_string(),
                 vec![(1, 4)],
                 vec![(1, 4)],
+            ),
+            (
+                "Makefile",
+                "PREFIX ?= /usr\nrelease: clean\n\tgit tag -s v1\n# Build\nbuild:\n\tcc main.c\n\
+                 clean:\n\trm -f main\n"
+                    .to_string(),
+                vec![(1, 2), (4, 7)],
+                vec![(1, 2), (4, 7)],
+            ),
+            (
+                "justfile",
+                "set shell := [\"bash\"]\ndist-pr version:\n    git push\ntest *args:\n    cargo test\n"
+                    .to_string(),
+                vec![(1, 2), (4, 5)],
+                vec![(1, 2), (4, 5)],
             ),
             (
                 "Makefile",
