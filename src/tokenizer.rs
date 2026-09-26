@@ -29,9 +29,17 @@ struct Encoding {
 
 fn encoding() -> &'static Encoding {
     static ENCODING: OnceLock<Encoding> = OnceLock::new();
-    ENCODING.get_or_init(|| Encoding {
-        ranks: load_ranks(include_str!("o200k_base.tiktoken")),
-        pieces: Regex::new(PIECE_PATTERN).expect("o200k piece pattern"),
+    ENCODING.get_or_init(|| {
+        let ranks = load_ranks(include_bytes!("o200k_base.tiktoken"));
+        assert_eq!(
+            ranks.len(),
+            199_998,
+            "o200k_base.tiktoken is not the vendored file"
+        );
+        Encoding {
+            ranks,
+            pieces: Regex::new(PIECE_PATTERN).expect("o200k piece pattern"),
+        }
     })
 }
 
@@ -61,10 +69,10 @@ pub fn count(text: &str) -> usize {
 
 /// Rank-file lines are `<base64 token bytes> <rank>`. Scanned as bytes:
 /// `str::lines` and `str::parse` cost more than the decoding.
-fn load_ranks(rank_file: &str) -> FxHashMap<&'static [u8], u32> {
+fn load_ranks(rank_file: &[u8]) -> FxHashMap<&'static [u8], u32> {
     let mut bytes = Vec::with_capacity(rank_file.len());
     let mut tokens = Vec::new();
-    for line in rank_file.as_bytes().split(|&byte| byte == b'\n') {
+    for line in rank_file.split(|&byte| byte == b'\n') {
         let Some(space) = line.iter().position(|&byte| byte == b' ') else {
             continue;
         };
@@ -129,6 +137,7 @@ impl Encoding {
             tokens += self.piece_tokens(piece.as_bytes());
             rest = &rest[piece.len()..];
         }
+        debug_assert!(rest.is_empty(), "o200k pieces must tile the text");
         tokens
     }
 
@@ -207,6 +216,39 @@ mod tests {
                 .map(|_| alphabet[next() % alphabet.len()])
                 .collect();
             assert_matches_tiktoken(&text);
+        }
+    }
+
+    #[test]
+    fn tokenizer_matches_tiktoken_on_edge_cases() {
+        let whitespace = [
+            " ", "\t", "\u{a0}", "\u{85}", "\u{1680}", "\u{2000}", "\u{2005}", "\u{200a}",
+            "\u{2028}", "\u{202f}", "\u{205f}", "\u{3000}",
+        ];
+        for space in whitespace {
+            for run in [1, 2, 5] {
+                let spaces = space.repeat(run);
+                assert_matches_tiktoken(&format!("a{spaces}b"));
+                assert_matches_tiktoken(&format!("a{spaces}"));
+                assert_matches_tiktoken(&format!("{spaces} {spaces}x"));
+                assert_matches_tiktoken(&format!("x\u{3000}{spaces}\n{spaces}"));
+            }
+        }
+        for text in [
+            "it'\u{17f} he'\u{17f}\u{17f}",
+            "IT'\u{17f} We'LL",
+            "\u{2160}\u{2161}\u{2162}\u{2163}\u{2164}",
+            "\u{bd}\u{bc}\u{b2}\u{b3}\u{2460}\u{2461}",
+            "\u{663}\u{664}\u{665}\u{666}\u{667}\u{968}\u{969}\u{96a}\u{96b}",
+            "\u{ff11}\u{ff12}\u{ff13}\u{ff14}\u{3007}\u{3007}",
+            "line one\r\nline two\r\n\r\n  \r\n",
+            " \r\n\t\r\nx\r",
+        ] {
+            assert_matches_tiktoken(text);
+        }
+        for unit in ["=", " ", "ab", "\u{3000}", "😀", "e\u{301}"] {
+            assert_matches_tiktoken(&unit.repeat(2000));
+            assert_matches_tiktoken(&format!("x{}y", unit.repeat(2000)));
         }
     }
 
