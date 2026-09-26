@@ -976,12 +976,57 @@ fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
 
 /// The `/** … */` blocks directly above `node`, one item per block.
 /// JSDoc is often separated from what it documents by one blank row
-/// (`/** … */`, blank, `function f`), so one blank row still attaches.
+/// (`/** … */`, blank, `function f`), so one blank row still attaches,
+/// and by tool directives (`// eslint-disable-next-line`), which are
+/// skipped. A file's `@license` / `@fileoverview` header is not the doc
+/// of the declaration under it.
 fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
-    file.comments_above(node, 2, |comment| file.text(comment).starts_with("/**"))
-        .into_iter()
-        .map(Item::new)
-        .collect()
+    file.comments_above(node, 2, |comment| {
+        let text = file.text(comment);
+        (text.starts_with("/**") && !is_file_header(comment, text)) || is_tool_directive(text)
+    })
+    .into_iter()
+    .filter(|rows| !is_tool_directive(file.line(*rows.start()).trim_start()))
+    .map(Item::new)
+    .collect()
+}
+
+const TOOL_DIRECTIVES: &[&str] = &[
+    "eslint-",
+    "istanbul ",
+    "tslint:",
+    "prettier-ignore",
+    "@ts-",
+    "deno-lint-",
+    "oxlint-",
+    "biome-ignore",
+];
+
+/// A comment addressed to a linter, type checker or coverage tool.
+fn is_tool_directive(comment: &str) -> bool {
+    let Some(body) = comment
+        .strip_prefix("//")
+        .or_else(|| comment.strip_prefix("/*"))
+    else {
+        return false;
+    };
+    let body = body.trim_start();
+    TOOL_DIRECTIVES
+        .iter()
+        .any(|directive| body.starts_with(directive))
+}
+
+const FILE_HEADER_TAGS: &[&str] = &[
+    "@license",
+    "@fileoverview",
+    "@module",
+    "@packagedocumentation",
+];
+
+/// A comment at the top of the file tagged as describing the file.
+fn is_file_header(comment: Node, text: &str) -> bool {
+    let text = text.to_ascii_lowercase();
+    comment.start_position().row == 0 && FILE_HEADER_TAGS.iter().any(|tag| text.contains(tag))
 }
 
 #[cfg(test)]
@@ -1681,6 +1726,36 @@ export const c = 3;
         );
         let docs: Vec<Vec<Vec<usize>>> = model.decls.iter().map(|decl| rows(&decl.doc)).collect();
         assert_eq!(docs, [vec![vec![1]], vec![], vec![]]);
+    }
+
+    #[test]
+    fn code_typescript_doc_skips_tool_directives_and_the_file_header() {
+        let model = extract_source(
+            "a.ts",
+            "\
+/**
+ * @license MIT
+ */
+export function first() {}
+/** Parses. */
+// eslint-disable-next-line complexity
+export function parse() {}
+export class A {
+  /** Handles. */
+  /* istanbul ignore next */
+  handle() {}
+}
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [4] head [4] doc [] body []",
+                "Callable name [7] head [7] doc [[5]] body []",
+                "Whole name [8] head [8, 12] doc [] body [[11]]",
+                "  Callable name [11] head [11] doc [[9]] body []",
+            ]
+        );
     }
 
     #[test]
