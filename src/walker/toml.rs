@@ -90,7 +90,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             dependency_rows.extend(pep621_dependency_array_rows(&pairs));
         }
         if let Some(content) = single_file_lines_content(&file, &source, dependency_rows) {
-            let value = dependency_roster_value(file.parent() == Some(ctx.root()), depth);
+            let value = dependency_roster_value(depth);
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,

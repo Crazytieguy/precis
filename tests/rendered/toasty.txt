@@ -392,16 +392,13 @@ crates/
         31→    url: String,
         32→}
         34→impl DynamoDb {
-        35→    pub fn new(url: String) -> Self {
         …
         38→}
         …
         41→impl Driver for DynamoDb {
         …
-        95→#[derive(Debug)]
         96→pub struct Connection {
         …
-        99→}
         101→impl Connection {
         …
         157→impl toasty_core::driver::Connection for Connection {
@@ -475,6 +472,9 @@ crates/
   toasty-sql/
     CONTEXT.md
     Cargo.toml
+      …
+      7→[dependencies]
+      8→toasty-core.workspace = true
     src/
       lib.rs
       migration.rs

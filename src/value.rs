@@ -4,17 +4,10 @@
 //! [`ratio_with_exponent`].
 
 /// Value of a manifest's runtime dependency roster, shared by every
-/// manifest format. What
-/// a package depends on is a primary statement of what it *is* — a
-/// database driver, an HTTP client, a template engine — for the manifest
-/// that describes the repository (its root, or a workspace's primary
-/// member). A sub-package's roster is scaffolding around that.
-pub fn dependency_roster_value(describes_repository: bool, depth: f64) -> f64 {
-    if describes_repository {
-        854.0 * depth
-    } else {
-        573.0 * depth
-    }
+/// manifest format. What a package depends on is a primary statement of
+/// what it *is* — a database driver, an HTTP client, a template engine.
+pub fn dependency_roster_value(depth: f64) -> f64 {
+    854.0 * depth
 }
 
 /// Value of a manifest's identity block (name, version, description),

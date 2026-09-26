@@ -1,4 +1,4 @@
-Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.762/0.810/0.799/0.751/0.708/0.638
+Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.762/0.810/0.799/0.751/0.701/0.638
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -109,9 +109,9 @@ Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 6010 | 174 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.697 |
 | walker |  | 6081 | 71 | Code::CodeKey { rung: Doc, file: packages/d2ts/src/electric/index.ts, decl: 3, sub: 0, line: 222 } |  |  | 0.697 |
 | walker |  | 6143 | 62 | Json::Identity { file: packages/d2ts-benchmark/package.json } |  |  | 0.701 |
-| walker |  | 6230 | 87 | Json::Scripts { file: packages/d2ts-benchmark/package.json } |  |  | 0.708 |
-| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.714 |
-| walker |  | 6295 | 65 | Json::Dependencies { file: packages/d2ts-benchmark/package.json } |  |  | 0.714 |
+| walker |  | 6208 | 65 | Json::Dependencies { file: packages/d2ts-benchmark/package.json } |  |  | 0.701 |
+| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.707 |
+| walker |  | 6295 | 87 | Json::Scripts { file: packages/d2ts-benchmark/package.json } |  |  | 0.714 |
 | walker |  | 6552 | 257 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.745 |
 | walker |  | 6587 | 35 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/base.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
 | walker |  | 6644 | 57 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 2, sub: 0, line: 19 } |  |  | 0.745 |
@@ -120,10 +120,10 @@ Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.707 |
 | walker |  | 6885 | 165 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 3, sub: 0, line: 27 } |  |  | 0.707 |
 | walker |  | 6976 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.720 |
-| walker |  | 7059 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.720 |
+| walker |  | 7047 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.720 |
+| walker |  | 7130 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.720 |
 | ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.699 |
-| walker |  | 7247 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.699 |
-| walker |  | 7318 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.699 |
+| walker |  | 7318 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.699 |
 | walker |  | 7412 | 94 | Json::Identity { file: packages/d2ql/package.json } |  |  | 0.712 |
 | ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.702 |
 | walker |  | 7584 | 172 | Json::Entry { file: packages/d2ql/package.json } |  |  | 0.702 |

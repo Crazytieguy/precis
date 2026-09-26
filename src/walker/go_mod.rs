@@ -39,7 +39,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: GoModKey::File { file: path.clone() }.into(),
                 predecessor: identity,
                 content,
-                value: dependency_roster_value(dir == ctx.root(), depth),
+                value: dependency_roster_value(depth),
             });
         }
     }

@@ -126,21 +126,21 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.649 |
 | walker |  | 8103 | 40 | Json::Identity { file: test/package.json } |  |  | 0.649 |
 | walker |  | 8166 | 63 | Json::Scripts { file: test/package.json } |  |  | 0.649 |
+| walker |  | 8275 | 109 | Json::Dependencies { file: test/package.json } |  |  | 0.649 |
 | ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.644 |
-| walker |  | 8397 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 72 } |  |  | 0.644 |
 | ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.638 |
 | ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.647 |
+| walker |  | 8506 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 72 } |  |  | 0.647 |
 | ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.651 |
 | ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.656 |
-| walker |  | 8692 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 13, sub: 0, line: 1098 } |  |  | 0.670 |
+| walker |  | 8801 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 13, sub: 0, line: 1098 } |  |  | 0.670 |
 | ns | 8915 |  | 293 | Spec-suite to demo-route map for every Playwright file | 6.4 |  | 0.660 |
-| walker |  | 9009 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.665 |
-| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.655 |
+| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.651 |
+| walker |  | 9118 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.655 |
 | ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.652 |
 | ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.657 |
 | ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.653 |
-| walker |  | 9525 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.658 |
-| walker |  | 9634 | 109 | Json::Dependencies { file: test/package.json } |  |  | 0.658 |
+| walker |  | 9634 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.658 |
 | ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.663 |
 | walker |  | 9665 | 31 | Code::CodeKey { rung: Names, file: test/tests/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
 | walker |  | 9724 | 59 | Code::CodeKey { rung: Decl, file: test/tests/helpers.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.663 |

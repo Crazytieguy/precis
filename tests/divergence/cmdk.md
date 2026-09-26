@@ -122,19 +122,13 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9240 | 43 | Json::Identity { file: website/package.json } |  |  | 0.524 |
 | walker |  | 9319 | 79 | Json::Scripts { file: website/package.json } |  |  | 0.524 |
 | walker |  | 9334 | 15 | Plaintext::DeclSurface { file: website/public/robots.txt } |  |  | 0.524 |
-| walker |  | 9367 | 33 | Plaintext::DeclSurface { file: .husky/pre-commit } |  |  | 0.524 |
-| walker |  | 9373 | 6 | Plaintext::Whole { file: .husky/pre-commit } |  |  | 0.524 |
 | ns | 9441 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.514 |
-| walker |  | 9572 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 729 } |  |  | 0.515 |
-| ns | 9717 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.505 |
-| walker |  | 9825 | 253 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 1, line: 729 } |  |  | 0.526 |
-| walker |  | 9847 | 22 | Code::CodeKey { rung: Names, file: test/pages/portal.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
-| walker |  | 9869 | 22 | Code::CodeKey { rung: Names, file: test/pages/props.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
-| ns | 9882 |  | 165 | CI workflow | 6.9 |  | 0.519 |
-| walker |  | 9891 | 22 | Code::CodeKey { rung: Names, file: test/pages/item.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
-| walker |  | 9913 | 22 | Code::CodeKey { rung: Names, file: test/pages/group.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
-| walker |  | 9935 | 22 | Code::CodeKey { rung: Names, file: test/pages/keybinds.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
-| ns | 9955 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.528 |
-| walker |  | 9957 | 22 | Code::CodeKey { rung: Names, file: test/pages/huge.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
-| walker |  | 9979 | 22 | Code::CodeKey { rung: Names, file: test/pages/item-advanced.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
-| walker |  | 9993 | 14 | Code::CodeKey { rung: Names, file: test/pages/dialog.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
+| walker |  | 9492 | 158 | Json::Dependencies { file: test/package.json } |  |  | 0.514 |
+| walker |  | 9525 | 33 | Plaintext::DeclSurface { file: .husky/pre-commit } |  |  | 0.514 |
+| walker |  | 9531 | 6 | Plaintext::Whole { file: .husky/pre-commit } |  |  | 0.514 |
+| ns | 9717 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.504 |
+| walker |  | 9730 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 729 } |  |  | 0.505 |
+| ns | 9882 |  | 165 | CI workflow | 6.9 |  | 0.498 |
+| walker |  | 9927 | 197 | Json::Dependencies { file: website/package.json } |  |  | 0.498 |
+| walker |  | 9951 | 24 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 1, line: 729 } |  |  | 0.498 |
+| ns | 9955 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.507 |

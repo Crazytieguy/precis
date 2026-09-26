@@ -252,7 +252,10 @@ exp/simd/
     1→module github.com/samber/lo/exp/simd
     2→
     3→go 1.26.0
+    4→
+    5→require github.com/samber/lo v0.0.0
     …
+    9→replace github.com/samber/lo => ../../
   go.sum
   intersect_avx512.go
   intersect_avx512_test.go
@@ -371,12 +374,6 @@ tuples_test.go
 type_manipulation.go
   …
   7→func IsNil(x any) bool {
-  …
-  22→func IsNotNil(x any) bool {
-  …
-  28→func ToPtr[T any](x T) *T {
-  …
-  34→func Nil[T any]() *T {
   …
 type_manipulation_test.go
 types.go

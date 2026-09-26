@@ -1,4 +1,4 @@
-Score(3000)=0.664 I=0.809 C=0.545 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.669/0.698/0.664/0.674/0.704/0.669
+Score(3000)=0.664 I=0.809 C=0.545 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.659/0.699/0.664/0.674/0.704/0.669
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -45,33 +45,33 @@ Score(3000)=0.664 I=0.809 C=0.545 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | ns | 1252 |  | 282 | `xxhash_unsafe.go`: `!appengine` tag, `Sum64String`/`WriteString` signatures, `sliceHeader` | 2.4 |  | 0.651 |
 | walker |  | 1290 | 53 | Code::CodeKey { rung: Doc, file: xxhash.go, decl: 1, sub: 0, line: 29 } |  |  | 0.706 |
 | walker |  | 1345 | 55 | Code::CodeKey { rung: Names, file: xxhash_unsafe.go, decl: 0, sub: 0, line: 0 } |  |  | 0.708 |
-| walker |  | 1389 | 44 | Code::CodeKey { rung: Names, file: xxhash_other.go, decl: 0, sub: 0, line: 0 } |  |  | 0.712 |
-| walker |  | 1411 | 22 | Code::CodeKey { rung: Doc, file: xxhash_other.go, decl: 1, sub: 0, line: 7 } |  |  | 0.718 |
-| ns | 1432 |  | 180 | `xxhash_safe.go` in full: the `appengine` fallbacks | 2.5 |  | 0.668 |
-| walker |  | 1455 | 44 | Code::CodeKey { rung: Names, file: xxhash_asm.go, decl: 0, sub: 0, line: 0 } |  |  | 0.671 |
-| walker |  | 1464 | 9 | Code::CodeKey { rung: Decl, file: xxhash_asm.go, decl: 1, sub: 0, line: 11 } |  |  | 0.673 |
-| walker |  | 1518 | 54 | Code::CodeKey { rung: Names, file: xxhash_safe.go, decl: 0, sub: 0, line: 0 } |  |  | 0.677 |
-| walker |  | 1529 | 11 | Code::CodeKey { rung: Body, file: xxhash_safe.go, decl: 1, sub: 0, line: 9 } |  |  | 0.680 |
-| walker |  | 1540 | 11 | Code::CodeKey { rung: Body, file: xxhash_safe.go, decl: 2, sub: 0, line: 14 } |  |  | 0.683 |
-| ns | 1541 |  | 109 | Constructors: `New` and `NewWithSeed`, with bodies | 2.6 |  | 0.669 |
-| walker |  | 1561 | 21 | Code::CodeKey { rung: Doc, file: xxhash_safe.go, decl: 2, sub: 0, line: 14 } |  |  | 0.676 |
-| walker |  | 1584 | 23 | Code::CodeKey { rung: Doc, file: xxhash_safe.go, decl: 1, sub: 0, line: 9 } |  |  | 0.684 |
-| walker |  | 1611 | 27 | Code::CodeKey { rung: Doc, file: xxhash_asm.go, decl: 1, sub: 0, line: 11 } |  |  | 0.692 |
-| walker |  | 1642 | 31 | Code::CodeKey { rung: Body, file: xxhash_unsafe.go, decl: 1, sub: 0, line: 38 } |  |  | 0.693 |
-| ns | 1718 |  | 177 | `Reset`, `ResetWithSeed`, `Size`, `BlockSize` signatures | 2.7 |  | 0.700 |
-| walker |  | 1789 | 147 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.700 |
-| walker |  | 1830 | 41 | Code::CodeKey { rung: Doc, file: xxhash_unsafe.go, decl: 2, sub: 0, line: 45 } |  |  | 0.705 |
-| ns | 1830 |  | 112 | `Write`, `Sum`, `Sum64` doc comments + signatures | 2.8 |  | 0.705 |
-| walker |  | 1856 | 26 | Code::CodeKey { rung: Body, file: xxhash.go, decl: 3, sub: 0, line: 45 } |  |  | 0.720 |
-| walker |  | 1900 | 44 | Code::CodeKey { rung: Doc, file: xxhash_unsafe.go, decl: 1, sub: 0, line: 38 } |  |  | 0.728 |
-| walker |  | 1946 | 46 | Code::CodeKey { rung: Names, file: xxhsum/xxhsum.go, decl: 0, sub: 0, line: 0 } |  |  | 0.728 |
+| ns | 1432 |  | 180 | `xxhash_safe.go` in full: the `appengine` fallbacks | 2.5 |  | 0.659 |
+| walker |  | 1458 | 113 | GoMod::File { file: xxhashbench/go.mod } |  |  | 0.660 |
+| walker |  | 1502 | 44 | Code::CodeKey { rung: Names, file: xxhash_other.go, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
+| walker |  | 1524 | 22 | Code::CodeKey { rung: Doc, file: xxhash_other.go, decl: 1, sub: 0, line: 7 } |  |  | 0.669 |
+| ns | 1541 |  | 109 | Constructors: `New` and `NewWithSeed`, with bodies | 2.6 |  | 0.656 |
+| walker |  | 1568 | 44 | Code::CodeKey { rung: Names, file: xxhash_asm.go, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
+| walker |  | 1577 | 9 | Code::CodeKey { rung: Decl, file: xxhash_asm.go, decl: 1, sub: 0, line: 11 } |  |  | 0.661 |
+| walker |  | 1631 | 54 | Code::CodeKey { rung: Names, file: xxhash_safe.go, decl: 0, sub: 0, line: 0 } |  |  | 0.665 |
+| walker |  | 1642 | 11 | Code::CodeKey { rung: Body, file: xxhash_safe.go, decl: 1, sub: 0, line: 9 } |  |  | 0.667 |
+| walker |  | 1653 | 11 | Code::CodeKey { rung: Body, file: xxhash_safe.go, decl: 2, sub: 0, line: 14 } |  |  | 0.670 |
+| walker |  | 1674 | 21 | Code::CodeKey { rung: Doc, file: xxhash_safe.go, decl: 2, sub: 0, line: 14 } |  |  | 0.676 |
+| walker |  | 1697 | 23 | Code::CodeKey { rung: Doc, file: xxhash_safe.go, decl: 1, sub: 0, line: 9 } |  |  | 0.684 |
+| ns | 1718 |  | 177 | `Reset`, `ResetWithSeed`, `Size`, `BlockSize` signatures | 2.7 |  | 0.692 |
+| walker |  | 1724 | 27 | Code::CodeKey { rung: Doc, file: xxhash_asm.go, decl: 1, sub: 0, line: 11 } |  |  | 0.700 |
+| walker |  | 1755 | 31 | Code::CodeKey { rung: Body, file: xxhash_unsafe.go, decl: 1, sub: 0, line: 38 } |  |  | 0.701 |
+| ns | 1830 |  | 112 | `Write`, `Sum`, `Sum64` doc comments + signatures | 2.8 |  | 0.700 |
+| walker |  | 1902 | 147 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.700 |
+| walker |  | 1943 | 41 | Code::CodeKey { rung: Doc, file: xxhash_unsafe.go, decl: 2, sub: 0, line: 45 } |  |  | 0.705 |
+| walker |  | 1969 | 26 | Code::CodeKey { rung: Body, file: xxhash.go, decl: 3, sub: 0, line: 45 } |  |  | 0.720 |
+| walker |  | 2013 | 44 | Code::CodeKey { rung: Doc, file: xxhash_unsafe.go, decl: 1, sub: 0, line: 38 } |  |  | 0.729 |
 | ns | 2022 |  | 192 | The five XXH64 primes and the `primes` array | 2.9 |  | 0.698 |
-| ns | 2145 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.686 |
-| walker |  | 2182 | 236 | Code::CodeKey { rung: Decl, file: xxhsum/xxhsum.go, decl: 1, sub: 0, line: 11 } |  |  | 0.688 |
-| ns | 2217 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.680 |
-| walker |  | 2293 | 111 | Plaintext::DeclSurface { file: testall.sh } |  |  | 0.681 |
-| walker |  | 2299 | 6 | Plaintext::Whole { file: testall.sh } |  |  | 0.681 |
-| walker |  | 2412 | 113 | GoMod::File { file: xxhashbench/go.mod } |  |  | 0.682 |
+| walker |  | 2059 | 46 | Code::CodeKey { rung: Names, file: xxhsum/xxhsum.go, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
+| ns | 2145 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.687 |
+| ns | 2217 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.678 |
+| walker |  | 2295 | 236 | Code::CodeKey { rung: Decl, file: xxhsum/xxhsum.go, decl: 1, sub: 0, line: 11 } |  |  | 0.681 |
+| walker |  | 2406 | 111 | Plaintext::DeclSurface { file: testall.sh } |  |  | 0.682 |
+| walker |  | 2412 | 6 | Plaintext::Whole { file: testall.sh } |  |  | 0.682 |
 | ns | 2436 |  | 219 | Roster: `round`, `mergeRound`, and the complete `rol*` rotate family | 2.12 |  | 0.663 |
 | ns | 2511 |  | 75 | `ResetWithSeed` body: how a seed becomes the four lanes | 3.1 | 2.7 | 0.650 |
 | ns | 2616 |  | 105 | `round` and `mergeRound` bodies | 3.2 | 2.12 | 0.628 |

@@ -132,7 +132,6 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
     } else {
         1.0
     };
-    let describes_repository = primary || file.parent() == Some(ctx.root());
     let operational = manifest_operational_value(depth);
     let f = file.to_path_buf();
     let section_kinds = [
@@ -158,7 +157,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
         ),
         (
             JsonKey::Dependencies { file: f },
-            dependency_roster_value(describes_repository, depth),
+            dependency_roster_value(depth),
             is_runtime_dependencies_key,
         ),
     ];
