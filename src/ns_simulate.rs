@@ -280,8 +280,9 @@ fn validate_spans(
 }
 
 /// Applied batches on `ns_id`'s predecessor chain. The walk passes through
-/// batches left out of the simulation, so a batch whose predecessor has a
-/// violation still counts that predecessor's own ancestors as its own.
+/// predecessors that weren't applied — left out of the simulation, or
+/// ranked later — so a batch whose predecessor already carries a violation
+/// still counts that predecessor's own ancestors as its own.
 fn collect_ancestors(
     ns_id: &str,
     by_id: &HashMap<&str, &NsBatch>,
