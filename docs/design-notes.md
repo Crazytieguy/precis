@@ -146,7 +146,6 @@ must not undo:
   measurement:
   - the TS/JS module doc and JSDoc paragraph splits;
   - unexported declarations in TS/JS entry files;
-  - publishing a published handle's factory;
   - Rust badge-paragraph skipping and rustdoc fence-aware paragraphs;
   - hiding impls of hidden types;
   - C decoration-row paragraph splits and the C banner cutoff on
