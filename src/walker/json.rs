@@ -435,10 +435,9 @@ fn collect_string_array(array: Node, source: &str) -> Vec<String> {
 
 /// Read the top-level `packages:` list from `<root>/pnpm-workspace.yaml`.
 /// Hand-rolled scanner — the file is a 2–10-line YAML list and pulling
-/// in a YAML dependency for one field is overkill. Assumes a single
-/// top-level mapping (the conventional pnpm-workspace.yaml shape); a
-/// nested `packages:` would be ignored or, if mis-indented enough to
-/// look top-level, would re-trigger the block scan.
+/// in a YAML dependency for one field is overkill. Only an unindented
+/// `packages:` key counts; its block list runs to the next unindented
+/// key, and a flow list (`[a, b]`) sits on the key's own line.
 ///
 /// `None` on any `!`-prefixed entry — half-supported negation parsing is
 /// unsafe across the npm/pnpm union, so the caller treats this as a

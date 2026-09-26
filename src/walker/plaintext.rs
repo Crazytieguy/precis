@@ -44,8 +44,9 @@ const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 /// Line cap on a whole [`Class::Build`] batch.
 const BUILD_LINE_CAP: usize = 100;
 
-/// FS-metadata pre-flight gate for build files (same ≈80
-/// bytes/line multiplier as [`PLAINTEXT_BYTE_GATE`]).
+/// Byte cap on a build file read whole or as a recipe roster (same ≈80
+/// bytes/line multiplier as [`PLAINTEXT_BYTE_GATE`]); a file within
+/// [`BUILD_LINE_CAP`] but past it has lines too wide to render whole.
 const BUILD_BYTE_GATE: usize = BUILD_LINE_CAP * 80;
 
 /// Promotion for a small root build file — see
