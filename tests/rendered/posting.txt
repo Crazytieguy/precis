@@ -1,5 +1,4 @@
-.codex/environments/
-  environment.toml
+.codex/
 .coverage
 .github/
   FUNDING.yml
@@ -87,28 +86,9 @@ README.md
   25→
   26→Visit the [website](https://posting.sh) for more information, the roadmap, and the user guide.
   28→## Installation
-  29→
-  30→Posting can be installed via [uv](https://docs.astral.sh/uv/getting-started/installation/) on MacOS, Linux, and Windows.
-  31→
-  32→```bash
-  33→# quickly install uv on MacOS/Linux
-  34→curl -LsSf https://astral.sh/uv/install.sh | sh
-  35→
-  36→# install Posting (will also quickly install Python 3.13 if needed)
-  37→uv tool install --python 3.13 posting
-  38→```
-  39→
-  40→ Now you can run Posting via the command line:
-  41→
-  42→```bash
-  43→posting
-  44→```
-  45→
-  46→Homebrew and NixOS are not officially supported at the moment.
-  47→
+  …
   48→### Prefer `pipx`?
-  49→
-  50→If you'd prefer to use `pipx`, that works too: `pipx install posting`.
+  …
   52→## Contributing
   …
   56→## Learn More
@@ -149,23 +129,6 @@ pyproject.toml
   3→version = "2.10.0"
   4→description = "The modern API client that lives in your terminal."
   …
-  8→dependencies = [
-  9→    "click>=8.1.7,<9.0.0",
-  10→    "xdg-base-dirs>=6.0.1,<7.0.0",
-  11→    "click-default-group>=1.2.4,<2.0.0",
-  12→    "httpx[brotli]==0.28.1",
-  13→    # pinned httpx automatically since we monkeypatch _main.py
-  14→    "openapi-pydantic>=0.5.0",
-  15→    "pyperclip>=1.9.0,<2.0.0",
-  16→    "pydantic>=2.9.2,<3.0.0",
-  17→    "pyyaml>=6.0.2,<7.0.0",
-  18→    "pydantic-settings>=2.4.0,<3.0.0",
-  19→    "python-dotenv>=1.0.1,<2.0.0",
-  20→    # pinned intentionally
-  21→    "watchfiles>=0.24.0",
-  22→    "textual[syntax]==6.1.0",
-  23→    "textual-autocomplete==4.0.6",
-  24→]
   25→readme = "README.md"
   26→requires-python = ">= 3.11"
   …
@@ -199,66 +162,112 @@ src/posting/
     …
     45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
     46→def cli() -> None:
-    47→    """A TUI for testing HTTP APIs."""
+    …
     50→@cli.command()
-    51→@click.option(
-    52→    "--collection",
-    53→    "-c",
-    54→    type=click.Path(exists=True),
-    55→    help="Path to the collection directory",
-    56→)
-    57→@click.option(
-    58→    "--env",
-    59→    "-e",
-    60→    type=click.Path(exists=True),
-    61→    help="Path to the .env environment file(s)",
-    62→    multiple=True,
-    63→)
+    …
     64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
     …
     76→@cli.command()
-    77→@click.argument(
-    78→    "thing_to_locate",
-    79→)
+    …
     80→def locate(thing_to_locate: str) -> None:
-    …
-    96→@cli.command(name="import")
-    97→@click.argument("spec_path", type=click.Path(exists=True))
-    98→@click.option(
-    99→    "--output",
-    100→    "-o",
-    101→    type=click.Path(),
-    102→    help="Path to save the imported collection",
-    103→    default=None,
-    104→)
-    105→@click.option(
-    106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
-    107→)
-    108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
-    109→    """Import an OpenAPI specification into a Posting collection."""
-    …
-    177→@cli.command(name="sponsors")
-    178→def sponsors() -> None:
-    179→    """Show the list of sponsors."""
-    …
-    194→def make_posting(
-    195→    collection: Path,
-    196→    env: tuple[str, ...] = (),
-    197→    using_default_collection: bool = False,
-    198→) -> Posting:
-    199→    """Return a Posting instance with the given collection and environment."""
     …
   _start_time.py
   app.py
-    …
-    93→class AppHeader(Horizontal):
-    …
-    108→class AppBody(Vertical):
-    …
-    112→class MainScreen(Screen[None]):
-    …
   auth.py
   collection.py
+    …
+    19→HttpRequestMethod = Literal["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
+    20→VALID_HTTP_METHODS = get_args(HttpRequestMethod)
+    21→
+    22→
+    23→class Auth(BaseModel):
+    …
+    56→class BasicAuth(BaseModel):
+    57→    username: str = Field(default="")
+    58→    password: str = Field(default="")
+    61→class DigestAuth(BaseModel):
+    62→    username: str = Field(default="")
+    63→    password: str = Field(default="")
+    66→class BearerTokenAuth(BaseModel):
+    67→    token: str = Field(default="")
+    70→class PathParam(BaseModel):
+    71→    name: str
+    72→    value: str
+    75→class Header(BaseModel):
+    76→    name: str
+    77→    value: str
+    78→    enabled: bool = Field(default=True)
+    81→class FormItem(BaseModel):
+    82→    name: str
+    83→    value: str
+    84→    enabled: bool = Field(default=True)
+    87→class QueryParam(BaseModel):
+    88→    name: str
+    89→    value: str
+    90→    enabled: bool = Field(default=True)
+    93→class Cookie(BaseModel):
+    94→    name: str
+    95→    value: str
+    96→    enabled: bool = Field(default=True)
+    97→
+    98→    @classmethod
+    99→    def from_httpx(cls, cookies: httpx.Cookies) -> list[Cookie]:
+    …
+    103→class Options(BaseModel):
+    104→    follow_redirects: bool = Field(default=True)
+    105→    verify_ssl: bool = Field(default=True)
+    106→    attach_cookies: bool = Field(default=True)
+    107→    proxy_url: str = Field(default="")
+    108→    timeout: float = Field(default=5.0)
+    111→class RequestBody(BaseModel):
+    112→    content: str | None = Field(default=None)
+    113→    """The content of the request."""
+    114→
+    115→    form_data: list[FormItem] | None = Field(default=None)
+    116→    """The form data of the request."""
+    117→
+    118→    content_type: str | None = Field(default=None, init=False)
+    119→    """We may set an additional header if the content type is known."""
+    120→
+    121→    def to_httpx_args(self) -> dict[str, Any]:
+    …
+    133→def request_sort_key(request: RequestModel) -> tuple[int, str]:
+    …
+    138→class Scripts(BaseModel):
+    …
+    144→    setup: str | None = Field(default=None)
+    145→    """A relative path to a script that will be run before the template is applied."""
+    146→
+    147→    on_request: str | None = Field(default=None)
+    148→    """A relative path to a script that will be run before the request is sent."""
+    149→
+    150→    on_response: str | None = Field(default=None)
+    151→    """A relative path to a script that will be run after the response is received."""
+    …
+    155→class RequestModel(BaseModel):
+    …
+    401→class Contact(BaseModel):
+    402→    name: str | None = None
+    403→    url: HttpUrl | None = None
+    404→    email: str | None = None
+    407→class License(BaseModel):
+    408→    name: str
+    409→    url: HttpUrl | None = None
+    412→class ExternalDocs(BaseModel):
+    413→    description: str | None = None
+    414→    url: HttpUrl
+    417→class APIInfo(BaseModel):
+    418→    title: str
+    419→    description: str | None = None
+    420→    termsOfService: HttpUrl | None = None
+    421→    contact: Contact | None = None
+    422→    license: License | None = None
+    423→    specSchema: str | None = None
+    424→    version: str
+    427→class Collection(BaseModel):
+    …
+    553→def load_request_from_yaml(file_path: str) -> RequestModel:
+    …
   commands.py
   config.py
   exit_codes.py
@@ -333,7 +342,6 @@ tests/
   __snapshots__/
   posting_snapshot_app.py
   resources/
-    snapshot_report_template.jinja2
   sample-collections/
     echo-post-01.posting.yaml
     echo.posting.yaml
@@ -343,8 +351,6 @@ tests/
       my_script.py
   sample-configs/
   sample-envs/
-    sample_base.env
-    sample_extra.env
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

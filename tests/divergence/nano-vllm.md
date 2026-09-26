@@ -26,16 +26,16 @@ Score(3000)=0.726 I=0.884 C=0.597 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 527 | 11 | Code::CodeKey { rung: Names, file: example.py, decl: 0, sub: 0, line: 0 } |  |  | 0.781 |
 | walker |  | 558 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
 | ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.698 |
-| walker |  | 650 | 92 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.700 |
-| walker |  | 661 | 11 | Code::CodeKey { rung: Names, file: nanovllm/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
-| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.592 |
-| walker |  | 845 | 184 | Code::CodeKey { rung: Decl, file: nanovllm/config.py, decl: 1, sub: 0, line: 6 } |  |  | 0.701 |
-| walker |  | 857 | 12 | Code::CodeKey { rung: Names, file: nanovllm/sampling_params.py, decl: 0, sub: 0, line: 0 } |  |  | 0.702 |
-| ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.666 |
-| walker |  | 922 | 65 | Code::CodeKey { rung: Decl, file: nanovllm/sampling_params.py, decl: 1, sub: 0, line: 4 } |  |  | 0.702 |
-| ns | 923 |  | 24 | Complete nanovllm/engine/ listing | 2.1 |  | 0.714 |
-| walker |  | 938 | 16 | Code::CodeKey { rung: Names, file: nanovllm/llm.py, decl: 0, sub: 0, line: 0 } |  |  | 0.723 |
-| walker |  | 943 | 5 | Code::CodeKey { rung: Decl, file: nanovllm/llm.py, decl: 1, sub: 0, line: 4 } |  |  | 0.731 |
+| walker |  | 570 | 12 | Code::CodeKey { rung: Names, file: nanovllm/sampling_params.py, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
+| walker |  | 635 | 65 | Code::CodeKey { rung: Decl, file: nanovllm/sampling_params.py, decl: 1, sub: 0, line: 4 } |  |  | 0.749 |
+| walker |  | 727 | 92 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.751 |
+| walker |  | 743 | 16 | Code::CodeKey { rung: Names, file: nanovllm/llm.py, decl: 0, sub: 0, line: 0 } |  |  | 0.764 |
+| walker |  | 748 | 5 | Code::CodeKey { rung: Decl, file: nanovllm/llm.py, decl: 1, sub: 0, line: 4 } |  |  | 0.775 |
+| walker |  | 759 | 11 | Code::CodeKey { rung: Names, file: nanovllm/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.775 |
+| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.655 |
+| ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.621 |
+| ns | 923 |  | 24 | Complete nanovllm/engine/ listing | 2.1 |  | 0.639 |
+| walker |  | 943 | 184 | Code::CodeKey { rung: Decl, file: nanovllm/config.py, decl: 1, sub: 0, line: 6 } |  |  | 0.731 |
 | walker |  | 964 | 21 | Code::CodeKey { rung: Body, file: nanovllm/sampling_params.py, decl: 2, sub: 0, line: 10 } |  |  | 0.757 |
 | ns | 972 |  | 49 | Listings for layers/, models/, utils/ and assets/ | 2.2 |  | 0.772 |
 | ns | 1047 |  | 75 | LLMEngine method roster | 2.3 |  | 0.741 |

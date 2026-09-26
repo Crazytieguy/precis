@@ -130,73 +130,73 @@ Score(3000)=0.715 I=0.808 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 4423 | 30 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.658 |
 | ns | 4494 |  | 259 | json/register.ts — every top-level export (names only) | 4.4 |  | 0.642 |
 | walker |  | 4527 | 104 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.642 |
-| walker |  | 4549 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 4, sub: 0, line: 41 } |  |  | 0.642 |
-| walker |  | 4571 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 8, sub: 0, line: 73 } |  |  | 0.642 |
-| walker |  | 4593 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 32, sub: 0, line: 259 } |  |  | 0.642 |
-| walker |  | 4616 | 23 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 5, sub: 0, line: 48 } |  |  | 0.642 |
-| walker |  | 4662 | 46 | Fs::DirListing { dir: website/src/website } |  |  | 0.642 |
-| walker |  | 4677 | 15 | Fs::DirListing { dir: website/src/website/data } |  |  | 0.642 |
-| walker |  | 4704 | 27 | Fs::DirListing { dir: website/src/website/pages } |  |  | 0.642 |
-| walker |  | 4709 | 5 | Fs::DirListing { dir: website/src/website/pages/home } |  |  | 0.642 |
-| walker |  | 4743 | 34 | Fs::DirListing { dir: website/src/website/data/playground-samples } |  |  | 0.642 |
-| walker |  | 4762 | 19 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence } |  |  | 0.642 |
+| walker |  | 4547 | 20 | Code::CodeKey { rung: Names, file: src/editor.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.643 |
+| walker |  | 4569 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 4, sub: 0, line: 41 } |  |  | 0.643 |
+| walker |  | 4591 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 8, sub: 0, line: 73 } |  |  | 0.643 |
+| walker |  | 4613 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 32, sub: 0, line: 259 } |  |  | 0.643 |
+| walker |  | 4636 | 23 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 5, sub: 0, line: 48 } |  |  | 0.643 |
+| walker |  | 4682 | 46 | Fs::DirListing { dir: website/src/website } |  |  | 0.643 |
+| walker |  | 4697 | 15 | Fs::DirListing { dir: website/src/website/data } |  |  | 0.643 |
+| walker |  | 4724 | 27 | Fs::DirListing { dir: website/src/website/pages } |  |  | 0.643 |
+| walker |  | 4729 | 5 | Fs::DirListing { dir: website/src/website/pages/home } |  |  | 0.643 |
+| walker |  | 4763 | 34 | Fs::DirListing { dir: website/src/website/data/playground-samples } |  |  | 0.622 |
 | ns | 4763 |  | 269 | json defaults: diagnostic option values, mode toggles, jsonDefaults, the worker interface | 4.5 | 4.4 | 0.622 |
-| walker |  | 4778 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence/scrollbars } |  |  | 0.622 |
-| walker |  | 4796 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence/exposed-colors } |  |  | 0.622 |
-| walker |  | 4814 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence/tokens-and-colors } |  |  | 0.622 |
-| walker |  | 4835 | 21 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor } |  |  | 0.622 |
-| walker |  | 4853 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor/hello-diff-world } |  |  | 0.622 |
-| walker |  | 4871 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor/inline-diff-example } |  |  | 0.622 |
-| walker |  | 4889 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor/multi-line-example } |  |  | 0.622 |
-| walker |  | 4920 | 31 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor } |  |  | 0.622 |
-| walker |  | 4938 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/editor-basic-options } |  |  | 0.622 |
-| walker |  | 4956 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/hard-wrapping } |  |  | 0.622 |
-| walker |  | 4974 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/hello-world } |  |  | 0.622 |
-| walker |  | 4992 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/syntax-highlighting-for-html-elements } |  |  | 0.622 |
-| walker |  | 5010 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/web-component } |  |  | 0.622 |
+| walker |  | 4782 | 19 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence } |  |  | 0.622 |
+| walker |  | 4798 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence/scrollbars } |  |  | 0.622 |
+| walker |  | 4816 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence/exposed-colors } |  |  | 0.622 |
+| walker |  | 4834 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence/tokens-and-colors } |  |  | 0.622 |
+| walker |  | 4855 | 21 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor } |  |  | 0.622 |
+| walker |  | 4873 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor/hello-diff-world } |  |  | 0.622 |
+| walker |  | 4891 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor/inline-diff-example } |  |  | 0.622 |
+| walker |  | 4909 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor/multi-line-example } |  |  | 0.622 |
+| walker |  | 4940 | 31 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor } |  |  | 0.622 |
+| walker |  | 4958 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/editor-basic-options } |  |  | 0.622 |
+| walker |  | 4976 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/hard-wrapping } |  |  | 0.622 |
+| walker |  | 4994 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/hello-world } |  |  | 0.622 |
+| walker |  | 5012 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/syntax-highlighting-for-html-elements } |  |  | 0.622 |
 | ns | 5025 |  | 262 | html/register.ts — export names plus the registerHTMLLanguageService factory | 4.6 |  | 0.608 |
-| walker |  | 5050 | 40 | Fs::DirListing { dir: website/src/website/components } |  |  | 0.608 |
-| walker |  | 5062 | 12 | Fs::DirListing { dir: website/src/website/components/monaco } |  |  | 0.608 |
-| walker |  | 5104 | 42 | Fs::DirListing { dir: website/src/website/utils } |  |  | 0.608 |
-| walker |  | 5155 | 51 | Fs::DirListing { dir: test/smoke } |  |  | 0.626 |
-| walker |  | 5163 | 8 | Fs::DirListing { dir: test/smoke/esbuild } |  |  | 0.626 |
-| walker |  | 5171 | 8 | Fs::DirListing { dir: test/smoke/vite } |  |  | 0.626 |
-| walker |  | 5179 | 8 | Fs::DirListing { dir: test/smoke/webpack } |  |  | 0.626 |
-| walker |  | 5191 | 12 | Fs::DirListing { dir: test/smoke/parcel } |  |  | 0.626 |
-| walker |  | 5216 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.626 |
-| walker |  | 5241 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.626 |
-| walker |  | 5266 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 7, sub: 0, line: 64 } |  |  | 0.626 |
-| walker |  | 5291 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 33, sub: 0, line: 628 } |  |  | 0.626 |
+| walker |  | 5030 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor/web-component } |  |  | 0.608 |
+| walker |  | 5070 | 40 | Fs::DirListing { dir: website/src/website/components } |  |  | 0.608 |
+| walker |  | 5082 | 12 | Fs::DirListing { dir: website/src/website/components/monaco } |  |  | 0.608 |
+| walker |  | 5124 | 42 | Fs::DirListing { dir: website/src/website/utils } |  |  | 0.608 |
+| walker |  | 5175 | 51 | Fs::DirListing { dir: test/smoke } |  |  | 0.626 |
+| walker |  | 5183 | 8 | Fs::DirListing { dir: test/smoke/esbuild } |  |  | 0.626 |
+| walker |  | 5191 | 8 | Fs::DirListing { dir: test/smoke/vite } |  |  | 0.626 |
+| walker |  | 5199 | 8 | Fs::DirListing { dir: test/smoke/webpack } |  |  | 0.626 |
+| walker |  | 5211 | 12 | Fs::DirListing { dir: test/smoke/parcel } |  |  | 0.626 |
+| walker |  | 5236 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.626 |
+| walker |  | 5261 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.626 |
+| walker |  | 5286 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 7, sub: 0, line: 64 } |  |  | 0.626 |
 | ns | 5309 |  | 284 | html: the three pre-registered services and their per-language toggles | 4.7 | 4.6 | 0.611 |
-| walker |  | 5317 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 3, sub: 0, line: 26 } |  |  | 0.611 |
-| walker |  | 5343 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 6, sub: 0, line: 57 } |  |  | 0.611 |
-| walker |  | 5537 | 194 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.611 |
+| walker |  | 5311 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 33, sub: 0, line: 628 } |  |  | 0.611 |
+| walker |  | 5337 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 3, sub: 0, line: 26 } |  |  | 0.611 |
+| walker |  | 5363 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 6, sub: 0, line: 57 } |  |  | 0.611 |
 | ns | 5554 |  | 245 | typescript/register.ts — every top-level export (names only) | 4.8 |  | 0.599 |
-| walker |  | 5731 | 194 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 1, line: 102 } |  |  | 0.599 |
-| ns | 5789 |  | 235 | LanguageServiceDefaults (typescript) — all members | 4.9 |  | 0.588 |
-| walker |  | 5964 | 233 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 2, line: 102 } |  |  | 0.589 |
-| ns | 6025 |  | 236 | TypeScriptWorker — all 21 proxy methods (names only) | 4.10 | 4.8 | 0.577 |
-| walker |  | 6116 | 152 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.578 |
-| walker |  | 6144 | 28 | Code::CodeKey { rung: Names, file: monaco-lsp-client/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
-| walker |  | 6211 | 67 | Fs::DirListing { dir: website/src/website/pages/playground } |  |  | 0.578 |
-| walker |  | 6286 | 75 | Fs::DirListing { dir: website/src/website/data/playground-samples/extending-language-services } |  |  | 0.578 |
+| walker |  | 5557 | 194 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.600 |
+| walker |  | 5751 | 194 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 1, line: 102 } |  |  | 0.600 |
+| ns | 5789 |  | 235 | LanguageServiceDefaults (typescript) — all members | 4.9 |  | 0.589 |
+| walker |  | 5984 | 233 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 2, line: 102 } |  |  | 0.589 |
+| ns | 6025 |  | 236 | TypeScriptWorker — all 21 proxy methods (names only) | 4.10 | 4.8 | 0.578 |
+| walker |  | 6136 | 152 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.578 |
+| walker |  | 6164 | 28 | Code::CodeKey { rung: Names, file: monaco-lsp-client/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
+| walker |  | 6231 | 67 | Fs::DirListing { dir: website/src/website/pages/playground } |  |  | 0.578 |
+| walker |  | 6306 | 75 | Fs::DirListing { dir: website/src/website/data/playground-samples/extending-language-services } |  |  | 0.578 |
 | ns | 6316 |  | 291 | typescript/javascript defaults and their divergence | 4.11 | 4.8 | 0.564 |
-| walker |  | 6360 | 74 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor } |  |  | 0.564 |
-| walker |  | 6376 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/line-and-inline-decorations } |  |  | 0.564 |
-| walker |  | 6392 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/listening-to-mouse-events } |  |  | 0.564 |
-| walker |  | 6408 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/rendering-glyphs-in-the-margin } |  |  | 0.564 |
-| walker |  | 6426 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/adding-a-command-to-an-editor-instance } |  |  | 0.564 |
-| walker |  | 6444 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/adding-a-keybinding-to-an-existing-command } |  |  | 0.564 |
-| walker |  | 6462 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/adding-an-action-to-an-editor-instance } |  |  | 0.564 |
-| walker |  | 6480 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/customizing-the-line-numbers } |  |  | 0.564 |
-| walker |  | 6498 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/listening-to-key-events } |  |  | 0.564 |
-| walker |  | 6516 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/revealing-a-position } |  |  | 0.564 |
+| walker |  | 6380 | 74 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor } |  |  | 0.564 |
+| walker |  | 6396 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/line-and-inline-decorations } |  |  | 0.564 |
+| walker |  | 6412 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/listening-to-mouse-events } |  |  | 0.564 |
+| walker |  | 6428 | 16 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/rendering-glyphs-in-the-margin } |  |  | 0.564 |
+| walker |  | 6446 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/adding-a-command-to-an-editor-instance } |  |  | 0.564 |
+| walker |  | 6464 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/adding-a-keybinding-to-an-existing-command } |  |  | 0.564 |
+| walker |  | 6482 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/adding-an-action-to-an-editor-instance } |  |  | 0.564 |
+| walker |  | 6500 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/customizing-the-line-numbers } |  |  | 0.564 |
+| walker |  | 6518 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/listening-to-key-events } |  |  | 0.564 |
+| walker |  | 6536 | 18 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor/revealing-a-position } |  |  | 0.564 |
 | ns | 6545 |  | 229 | The four *Mode.ts entry points and the tsMode re-export tail | 5.1 |  | 0.559 |
-| walker |  | 6690 | 174 | Fs::DirListing { dir: monaco-lsp-client/src/adapters/languageFeatures } |  |  | 0.559 |
+| walker |  | 6710 | 174 | Fs::DirListing { dir: monaco-lsp-client/src/adapters/languageFeatures } |  |  | 0.559 |
 | ns | 6759 |  | 214 | cssMode.setupMode — WorkerManager, the worker accessor, and ModeConfiguration-gated provider registration | 5.2 | 5.1 | 0.549 |
-| walker |  | 6770 | 80 | Fs::DirListing { dir: test/manual } |  |  | 0.549 |
-| walker |  | 6784 | 14 | Fs::DirListing { dir: test/manual/typescript } |  |  | 0.549 |
-| walker |  | 6804 | 20 | Code::CodeKey { rung: Names, file: src/editor.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.549 |
+| walker |  | 6790 | 80 | Fs::DirListing { dir: test/manual } |  |  | 0.549 |
+| walker |  | 6804 | 14 | Fs::DirListing { dir: test/manual/typescript } |  |  | 0.549 |
 | ns | 7112 |  | 353 | common/lspLanguageFeatures.ts — the shared provider adapters and LSP conversion helpers | 5.3 |  | 0.540 |
 | walker |  | 7390 | 586 | Json::ScriptsTail { file: package.json } |  |  | 0.560 |
 | walker |  | 7394 | 4 | Fs::DirListing { dir: test/smoke/amd } |  |  | 0.560 |

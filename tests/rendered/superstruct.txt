@@ -48,50 +48,8 @@ Readme.md
   68→// This will throw an error when the data is invalid.
   69→// If you'd rather not throw, you can use `is()` or `validate()`.
   70→```
-  72→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
-  73→
-  74→```js
-  75→import { is, define, object, string } from 'superstruct'
-  76→import isUuid from 'is-uuid'
-  77→import isEmail from 'is-email'
-  78→
-  79→const Email = define('Email', isEmail)
-  80→const Uuid = define('Uuid', isUuid.v4)
-  81→
-  82→const User = object({
-  83→  id: Uuid,
-  84→  email: Email,
-  85→  name: string(),
-  86→})
-  87→
-  88→const data = {
-  89→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
-  90→  email: 'jane@example.com',
-  91→  name: 'Jane',
-  92→}
-  93→
-  94→if (is(data, User)) {
-  95→  // Your data is guaranteed to be valid in this block.
-  96→}
-  97→```
   …
   145→### Why?
-  146→
-  147→There are lots of existing validation libraries—[`joi`](https://github.com/hapijs/joi), [`express-validator`](https://github.com/ctavan/express-validator), [`validator.js`](https://github.com/chriso/validator.js), [`yup`](https://github.com/jquense/yup), [`ajv`](https://github.com/epoberezkin/ajv), [`is-my-json-valid`](https://github.com/mafintosh/is-my-json-valid)... But they exhibit many issues that lead to your codebase becoming hard to maintain...
-  148→
-  149→- **They don't expose detailed errors.** Many validators simply return string-only errors or booleans without any details as to why, making it difficult to customize the errors to be helpful for end-users.
-  151→- **They make custom types hard.** Many validators ship with built-in types like emails, URLs, UUIDs, etc. with no way to know what they check for, and complicated APIs for defining new types.
-  152→
-  153→- **They don't encourage single sources of truth.** Many existing APIs encourage re-defining custom data types over and over, with the source of truth being spread out across your entire code base.
-  154→
-  155→- **They don't throw errors.** Many don't actually throw the errors, forcing you to wrap everywhere. Although helpful in the days of callbacks, not using `throw` in modern JavaScript makes code much more complex.
-  156→
-  157→- **They're tightly coupled to other concerns.** Many validators are tightly coupled to Express or other frameworks, which results in one-off, confusing code that isn't reusable across your code base.
-  159→- **They use JSON Schema.** Don't get me wrong, JSON Schema _can_ be useful. But it's kind of like HATEOAS—it's usually way more complexity than you need and you aren't using any of its benefits. (Sorry, I said it.)
-  160→
-  161→Of course, not every validation library suffers from all of these issues, but most of them exhibit at least one. If you've run into this problem before, you might like Superstruct.
-  162→
-  163→Which brings me to how Superstruct solves these issues...
   …
   167→### Principles
   …
@@ -186,6 +144,31 @@ package.json
 rollup.config.js
 src/
   error.ts
+    …
+    5→export type Failure = {
+    6→  value: any
+    7→  key: any
+    8→  type: string
+    9→  refinement: string | undefined
+    10→  message: string
+    11→  explanation?: string
+    12→  branch: Array<any>
+    13→  path: Array<any>
+    14→}
+    …
+    25→export class StructError extends TypeError {
+    26→  value: any
+    27→  key!: any
+    28→  type!: string
+    29→  refinement!: string | undefined
+    30→  path!: Array<any>
+    31→  branch!: Array<any>
+    32→  failures: () => Array<Failure>;
+    33→  [x: string]: any
+    34→
+    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    …
+    49→}
   index.ts
     1→export * from './error.js'
     2→export * from './struct.js'
@@ -194,47 +177,104 @@ src/
     5→export * from './structs/types.js'
     6→export * from './structs/utilities.js'
   struct.ts
+    …
+    10→export class Struct<T = unknown, S = unknown> {
+    11→  readonly TYPE!: T
+    12→  type: string
+    13→  schema: S
+    14→  coercer: (value: unknown, context: Context) => unknown
+    15→  validator: (value: unknown, context: Context) => Iterable<Failure>
+    16→  refiner: (value: T, context: Context) => Iterable<Failure>
+    17→  entries: (
+    18→    value: unknown,
+    19→    context: Context
+    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
+    21→
+    22→  constructor(props: {
+    23→    type: string
+    24→    schema: S
+    25→    coercer?: Coercer
+    26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    …
+    67→  assert(value: unknown, message?: string): asserts value is T {
+    …
+    75→  create(value: unknown, message?: string): T {
+    …
+    83→  is(value: unknown): value is T {
+    …
+    93→  mask(value: unknown, message?: string): T {
+    …
+    107→  validate(
+    108→    value: unknown,
+    109→    options: {
+    110→      coerce?: boolean
+    111→      mask?: boolean
+    112→      message?: string
+    113→    } = {}
+    114→  ): [StructError, undefined] | [undefined, T] {
+    …
+    117→}
+    …
+    123→export function assert<T, S>(
+    124→  value: unknown,
+    125→  struct: Struct<T, S>,
+    126→  message?: string
+    127→): asserts value is T {
+    …
+    139→export function create<T, S>(
+    140→  value: unknown,
+    141→  struct: Struct<T, S>,
+    142→  message?: string
+    143→): T {
+    …
+    157→export function mask<T, S>(
+    158→  value: unknown,
+    159→  struct: Struct<T, S>,
+    160→  message?: string
+    161→): T {
+    …
+    175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
+    …
+    185→export function validate<T, S>(
+    186→  value: unknown,
+    187→  struct: Struct<T, S>,
+    188→  options: {
+    189→    coerce?: boolean
+    190→    mask?: boolean
+    191→    message?: string
+    192→  } = {}
+    193→): [StructError, undefined] | [undefined, T] {
+    …
+    221→export type Context = {
+    222→  branch: Array<any>
+    223→  path: Array<any>
+    224→  mask?: boolean
+    225→}
+    …
+    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
+    …
+    237→export type Describe<T> = Struct<T, StructSchema<T>>
+    …
+    243→export type Result =
+    244→  | boolean
+    245→  | string
+    246→  | Partial<Failure>
+    247→  | Iterable<boolean | string | Partial<Failure>>
+    …
+    253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
+    …
+    259→export type Validator = (value: unknown, context: Context) => Result
+    …
+    266→export type Refiner<T> = (value: T, context: Context) => Result
   structs/
     coercions.ts
     refinements.ts
     types.ts
     utilities.ts
   utils.ts
-    …
-    16→export function isObject(x: unknown): x is object {
-    …
-    24→export function isNonArrayObject(x: unknown): x is object {
-    …
-    32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
-    …
-    45→export function print(value: any): string {
-    …
-    58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
-    …
-    67→export function toFailure<T, S>(
-    68→  result: string | boolean | Partial<Failure>,
-    69→  context: Context,
-    70→  struct: Struct<T, S>,
-    71→  value: any
-    72→): Failure | undefined {
-    …
-    106→export function* toFailures<T, S>(
-    107→  result: Result,
-    108→  context: Context,
-    109→  struct: Struct<T, S>,
-    110→  value: any
-    111→): IterableIterator<Failure> {
-    …
-    130→export function* run<T, S>(
-    …
-    202→export type UnionToIntersection<U> = (
-    203→  U extends any ? (arg: U) => any : never
-    204→) extends (arg: infer I) => void
-    205→  ? I
-    206→  : never
-    …
-    212→export type Assign<T, U> = Simplify<U & Omit<T, keyof U>>
-    …
 test/
   api/
     assert.test.ts

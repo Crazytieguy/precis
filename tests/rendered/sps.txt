@@ -176,27 +176,7 @@ sps/
       …
       2→//! Defines the command-line argument structure using clap.
       …
-      10→pub mod info;
-      11→pub mod init;
-      12→pub mod install;
-      13→pub mod list;
-      14→pub mod reinstall;
-      15→pub mod search;
-      16→pub mod status;
-      17→pub mod uninstall;
-      18→pub mod update;
-      19→pub mod upgrade;
-      …
-      23→pub use crate::cli::init::InitArgs;
-      …
     main.rs
-      …
-      23→async fn run_init_command(init_args: &InitArgs, verbose_level: u8) -> spResult<()> {
-      …
-      57→async fn main() -> spResult<()> {
-      …
-      193→async fn check_and_run_auto_update(config: &Config, cache: Arc<Cache>) -> spResult<()> {
-      …
     pipeline/
       downloader.rs
       planner.rs
@@ -215,6 +195,20 @@ sps-common/
     error.rs
     formulary.rs
     keg.rs
+      …
+      12→#[derive(Debug, Clone, PartialEq, Eq)]
+      13→pub struct InstalledKeg {
+      14→    pub name: String,
+      15→    pub version_str: String,
+      16→    pub path: PathBuf,
+      17→}
+      …
+      20→#[derive(Debug)]
+      21→pub struct KegRegistry {
+      22→    config: Config,
+      23→}
+      25→impl KegRegistry {
+      …
     lib.rs
       …
       2→pub mod cache;
@@ -332,6 +326,12 @@ sps-net/
   src/
     api.rs
     http.rs
+      …
+      18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;
+      19→
+      20→const DOWNLOAD_TIMEOUT_SECS: u64 = 300;
+      21→const CONNECT_TIMEOUT_SECS: u64 = 30;
+      …
     lib.rs
       …
       2→pub mod api;

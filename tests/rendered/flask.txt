@@ -56,26 +56,6 @@ README.md
   …
 docs/
   Makefile
-    1→# Minimal makefile for Sphinx documentation
-    2→#
-    3→
-    4→# You can set these variables from the command line, and also
-    5→# from the environment for the first two.
-    6→SPHINXOPTS    ?=
-    7→SPHINXBUILD   ?= sphinx-build
-    8→SOURCEDIR     = .
-    9→BUILDDIR      = _build
-    10→
-    11→# Put it first so that "make" without argument is like "make help".
-    12→help:
-    13→	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-    14→
-    15→.PHONY: help Makefile
-    16→
-    17→# Catch-all target: route all unknown targets to Sphinx using the new
-    18→# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-    19→%: Makefile
-    20→	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
   _static/
     debugger.png
     flask-icon.svg

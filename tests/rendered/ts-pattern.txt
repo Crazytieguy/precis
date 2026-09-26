@@ -49,24 +49,7 @@ README.md
   59→## What is Pattern Matching?
   …
   67→## Installation
-  68→
-  69→Via npm
-  70→
-  71→```sh
-  72→npm install ts-pattern
-  73→```
-  74→
-  75→You can also use your favorite package manager:
-  76→
-  77→```sh
-  78→pnpm add ts-pattern
-  79→# OR
-  80→yarn add ts-pattern
-  81→# OR
-  82→bun add ts-pattern
-  83→# OR
-  84→npx jsr add @gabriel/ts-pattern
-  85→```
+  …
   87→## Want to become a TypeScript Expert?
   88→
   89→Check out 👉 [Type-Level TypeScript](https://type-level-typescript.com/), an online course teaching you how to unleash the full potential of TypeScript's Turing-complete type system. You already know how to code, and types are simply another programming language to master. This course **bridges the gap**, helping you apply your **existing programming knowledge** to **TypeScript's type system**, so you never again struggle with type errors or feel unable to type complex generic code correctly!
@@ -151,7 +134,7 @@ package.json
   32→  "types": "dist/index.d.ts",
   33→  "main": "dist/index.cjs",
   34→  "module": "dist/index.js",
-  35→  "unpkg": "dist/index.umd.js",
+  …
   36→  "scripts": {
   37→    "build": "rimraf dist && microbundle --format modern,cjs,umd && sh ./scripts/generate-cts.sh",
   38→    "dev": "microbundle watch",
@@ -166,10 +149,6 @@ package.json
   47→    "trace": "tsc --project tests/tsconfig.json --generateTrace trace --incremental false  --noEmit",
   48→    "analyzeTrace": "npx @typescript/analyze-trace trace"
   49→  },
-  50→  "files": [
-  51→    "dist/**/*",
-  52→    "package.json"
-  53→  ],
   …
   69→  "license": "MIT",
   …
@@ -188,64 +167,12 @@ src/
     symbols.ts
   is-matching.ts
   match.ts
+    …
+    32→export function match<const input, output = symbols.unset>(
+    33→  value: input
+    34→): Match<input, output> {
+    …
   patterns.ts
-    …
-    48→export type {
-    49→  /**
-    50→   * `Pattern<T>` is the type of all patterns
-    51→   * that can match a value of type `T`.
-    52→   */
-    53→  Pattern,
-    54→
-    55→  /**
-    56→   * `unstable_Fn` can be used to created a
-    57→   * a Matchable instance – a custom type that
-    58→   * can be used as a pattern.
-    59→   *
-    60→   * @experimental This feature is unstable.
-    61→   */
-    62→  Fn as unstable_Fn,
-    63→};
-    64→
-    65→export { matcher };
-    …
-    81→export type unstable_Matchable<
-    82→  narrowedOrFn,
-    83→  input = unknown,
-    84→  pattern = never
-    85→> = CustomP<input, pattern, narrowedOrFn>;
-    …
-    100→export type unstable_Matcher<
-    101→  narrowedOrFn,
-    102→  input = unknown,
-    103→  pattern = never
-    104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
-    …
-    116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
-    …
-    131→export type narrow<input, pattern> = ExtractPreciseValue<
-    …
-    187→export function optional<
-    …
-    241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
-    242→export function array<
-    …
-    246→export function array(
-    …
-    294→export function set<input>(): Chainable<SetP<input, unknown>>;
-    295→export function set<
-    …
-    299→export function set<
-    …
-    356→export function map<input>(): Chainable<MapP<input, unknown, unknown>>;
-    357→export function map<
-    …
-    362→export function map<
-    …
-    433→export function record<
-    …
-    437→export function record<
-    …
   types/
     BuildMany.ts
     DeepExclude.ts
@@ -256,6 +183,68 @@ src/
     IsMatching.ts
     Match.ts
     Pattern.ts
+      …
+      7→export type MatcherType =
+      8→  | 'not'
+      9→  | 'optional'
+      10→  | 'or'
+      11→  | 'and'
+      12→  | 'array'
+      13→  | 'record'
+      14→  | 'map'
+      15→  | 'set'
+      16→  | 'select'
+      17→  | 'default'
+      18→  | 'custom';
+      …
+      23→export type MatcherProtocol<
+      24→  input,
+      25→  narrowed,
+      26→  // Type of what this pattern selected from the input
+      27→  matcherType extends MatcherType,
+      28→  selections extends SelectionType,
+      29→  // Type to exclude from the input union because
+      30→  // it has been fully matched by this pattern
+      31→  excluded
+      32→> = {
+      33→  match: <I>(value: I | input) => MatchResult;
+      34→  getSelectionKeys?: () => string[];
+      35→  matcherType?: matcherType;
+      36→};
+      38→export type MatchResult = {
+      39→  matched: boolean;
+      40→  selections?: Record<string, any>;
+      41→};
+      …
+      50→export interface Matcher<
+      …
+      74→export type MatchedValue<a, invpattern> = WithDefault<
+      75→  ExtractPreciseValue<a, invpattern>,
+      76→  a
+      77→>;
+      79→export type AnyMatcher = Matcher<any, any, any, any, any>;
+      …
+      83→export type CustomP<input, pattern, narrowedOrFn> = Matcher<
+      84→  input,
+      85→  pattern,
+      86→  //  👆
+      87→  // for the input type to be instantiated correctly
+      88→  // on subpatterns, it has to be passed through.
+      89→  'custom',
+      90→  None,
+      91→  narrowedOrFn
+      92→>;
+      94→export type ArrayP<input, p> = Matcher<input, p, 'array'>;
+      95→
+      96→export type RecordP<input, pkey, pvalue> = Matcher<
+      97→  input,
+      98→  [pkey, pvalue],
+      99→  'record'
+      100→>;
+      102→export type OptionalP<input, p> = Matcher<input, p, 'optional'>;
+      103→
+      104→export type MapP<input, pkey, pvalue> = Matcher<input, [pkey, pvalue], 'map'>;
+      …
     helpers.ts
     index.ts
       1→export * from './Pattern';

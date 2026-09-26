@@ -1,4 +1,4 @@
-Score(3000)=0.452 I=0.769 C=0.266 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.719/0.606/0.500/0.452/0.541/0.600/0.580
+Score(3000)=0.591 I=0.834 C=0.419 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.719/0.606/0.596/0.591/0.541/0.600/0.580
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -41,42 +41,42 @@ Score(3000)=0.452 I=0.769 C=0.266 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 1503 |  | 83 | Complete roster of src/structs/refinements.ts | 2.4 |  | 0.584 |
 | ns | 1537 |  | 34 | Complete roster of src/structs/coercions.ts | 2.5 |  | 0.577 |
 | ns | 1651 |  | 114 | Failure - the shape of every validation failure | 2.6 |  | 0.551 |
-| walker |  | 1664 | 235 | Json::ScriptsTail { file: package.json } |  |  | 0.552 |
-| ns | 1829 |  | 178 | StructError class: doc, fields, and its early-exit contract | 2.7 |  | 0.522 |
-| walker |  | 1847 | 183 | Fs::DirListing { dir: test/typings } |  |  | 0.527 |
-| walker |  | 2023 | 176 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.527 |
-| ns | 2037 |  | 208 | Exported type vocabulary of src/struct.ts | 2.8 |  | 0.500 |
-| ns | 2140 |  | 103 | Function roster of src/utils.ts | 2.9 |  | 0.486 |
-| walker |  | 2218 | 195 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.486 |
-| walker |  | 2343 | 125 | Markdown::Section { file: Readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.486 |
-| ns | 2378 |  | 238 | Type-level utility roster of src/utils.ts | 2.10 |  | 0.457 |
-| ns | 2574 |  | 196 | What each type struct does, part 1 (any ... literal) | 3.1 | 2.2 | 0.443 |
-| walker |  | 2625 | 282 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.443 |
-| walker |  | 2810 | 185 | Code::CodeKey { rung: Names, file: src/utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.474 |
-| walker |  | 2860 | 50 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 7, sub: 0, line: 106 } |  |  | 0.474 |
-| walker |  | 2910 | 50 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 9, sub: 0, line: 202 } |  |  | 0.474 |
-| ns | 2916 |  | 342 | What each type struct does, part 2 (map ... unknown) | 3.2 | 2.2 | 0.452 |
-| walker |  | 2964 | 54 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 6, sub: 0, line: 67 } |  |  | 0.452 |
-| walker |  | 3066 | 102 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 8, sub: 0, line: 130 } |  |  | 0.453 |
-| ns | 3144 |  | 228 | What each utility struct does | 3.3 | 2.3 | 0.437 |
-| walker |  | 3299 | 233 | Code::CodeKey { rung: Names, file: src/struct.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.470 |
-| ns | 3300 |  | 156 | What each refinement does | 3.4 | 2.4 | 0.463 |
-| walker |  | 3333 | 34 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 13, sub: 0, line: 221 } |  |  | 0.477 |
-| walker |  | 3370 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 9, sub: 0, line: 139 } |  |  | 0.477 |
-| walker |  | 3407 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 10, sub: 0, line: 157 } |  |  | 0.477 |
-| ns | 3411 |  | 111 | What each coercion does - and the create() gotcha | 3.5 | 2.5 | 0.471 |
-| walker |  | 3447 | 40 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 8, sub: 0, line: 123 } |  |  | 0.471 |
-| walker |  | 3488 | 41 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 16, sub: 0, line: 243 } |  |  | 0.491 |
-| walker |  | 3571 | 83 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.491 |
-| ns | 3716 |  | 305 | Public overload declarations of the six overloaded factories | 3.6 | 2.2 | 0.468 |
-| walker |  | 3815 | 244 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.519 |
-| walker |  | 3887 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 2, sub: 0, line: 22 } |  |  | 0.519 |
-| walker |  | 3959 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 7, sub: 0, line: 107 } |  |  | 0.506 |
-| ns | 3959 |  | 243 | Struct method semantics: mask recursion and validate options | 3.7 | 2.1 | 0.506 |
-| walker |  | 3986 | 27 | Code::CodeKey { rung: Names, file: src/error.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
-| walker |  | 4067 | 81 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.527 |
-| ns | 4149 |  | 190 | What each src/utils.ts helper does | 3.8 | 2.9 | 0.516 |
-| walker |  | 4180 | 113 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.527 |
+| walker |  | 1662 | 233 | Code::CodeKey { rung: Names, file: src/struct.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
+| walker |  | 1696 | 34 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 13, sub: 0, line: 221 } |  |  | 0.576 |
+| walker |  | 1733 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 9, sub: 0, line: 139 } |  |  | 0.576 |
+| walker |  | 1770 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 10, sub: 0, line: 157 } |  |  | 0.576 |
+| walker |  | 1810 | 40 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 8, sub: 0, line: 123 } |  |  | 0.576 |
+| ns | 1829 |  | 178 | StructError class: doc, fields, and its early-exit contract | 2.7 |  | 0.544 |
+| walker |  | 1851 | 41 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 16, sub: 0, line: 243 } |  |  | 0.546 |
+| walker |  | 1934 | 83 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.546 |
+| ns | 2037 |  | 208 | Exported type vocabulary of src/struct.ts | 2.8 |  | 0.580 |
+| ns | 2140 |  | 103 | Function roster of src/utils.ts | 2.9 |  | 0.564 |
+| walker |  | 2178 | 244 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.630 |
+| walker |  | 2250 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 2, sub: 0, line: 22 } |  |  | 0.630 |
+| walker |  | 2322 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 7, sub: 0, line: 107 } |  |  | 0.630 |
+| ns | 2378 |  | 238 | Type-level utility roster of src/utils.ts | 2.10 |  | 0.592 |
+| walker |  | 2557 | 235 | Json::ScriptsTail { file: package.json } |  |  | 0.593 |
+| ns | 2574 |  | 196 | What each type struct does, part 1 (any ... literal) | 3.1 | 2.2 | 0.575 |
+| walker |  | 2740 | 183 | Fs::DirListing { dir: test/typings } |  |  | 0.580 |
+| walker |  | 2767 | 27 | Code::CodeKey { rung: Names, file: src/error.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
+| walker |  | 2848 | 81 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.606 |
+| ns | 2916 |  | 342 | What each type struct does, part 2 (map ... unknown) | 3.2 | 2.2 | 0.577 |
+| walker |  | 2961 | 113 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.591 |
+| walker |  | 3137 | 176 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.591 |
+| ns | 3144 |  | 228 | What each utility struct does | 3.3 | 2.3 | 0.570 |
+| ns | 3300 |  | 156 | What each refinement does | 3.4 | 2.4 | 0.561 |
+| walker |  | 3332 | 195 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.561 |
+| ns | 3411 |  | 111 | What each coercion does - and the create() gotcha | 3.5 | 2.5 | 0.555 |
+| walker |  | 3457 | 125 | Markdown::Section { file: Readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.555 |
+| ns | 3716 |  | 305 | Public overload declarations of the six overloaded factories | 3.6 | 2.2 | 0.529 |
+| walker |  | 3739 | 282 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.529 |
+| walker |  | 3924 | 185 | Code::CodeKey { rung: Names, file: src/utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.551 |
+| ns | 3959 |  | 243 | Struct method semantics: mask recursion and validate options | 3.7 | 2.1 | 0.537 |
+| walker |  | 3974 | 50 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 7, sub: 0, line: 106 } |  |  | 0.537 |
+| walker |  | 4024 | 50 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 9, sub: 0, line: 202 } |  |  | 0.537 |
+| walker |  | 4078 | 54 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 6, sub: 0, line: 67 } |  |  | 0.537 |
+| ns | 4149 |  | 190 | What each src/utils.ts helper does | 3.8 | 2.9 | 0.526 |
+| walker |  | 4180 | 102 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 8, sub: 0, line: 130 } |  |  | 0.527 |
 | ns | 4298 |  | 149 | run() signature and per-call context setup | 4.1 | 2.9 | 0.532 |
 | walker |  | 4361 | 181 | Code::CodeKey { rung: Names, file: src/utils.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.546 |
 | walker |  | 4381 | 20 | Code::CodeKey { rung: Decl, file: src/utils.ts, decl: 11, sub: 0, line: 218 } |  |  | 0.546 |

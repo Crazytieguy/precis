@@ -418,6 +418,22 @@ must not undo:
   manifest batches and lost. Reference signals for C `#include`, Rust
   `crate::`/`mod` and TS/JS relative imports ranked no better than size
   (C's most-included headers are utility headers) and were dropped.
+- **A barrel opens the chain of the modules it re-exports.** Beside an
+  entry file that only re-exports (no declarations of its own), the
+  siblings its re-export rows name lead the chain, and the first one's
+  roster head is gated on the barrel's last roster chunk and priced at
+  the barrel's pinned depth. Priced as an entry file, the barrel alone
+  outranked every module under it, so a monorepo's packages showed only
+  their `src/index.ts` (8,000-token real-world renders: 96 barrel-only
+  directories in 17 repos → 35 in 15; plugin: 16 in 9 → 12 in 7; grid
+  3000 +.0018, avg7 +.0005). The ordering alone was worth +.0015 at 3000
+  but fixed none of those directories. Measured and rejected: extending
+  the rule to entry files that also declare (answer keys read a package
+  `__init__`'s full re-export list before its core module: 3000 −.0014
+  to −.0032); gating the barrel's second chunk on the module instead
+  (the barrel shrank but the module still didn't open, and the budget
+  went to test listings); lifting the module's whole roster rather than
+  its head (a type-definition module filled the budget).
 
 ## Copies are named, not listed
 

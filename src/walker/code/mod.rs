@@ -545,9 +545,25 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         };
         let is_entrypoint = language.is_entrypoint.is_some_and(|test| test(path, ctx));
         let non_essential = model.non_essential || ctx.non_essential_factor(path) < 1.0;
+        let reexported_words = if is_entrypoint && model.decls.is_empty() {
+            model
+                .reexports
+                .iter()
+                .flat_map(|item| &item.rows)
+                .flat_map(|&row| {
+                    file.line(row)
+                        .split(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-'))
+                })
+                .filter(|word| !word.is_empty())
+                .map(str::to_owned)
+                .collect()
+        } else {
+            HashSet::new()
+        };
         emitted.push(EmittedFile {
             batches: emit::emit_file(language, &file, model, is_entrypoint, ctx),
             chained: !is_entrypoint,
+            reexported_words,
             non_essential,
             bytes,
             names,
@@ -556,7 +572,9 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 .map_or_else(HashSet::new, |mentions| mentions(&file)),
         });
     });
-    chain_rosters(&mut emitted);
+    let depth = ctx.depth_from_root(&dir.join("_"));
+    let entry_lift = crate::value::depth_factor(depth.min(1)) / crate::value::depth_factor(depth);
+    chain_rosters(&mut emitted, entry_lift);
     emitted.into_iter().flat_map(|file| file.batches).collect()
 }
 
@@ -567,6 +585,9 @@ struct EmittedFile {
     /// Entry files stay off the chain: their rosters are neither gated nor
     /// a gate.
     chained: bool,
+    /// The words of a re-export-only entry file's re-export rows, which
+    /// name the sibling modules it re-exports; empty for any other file.
+    reexported_words: HashSet<String>,
     non_essential: bool,
     bytes: usize,
     /// See [`Language::sibling_names`].
@@ -582,7 +603,23 @@ struct EmittedFile {
 /// A file is central when many siblings depend on it (a base type the
 /// others are written against) or it depends on many (the one composing
 /// them); ties, and languages that don't say, fall back to size.
-fn chain_rosters(files: &mut [EmittedFile]) {
+///
+/// Beside a re-export-only entry file (a barrel), the modules it re-exports
+/// lead the chain, and the first one's head chunk is gated on the barrel's
+/// last roster chunk and priced at the barrel's pinned depth: otherwise the
+/// barrel, priced as an entry file, is all a package's source shows.
+fn chain_rosters(files: &mut [EmittedFile], entry_lift: f64) {
+    let barrel_end = files
+        .iter()
+        .filter(|file| !file.reexported_words.is_empty())
+        .flat_map(|file| &file.batches)
+        .filter(|batch| matches!(&batch.key, BatchKey::Code(key) if key.rung == Rung::Names))
+        .map(|batch| batch.key.clone())
+        .next_back();
+    let reexported: HashSet<String> = files
+        .iter_mut()
+        .flat_map(|file| std::mem::take(&mut file.reexported_words))
+        .collect();
     let chain: Vec<&mut EmittedFile> = files.iter_mut().filter(|file| file.chained).collect();
     let mut declarers: HashMap<&str, Vec<usize>> = HashMap::new();
     for (index, file) in chain.iter().enumerate() {
@@ -613,15 +650,32 @@ fn chain_rosters(files: &mut [EmittedFile]) {
             degrees[dependency] += 1;
         }
     }
-    let mut ranked: Vec<(usize, &mut EmittedFile)> = degrees.into_iter().zip(chain).collect();
-    ranked.sort_by_key(|(degree, file)| (file.non_essential, Reverse((*degree, file.bytes))));
+    let mut ranked: Vec<(bool, usize, &mut EmittedFile)> = degrees
+        .into_iter()
+        .zip(chain)
+        .map(|(degree, file)| {
+            let is_reexported = file.names.iter().any(|name| reexported.contains(name));
+            (is_reexported, degree, file)
+        })
+        .collect();
+    ranked.sort_by_key(|(is_reexported, degree, file)| {
+        (
+            file.non_essential,
+            !is_reexported,
+            Reverse((*degree, file.bytes)),
+        )
+    });
     let mut gate: Option<BatchKey> = None;
-    for (_, file) in ranked {
+    for (is_reexported, _, file) in ranked {
         let Some(head) = file.batches.iter_mut().find(|batch| {
             matches!(&batch.key, BatchKey::Code(key) if key.rung == Rung::Names && key.sub == 0)
         }) else {
             continue;
         };
+        if gate.is_none() && is_reexported {
+            head.value *= entry_lift;
+            gate.clone_from(&barrel_end);
+        }
         head.predecessor = gate.replace(head.key.clone());
     }
 }
@@ -1002,9 +1056,34 @@ mod tests {
             [
                 link("__init__.py", None),
                 link("cli.py", Some("helpers.py")),
-                link("core.py", None),
+                link("core.py", Some("__init__.py")),
                 link("helpers.py", Some("core.py")),
                 link("test_core.py", Some("cli.py")),
+            ]
+        );
+    }
+
+    #[test]
+    fn code_mod_roster_chain_opens_a_barrels_modules_after_it() {
+        let chain = roster_chain(&[
+            (
+                "index.ts",
+                "export { parse } from './parser'\nexport * from './ast'\n",
+            ),
+            ("parser.ts", "export function parse() {}\n"),
+            ("ast.ts", "export interface Node {}\n"),
+            (
+                "tokenizer.ts",
+                "export class TokenizerWithAMuchLongerNameThanTheOthers {}\n",
+            ),
+        ]);
+        assert_eq!(
+            chain,
+            [
+                link("ast.ts", Some("parser.ts")),
+                link("index.ts", None),
+                link("parser.ts", Some("index.ts")),
+                link("tokenizer.ts", Some("ast.ts")),
             ]
         );
     }
