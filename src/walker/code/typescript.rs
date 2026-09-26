@@ -1174,7 +1174,7 @@ mod tests {
     }
 
     #[test]
-    fn code_typescript_exported_function_splits_signature_and_statements() {
+    fn typescript_exported_function_splits_signature_and_statements() {
         let model = extract_source(
             "src/util.ts",
             "\
@@ -1200,7 +1200,7 @@ export function add(
     }
 
     #[test]
-    fn code_typescript_statement_on_the_signature_row_stays_head() {
+    fn typescript_statement_on_the_signature_row_stays_head() {
         let model = extract_source(
             "a.ts",
             "export function one() { return 1; }\nexport const two = () => { return 2;\n};\n",
@@ -1215,7 +1215,7 @@ export function add(
     }
 
     #[test]
-    fn code_typescript_expression_bodied_arrow_keeps_its_body_out_of_the_head() {
+    fn typescript_expression_bodied_arrow_keeps_its_body_out_of_the_head() {
         let model = extract_source(
             "src/card.tsx",
             "\
@@ -1244,7 +1244,7 @@ export const one = () => 1;
     }
 
     #[test]
-    fn code_typescript_class_is_a_container_of_its_public_members() {
+    fn typescript_class_is_a_container_of_its_public_members() {
         let model = extract_source(
             "src/queue.ts",
             "\
@@ -1292,7 +1292,7 @@ export class Queue<T>
     }
 
     #[test]
-    fn code_typescript_underscore_members_are_private() {
+    fn typescript_underscore_members_are_private() {
         let model = extract_source(
             "lib/graph.js",
             "\
@@ -1326,7 +1326,7 @@ export { Provider };
     }
 
     #[test]
-    fn code_typescript_underscore_data_entries_stay_public() {
+    fn typescript_underscore_data_entries_stay_public() {
         let model = extract_source(
             "src/schema.ts",
             "\
@@ -1344,7 +1344,7 @@ export const documentSchema = z.object({
     }
 
     #[test]
-    fn code_typescript_internal_tagged_declarations_are_hidden() {
+    fn typescript_internal_tagged_declarations_are_hidden() {
         let model = extract_source(
             "src/proxy.ts",
             "\
@@ -1370,7 +1370,7 @@ export class Client {
     }
 
     #[test]
-    fn code_typescript_field_keeps_its_doc_across_a_blank_row() {
+    fn typescript_field_keeps_its_doc_across_a_blank_row() {
         let model = extract_source(
             "src/options.ts",
             "\
@@ -1388,7 +1388,7 @@ export class Options {
     }
 
     #[test]
-    fn code_typescript_abstract_and_overload_method_signatures_are_members() {
+    fn typescript_abstract_and_overload_method_signatures_are_members() {
         let model = extract_source(
             "src/shape.ts",
             "\
@@ -1415,7 +1415,7 @@ export abstract class Shape {
     }
 
     #[test]
-    fn code_typescript_member_on_the_class_row_shares_the_container_head() {
+    fn typescript_member_on_the_class_row_shares_the_container_head() {
         let model = extract_source("a.ts", "export class A { run() {\n  go();\n} }\n");
         assert_eq!(
             describe(&model),
@@ -1427,7 +1427,7 @@ export abstract class Shape {
     }
 
     #[test]
-    fn code_typescript_interface_enum_and_object_alias_list_their_entries() {
+    fn typescript_interface_enum_and_object_alias_list_their_entries() {
         let model = extract_source(
             "src/types.ts",
             "\
@@ -1467,7 +1467,7 @@ export type Picked = {
     }
 
     #[test]
-    fn code_typescript_object_literal_const_lists_entries_and_methods() {
+    fn typescript_object_literal_const_lists_entries_and_methods() {
         let model = extract_source(
             "src/config.js",
             "\
@@ -1491,7 +1491,7 @@ export const config = {
     }
 
     #[test]
-    fn code_typescript_call_ending_in_an_object_lists_its_entries() {
+    fn typescript_call_ending_in_an_object_lists_its_entries() {
         let model = extract_source(
             "src/schema.ts",
             "\
@@ -1532,7 +1532,7 @@ export const strict = z.object({
     }
 
     #[test]
-    fn code_typescript_local_types_in_published_signatures_are_published() {
+    fn typescript_local_types_in_published_signatures_are_published() {
         let model = extract_source(
             "src/timeline.tsx",
             "\
@@ -1554,7 +1554,7 @@ export interface TreeState<T> extends StateType<T> {}
     }
 
     #[test]
-    fn code_typescript_reexport_keeps_its_line_comment_label() {
+    fn typescript_reexport_keeps_its_line_comment_label() {
         let model = extract_source(
             "src/index.ts",
             "\
@@ -1568,7 +1568,7 @@ export * from './errors';
     }
 
     #[test]
-    fn code_typescript_reexports_and_clauses_publish_without_declaring() {
+    fn typescript_reexports_and_clauses_publish_without_declaring() {
         let model = extract_source(
             "src/api.ts",
             "\
@@ -1591,7 +1591,7 @@ export { local, type Shape };
     }
 
     #[test]
-    fn code_typescript_unexported_declarations_are_hidden_unless_an_entrypoint_exports_nothing() {
+    fn typescript_unexported_declarations_are_hidden_unless_an_entrypoint_exports_nothing() {
         let source = "import x from 'x';\nconst helper = 1;\nexport const api = 2;\n";
         let listed = |relative| extract_source(relative, source).decls.len();
         assert_eq!(listed("src/other.ts"), 1);
@@ -1614,7 +1614,7 @@ export { local, type Shape };
     }
 
     #[test]
-    fn code_typescript_default_export_resolves_to_the_local_implementation() {
+    fn typescript_default_export_resolves_to_the_local_implementation() {
         let model = extract_source(
             "src/client.ts",
             "\
@@ -1637,7 +1637,7 @@ export default instance;
     }
 
     #[test]
-    fn code_typescript_exported_singleton_keeps_its_class() {
+    fn typescript_exported_singleton_keeps_its_class() {
         let model = extract_source(
             "src/client.js",
             "\
@@ -1659,7 +1659,7 @@ export default client;
     }
 
     #[test]
-    fn code_typescript_default_export_values_take_their_shape() {
+    fn typescript_default_export_values_take_their_shape() {
         let model = extract_source(
             "src/component.tsx",
             "export default function () {\n  return <div />;\n}\n",
@@ -1679,7 +1679,7 @@ export default client;
     }
 
     #[test]
-    fn code_typescript_wrapped_component_in_jsx_is_callable() {
+    fn typescript_wrapped_component_in_jsx_is_callable() {
         let model = extract_source(
             "src/item.jsx",
             "\
@@ -1696,7 +1696,7 @@ export const Item = React.memo(React.forwardRef((props, ref) => {
     }
 
     #[test]
-    fn code_typescript_commonjs_exports_publish_their_targets() {
+    fn typescript_commonjs_exports_publish_their_targets() {
         let model = extract_source(
             "lib/router.js",
             "\
@@ -1732,7 +1732,7 @@ exports.static = require('serve-static');
     }
 
     #[test]
-    fn code_typescript_values_assigned_onto_a_published_local_are_its_api() {
+    fn typescript_values_assigned_onto_a_published_local_are_its_api() {
         let model = extract_source(
             "lib/application.js",
             "\
@@ -1784,7 +1784,7 @@ app.name = 'app';
     }
 
     #[test]
-    fn code_typescript_assignment_chain_is_shaped_by_its_final_value() {
+    fn typescript_assignment_chain_is_shaped_by_its_final_value() {
         let model = extract_source(
             "lib/stores/file.js",
             "\
@@ -1801,7 +1801,7 @@ var File = exports.File = function (options) {
     }
 
     #[test]
-    fn code_typescript_prototype_object_lists_its_methods() {
+    fn typescript_prototype_object_lists_its_methods() {
         let model = extract_source(
             "lib/store.js",
             "\
@@ -1827,7 +1827,7 @@ exports.Store = Store;
     }
 
     #[test]
-    fn code_typescript_amd_and_umd_factories_export_what_they_return() {
+    fn typescript_amd_and_umd_factories_export_what_they_return() {
         let amd = extract_source(
             "client/js/area.js",
             "\
@@ -1873,7 +1873,7 @@ define(['lib/class'], function(Class) {
     }
 
     #[test]
-    fn code_typescript_commonjs_published_constructor_call_publishes_the_constructor() {
+    fn typescript_commonjs_published_constructor_call_publishes_the_constructor() {
         let model = extract_source(
             "lib/cli.js",
             "function Cli() {\n  this.opts = [];\n}\nfunction other() {}\nmodule.exports = new Cli();\n",
@@ -1888,7 +1888,7 @@ define(['lib/class'], function(Class) {
     }
 
     #[test]
-    fn code_typescript_overloads_are_separate_declarations() {
+    fn typescript_overloads_are_separate_declarations() {
         let model = extract_source(
             "src/parse.ts",
             "\
@@ -1910,7 +1910,7 @@ export function parse(input: unknown): Ast {
     }
 
     #[test]
-    fn code_typescript_declaration_file_publishes_every_ambient_declaration() {
+    fn typescript_declaration_file_publishes_every_ambient_declaration() {
         let model = extract_source(
             "types/index.d.ts",
             "\
@@ -1937,7 +1937,7 @@ declare namespace Greeter {
     }
 
     #[test]
-    fn code_typescript_doc_sits_at_most_one_blank_row_above() {
+    fn typescript_doc_sits_at_most_one_blank_row_above() {
         let model = extract_source(
             "a.ts",
             "\
@@ -1957,7 +1957,7 @@ export const c = 3;
     }
 
     #[test]
-    fn code_typescript_line_comment_runs_are_docs() {
+    fn typescript_line_comment_runs_are_docs() {
         let model = extract_source(
             "lib/provider.js",
             "\
@@ -1976,7 +1976,7 @@ export type Token = string;
     }
 
     #[test]
-    fn code_typescript_doc_skips_tool_directives_and_the_file_header() {
+    fn typescript_doc_skips_tool_directives_and_the_file_header() {
         let model = extract_source(
             "a.ts",
             "\
@@ -2006,7 +2006,7 @@ export class A {
     }
 
     #[test]
-    fn code_typescript_entrypoints_sit_near_their_package_root() {
+    fn typescript_entrypoints_sit_near_their_package_root() {
         let files = [
             ("index.ts", ""),
             ("src/index.ts", ""),
@@ -2046,7 +2046,7 @@ export class A {
     }
 
     #[test]
-    fn code_typescript_config_weighs_less() {
+    fn typescript_config_weighs_less() {
         let ctx = WalkCtx::new(PathBuf::from("/repo"));
         let weight = |relative: &str| file_weight(&Path::new("/repo").join(relative), &ctx);
         for primary in [

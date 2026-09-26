@@ -522,7 +522,7 @@ mod tests {
     }
 
     #[test]
-    fn code_python_module_doc_skips_license_header_and_keeps_dunders() {
+    fn python_module_doc_skips_license_header_and_keeps_dunders() {
         let source = "\
 # Copyright (c) 2020 Someone
 # SPDX-License-Identifier: MIT
@@ -548,7 +548,7 @@ __all__ += [\"extra\"]
     }
 
     #[test]
-    fn code_python_package_init_reexports_from_imports_only() {
+    fn python_package_init_reexports_from_imports_only() {
         let source = "\
 \"\"\"Package.\"\"\"
 import sys
@@ -569,7 +569,7 @@ if sys.version_info >= (3, 8):
     }
 
     #[test]
-    fn code_python_package_init_reexports_only_its_own_modules() {
+    fn python_package_init_reexports_only_its_own_modules() {
         let model = extract_source(
             "src/pkg/markdown/__init__.py",
             "\
@@ -585,7 +585,7 @@ from pkgextra import helper
     }
 
     #[test]
-    fn code_python_package_init_reexports_explicitly_exported_imports() {
+    fn python_package_init_reexports_explicitly_exported_imports() {
         let model = extract_source(
             "pkg/__init__.pyi",
             "\
@@ -600,7 +600,7 @@ __all__ = [\"escape\"]
     }
 
     #[test]
-    fn code_python_decorated_function_splits_head_doc_and_body() {
+    fn python_decorated_function_splits_head_doc_and_body() {
         let model = extract_source(
             "cli.py",
             "\
@@ -631,7 +631,7 @@ def greet(
     }
 
     #[test]
-    fn code_python_comment_above_docstring_joins_first_statement() {
+    fn python_comment_above_docstring_joins_first_statement() {
         let model = extract_source(
             "m.py",
             "\
@@ -649,7 +649,7 @@ def run():
     }
 
     #[test]
-    fn code_python_one_line_def_is_all_head() {
+    fn python_one_line_def_is_all_head() {
         let model = extract_source(
             "m.py",
             "\
@@ -675,7 +675,7 @@ def _helper(x):  # noqa
     }
 
     #[test]
-    fn code_python_class_is_container_with_methods_as_members() {
+    fn python_class_is_container_with_methods_as_members() {
         let model = extract_source(
             "models.py",
             "\
@@ -745,7 +745,7 @@ class Config(Base):  # the config
     }
 
     #[test]
-    fn code_python_nested_class_flattens_into_outer_roster() {
+    fn python_nested_class_flattens_into_outer_roster() {
         let model = extract_source(
             "spec.py",
             "\
@@ -791,7 +791,7 @@ class Basic:
     }
 
     #[test]
-    fn code_python_roster_lists_decorators_and_signature_closing_row() {
+    fn python_roster_lists_decorators_and_signature_closing_row() {
         let model = extract_source(
             "props.py",
             "\
@@ -838,7 +838,7 @@ class Wide(
     }
 
     #[test]
-    fn code_python_type_stub_parses_like_a_module() {
+    fn python_type_stub_parses_like_a_module() {
         assert!(
             Language::from_path(Path::new("stub.pyi"))
                 .is_some_and(|language| language.extensions == LANGUAGE.extensions)
@@ -865,7 +865,7 @@ class Params:
     }
 
     #[test]
-    fn code_python_definitions_under_if_and_try_carry_their_condition() {
+    fn python_definitions_under_if_and_try_carry_their_condition() {
         let model = extract_source(
             "pkg/locks.py",
             "\
@@ -905,7 +905,7 @@ else:
     }
 
     #[test]
-    fn code_python_overload_stubs_before_their_implementation_are_hidden() {
+    fn python_overload_stubs_before_their_implementation_are_hidden() {
         let source = "\
 @overload
 def filter(x: int) -> list[int]: ...
@@ -947,7 +947,7 @@ class Wikicode:
     }
 
     #[test]
-    fn code_python_comment_above_undocumented_definition_is_its_doc() {
+    fn python_comment_above_undocumented_definition_is_its_doc() {
         let model = extract_source(
             "tz.py",
             "\
@@ -980,7 +980,7 @@ class Node:
     }
 
     #[test]
-    fn code_python_constants_and_aliases_are_whole_head_only() {
+    fn python_constants_and_aliases_are_whole_head_only() {
         let model = extract_source(
             "consts.py",
             "\
@@ -1013,7 +1013,7 @@ if TYPE_CHECKING:
     }
 
     #[test]
-    fn code_python_chained_assignment_is_one_statement() {
+    fn python_chained_assignment_is_one_statement() {
         let source = "\
 __version__ = version = \"1.0\"
 LIB = STATE = SUPPRESS = None
@@ -1026,7 +1026,7 @@ _first = second = 0
     }
 
     #[test]
-    fn code_python_file_weight_favors_modules_a_package_init_imports_from() {
+    fn python_file_weight_favors_modules_a_package_init_imports_from() {
         let dir = tempfile::tempdir().unwrap();
         let write = |relative: &str, content: &str| {
             let path = dir.path().join(relative);
@@ -1052,7 +1052,7 @@ _first = second = 0
     }
 
     #[test]
-    fn code_python_entrypoints_are_dunder_named_modules() {
+    fn python_entrypoints_are_dunder_named_modules() {
         let ctx = WalkCtx::new(PathBuf::from("/repo"));
         let entrypoint = |path: &str| is_entrypoint(Path::new(path), &ctx);
         assert!(entrypoint("/repo/pkg/__init__.py"));
