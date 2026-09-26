@@ -89,8 +89,9 @@ fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
 /// Whether `path` is a header written in C++, which the C grammar
 /// misparses (namespaces read as functions, classes as statement lists,
 /// templates as expressions): a line of `source` opens a namespace or a
-/// class, starts a template, or is an access specifier, outside the
-/// `#if … __cplusplus` blocks a C header keeps for C++ callers.
+/// class, starts a template, or is an access specifier, outside block
+/// comments and the `#if … __cplusplus` blocks a C header keeps for C++
+/// callers.
 pub(in crate::walker) fn is_cpp_header(path: &Path, source: &str) -> bool {
     if !is_header(path) {
         return false;
@@ -105,7 +106,13 @@ pub(in crate::walker) fn is_cpp_header(path: &Path, source: &str) -> bool {
         .expect("valid regex")
     });
     let mut cplusplus_depth = 0usize;
+    let mut in_block_comment = false;
     for line in source.lines() {
+        let starts_in_block_comment = in_block_comment;
+        in_block_comment = ends_in_block_comment(line, in_block_comment);
+        if starts_in_block_comment {
+            continue;
+        }
         if let Some(directive) = line.trim_start().strip_prefix('#') {
             let directive = directive.trim_start();
             if cplusplus_depth > 0 {
@@ -122,6 +129,28 @@ pub(in crate::walker) fn is_cpp_header(path: &Path, source: &str) -> bool {
         }
     }
     false
+}
+
+fn ends_in_block_comment(line: &str, starts_in_block_comment: bool) -> bool {
+    let mut in_block_comment = starts_in_block_comment;
+    let mut rest = line;
+    loop {
+        if in_block_comment {
+            let Some(close) = rest.find("*/") else {
+                return true;
+            };
+            rest = &rest[close + 2..];
+            in_block_comment = false;
+        } else {
+            match rest.find("/*") {
+                Some(open) if !rest[..open].contains("//") => {
+                    rest = &rest[open + 2..];
+                    in_block_comment = true;
+                }
+                _ => return false,
+            }
+        }
+    }
 }
 
 fn is_header(path: &Path) -> bool {
@@ -1089,6 +1118,19 @@ template <typename T> class wrapper {
 struct namespace_entry { int class_id; };
 ";
         assert!(!is_cpp_header(Path::new("api.h"), c_with_cpp_wrappers));
+        let c_documenting_cpp_use = "\
+/* From C++:
+
+template <typename T>
+class Widget {
+public:
+};
+*/ int api(void); /* trailing
+namespace lib {
+*/
+int other_api(void);
+";
+        assert!(!is_cpp_header(Path::new("api.h"), c_documenting_cpp_use));
     }
 
     #[test]
