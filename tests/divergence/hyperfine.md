@@ -3,15 +3,15 @@ Score(3000)=0.668 I=0.893 C=0.500 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 45 | 45 | Fs::DirListing { dir: . } |  |  | 0.000 |
+| walker |  | 89 | 44 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 96 |  | 96 | Crate identity: package name, description, homepage, licence | 1.1 |  | 0.000 |
-| walker |  | 114 | 69 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
-| walker |  | 139 | 25 | Fs::DirListing { dir: doc } |  |  | 0.000 |
-| ns | 141 |  | 45 | Repository root listing (complete) | 1.2 |  | 0.441 |
-| walker |  | 183 | 44 | Fs::DirListing { dir: src } |  |  | 0.510 |
-| walker |  | 196 | 13 | Fs::DirListing { dir: src/parameter } |  |  | 0.512 |
-| walker |  | 213 | 17 | Fs::DirListing { dir: src/output } |  |  | 0.518 |
-| ns | 217 |  | 76 | Cargo.toml: version 1.20.0, edition, MSRV, build script | 1.3 | 1.1 | 0.442 |
-| walker |  | 233 | 20 | Fs::DirListing { dir: src/timer } |  |  | 0.451 |
+| ns | 141 |  | 45 | Repository root listing (complete) | 1.2 |  | 0.509 |
+| walker |  | 158 | 69 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.509 |
+| walker |  | 171 | 13 | Fs::DirListing { dir: src/parameter } |  |  | 0.510 |
+| walker |  | 188 | 17 | Fs::DirListing { dir: src/output } |  |  | 0.516 |
+| walker |  | 208 | 20 | Fs::DirListing { dir: src/timer } |  |  | 0.527 |
+| ns | 217 |  | 76 | Cargo.toml: version 1.20.0, edition, MSRV, build script | 1.3 | 1.1 | 0.450 |
+| walker |  | 233 | 25 | Fs::DirListing { dir: doc } |  |  | 0.451 |
 | walker |  | 261 | 28 | Fs::DirListing { dir: src/util } |  |  | 0.510 |
 | ns | 261 |  | 44 | src/ listing: the flat modules and six subdirectories | 1.4 |  | 0.510 |
 | walker |  | 296 | 35 | Fs::DirListing { dir: src/export } |  |  | 0.521 |

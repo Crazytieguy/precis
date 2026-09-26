@@ -4,11 +4,11 @@ Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 34 |  | 34 | Crate identity: README title and one-line description | 1.1 |  | 0.000 |
 | walker |  | 46 | 46 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| ns | 80 |  | 46 | Complete root listing | 1.2 |  | 0.549 |
-| walker |  | 98 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| walker |  | 108 | 10 | Fs::DirListing { dir: rfcs } |  |  | 1.000 |
-| ns | 121 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.746 |
-| walker |  | 129 | 21 | Fs::DirListing { dir: src } |  |  | 0.814 |
+| walker |  | 67 | 21 | Fs::DirListing { dir: src } |  |  | 0.000 |
+| ns | 80 |  | 46 | Complete root listing | 1.2 |  | 0.574 |
+| walker |  | 119 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 121 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.813 |
+| walker |  | 129 | 10 | Fs::DirListing { dir: rfcs } |  |  | 0.814 |
 | walker |  | 149 | 20 | Fs::DirListing { dir: src/kv } |  |  | 1.000 |
 | walker |  | 153 | 4 | Fs::DirListing { dir: benches } |  |  | 1.000 |
 | ns | 156 |  | 35 | Listings for the remaining directories | 1.4 |  | 0.877 |

@@ -5,37 +5,37 @@ Score(3000)=0.547 I=0.867 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 47 | 47 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 88 |  | 88 | README lede: Toasty is a Rust ORM for SQL and NoSQL | 1.1 |  | 0.000 |
 | walker |  | 99 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.056 |
-| walker |  | 129 | 30 | Fs::DirListing { dir: docs } |  |  | 0.057 |
-| ns | 135 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.547 |
-| walker |  | 138 | 9 | Fs::DirListing { dir: docs/guide } |  |  | 0.554 |
-| walker |  | 148 | 10 | Fs::DirListing { dir: docs/architecture } |  |  | 0.564 |
-| walker |  | 162 | 14 | Fs::DirListing { dir: docs/design } |  |  | 0.574 |
-| walker |  | 185 | 23 | Fs::DirListing { dir: docs/roadmap } |  |  | 0.598 |
-| walker |  | 194 | 9 | Fs::DirListing { dir: benches } |  |  | 0.598 |
-| walker |  | 205 | 11 | Fs::DirListing { dir: .github/workflows } |  |  | 0.598 |
-| walker |  | 216 | 11 | Fs::DirListing { dir: scripts } |  |  | 0.598 |
-| ns | 220 |  | 85 | The 13 workspace crates under crates/ (complete) | 1.3 |  | 0.437 |
-| walker |  | 227 | 11 | Fs::DirListing { dir: tests } |  |  | 0.437 |
-| walker |  | 312 | 85 | Fs::DirListing { dir: crates } |  |  | 0.677 |
-| walker |  | 320 | 8 | Fs::DirListing { dir: crates/std-util } |  |  | 0.677 |
-| ns | 321 |  | 101 | README incubating-status caveat and section headings | 1.4 |  | 0.602 |
-| walker |  | 328 | 8 | Fs::DirListing { dir: crates/toasty-cli } |  |  | 0.602 |
-| walker |  | 336 | 8 | Fs::DirListing { dir: crates/toasty-driver-dynamodb } |  |  | 0.602 |
-| walker |  | 344 | 8 | Fs::DirListing { dir: crates/toasty-driver-integration-suite } |  |  | 0.602 |
-| walker |  | 352 | 8 | Fs::DirListing { dir: crates/toasty-driver-integration-suite-macros } |  |  | 0.602 |
-| walker |  | 360 | 8 | Fs::DirListing { dir: crates/toasty-driver-mysql } |  |  | 0.602 |
-| walker |  | 368 | 8 | Fs::DirListing { dir: crates/toasty-driver-postgresql } |  |  | 0.602 |
-| walker |  | 376 | 8 | Fs::DirListing { dir: crates/toasty-macros } |  |  | 0.602 |
-| walker |  | 380 | 4 | Fs::DirListing { dir: crates/toasty-macros/src } |  |  | 0.602 |
-| walker |  | 393 | 13 | Fs::DirListing { dir: crates/toasty-codegen } |  |  | 0.602 |
-| walker |  | 406 | 13 | Fs::DirListing { dir: crates/toasty-driver-sqlite } |  |  | 0.603 |
-| ns | 407 |  | 86 | docs/ tree: every documentation file (complete) | 1.5 |  | 0.614 |
-| walker |  | 414 | 8 | Fs::DirListing { dir: crates/toasty-driver-mysql/src } |  |  | 0.614 |
-| walker |  | 422 | 8 | Fs::DirListing { dir: crates/toasty-driver-sqlite/src } |  |  | 0.614 |
-| walker |  | 438 | 16 | Fs::DirListing { dir: crates/toasty } |  |  | 0.615 |
-| walker |  | 454 | 16 | Fs::DirListing { dir: crates/toasty-core } |  |  | 0.615 |
-| walker |  | 470 | 16 | Fs::DirListing { dir: crates/toasty-sql } |  |  | 0.615 |
-| walker |  | 487 | 17 | Fs::DirListing { dir: crates/toasty-driver-postgresql/src } |  |  | 0.616 |
+| ns | 135 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.535 |
+| walker |  | 184 | 85 | Fs::DirListing { dir: crates } |  |  | 0.623 |
+| walker |  | 192 | 8 | Fs::DirListing { dir: crates/std-util } |  |  | 0.623 |
+| walker |  | 200 | 8 | Fs::DirListing { dir: crates/toasty-cli } |  |  | 0.623 |
+| walker |  | 208 | 8 | Fs::DirListing { dir: crates/toasty-driver-dynamodb } |  |  | 0.623 |
+| walker |  | 216 | 8 | Fs::DirListing { dir: crates/toasty-driver-integration-suite } |  |  | 0.623 |
+| ns | 220 |  | 85 | The 13 workspace crates under crates/ (complete) | 1.3 |  | 0.622 |
+| walker |  | 224 | 8 | Fs::DirListing { dir: crates/toasty-driver-integration-suite-macros } |  |  | 0.622 |
+| walker |  | 232 | 8 | Fs::DirListing { dir: crates/toasty-driver-mysql } |  |  | 0.622 |
+| walker |  | 240 | 8 | Fs::DirListing { dir: crates/toasty-driver-postgresql } |  |  | 0.622 |
+| walker |  | 248 | 8 | Fs::DirListing { dir: crates/toasty-macros } |  |  | 0.622 |
+| walker |  | 252 | 4 | Fs::DirListing { dir: crates/toasty-macros/src } |  |  | 0.622 |
+| walker |  | 282 | 30 | Fs::DirListing { dir: docs } |  |  | 0.633 |
+| walker |  | 291 | 9 | Fs::DirListing { dir: docs/guide } |  |  | 0.639 |
+| walker |  | 301 | 10 | Fs::DirListing { dir: docs/architecture } |  |  | 0.647 |
+| walker |  | 314 | 13 | Fs::DirListing { dir: crates/toasty-codegen } |  |  | 0.647 |
+| ns | 321 |  | 101 | README incubating-status caveat and section headings | 1.4 |  | 0.576 |
+| walker |  | 327 | 13 | Fs::DirListing { dir: crates/toasty-driver-sqlite } |  |  | 0.576 |
+| walker |  | 341 | 14 | Fs::DirListing { dir: docs/design } |  |  | 0.584 |
+| walker |  | 349 | 8 | Fs::DirListing { dir: crates/toasty-driver-mysql/src } |  |  | 0.584 |
+| walker |  | 357 | 8 | Fs::DirListing { dir: crates/toasty-driver-sqlite/src } |  |  | 0.584 |
+| walker |  | 373 | 16 | Fs::DirListing { dir: crates/toasty } |  |  | 0.585 |
+| walker |  | 389 | 16 | Fs::DirListing { dir: crates/toasty-core } |  |  | 0.585 |
+| walker |  | 405 | 16 | Fs::DirListing { dir: crates/toasty-sql } |  |  | 0.585 |
+| ns | 407 |  | 86 | docs/ tree: every documentation file (complete) | 1.5 |  | 0.548 |
+| walker |  | 428 | 23 | Fs::DirListing { dir: docs/roadmap } |  |  | 0.615 |
+| walker |  | 437 | 9 | Fs::DirListing { dir: benches } |  |  | 0.615 |
+| walker |  | 454 | 17 | Fs::DirListing { dir: crates/toasty-driver-postgresql/src } |  |  | 0.616 |
+| walker |  | 465 | 11 | Fs::DirListing { dir: .github/workflows } |  |  | 0.616 |
+| walker |  | 476 | 11 | Fs::DirListing { dir: scripts } |  |  | 0.616 |
+| walker |  | 487 | 11 | Fs::DirListing { dir: tests } |  |  | 0.616 |
 | walker |  | 505 | 18 | Fs::DirListing { dir: crates/toasty-codegen/src } |  |  | 0.616 |
 | ns | 538 |  | 131 | toasty crate public exports, first half of src/lib.rs | 1.6 |  | 0.532 |
 | walker |  | 541 | 36 | Fs::DirListing { dir: crates/toasty-codegen/src/expand } |  |  | 0.533 |

@@ -1,4 +1,4 @@
-Score(3000)=0.702 I=0.907 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.834/0.774/0.702/0.648/0.546/0.529
+Score(3000)=0.702 I=0.907 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.602/0.834/0.774/0.702/0.648/0.546/0.529
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,41 +23,41 @@ Score(3000)=0.702 I=0.907 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 272 | 5 | Fs::DirListing { dir: web/content/docs } |  |  | 0.579 |
 | walker |  | 278 | 6 | Fs::DirListing { dir: .github } |  |  | 0.579 |
 | walker |  | 286 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.579 |
-| walker |  | 305 | 19 | Fs::DirListing { dir: web/assets } |  |  | 0.580 |
-| walker |  | 318 | 13 | Fs::DirListing { dir: web/static/fonts } |  |  | 0.581 |
-| ns | 325 |  | 116 | README: where the docs and examples live, and how to build | 1.4 | 1.3 | 0.515 |
-| walker |  | 344 | 26 | Fs::DirListing { dir: clibs/soluna } |  |  | 0.517 |
-| walker |  | 370 | 26 | Fs::DirListing { dir: web/layouts } |  |  | 0.517 |
-| walker |  | 374 | 4 | Fs::DirListing { dir: web/layouts/docs } |  |  | 0.517 |
-| walker |  | 378 | 4 | Fs::DirListing { dir: web/layouts/playframe } |  |  | 0.517 |
-| walker |  | 386 | 8 | Fs::DirListing { dir: web/layouts/partials } |  |  | 0.517 |
-| walker |  | 403 | 17 | Fs::DirListing { dir: web/layouts/_default } |  |  | 0.518 |
-| ns | 406 |  | 81 | Complete listings of src/lualib and src/service | 1.5 |  | 0.401 |
-| walker |  | 408 | 5 | Fs::DirListing { dir: web/content/examples } |  |  | 0.402 |
-| ns | 497 |  | 91 | Complete listing of docs/ — the LuaCATS API reference | 1.6 |  | 0.331 |
-| walker |  | 499 | 91 | Fs::DirListing { dir: docs } |  |  | 0.506 |
-| walker |  | 568 | 69 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.570 |
-| ns | 585 |  | 88 | Complete listing of test/ — runnable example entries and .game files | 1.7 |  | 0.490 |
-| walker |  | 649 | 81 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.662 |
-| walker |  | 694 | 45 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.685 |
-| ns | 700 |  | 115 | The eight vendored submodules (.gitmodules paths) | 1.8 |  | 0.652 |
-| walker |  | 729 | 35 | Fs::DirListing { dir: web/layouts/shortcodes } |  |  | 0.653 |
-| walker |  | 760 | 31 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.653 |
-| walker |  | 800 | 40 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.653 |
-| ns | 884 |  | 184 | Complete listing of src/ C and C++ translation units | 1.9 |  | 0.546 |
-| ns | 1022 |  | 138 | Rest of src/: headers, GLSL shaders, and subdirectories | 1.10 | 1.9 | 0.490 |
-| walker |  | 1122 | 322 | Fs::DirListing { dir: src } |  |  | 0.774 |
-| walker |  | 1135 | 13 | Fs::DirListing { dir: src/platform } |  |  | 0.774 |
-| ns | 1138 |  | 116 | A complete minimal game: test/window.lua | 2.1 |  | 0.740 |
-| walker |  | 1141 | 6 | Fs::DirListing { dir: src/data } |  |  | 0.740 |
-| walker |  | 1157 | 16 | Fs::DirListing { dir: src/platform/linux } |  |  | 0.740 |
-| walker |  | 1173 | 16 | Fs::DirListing { dir: src/platform/windows } |  |  | 0.741 |
-| walker |  | 1191 | 18 | Fs::DirListing { dir: src/platform/macos } |  |  | 0.741 |
-| walker |  | 1214 | 23 | Fs::DirListing { dir: src/platform/wasm } |  |  | 0.741 |
-| walker |  | 1239 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.752 |
-| walker |  | 1252 | 13 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.752 |
-| ns | 1256 |  | 118 | Every callback a game may implement (docs/callback.lua roster) | 2.2 |  | 0.733 |
-| walker |  | 1308 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.809 |
+| ns | 325 |  | 116 | README: where the docs and examples live, and how to build | 1.4 | 1.3 | 0.514 |
+| ns | 406 |  | 81 | Complete listings of src/lualib and src/service | 1.5 |  | 0.399 |
+| ns | 497 |  | 91 | Complete listing of docs/ — the LuaCATS API reference | 1.6 |  | 0.328 |
+| ns | 585 |  | 88 | Complete listing of test/ — runnable example entries and .game files | 1.7 |  | 0.282 |
+| walker |  | 608 | 322 | Fs::DirListing { dir: src } |  |  | 0.315 |
+| walker |  | 621 | 13 | Fs::DirListing { dir: src/platform } |  |  | 0.316 |
+| walker |  | 627 | 6 | Fs::DirListing { dir: src/data } |  |  | 0.316 |
+| walker |  | 643 | 16 | Fs::DirListing { dir: src/platform/linux } |  |  | 0.316 |
+| walker |  | 659 | 16 | Fs::DirListing { dir: src/platform/windows } |  |  | 0.316 |
+| walker |  | 677 | 18 | Fs::DirListing { dir: src/platform/macos } |  |  | 0.316 |
+| walker |  | 700 | 23 | Fs::DirListing { dir: src/platform/wasm } |  |  | 0.302 |
+| ns | 700 |  | 115 | The eight vendored submodules (.gitmodules paths) | 1.8 |  | 0.302 |
+| walker |  | 725 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.320 |
+| walker |  | 738 | 13 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.320 |
+| walker |  | 757 | 19 | Fs::DirListing { dir: web/assets } |  |  | 0.320 |
+| walker |  | 813 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.451 |
+| walker |  | 826 | 13 | Fs::DirListing { dir: web/static/fonts } |  |  | 0.451 |
+| walker |  | 852 | 26 | Fs::DirListing { dir: clibs/soluna } |  |  | 0.452 |
+| walker |  | 878 | 26 | Fs::DirListing { dir: web/layouts } |  |  | 0.452 |
+| walker |  | 882 | 4 | Fs::DirListing { dir: web/layouts/docs } |  |  | 0.452 |
+| ns | 884 |  | 184 | Complete listing of src/ C and C++ translation units | 1.9 |  | 0.528 |
+| walker |  | 886 | 4 | Fs::DirListing { dir: web/layouts/playframe } |  |  | 0.528 |
+| walker |  | 894 | 8 | Fs::DirListing { dir: web/layouts/partials } |  |  | 0.528 |
+| walker |  | 911 | 17 | Fs::DirListing { dir: web/layouts/_default } |  |  | 0.529 |
+| walker |  | 916 | 5 | Fs::DirListing { dir: web/content/examples } |  |  | 0.529 |
+| walker |  | 1007 | 91 | Fs::DirListing { dir: docs } |  |  | 0.628 |
+| ns | 1022 |  | 138 | Rest of src/: headers, GLSL shaders, and subdirectories | 1.10 | 1.9 | 0.642 |
+| walker |  | 1076 | 69 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.682 |
+| ns | 1138 |  | 116 | A complete minimal game: test/window.lua | 2.1 |  | 0.652 |
+| walker |  | 1157 | 81 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.815 |
+| walker |  | 1202 | 45 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.829 |
+| walker |  | 1237 | 35 | Fs::DirListing { dir: web/layouts/shortcodes } |  |  | 0.830 |
+| ns | 1256 |  | 118 | Every callback a game may implement (docs/callback.lua roster) | 2.2 |  | 0.809 |
+| walker |  | 1268 | 31 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.809 |
+| walker |  | 1308 | 40 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.809 |
 | walker |  | 1318 | 10 | Plaintext::DeclSurface { file: bin/readme.txt } |  |  | 0.809 |
 | walker |  | 1364 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.810 |
 | ns | 1412 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.776 |

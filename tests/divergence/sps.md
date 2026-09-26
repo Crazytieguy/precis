@@ -3,33 +3,33 @@ Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 47 | 47 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 55 | 8 | Fs::DirListing { dir: sps } |  |  | 0.000 |
-| walker |  | 63 | 8 | Fs::DirListing { dir: sps-common } |  |  | 0.000 |
-| walker |  | 71 | 8 | Fs::DirListing { dir: sps-core } |  |  | 0.000 |
+| walker |  | 55 | 8 | Fs::DirListing { dir: sps-core } |  |  | 0.000 |
+| walker |  | 63 | 8 | Fs::DirListing { dir: sps } |  |  | 0.000 |
+| walker |  | 71 | 8 | Fs::DirListing { dir: sps-common } |  |  | 0.000 |
 | walker |  | 79 | 8 | Fs::DirListing { dir: sps-net } |  |  | 0.000 |
 | ns | 81 |  | 81 | README identity: what sps is | 1.1 |  | 0.000 |
-| walker |  | 97 | 18 | Fs::DirListing { dir: sps/src } |  |  | 0.000 |
-| walker |  | 109 | 12 | Fs::DirListing { dir: sps/src/pipeline } |  |  | 0.000 |
-| ns | 128 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.516 |
-| walker |  | 149 | 40 | Fs::DirListing { dir: sps/src/cli } |  |  | 0.567 |
-| ns | 223 |  | 95 | README deprecation warning: sps will be superseded by sps2 | 1.3 |  | 0.486 |
-| walker |  | 226 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.519 |
-| walker |  | 247 | 21 | Fs::DirListing { dir: sps-net/src } |  |  | 0.521 |
-| walker |  | 255 | 8 | Fs::DirListing { dir: .github } |  |  | 0.521 |
-| walker |  | 259 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.521 |
-| walker |  | 284 | 25 | Fs::DirListing { dir: sps-core/src } |  |  | 0.525 |
-| walker |  | 295 | 11 | Fs::DirListing { dir: sps-core/src/build } |  |  | 0.527 |
-| walker |  | 307 | 12 | Fs::DirListing { dir: sps-core/src/check } |  |  | 0.530 |
-| walker |  | 319 | 12 | Fs::DirListing { dir: sps-core/src/pipeline } |  |  | 0.534 |
-| walker |  | 333 | 14 | Fs::DirListing { dir: sps-core/src/utils } |  |  | 0.539 |
-| ns | 336 |  | 113 | README section headings (all H2s) | 1.4 |  | 0.438 |
-| walker |  | 350 | 17 | Fs::DirListing { dir: sps-core/src/uninstall } |  |  | 0.444 |
-| walker |  | 367 | 17 | Fs::DirListing { dir: sps-core/src/upgrade } |  |  | 0.450 |
-| walker |  | 387 | 20 | Fs::DirListing { dir: sps-core/src/install } |  |  | 0.461 |
-| walker |  | 402 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.461 |
-| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.510 |
-| walker |  | 418 | 16 | Fs::DirListing { dir: sps-core/src/install/bottle } |  |  | 0.512 |
-| walker |  | 452 | 34 | Fs::DirListing { dir: sps-core/src/build/compile } |  |  | 0.516 |
+| walker |  | 104 | 25 | Fs::DirListing { dir: sps-core/src } |  |  | 0.000 |
+| walker |  | 115 | 11 | Fs::DirListing { dir: sps-core/src/build } |  |  | 0.000 |
+| walker |  | 127 | 12 | Fs::DirListing { dir: sps-core/src/check } |  |  | 0.000 |
+| ns | 128 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.514 |
+| walker |  | 139 | 12 | Fs::DirListing { dir: sps-core/src/pipeline } |  |  | 0.520 |
+| walker |  | 153 | 14 | Fs::DirListing { dir: sps-core/src/utils } |  |  | 0.526 |
+| walker |  | 170 | 17 | Fs::DirListing { dir: sps-core/src/uninstall } |  |  | 0.536 |
+| walker |  | 187 | 17 | Fs::DirListing { dir: sps-core/src/upgrade } |  |  | 0.547 |
+| walker |  | 207 | 20 | Fs::DirListing { dir: sps-core/src/install } |  |  | 0.564 |
+| walker |  | 222 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.565 |
+| ns | 223 |  | 95 | README deprecation warning: sps will be superseded by sps2 | 1.3 |  | 0.484 |
+| walker |  | 238 | 16 | Fs::DirListing { dir: sps-core/src/install/bottle } |  |  | 0.485 |
+| walker |  | 272 | 34 | Fs::DirListing { dir: sps-core/src/build/compile } |  |  | 0.491 |
+| walker |  | 290 | 18 | Fs::DirListing { dir: sps/src } |  |  | 0.495 |
+| walker |  | 302 | 12 | Fs::DirListing { dir: sps/src/pipeline } |  |  | 0.501 |
+| ns | 336 |  | 113 | README section headings (all H2s) | 1.4 |  | 0.408 |
+| walker |  | 342 | 40 | Fs::DirListing { dir: sps/src/cli } |  |  | 0.440 |
+| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.383 |
+| walker |  | 419 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.514 |
+| walker |  | 440 | 21 | Fs::DirListing { dir: sps-net/src } |  |  | 0.515 |
+| walker |  | 448 | 8 | Fs::DirListing { dir: .github } |  |  | 0.516 |
+| walker |  | 452 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.516 |
 | ns | 490 |  | 77 | Per-crate one-line role | 1.6 |  | 0.487 |
 | ns | 560 |  | 70 | Binary crate source tree (sps/src, cli/, pipeline/) | 1.7 |  | 0.538 |
 | ns | 657 |  | 97 | sps-common and sps-net source trees | 1.8 |  | 0.448 |

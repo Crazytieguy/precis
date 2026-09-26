@@ -6,14 +6,14 @@ Score(3000)=0.774 I=0.910 C=0.658 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 33 | 33 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 74 | 41 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
 | ns | 126 |  | 96 | The complete list of built-in instruments | 1.2 |  | 0.246 |
-| walker |  | 146 | 72 | Toml::Identity { file: pyproject.toml } |  |  | 0.246 |
-| ns | 191 |  | 65 | The four bootstrap targets: fastapi, litestar, faststream, or no framework | 1.3 |  | 0.176 |
-| walker |  | 218 | 72 | Json::Identity { file: package.json } |  |  | 0.176 |
-| ns | 224 |  | 33 | Repository root listing (complete) | 1.4 |  | 0.429 |
-| walker |  | 275 | 57 | Fs::DirListing { dir: microbootstrap } |  |  | 0.456 |
-| walker |  | 293 | 18 | Fs::DirListing { dir: microbootstrap/middlewares } |  |  | 0.457 |
-| walker |  | 316 | 23 | Fs::DirListing { dir: microbootstrap/config } |  |  | 0.463 |
-| walker |  | 343 | 27 | Fs::DirListing { dir: microbootstrap/bootstrappers } |  |  | 0.478 |
+| walker |  | 131 | 57 | Fs::DirListing { dir: microbootstrap } |  |  | 0.261 |
+| walker |  | 149 | 18 | Fs::DirListing { dir: microbootstrap/middlewares } |  |  | 0.262 |
+| walker |  | 172 | 23 | Fs::DirListing { dir: microbootstrap/config } |  |  | 0.265 |
+| ns | 191 |  | 65 | The four bootstrap targets: fastapi, litestar, faststream, or no framework | 1.3 |  | 0.190 |
+| walker |  | 199 | 27 | Fs::DirListing { dir: microbootstrap/bootstrappers } |  |  | 0.196 |
+| ns | 224 |  | 33 | Repository root listing (complete) | 1.4 |  | 0.478 |
+| walker |  | 271 | 72 | Toml::Identity { file: pyproject.toml } |  |  | 0.478 |
+| walker |  | 343 | 72 | Json::Identity { file: package.json } |  |  | 0.478 |
 | ns | 353 |  | 129 | `microbootstrap/` and `microbootstrap/instruments/` listings (complete) | 1.5 |  | 0.398 |
 | walker |  | 415 | 72 | Fs::DirListing { dir: microbootstrap/instruments } |  |  | 0.610 |
 | ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.586 |

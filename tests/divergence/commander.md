@@ -6,10 +6,10 @@ Score(3000)=0.582 I=0.793 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | ns | 59 |  | 25 | lib/ listing — the entire implementation | 1.2 |  | 0.000 |
 | walker |  | 102 | 102 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 109 |  | 50 | package.json name, version, npm description | 1.3 |  | 0.000 |
-| walker |  | 167 | 65 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.336 |
-| ns | 180 |  | 71 | package.json module type, main, types, engines | 1.4 |  | 0.221 |
-| walker |  | 184 | 17 | Fs::DirListing { dir: typings } |  |  | 0.222 |
-| walker |  | 209 | 25 | Fs::DirListing { dir: lib } |  |  | 0.569 |
+| walker |  | 127 | 25 | Fs::DirListing { dir: lib } |  |  | 0.536 |
+| ns | 180 |  | 71 | package.json module type, main, types, engines | 1.4 |  | 0.353 |
+| walker |  | 192 | 65 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.568 |
+| walker |  | 209 | 17 | Fs::DirListing { dir: typings } |  |  | 0.569 |
 | walker |  | 245 | 36 | Fs::DirListing { dir: docs } |  |  | 0.571 |
 | ns | 265 |  | 85 | index.js: which lib module each public class comes from | 1.5 |  | 0.499 |
 | walker |  | 322 | 77 | Json::Identity { file: package.json } |  |  | 0.619 |

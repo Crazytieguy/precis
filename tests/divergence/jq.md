@@ -9,37 +9,37 @@ Score(3000)=0.848 I=0.900 C=0.800 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 161 | 9 | Fs::DirListing { dir: config } |  |  | 1.000 |
 | walker |  | 184 | 23 | Fs::DirListing { dir: m4 } |  |  | 1.000 |
 | ns | 215 |  | 63 | Front-end landmarks: jq_parse / jq_parse_library / block_compile | 1.3 |  | 0.909 |
-| walker |  | 236 | 52 | Fs::DirListing { dir: docs } |  |  | 0.913 |
-| walker |  | 249 | 13 | Fs::DirListing { dir: docs/content } |  |  | 0.916 |
-| walker |  | 253 | 4 | Fs::DirListing { dir: docs/content/download } |  |  | 0.916 |
-| walker |  | 257 | 4 | Fs::DirListing { dir: docs/content/tutorial } |  |  | 0.916 |
-| walker |  | 278 | 21 | Fs::DirListing { dir: docs/templates } |  |  | 0.916 |
-| walker |  | 309 | 31 | Fs::DirListing { dir: docs/public } |  |  | 0.916 |
-| walker |  | 313 | 4 | Fs::DirListing { dir: docs/public/css } |  |  | 0.916 |
-| walker |  | 318 | 5 | Fs::DirListing { dir: docs/public/js } |  |  | 0.916 |
-| walker |  | 330 | 12 | Fs::DirListing { dir: .github } |  |  | 0.916 |
-| ns | 334 |  | 119 | Back-end landmarks: load_program, builtins_bind, and who owns the bytecode format | 1.4 |  | 0.785 |
-| walker |  | 365 | 35 | Fs::DirListing { dir: .github/workflows } |  |  | 0.788 |
-| walker |  | 370 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.788 |
-| walker |  | 382 | 12 | Fs::DirListing { dir: vendor } |  |  | 0.789 |
-| walker |  | 403 | 21 | Fs::DirListing { dir: docs/templates/shared } |  |  | 0.789 |
-| walker |  | 417 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.789 |
-| walker |  | 464 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.789 |
-| ns | 517 |  | 183 | README: build-from-source dependencies and the exact command sequence | 1.5 |  | 0.631 |
-| walker |  | 536 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.632 |
-| walker |  | 588 | 52 | Markdown::CommandBlock { file: README.md, row: 24 } |  |  | 0.632 |
-| ns | 607 |  | 90 | README: static build and released-tarball builds | 1.6 |  | 0.594 |
-| walker |  | 640 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.594 |
-| walker |  | 683 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.600 |
-| walker |  | 687 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.600 |
-| walker |  | 691 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.600 |
-| walker |  | 695 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.600 |
-| walker |  | 699 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.600 |
-| walker |  | 703 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.600 |
-| walker |  | 707 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.600 |
-| walker |  | 711 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.600 |
-| ns | 840 |  | 233 | src/ listing (complete) - the flat core | 1.7 |  | 0.449 |
-| walker |  | 944 | 233 | Fs::DirListing { dir: src } |  |  | 0.749 |
+| ns | 334 |  | 119 | Back-end landmarks: load_program, builtins_bind, and who owns the bytecode format | 1.4 |  | 0.778 |
+| walker |  | 417 | 233 | Fs::DirListing { dir: src } |  |  | 0.816 |
+| walker |  | 469 | 52 | Fs::DirListing { dir: docs } |  |  | 0.816 |
+| walker |  | 482 | 13 | Fs::DirListing { dir: docs/content } |  |  | 0.816 |
+| walker |  | 486 | 4 | Fs::DirListing { dir: docs/content/download } |  |  | 0.816 |
+| walker |  | 490 | 4 | Fs::DirListing { dir: docs/content/tutorial } |  |  | 0.816 |
+| walker |  | 511 | 21 | Fs::DirListing { dir: docs/templates } |  |  | 0.816 |
+| ns | 517 |  | 183 | README: build-from-source dependencies and the exact command sequence | 1.5 |  | 0.664 |
+| walker |  | 542 | 31 | Fs::DirListing { dir: docs/public } |  |  | 0.664 |
+| walker |  | 546 | 4 | Fs::DirListing { dir: docs/public/css } |  |  | 0.664 |
+| walker |  | 551 | 5 | Fs::DirListing { dir: docs/public/js } |  |  | 0.664 |
+| walker |  | 563 | 12 | Fs::DirListing { dir: .github } |  |  | 0.664 |
+| walker |  | 598 | 35 | Fs::DirListing { dir: .github/workflows } |  |  | 0.666 |
+| walker |  | 603 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.666 |
+| ns | 607 |  | 90 | README: static build and released-tarball builds | 1.6 |  | 0.626 |
+| walker |  | 615 | 12 | Fs::DirListing { dir: vendor } |  |  | 0.627 |
+| walker |  | 636 | 21 | Fs::DirListing { dir: docs/templates/shared } |  |  | 0.627 |
+| walker |  | 650 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.627 |
+| walker |  | 697 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.627 |
+| walker |  | 769 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.628 |
+| walker |  | 821 | 52 | Markdown::CommandBlock { file: README.md, row: 24 } |  |  | 0.628 |
+| ns | 840 |  | 233 | src/ listing (complete) - the flat core | 1.7 |  | 0.743 |
+| walker |  | 873 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.743 |
+| walker |  | 916 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.749 |
+| walker |  | 920 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.749 |
+| walker |  | 924 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.749 |
+| walker |  | 928 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.749 |
+| walker |  | 932 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.749 |
+| walker |  | 936 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.749 |
+| walker |  | 940 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.749 |
+| walker |  | 944 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.749 |
 | ns | 1005 |  | 165 | tests/ listing (complete) | 1.8 |  | 0.652 |
 | walker |  | 1109 | 165 | Fs::DirListing { dir: tests } |  |  | 0.794 |
 | ns | 1113 |  | 108 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.805 |

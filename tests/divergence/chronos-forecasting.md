@@ -5,14 +5,14 @@ Score(3000)=0.504 I=0.601 C=0.423 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 54 |  | 54 | Repository identity: README title + one-sentence purpose | 1.1 |  | 0.000 |
 | walker |  | 71 | 21 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.371 |
-| walker |  | 98 | 27 | Fs::DirListing { dir: notebooks } |  |  | 0.371 |
 | ns | 104 |  | 50 | Complete root directory listing | 1.2 |  | 0.761 |
-| walker |  | 166 | 68 | Toml::Identity { file: pyproject.toml } |  |  | 0.762 |
-| ns | 170 |  | 66 | The three model families, one sentence each | 1.3 |  | 0.687 |
-| walker |  | 216 | 50 | Fs::DirListing { dir: src/chronos } |  |  | 0.722 |
-| walker |  | 231 | 15 | Code::CodeKey { rung: ModuleDoc, file: src/chronos/__about__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.722 |
-| ns | 250 |  | 80 | Complete listing of the package source tree | 1.4 |  | 0.578 |
-| walker |  | 261 | 30 | Fs::DirListing { dir: src/chronos/chronos2 } |  |  | 0.766 |
+| walker |  | 121 | 50 | Fs::DirListing { dir: src/chronos } |  |  | 0.800 |
+| walker |  | 151 | 30 | Fs::DirListing { dir: src/chronos/chronos2 } |  |  | 0.858 |
+| walker |  | 166 | 15 | Code::CodeKey { rung: ModuleDoc, file: src/chronos/__about__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.858 |
+| ns | 170 |  | 66 | The three model families, one sentence each | 1.3 |  | 0.774 |
+| walker |  | 193 | 27 | Fs::DirListing { dir: notebooks } |  |  | 0.774 |
+| ns | 250 |  | 80 | Complete listing of the package source tree | 1.4 |  | 0.765 |
+| walker |  | 261 | 68 | Toml::Identity { file: pyproject.toml } |  |  | 0.766 |
 | walker |  | 268 | 7 | Fs::DirListing { dir: .github } |  |  | 0.766 |
 | walker |  | 285 | 17 | Fs::DirListing { dir: .github/workflows } |  |  | 0.767 |
 | walker |  | 301 | 16 | Fs::DirListing { dir: scripts } |  |  | 0.767 |

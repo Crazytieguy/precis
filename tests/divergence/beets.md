@@ -1,4 +1,4 @@
-Score(3000)=0.623 I=0.778 C=0.498 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.647/0.754/0.721/0.623/0.530/0.453/0.388
+Score(3000)=0.623 I=0.778 C=0.498 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.596/0.597/0.721/0.623/0.530/0.453/0.388
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -9,65 +9,65 @@ Score(3000)=0.623 I=0.778 C=0.498 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | ns | 177 |  | 83 | Repository root listing (complete) | 1.2 |  | 0.603 |
 | walker |  | 211 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.611 |
 | ns | 246 |  | 69 | beets/ core package listing (complete) | 1.3 |  | 0.454 |
-| walker |  | 280 | 69 | Fs::DirListing { dir: beets } |  |  | 0.679 |
-| walker |  | 289 | 9 | Fs::DirListing { dir: beets/ui } |  |  | 0.680 |
-| walker |  | 307 | 18 | Fs::DirListing { dir: beets/autotag } |  |  | 0.681 |
-| walker |  | 329 | 22 | Fs::DirListing { dir: beets/importer } |  |  | 0.687 |
-| ns | 344 |  | 98 | Shipped packages, Python floor, `beet` console entry point | 1.4 |  | 0.610 |
-| walker |  | 357 | 28 | Fs::DirListing { dir: beets/dbcore } |  |  | 0.625 |
-| walker |  | 387 | 30 | Fs::DirListing { dir: beets/library } |  |  | 0.648 |
-| walker |  | 427 | 40 | Code::CodeKey { rung: ModuleDoc, file: beets/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |
-| ns | 442 |  | 98 | Core subpackage listings: dbcore, library, autotag, importer | 1.5 |  | 0.661 |
-| walker |  | 468 | 41 | Code::CodeKey { rung: ModuleDoc, file: beets/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
-| walker |  | 535 | 67 | Fs::DirListing { dir: beets/ui/commands } |  |  | 0.670 |
-| ns | 542 |  | 100 | Project metadata header (poetry, version, license, URLs) | 1.6 |  | 0.650 |
-| walker |  | 549 | 14 | Fs::DirListing { dir: beets/ui/commands/import_ } |  |  | 0.650 |
-| walker |  | 624 | 75 | Fs::DirListing { dir: beets/util } |  |  | 0.672 |
-| ns | 690 |  | 148 | README capability bullets, part 1 (plugin framing + metadata sources) | 1.7 |  | 0.635 |
-| walker |  | 701 | 77 | Fs::DirListing { dir: docs } |  |  | 0.639 |
-| walker |  | 705 | 4 | Fs::DirListing { dir: docs/extensions } |  |  | 0.639 |
-| walker |  | 719 | 14 | Fs::DirListing { dir: docs/_static } |  |  | 0.639 |
-| walker |  | 741 | 22 | Fs::DirListing { dir: docs/api } |  |  | 0.639 |
-| walker |  | 767 | 26 | Fs::DirListing { dir: docs/guides } |  |  | 0.639 |
-| walker |  | 793 | 26 | Fs::DirListing { dir: docs/reference } |  |  | 0.639 |
-| walker |  | 821 | 28 | Fs::DirListing { dir: docs/dev } |  |  | 0.639 |
-| walker |  | 835 | 14 | Code::CodeKey { rung: ModuleDoc, file: beets/util/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| walker |  | 853 | 18 | Code::CodeKey { rung: ModuleDoc, file: beets/autotag/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| walker |  | 877 | 24 | Fs::DirListing { dir: docs/_templates/autosummary } |  |  | 0.639 |
-| ns | 885 |  | 195 | README capability bullets, part 2 (files, art, web, MPD) | 1.8 |  | 0.592 |
-| walker |  | 901 | 24 | Fs::DirListing { dir: docs/dev/plugins } |  |  | 0.592 |
-| walker |  | 936 | 35 | Code::CodeKey { rung: ModuleDoc, file: beets/dbcore/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.593 |
-| walker |  | 974 | 38 | Code::CodeKey { rung: ModuleDoc, file: beets/importer/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.593 |
-| ns | 1051 |  | 166 | UI, util and test-helper subpackage listings | 1.9 |  | 0.604 |
-| walker |  | 1179 | 205 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.778 |
-| walker |  | 1194 | 15 | Fs::DirListing { dir: beets/test } |  |  | 0.805 |
-| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.754 |
-| walker |  | 1233 | 39 | Fs::DirListing { dir: .github } |  |  | 0.754 |
-| walker |  | 1264 | 31 | Fs::DirListing { dir: .github/workflows } |  |  | 0.754 |
-| walker |  | 1278 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.754 |
-| walker |  | 1298 | 20 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/commands/import_/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.754 |
-| walker |  | 1339 | 41 | Fs::DirListing { dir: docs/dev/plugins/other } |  |  | 0.754 |
-| walker |  | 1372 | 33 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/commands/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.754 |
-| walker |  | 1436 | 64 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.754 |
-| ns | 1445 |  | 218 | test/ and docs/ top-level listings (complete) | 1.11 |  | 0.669 |
-| walker |  | 1819 | 383 | Fs::DirListing { dir: beetsplug } |  |  | 0.692 |
-| ns | 1828 |  | 383 | beetsplug/ bundled plugin listing (complete, 81 entries) | 1.12 |  | 0.747 |
-| walker |  | 1830 | 11 | Fs::DirListing { dir: beetsplug/bpd } |  |  | 0.747 |
-| walker |  | 1842 | 12 | Fs::DirListing { dir: beetsplug/web } |  |  | 0.747 |
-| walker |  | 1856 | 14 | Fs::DirListing { dir: beetsplug/discogs } |  |  | 0.747 |
-| walker |  | 1872 | 16 | Fs::DirListing { dir: beetsplug/metasync } |  |  | 0.747 |
-| walker |  | 1876 | 4 | Fs::DirListing { dir: beetsplug/web/templates } |  |  | 0.747 |
-| walker |  | 1895 | 19 | Fs::DirListing { dir: beetsplug/tidal } |  |  | 0.747 |
-| walker |  | 1911 | 16 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/web/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.747 |
-| walker |  | 1928 | 17 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/metasync/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.747 |
-| walker |  | 1951 | 23 | Fs::DirListing { dir: beetsplug/lastgenre } |  |  | 0.747 |
-| walker |  | 1981 | 30 | Fs::DirListing { dir: beetsplug/_utils } |  |  | 0.747 |
+| ns | 344 |  | 98 | Shipped packages, Python floor, `beet` console entry point | 1.4 |  | 0.403 |
+| ns | 442 |  | 98 | Core subpackage listings: dbcore, library, autotag, importer | 1.5 |  | 0.324 |
+| ns | 542 |  | 100 | Project metadata header (poetry, version, license, URLs) | 1.6 |  | 0.332 |
+| walker |  | 594 | 383 | Fs::DirListing { dir: beetsplug } |  |  | 0.361 |
+| walker |  | 605 | 11 | Fs::DirListing { dir: beetsplug/bpd } |  |  | 0.361 |
+| walker |  | 617 | 12 | Fs::DirListing { dir: beetsplug/web } |  |  | 0.361 |
+| walker |  | 631 | 14 | Fs::DirListing { dir: beetsplug/discogs } |  |  | 0.361 |
+| walker |  | 647 | 16 | Fs::DirListing { dir: beetsplug/metasync } |  |  | 0.361 |
+| walker |  | 651 | 4 | Fs::DirListing { dir: beetsplug/web/templates } |  |  | 0.361 |
+| walker |  | 670 | 19 | Fs::DirListing { dir: beetsplug/tidal } |  |  | 0.361 |
+| walker |  | 686 | 16 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/web/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.361 |
+| ns | 690 |  | 148 | README capability bullets, part 1 (plugin framing + metadata sources) | 1.7 |  | 0.341 |
+| walker |  | 703 | 17 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/metasync/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.341 |
+| walker |  | 726 | 23 | Fs::DirListing { dir: beetsplug/lastgenre } |  |  | 0.341 |
+| walker |  | 756 | 30 | Fs::DirListing { dir: beetsplug/_utils } |  |  | 0.341 |
+| walker |  | 795 | 39 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/discogs/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.341 |
+| walker |  | 864 | 69 | Fs::DirListing { dir: beets } |  |  | 0.485 |
+| walker |  | 873 | 9 | Fs::DirListing { dir: beets/ui } |  |  | 0.485 |
+| ns | 885 |  | 195 | README capability bullets, part 2 (files, art, web, MPD) | 1.8 |  | 0.450 |
+| walker |  | 891 | 18 | Fs::DirListing { dir: beets/autotag } |  |  | 0.455 |
+| walker |  | 913 | 22 | Fs::DirListing { dir: beets/importer } |  |  | 0.475 |
+| walker |  | 941 | 28 | Fs::DirListing { dir: beets/dbcore } |  |  | 0.519 |
+| walker |  | 971 | 30 | Fs::DirListing { dir: beets/library } |  |  | 0.596 |
+| walker |  | 1011 | 40 | Code::CodeKey { rung: ModuleDoc, file: beets/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.596 |
+| ns | 1051 |  | 166 | UI, util and test-helper subpackage listings | 1.9 |  | 0.496 |
+| walker |  | 1052 | 41 | Code::CodeKey { rung: ModuleDoc, file: beets/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.496 |
+| walker |  | 1119 | 67 | Fs::DirListing { dir: beets/ui/commands } |  |  | 0.536 |
+| walker |  | 1133 | 14 | Fs::DirListing { dir: beets/ui/commands/import_ } |  |  | 0.536 |
+| walker |  | 1208 | 75 | Fs::DirListing { dir: beets/util } |  |  | 0.633 |
+| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.594 |
+| walker |  | 1285 | 77 | Fs::DirListing { dir: docs } |  |  | 0.597 |
+| walker |  | 1289 | 4 | Fs::DirListing { dir: docs/extensions } |  |  | 0.597 |
+| walker |  | 1303 | 14 | Fs::DirListing { dir: docs/_static } |  |  | 0.597 |
+| walker |  | 1325 | 22 | Fs::DirListing { dir: docs/api } |  |  | 0.597 |
+| walker |  | 1351 | 26 | Fs::DirListing { dir: docs/guides } |  |  | 0.597 |
+| walker |  | 1377 | 26 | Fs::DirListing { dir: docs/reference } |  |  | 0.597 |
+| walker |  | 1405 | 28 | Fs::DirListing { dir: docs/dev } |  |  | 0.597 |
+| ns | 1445 |  | 218 | test/ and docs/ top-level listings (complete) | 1.11 |  | 0.531 |
+| walker |  | 1468 | 63 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/bpd/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| walker |  | 1482 | 14 | Code::CodeKey { rung: ModuleDoc, file: beets/util/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| walker |  | 1504 | 22 | Fs::DirListing { dir: beetsplug/web/static } |  |  | 0.531 |
+| walker |  | 1522 | 18 | Code::CodeKey { rung: ModuleDoc, file: beets/autotag/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| walker |  | 1546 | 24 | Fs::DirListing { dir: docs/_templates/autosummary } |  |  | 0.531 |
+| walker |  | 1570 | 24 | Fs::DirListing { dir: docs/dev/plugins } |  |  | 0.531 |
+| walker |  | 1675 | 105 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/lastgenre/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| walker |  | 1710 | 35 | Code::CodeKey { rung: ModuleDoc, file: beets/dbcore/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| walker |  | 1748 | 38 | Code::CodeKey { rung: ModuleDoc, file: beets/importer/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| ns | 1828 |  | 383 | beetsplug/ bundled plugin listing (complete, 81 entries) | 1.12 |  | 0.586 |
+| walker |  | 1953 | 205 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.732 |
+| walker |  | 1968 | 15 | Fs::DirListing { dir: beets/test } |  |  | 0.747 |
 | ns | 2006 |  | 178 | beets.library public export block (complete) | 2.1 |  | 0.721 |
-| walker |  | 2020 | 39 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/discogs/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
-| walker |  | 2083 | 63 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/bpd/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
-| walker |  | 2105 | 22 | Fs::DirListing { dir: beetsplug/web/static } |  |  | 0.721 |
+| walker |  | 2007 | 39 | Fs::DirListing { dir: .github } |  |  | 0.721 |
+| walker |  | 2038 | 31 | Fs::DirListing { dir: .github/workflows } |  |  | 0.721 |
+| walker |  | 2052 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.721 |
+| walker |  | 2072 | 20 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/commands/import_/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
+| walker |  | 2113 | 41 | Fs::DirListing { dir: docs/dev/plugins/other } |  |  | 0.721 |
+| walker |  | 2146 | 33 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/commands/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
 | ns | 2183 |  | 177 | The `beet` subcommand roster (default_commands) | 2.2 |  | 0.694 |
-| walker |  | 2210 | 105 | Code::CodeKey { rung: ModuleDoc, file: beetsplug/lastgenre/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
+| walker |  | 2210 | 64 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
 | ns | 2373 |  | 190 | Library class: models and schema migrations | 2.3 |  | 0.678 |
 | walker |  | 2422 | 212 | Code::CodeKey { rung: Names, file: beetsplug/bpd/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.678 |
 | ns | 2528 |  | 155 | Library method roster (complete) | 2.4 | 2.3 | 0.666 |

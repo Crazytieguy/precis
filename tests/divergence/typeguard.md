@@ -4,13 +4,13 @@ Score(3000)=0.689 I=0.894 C=0.532 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 34 | 34 | Fs::DirListing { dir: . } |  |  | 1.000 |
 | ns | 34 |  | 34 | Repository root listing | 1.1 |  | 1.000 |
-| walker |  | 140 | 106 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 1.000 |
-| ns | 140 |  | 106 | README identity paragraph | 1.2 |  | 1.000 |
-| walker |  | 181 | 41 | Fs::DirListing { dir: docs } |  |  | 1.000 |
-| ns | 216 |  | 76 | Package module roster: src/typeguard/ | 1.3 |  | 0.661 |
-| walker |  | 255 | 74 | Toml::Identity { file: pyproject.toml } |  |  | 0.661 |
-| ns | 311 |  | 95 | README: the two principal checking modes | 1.4 |  | 0.568 |
-| walker |  | 331 | 76 | Fs::DirListing { dir: src/typeguard } |  |  | 0.863 |
+| walker |  | 110 | 76 | Fs::DirListing { dir: src/typeguard } |  |  | 1.000 |
+| ns | 140 |  | 106 | README identity paragraph | 1.2 |  | 0.816 |
+| walker |  | 216 | 106 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 1.000 |
+| ns | 216 |  | 76 | Package module roster: src/typeguard/ | 1.3 |  | 1.000 |
+| walker |  | 257 | 41 | Fs::DirListing { dir: docs } |  |  | 1.000 |
+| ns | 311 |  | 95 | README: the two principal checking modes | 1.4 |  | 0.863 |
+| walker |  | 331 | 74 | Toml::Identity { file: pyproject.toml } |  |  | 0.863 |
 | walker |  | 382 | 51 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.864 |
 | walker |  | 409 | 27 | Fs::DirListing { dir: .github } |  |  | 0.864 |
 | walker |  | 417 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.788 |

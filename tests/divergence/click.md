@@ -6,13 +6,13 @@ Score(3000)=0.837 I=0.952 C=0.736 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 81 |  | 81 | README identity: what Click is | 1.1 |  | 0.000 |
 | walker |  | 131 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
 | ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.583 |
-| walker |  | 213 | 82 | Toml::Identity { file: pyproject.toml } |  |  | 0.584 |
-| walker |  | 243 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.584 |
-| walker |  | 270 | 27 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.355 |
-| ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.355 |
-| walker |  | 281 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.355 |
-| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.527 |
-| walker |  | 371 | 90 | Fs::DirListing { dir: src/click } |  |  | 0.810 |
+| walker |  | 221 | 90 | Fs::DirListing { dir: src/click } |  |  | 0.632 |
+| ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.799 |
+| walker |  | 303 | 82 | Toml::Identity { file: pyproject.toml } |  |  | 0.800 |
+| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.810 |
+| walker |  | 333 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.810 |
+| walker |  | 360 | 27 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.810 |
+| walker |  | 371 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.810 |
 | walker |  | 384 | 13 | Fs::DirListing { dir: .github } |  |  | 0.810 |
 | walker |  | 407 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.811 |
 | ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.694 |

@@ -69,7 +69,10 @@ fn has_extension_in(path: impl AsRef<Path>, exts: &[&str]) -> bool {
 /// path segment, so it is bought and keyed with the first listing below
 /// it that names more, at the lower of the two listings' values. The run
 /// stops at a third-party directory, whose listing names its projects. A
-/// long last listing is split into its head and the rest.
+/// long last listing is split into its head and the rest. A directory on
+/// the source spine gates most of the repository's code, however few
+/// entries it has, so its head is priced up; the rest keeps the plain
+/// price, or a huge spine directory's names crowd out its code.
 fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
     let mut dir = dir;
     let mut children = list_dir(&dir, ctx.dir_filter());
@@ -109,11 +112,16 @@ fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
         },
     });
     groups.push(listing_group(&dir, head_entries));
+    let spine_factor = if ctx.is_on_source_spine(&dir) {
+        SOURCE_SPINE_LISTING_BOOST
+    } else {
+        1.0
+    };
     let head = Batch {
         key: head_key,
         predecessor: None,
         content: BatchContent::Fs { groups },
-        value,
+        value: value * spine_factor,
     };
     std::iter::once(head).chain(tail).collect()
 }
@@ -129,6 +137,9 @@ fn listing_group(dir: &Path, entries: Vec<&String>) -> FsGroup {
 fn listed_entries(children: &BTreeMap<String, EntryKind>) -> impl Iterator<Item = &String> {
     children.keys().filter(|name| !is_sidecar(name, children))
 }
+
+/// Multiplier on the value of a source-spine directory's listing head.
+const SOURCE_SPINE_LISTING_BOOST: f64 = 2.0;
 
 /// A listing of more entries than this is split into a head and the rest.
 const LISTING_SPLIT_ENTRIES: usize = 120;

@@ -4,10 +4,10 @@ Score(3000)=0.620 I=0.849 C=0.453 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 43 | 43 | Fs::DirListing { dir: . } |  |  | 1.000 |
 | ns | 43 |  | 43 | Repository root listing | 1.1 |  | 1.000 |
-| ns | 135 |  | 92 | package.json identity | 1.2 |  | 0.795 |
-| ns | 159 |  | 24 | lib/ listing — the entire shipped library | 1.3 |  | 0.674 |
-| walker |  | 224 | 181 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.705 |
-| walker |  | 248 | 24 | Fs::DirListing { dir: lib } |  |  | 0.873 |
+| walker |  | 67 | 24 | Fs::DirListing { dir: lib } |  |  | 1.000 |
+| ns | 135 |  | 92 | package.json identity | 1.2 |  | 0.826 |
+| ns | 159 |  | 24 | lib/ listing — the entire shipped library | 1.3 |  | 0.837 |
+| walker |  | 248 | 181 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.873 |
 | ns | 296 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.689 |
 | walker |  | 311 | 63 | Json::Identity { file: package.json } |  |  | 0.746 |
 | walker |  | 319 | 8 | Fs::DirListing { dir: .github } |  |  | 0.747 |

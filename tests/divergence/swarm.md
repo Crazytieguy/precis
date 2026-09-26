@@ -3,12 +3,12 @@ Score(3000)=0.739 I=0.901 C=0.606 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 37 | 37 | Fs::DirListing { dir: . } |  |  | 0.000 |
+| walker |  | 58 | 21 | Fs::DirListing { dir: swarm } |  |  | 0.000 |
+| walker |  | 68 | 10 | Fs::DirListing { dir: swarm/repl } |  |  | 0.000 |
 | ns | 87 |  | 87 | README title + deprecation callout | 1.1 |  | 0.000 |
-| ns | 124 |  | 37 | Repository root listing (complete) | 1.2 |  | 0.487 |
-| walker |  | 147 | 110 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| walker |  | 161 | 14 | Fs::DirListing { dir: assets } |  |  | 1.000 |
-| walker |  | 182 | 21 | Fs::DirListing { dir: swarm } |  |  | 1.000 |
-| walker |  | 192 | 10 | Fs::DirListing { dir: swarm/repl } |  |  | 1.000 |
+| ns | 124 |  | 37 | Repository root listing (complete) | 1.2 |  | 0.545 |
+| walker |  | 178 | 110 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 192 | 14 | Fs::DirListing { dir: assets } |  |  | 1.000 |
 | ns | 211 |  | 87 | README Overview: agents and handoffs | 1.3 |  | 0.922 |
 | walker |  | 219 | 27 | Fs::DirListing { dir: tests } |  |  | 0.922 |
 | ns | 242 |  | 31 | `swarm/` package listing (complete, incl. `repl/`) | 1.4 |  | 0.928 |

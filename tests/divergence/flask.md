@@ -6,19 +6,19 @@ Score(3000)=0.689 I=0.905 C=0.525 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | ns | 97 |  | 97 | README title + what Flask is (README.md:3, 5-9) | 1.1 |  | 0.000 |
 | ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.484 |
 | walker |  | 152 | 102 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| walker |  | 239 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 1.000 |
-| walker |  | 269 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 1.000 |
-| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.592 |
-| walker |  | 278 | 9 | Fs::DirListing { dir: examples } |  |  | 0.592 |
-| walker |  | 343 | 65 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.597 |
-| walker |  | 368 | 25 | Toml::Operational { file: pyproject.toml } |  |  | 0.597 |
-| walker |  | 379 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.597 |
-| walker |  | 392 | 13 | Fs::DirListing { dir: .github } |  |  | 0.597 |
-| ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.578 |
-| walker |  | 415 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.579 |
-| walker |  | 510 | 95 | Fs::DirListing { dir: src/flask } |  |  | 0.796 |
-| walker |  | 524 | 14 | Fs::DirListing { dir: src/flask/json } |  |  | 0.857 |
-| walker |  | 541 | 17 | Fs::DirListing { dir: src/flask/sansio } |  |  | 0.808 |
+| walker |  | 247 | 95 | Fs::DirListing { dir: src/flask } |  |  | 1.000 |
+| walker |  | 261 | 14 | Fs::DirListing { dir: src/flask/json } |  |  | 1.000 |
+| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.901 |
+| walker |  | 278 | 17 | Fs::DirListing { dir: src/flask/sansio } |  |  | 1.000 |
+| walker |  | 365 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 1.000 |
+| walker |  | 395 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.914 |
+| ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.914 |
+| walker |  | 404 | 9 | Fs::DirListing { dir: examples } |  |  | 0.914 |
+| walker |  | 469 | 65 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.944 |
+| walker |  | 494 | 25 | Toml::Operational { file: pyproject.toml } |  |  | 0.944 |
+| walker |  | 505 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.944 |
+| walker |  | 518 | 13 | Fs::DirListing { dir: .github } |  |  | 0.945 |
+| walker |  | 541 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.808 |
 | ns | 541 |  | 146 | Canonical usage example: @app.route + `flask run` (README.md:20-36) | 1.5 |  | 0.808 |
 | ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.739 |
 | walker |  | 717 | 176 | Fs::DirListing { dir: docs } |  |  | 0.742 |

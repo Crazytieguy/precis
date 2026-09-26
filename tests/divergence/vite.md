@@ -1,4 +1,4 @@
-Score(3000)=0.503 I=0.862 C=0.294 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.802/0.791/0.650/0.503/0.414/0.343/0.482
+Score(3000)=0.503 I=0.862 C=0.294 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.823/0.766/0.650/0.503/0.414/0.343/0.482
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -10,39 +10,39 @@ Score(3000)=0.503 I=0.862 C=0.294 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | ns | 205 |  | 75 | README: Vite's one-sentence definition | 1.4 | 1.1 | 0.225 |
 | walker |  | 289 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.850 |
 | ns | 296 |  | 91 | Repository root listing (complete) | 1.5 |  | 0.898 |
-| walker |  | 331 | 42 | Json::Identity { file: package.json } |  |  | 0.901 |
-| walker |  | 364 | 33 | Fs::DirListing { dir: patches } |  |  | 0.901 |
-| walker |  | 418 | 54 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 28 } |  |  | 0.901 |
-| walker |  | 454 | 36 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.901 |
-| ns | 466 |  | 170 | README: dev server vs. build command, and extensibility | 1.6 | 1.4 | 0.838 |
-| walker |  | 484 | 30 | Fs::DirListing { dir: packages/plugin-legacy } |  |  | 0.838 |
-| walker |  | 507 | 23 | Fs::DirListing { dir: packages/plugin-legacy/src } |  |  | 0.839 |
-| ns | 543 |  | 77 | packages/vite top-level listing | 1.7 |  | 0.697 |
-| ns | 636 |  | 93 | Root package.json identity, engines, package manager | 1.8 |  | 0.667 |
-| walker |  | 649 | 142 | Json::Scripts { file: package.json } |  |  | 0.670 |
-| walker |  | 772 | 123 | Fs::DirListing { dir: packages/create-vite } |  |  | 0.672 |
-| walker |  | 776 | 4 | Fs::DirListing { dir: packages/create-vite/src } |  |  | 0.672 |
-| walker |  | 781 | 5 | Fs::DirListing { dir: packages/create-vite/__tests__ } |  |  | 0.672 |
-| walker |  | 840 | 59 | Json::Runtime { file: package.json } |  |  | 0.711 |
-| ns | 859 |  | 223 | Root pnpm scripts: lint, typecheck and the test entry points | 1.9 |  | 0.657 |
-| walker |  | 917 | 77 | Fs::DirListing { dir: packages/vite } |  |  | 0.799 |
-| walker |  | 926 | 9 | Fs::DirListing { dir: packages/vite/bin } |  |  | 0.799 |
-| walker |  | 999 | 73 | Json::Identity { file: packages/vite/package.json } |  |  | 0.802 |
-| walker |  | 1016 | 17 | Fs::DirListing { dir: packages/vite/src } |  |  | 0.867 |
-| walker |  | 1087 | 71 | Fs::DirListing { dir: packages/vite/src/module-runner } |  |  | 0.867 |
-| walker |  | 1099 | 12 | Fs::DirListing { dir: packages/vite/src/module-runner/sourcemap } |  |  | 0.867 |
-| walker |  | 1117 | 18 | Fs::DirListing { dir: packages/vite/misc } |  |  | 0.867 |
-| ns | 1118 |  | 259 | Root pnpm scripts: debug, docs, build, release | 1.10 | 1.9 | 0.801 |
-| walker |  | 1157 | 40 | Json::Runtime { file: packages/vite/package.json } |  |  | 0.801 |
-| walker |  | 1174 | 17 | Fs::DirListing { dir: packages/vite/src/client } |  |  | 0.802 |
-| ns | 1225 |  | 107 | vite package manifest: name, version, description, bin | 1.11 |  | 0.784 |
-| walker |  | 1309 | 135 | Fs::DirListing { dir: packages/vite/src/node } |  |  | 0.788 |
-| walker |  | 1338 | 29 | Fs::DirListing { dir: packages/vite/src/node/optimizer } |  |  | 0.789 |
-| walker |  | 1387 | 49 | Fs::DirListing { dir: packages/vite/src/node/ssr } |  |  | 0.790 |
-| walker |  | 1462 | 75 | Fs::DirListing { dir: packages/vite/src/node/server } |  |  | 0.793 |
-| ns | 1485 |  | 260 | vite package exports and internal import aliases | 1.12 | 1.11 | 0.702 |
-| walker |  | 1611 | 149 | Fs::DirListing { dir: packages/vite/src/node/plugins } |  |  | 0.705 |
-| walker |  | 1621 | 10 | Fs::DirListing { dir: packages/vite/src/module-runner/__tests_dts__ } |  |  | 0.705 |
+| walker |  | 366 | 77 | Fs::DirListing { dir: packages/vite } |  |  | 0.932 |
+| walker |  | 383 | 17 | Fs::DirListing { dir: packages/vite/src } |  |  | 1.000 |
+| ns | 466 |  | 170 | README: dev server vs. build command, and extensibility | 1.6 | 1.4 | 0.943 |
+| walker |  | 518 | 135 | Fs::DirListing { dir: packages/vite/src/node } |  |  | 0.943 |
+| ns | 543 |  | 77 | packages/vite top-level listing | 1.7 |  | 0.952 |
+| walker |  | 560 | 42 | Json::Identity { file: package.json } |  |  | 0.955 |
+| walker |  | 589 | 29 | Fs::DirListing { dir: packages/vite/src/node/optimizer } |  |  | 0.955 |
+| walker |  | 622 | 33 | Fs::DirListing { dir: patches } |  |  | 0.955 |
+| walker |  | 631 | 9 | Fs::DirListing { dir: packages/vite/bin } |  |  | 0.955 |
+| ns | 636 |  | 93 | Root package.json identity, engines, package manager | 1.8 |  | 0.906 |
+| walker |  | 704 | 73 | Json::Identity { file: packages/vite/package.json } |  |  | 0.910 |
+| walker |  | 753 | 49 | Fs::DirListing { dir: packages/vite/src/node/ssr } |  |  | 0.912 |
+| walker |  | 807 | 54 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 28 } |  |  | 0.912 |
+| walker |  | 843 | 36 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.912 |
+| ns | 859 |  | 223 | Root pnpm scripts: lint, typecheck and the test entry points | 1.9 |  | 0.821 |
+| walker |  | 873 | 30 | Fs::DirListing { dir: packages/plugin-legacy } |  |  | 0.821 |
+| walker |  | 896 | 23 | Fs::DirListing { dir: packages/plugin-legacy/src } |  |  | 0.822 |
+| walker |  | 967 | 71 | Fs::DirListing { dir: packages/vite/src/module-runner } |  |  | 0.823 |
+| walker |  | 979 | 12 | Fs::DirListing { dir: packages/vite/src/module-runner/sourcemap } |  |  | 0.823 |
+| walker |  | 1054 | 75 | Fs::DirListing { dir: packages/vite/src/node/server } |  |  | 0.825 |
+| walker |  | 1072 | 18 | Fs::DirListing { dir: packages/vite/misc } |  |  | 0.825 |
+| ns | 1118 |  | 259 | Root pnpm scripts: debug, docs, build, release | 1.10 | 1.9 | 0.760 |
+| walker |  | 1214 | 142 | Json::Scripts { file: package.json } |  |  | 0.779 |
+| ns | 1225 |  | 107 | vite package manifest: name, version, description, bin | 1.11 |  | 0.763 |
+| walker |  | 1254 | 40 | Json::Runtime { file: packages/vite/package.json } |  |  | 0.763 |
+| walker |  | 1377 | 123 | Fs::DirListing { dir: packages/create-vite } |  |  | 0.765 |
+| walker |  | 1381 | 4 | Fs::DirListing { dir: packages/create-vite/src } |  |  | 0.765 |
+| walker |  | 1386 | 5 | Fs::DirListing { dir: packages/create-vite/__tests__ } |  |  | 0.765 |
+| walker |  | 1403 | 17 | Fs::DirListing { dir: packages/vite/src/client } |  |  | 0.765 |
+| ns | 1485 |  | 260 | vite package exports and internal import aliases | 1.12 | 1.11 | 0.678 |
+| walker |  | 1552 | 149 | Fs::DirListing { dir: packages/vite/src/node/plugins } |  |  | 0.681 |
+| walker |  | 1562 | 10 | Fs::DirListing { dir: packages/vite/src/module-runner/__tests_dts__ } |  |  | 0.681 |
+| walker |  | 1621 | 59 | Json::Runtime { file: package.json } |  |  | 0.705 |
 | walker |  | 1632 | 11 | Fs::DirListing { dir: packages/vite/scripts } |  |  | 0.705 |
 | ns | 1640 |  | 155 | src/node/index.ts: primary API factories | 2.1 |  | 0.662 |
 | walker |  | 1643 | 11 | Fs::DirListing { dir: packages/vite/src/node/ssr/runtime } |  |  | 0.662 |

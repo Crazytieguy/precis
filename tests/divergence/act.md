@@ -5,17 +5,17 @@ Score(3000)=0.604 I=0.875 C=0.417 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | ns | 49 |  | 49 | README tagline + what act is | 1.1 |  | 0.000 |
 | walker |  | 127 | 127 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 135 |  | 86 | main.go: process entry point | 1.2 |  | 0.000 |
-| walker |  | 159 | 32 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
-| ns | 176 |  | 41 | pkg/: complete package list | 1.3 |  | 0.000 |
-| ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.000 |
-| walker |  | 344 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.173 |
-| ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.479 |
-| walker |  | 385 | 41 | Fs::DirListing { dir: pkg } |  |  | 0.638 |
-| walker |  | 394 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.638 |
-| ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.578 |
-| walker |  | 407 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.578 |
-| walker |  | 423 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.578 |
-| walker |  | 442 | 19 | Fs::DirListing { dir: pkg/schema } |  |  | 0.578 |
+| walker |  | 168 | 41 | Fs::DirListing { dir: pkg } |  |  | 0.000 |
+| ns | 176 |  | 41 | pkg/: complete package list | 1.3 |  | 0.417 |
+| walker |  | 177 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.417 |
+| walker |  | 190 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.417 |
+| walker |  | 206 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.418 |
+| ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.330 |
+| walker |  | 225 | 19 | Fs::DirListing { dir: pkg/schema } |  |  | 0.330 |
+| walker |  | 257 | 32 | GoMod::Identity { file: go.mod } |  |  | 0.333 |
+| ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.429 |
+| ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.388 |
+| walker |  | 442 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.578 |
 | walker |  | 464 | 22 | Fs::DirListing { dir: pkg/exprparser } |  |  | 0.578 |
 | walker |  | 488 | 24 | Fs::DirListing { dir: pkg/artifacts } |  |  | 0.579 |
 | walker |  | 513 | 25 | Fs::DirListing { dir: pkg/artifactcache } |  |  | 0.580 |

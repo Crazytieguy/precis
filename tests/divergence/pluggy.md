@@ -5,17 +5,17 @@ Score(3000)=0.640 I=0.785 C=0.521 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | ns | 62 |  | 62 | Repository identity: README title, dependents, and the docs tagline | 1.1 |  | 0.000 |
 | walker |  | 96 | 96 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 107 |  | 45 | Complete listing of the shipped package directory `src/pluggy/` | 1.2 |  | 0.000 |
-| walker |  | 154 | 58 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.345 |
-| walker |  | 169 | 15 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.345 |
-| walker |  | 188 | 19 | Fs::DirListing { dir: changelog } |  |  | 0.345 |
-| walker |  | 192 | 4 | Fs::DirListing { dir: .claude } |  |  | 0.345 |
-| ns | 203 |  | 96 | Complete repository root listing | 1.3 |  | 0.652 |
-| walker |  | 224 | 32 | Fs::DirListing { dir: docs } |  |  | 0.656 |
-| walker |  | 229 | 5 | Fs::DirListing { dir: docs/_static/img } |  |  | 0.656 |
-| walker |  | 282 | 53 | Toml::Identity { file: pyproject.toml } |  |  | 0.656 |
-| walker |  | 325 | 43 | Fs::DirListing { dir: downstream } |  |  | 0.656 |
-| ns | 355 |  | 152 | The complete public API name list (`__all__` of src/pluggy/__init__.py) | 1.4 |  | 0.524 |
-| walker |  | 373 | 48 | Fs::DirListing { dir: src/pluggy } |  |  | 0.729 |
+| walker |  | 144 | 48 | Fs::DirListing { dir: src/pluggy } |  |  | 0.751 |
+| walker |  | 202 | 58 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.937 |
+| ns | 203 |  | 96 | Complete repository root listing | 1.3 |  | 0.908 |
+| walker |  | 217 | 15 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.908 |
+| walker |  | 236 | 19 | Fs::DirListing { dir: changelog } |  |  | 0.909 |
+| walker |  | 240 | 4 | Fs::DirListing { dir: .claude } |  |  | 0.909 |
+| walker |  | 272 | 32 | Fs::DirListing { dir: docs } |  |  | 0.913 |
+| walker |  | 277 | 5 | Fs::DirListing { dir: docs/_static/img } |  |  | 0.913 |
+| walker |  | 330 | 53 | Toml::Identity { file: pyproject.toml } |  |  | 0.913 |
+| ns | 355 |  | 152 | The complete public API name list (`__all__` of src/pluggy/__init__.py) | 1.4 |  | 0.729 |
+| walker |  | 373 | 43 | Fs::DirListing { dir: downstream } |  |  | 0.729 |
 | walker |  | 386 | 13 | Fs::DirListing { dir: .github } |  |  | 0.729 |
 | walker |  | 390 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.729 |
 | walker |  | 404 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.729 |

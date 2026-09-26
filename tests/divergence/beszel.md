@@ -5,27 +5,27 @@ Score(3000)=0.669 I=0.831 C=0.538 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | walker |  | 55 | 55 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 83 |  | 83 | Readme lede: what Beszel is | 1.1 |  | 0.000 |
 | walker |  | 94 | 39 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.428 |
-| walker |  | 128 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.428 |
-| walker |  | 154 | 26 | Fs::DirListing { dir: supplemental } |  |  | 0.429 |
-| walker |  | 159 | 5 | Fs::DirListing { dir: supplemental/guides } |  |  | 0.429 |
-| walker |  | 169 | 10 | Fs::DirListing { dir: supplemental/docker } |  |  | 0.429 |
-| walker |  | 174 | 5 | Fs::DirListing { dir: supplemental/docker/agent } |  |  | 0.429 |
-| walker |  | 179 | 5 | Fs::DirListing { dir: supplemental/docker/hub } |  |  | 0.429 |
-| walker |  | 184 | 5 | Fs::DirListing { dir: supplemental/docker/same-system } |  |  | 0.429 |
-| ns | 190 |  | 107 | Readme Architecture section: hub vs agent | 1.2 |  | 0.238 |
-| walker |  | 194 | 10 | Fs::DirListing { dir: supplemental/licenses } |  |  | 0.238 |
-| walker |  | 197 | 3 | Fs::DirListing { dir: supplemental/licenses/LibreHardwareMonitor } |  |  | 0.238 |
-| walker |  | 200 | 3 | Fs::DirListing { dir: supplemental/licenses/smartmontools } |  |  | 0.238 |
-| walker |  | 230 | 30 | Code::CodeKey { rung: ModuleDoc, file: beszel.go, decl: 0, sub: 0, line: 0 } |  |  | 0.240 |
-| ns | 245 |  | 55 | Repository root listing (complete) | 1.3 |  | 0.509 |
-| walker |  | 296 | 66 | Fs::DirListing { dir: internal } |  |  | 0.558 |
-| walker |  | 300 | 4 | Fs::DirListing { dir: internal/users } |  |  | 0.558 |
-| walker |  | 306 | 6 | Fs::DirListing { dir: internal/cmd } |  |  | 0.558 |
-| walker |  | 310 | 4 | Fs::DirListing { dir: internal/cmd/hub } |  |  | 0.558 |
-| walker |  | 322 | 12 | Fs::DirListing { dir: internal/common } |  |  | 0.558 |
-| walker |  | 335 | 13 | Fs::DirListing { dir: internal/entities } |  |  | 0.559 |
-| walker |  | 339 | 4 | Fs::DirListing { dir: internal/entities/container } |  |  | 0.559 |
-| walker |  | 343 | 4 | Fs::DirListing { dir: internal/entities/system } |  |  | 0.559 |
+| walker |  | 160 | 66 | Fs::DirListing { dir: internal } |  |  | 0.470 |
+| walker |  | 164 | 4 | Fs::DirListing { dir: internal/users } |  |  | 0.470 |
+| walker |  | 170 | 6 | Fs::DirListing { dir: internal/cmd } |  |  | 0.470 |
+| walker |  | 174 | 4 | Fs::DirListing { dir: internal/cmd/hub } |  |  | 0.470 |
+| ns | 190 |  | 107 | Readme Architecture section: hub vs agent | 1.2 |  | 0.260 |
+| walker |  | 208 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.260 |
+| walker |  | 234 | 26 | Fs::DirListing { dir: supplemental } |  |  | 0.261 |
+| walker |  | 239 | 5 | Fs::DirListing { dir: supplemental/guides } |  |  | 0.261 |
+| ns | 245 |  | 55 | Repository root listing (complete) | 1.3 |  | 0.554 |
+| walker |  | 249 | 10 | Fs::DirListing { dir: supplemental/docker } |  |  | 0.555 |
+| walker |  | 254 | 5 | Fs::DirListing { dir: supplemental/docker/agent } |  |  | 0.555 |
+| walker |  | 259 | 5 | Fs::DirListing { dir: supplemental/docker/hub } |  |  | 0.555 |
+| walker |  | 264 | 5 | Fs::DirListing { dir: supplemental/docker/same-system } |  |  | 0.555 |
+| walker |  | 274 | 10 | Fs::DirListing { dir: supplemental/licenses } |  |  | 0.555 |
+| walker |  | 277 | 3 | Fs::DirListing { dir: supplemental/licenses/LibreHardwareMonitor } |  |  | 0.555 |
+| walker |  | 280 | 3 | Fs::DirListing { dir: supplemental/licenses/smartmontools } |  |  | 0.555 |
+| walker |  | 292 | 12 | Fs::DirListing { dir: internal/common } |  |  | 0.555 |
+| walker |  | 305 | 13 | Fs::DirListing { dir: internal/entities } |  |  | 0.555 |
+| walker |  | 309 | 4 | Fs::DirListing { dir: internal/entities/container } |  |  | 0.555 |
+| walker |  | 313 | 4 | Fs::DirListing { dir: internal/entities/system } |  |  | 0.555 |
+| walker |  | 343 | 30 | Code::CodeKey { rung: ModuleDoc, file: beszel.go, decl: 0, sub: 0, line: 0 } |  |  | 0.559 |
 | walker |  | 352 | 9 | Fs::DirListing { dir: internal/cmd/agent } |  |  | 0.559 |
 | walker |  | 361 | 9 | Fs::DirListing { dir: internal/entities/smart } |  |  | 0.559 |
 | walker |  | 372 | 11 | Fs::DirListing { dir: internal/entities/systemd } |  |  | 0.458 |

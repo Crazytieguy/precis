@@ -3,23 +3,23 @@ Score(3000)=0.502 I=0.546 C=0.461 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 65 | 65 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 74 | 9 | Fs::DirListing { dir: notebooks } |  |  | 0.000 |
 | ns | 96 |  | 96 | What xLSTM is, from the README lede | 1.1 |  | 0.000 |
-| ns | 161 |  | 65 | Complete repository-root listing | 1.2 |  | 0.589 |
-| walker |  | 177 | 103 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.610 |
-| walker |  | 205 | 28 | Fs::DirListing { dir: res } |  |  | 0.612 |
-| walker |  | 220 | 15 | Fs::DirListing { dir: notebooks/xlstm_large } |  |  | 0.613 |
-| ns | 225 |  | 64 | README: the 7B model and the name "xLSTM Large" | 1.3 |  | 0.563 |
-| walker |  | 256 | 36 | Fs::DirListing { dir: xlstm } |  |  | 0.576 |
-| walker |  | 273 | 17 | Code::CodeKey { rung: ModuleDoc, file: xlstm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 295 | 22 | Fs::DirListing { dir: xlstm/blocks } |  |  | 0.591 |
-| walker |  | 318 | 23 | Fs::DirListing { dir: xlstm/blocks/mlstm } |  |  | 0.597 |
-| walker |  | 341 | 23 | Fs::DirListing { dir: xlstm/blocks/slstm } |  |  | 0.606 |
-| ns | 346 |  | 121 | Complete listings of `xlstm/`, `xlstm/blocks/`, `xlstm/components/`, `xlstm/xlstm_large/` | 1.4 |  | 0.449 |
-| walker |  | 363 | 22 | Fs::DirListing { dir: xlstm/blocks/slstm/src } |  |  | 0.449 |
-| walker |  | 379 | 16 | Fs::DirListing { dir: xlstm/blocks/slstm/src/vanilla } |  |  | 0.449 |
-| walker |  | 407 | 28 | Fs::DirListing { dir: xlstm/xlstm_large } |  |  | 0.539 |
-| walker |  | 442 | 35 | Fs::DirListing { dir: xlstm/components } |  |  | 0.688 |
+| walker |  | 101 | 36 | Fs::DirListing { dir: xlstm } |  |  | 0.000 |
+| walker |  | 123 | 22 | Fs::DirListing { dir: xlstm/blocks } |  |  | 0.000 |
+| walker |  | 146 | 23 | Fs::DirListing { dir: xlstm/blocks/slstm } |  |  | 0.000 |
+| ns | 161 |  | 65 | Complete repository-root listing | 1.2 |  | 0.622 |
+| walker |  | 168 | 22 | Fs::DirListing { dir: xlstm/blocks/slstm/src } |  |  | 0.622 |
+| walker |  | 177 | 9 | Fs::DirListing { dir: notebooks } |  |  | 0.624 |
+| ns | 225 |  | 64 | README: the 7B model and the name "xLSTM Large" | 1.3 |  | 0.573 |
+| walker |  | 280 | 103 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.592 |
+| walker |  | 296 | 16 | Fs::DirListing { dir: xlstm/blocks/slstm/src/vanilla } |  |  | 0.592 |
+| walker |  | 313 | 17 | Code::CodeKey { rung: ModuleDoc, file: xlstm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.592 |
+| walker |  | 336 | 23 | Fs::DirListing { dir: xlstm/blocks/mlstm } |  |  | 0.598 |
+| ns | 346 |  | 121 | Complete listings of `xlstm/`, `xlstm/blocks/`, `xlstm/components/`, `xlstm/xlstm_large/` | 1.4 |  | 0.443 |
+| walker |  | 364 | 28 | Fs::DirListing { dir: res } |  |  | 0.446 |
+| walker |  | 392 | 28 | Fs::DirListing { dir: xlstm/xlstm_large } |  |  | 0.536 |
+| walker |  | 427 | 35 | Fs::DirListing { dir: xlstm/components } |  |  | 0.684 |
+| walker |  | 442 | 15 | Fs::DirListing { dir: notebooks/xlstm_large } |  |  | 0.688 |
 | walker |  | 488 | 46 | Fs::DirListing { dir: experiments } |  |  | 0.691 |
 | walker |  | 504 | 16 | Fs::DirListing { dir: experiments/data } |  |  | 0.694 |
 | ns | 528 |  | 182 | `xlstm/__init__.py` in full — version plus the entire public export block | 1.5 |  | 0.625 |

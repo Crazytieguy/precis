@@ -4,11 +4,11 @@ Score(3000)=0.745 I=0.914 C=0.607 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 38 | 38 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 54 |  | 54 | Identity: README title + package name/version/description | 1.1 |  | 0.000 |
-| ns | 92 |  | 38 | Complete repository root listing | 1.2 |  | 0.536 |
-| walker |  | 135 | 97 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.568 |
-| walker |  | 163 | 28 | Fs::DirListing { dir: images } |  |  | 0.569 |
-| ns | 173 |  | 81 | README lede paragraph — scope and supported databases | 1.3 | 1.1 | 0.569 |
-| walker |  | 197 | 34 | Fs::DirListing { dir: peepdb } |  |  | 0.601 |
+| walker |  | 72 | 34 | Fs::DirListing { dir: peepdb } |  |  | 0.000 |
+| ns | 92 |  | 38 | Complete repository root listing | 1.2 |  | 0.570 |
+| walker |  | 169 | 97 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.600 |
+| ns | 173 |  | 81 | README lede paragraph — scope and supported databases | 1.3 | 1.1 | 0.600 |
+| walker |  | 197 | 28 | Fs::DirListing { dir: images } |  |  | 0.601 |
 | walker |  | 238 | 41 | Fs::DirListing { dir: docs } |  |  | 0.616 |
 | ns | 252 |  | 79 | Source roster: complete listing of peepdb/ and peepdb/db/ | 1.4 |  | 0.441 |
 | walker |  | 283 | 45 | Fs::DirListing { dir: peepdb/db } |  |  | 0.692 |

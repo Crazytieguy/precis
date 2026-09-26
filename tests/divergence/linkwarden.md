@@ -1,4 +1,4 @@
-Score(3000)=0.741 I=0.896 C=0.612 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.638/0.715/0.688/0.741/0.651/0.680/0.793
+Score(3000)=0.741 I=0.896 C=0.612 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.814/0.716/0.688/0.741/0.651/0.680/0.793
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -16,71 +16,71 @@ Score(3000)=0.741 I=0.896 C=0.612 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 282 | 26 | Fs::DirListing { dir: apps/worker } |  |  | 0.749 |
 | walker |  | 287 | 5 | Fs::DirListing { dir: apps/worker/templates } |  |  | 0.749 |
 | ns | 321 |  | 62 | Workspace globs in the root package.json | 1.5 |  | 0.702 |
-| walker |  | 330 | 43 | Json::Identity { file: package.json } |  |  | 0.713 |
-| walker |  | 371 | 41 | Json::Scripts { file: package.json } |  |  | 0.713 |
-| walker |  | 375 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.713 |
-| walker |  | 388 | 13 | Fs::DirListing { dir: packages/types } |  |  | 0.713 |
-| walker |  | 421 | 33 | Fs::DirListing { dir: assets } |  |  | 0.713 |
-| walker |  | 426 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.713 |
-| ns | 460 |  | 139 | Workspace package names — every `name` field under apps/ and packages/ | 1.6 |  | 0.661 |
-| walker |  | 480 | 54 | Fs::DirListing { dir: packages/filesystem } |  |  | 0.661 |
-| walker |  | 512 | 32 | Json::Entry { file: package.json } |  |  | 0.717 |
-| ns | 674 |  | 214 | Root scripts: how you run web, worker and both together | 1.7 |  | 0.665 |
-| walker |  | 732 | 220 | Prisma::Toc { file: packages/prisma/schema.prisma } |  |  | 0.675 |
-| walker |  | 768 | 36 | Fs::DirListing { dir: apps/worker/workers } |  |  | 0.675 |
-| ns | 837 |  | 163 | Root scripts: prisma, format, test, coverage, postinstall | 1.8 |  | 0.634 |
-| walker |  | 840 | 72 | Fs::DirListing { dir: packages/router } |  |  | 0.635 |
-| walker |  | 864 | 24 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 77 } |  |  | 0.636 |
-| walker |  | 913 | 49 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 90 } |  |  | 0.638 |
-| walker |  | 993 | 80 | Fs::DirListing { dir: apps/mobile } |  |  | 0.638 |
-| walker |  | 997 | 4 | Fs::DirListing { dir: apps/mobile/styles } |  |  | 0.638 |
-| walker |  | 1003 | 6 | Fs::DirListing { dir: apps/mobile/assets } |  |  | 0.638 |
-| walker |  | 1039 | 36 | Fs::DirListing { dir: apps/mobile/app } |  |  | 0.639 |
-| walker |  | 1047 | 8 | Fs::DirListing { dir: apps/mobile/plugins } |  |  | 0.639 |
-| walker |  | 1053 | 6 | Fs::DirListing { dir: apps/mobile/app/links } |  |  | 0.639 |
-| walker |  | 1059 | 6 | Fs::DirListing { dir: apps/mobile/assets/fonts } |  |  | 0.639 |
-| walker |  | 1070 | 11 | Fs::DirListing { dir: apps/mobile/types } |  |  | 0.639 |
-| walker |  | 1082 | 12 | Fs::DirListing { dir: apps/mobile/store } |  |  | 0.590 |
-| ns | 1082 |  | 245 | Feature list, first half (preservation, reading, organisation, sharing) | 1.9 |  | 0.590 |
-| walker |  | 1105 | 23 | Fs::DirListing { dir: apps/mobile/lib } |  |  | 0.590 |
-| walker |  | 1126 | 21 | Fs::DirListing { dir: apps/mobile/app/(tabs) } |  |  | 0.591 |
-| walker |  | 1137 | 11 | Fs::DirListing { dir: apps/mobile/app/(tabs)/links } |  |  | 0.591 |
-| walker |  | 1154 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/collections } |  |  | 0.591 |
-| walker |  | 1171 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/dashboard } |  |  | 0.591 |
-| walker |  | 1188 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/settings } |  |  | 0.592 |
-| walker |  | 1205 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/tags } |  |  | 0.592 |
-| walker |  | 1229 | 24 | Fs::DirListing { dir: apps/mobile/assets/images } |  |  | 0.592 |
-| walker |  | 1255 | 26 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 304 } |  |  | 0.594 |
-| ns | 1271 |  | 189 | Feature list, second half (sync, SSO, API keys, i18n, RSS, uploads) | 1.10 |  | 0.554 |
-| walker |  | 1336 | 81 | Fs::DirListing { dir: apps/web } |  |  | 0.715 |
-| walker |  | 1354 | 18 | Fs::DirListing { dir: apps/web/e2e } |  |  | 0.715 |
-| walker |  | 1358 | 4 | Fs::DirListing { dir: apps/web/styles } |  |  | 0.715 |
-| walker |  | 1362 | 4 | Fs::DirListing { dir: apps/web/e2e/data } |  |  | 0.715 |
-| walker |  | 1371 | 9 | Fs::DirListing { dir: apps/web/store } |  |  | 0.715 |
-| walker |  | 1383 | 12 | Fs::DirListing { dir: apps/web/types } |  |  | 0.715 |
-| walker |  | 1396 | 13 | Fs::DirListing { dir: apps/web/lib } |  |  | 0.715 |
-| walker |  | 1482 | 86 | Fs::DirListing { dir: apps/web/pages } |  |  | 0.716 |
-| walker |  | 1493 | 11 | Fs::DirListing { dir: apps/web/pages/collections } |  |  | 0.716 |
-| walker |  | 1504 | 11 | Fs::DirListing { dir: apps/web/pages/tags } |  |  | 0.716 |
-| walker |  | 1520 | 16 | Fs::DirListing { dir: apps/web/pages/links } |  |  | 0.716 |
-| walker |  | 1539 | 19 | Fs::DirListing { dir: apps/web/pages/admin } |  |  | 0.668 |
-| ns | 1539 |  | 268 | schema.prisma: datasource/generator plus every model and enum header, bodies elided | 2.1 |  | 0.668 |
-| walker |  | 1545 | 6 | Fs::DirListing { dir: apps/web/pages/preserved } |  |  | 0.668 |
-| walker |  | 1601 | 56 | Fs::DirListing { dir: apps/web/pages/settings } |  |  | 0.669 |
-| walker |  | 1609 | 8 | Fs::DirListing { dir: apps/web/pages/api } |  |  | 0.669 |
-| walker |  | 1614 | 5 | Fs::DirListing { dir: apps/web/pages/api/v2/dashboard } |  |  | 0.669 |
-| walker |  | 1623 | 9 | Fs::DirListing { dir: apps/web/pages/public } |  |  | 0.670 |
-| walker |  | 1629 | 6 | Fs::DirListing { dir: apps/web/pages/public/links } |  |  | 0.670 |
-| walker |  | 1635 | 6 | Fs::DirListing { dir: apps/web/pages/public/preserved } |  |  | 0.670 |
-| walker |  | 1647 | 12 | Fs::DirListing { dir: apps/web/pages/auth } |  |  | 0.670 |
-| walker |  | 1668 | 21 | Fs::DirListing { dir: apps/web/templates } |  |  | 0.670 |
-| walker |  | 1674 | 6 | Fs::DirListing { dir: apps/web/e2e/tests } |  |  | 0.671 |
-| walker |  | 1679 | 5 | Fs::DirListing { dir: apps/web/e2e/tests/public } |  |  | 0.671 |
-| ns | 1697 |  | 158 | All five schema enums, fully expanded | 2.2 | 2.1 | 0.650 |
-| walker |  | 1703 | 24 | Fs::DirListing { dir: apps/web/layouts } |  |  | 0.650 |
-| walker |  | 1723 | 20 | Fs::DirListing { dir: apps/web/lib/shared } |  |  | 0.650 |
-| walker |  | 1736 | 13 | Fs::DirListing { dir: apps/web/pages/public/collections/[id] } |  |  | 0.650 |
-| walker |  | 1746 | 10 | Fs::DirListing { dir: apps/web/e2e/tests/global } |  |  | 0.651 |
+| walker |  | 368 | 81 | Fs::DirListing { dir: apps/web } |  |  | 0.939 |
+| walker |  | 386 | 18 | Fs::DirListing { dir: apps/web/e2e } |  |  | 0.939 |
+| walker |  | 390 | 4 | Fs::DirListing { dir: apps/web/styles } |  |  | 0.939 |
+| walker |  | 433 | 43 | Json::Identity { file: package.json } |  |  | 0.949 |
+| ns | 460 |  | 139 | Workspace package names — every `name` field under apps/ and packages/ | 1.6 |  | 0.879 |
+| walker |  | 474 | 41 | Json::Scripts { file: package.json } |  |  | 0.879 |
+| walker |  | 478 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.879 |
+| walker |  | 491 | 13 | Fs::DirListing { dir: packages/types } |  |  | 0.879 |
+| walker |  | 495 | 4 | Fs::DirListing { dir: apps/web/e2e/data } |  |  | 0.879 |
+| walker |  | 528 | 33 | Fs::DirListing { dir: assets } |  |  | 0.879 |
+| walker |  | 533 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.879 |
+| walker |  | 542 | 9 | Fs::DirListing { dir: apps/web/store } |  |  | 0.879 |
+| walker |  | 596 | 54 | Fs::DirListing { dir: packages/filesystem } |  |  | 0.880 |
+| walker |  | 608 | 12 | Fs::DirListing { dir: apps/web/types } |  |  | 0.880 |
+| walker |  | 621 | 13 | Fs::DirListing { dir: apps/web/lib } |  |  | 0.880 |
+| ns | 674 |  | 214 | Root scripts: how you run web, worker and both together | 1.7 |  | 0.816 |
+| walker |  | 707 | 86 | Fs::DirListing { dir: apps/web/pages } |  |  | 0.817 |
+| walker |  | 718 | 11 | Fs::DirListing { dir: apps/web/pages/collections } |  |  | 0.817 |
+| walker |  | 729 | 11 | Fs::DirListing { dir: apps/web/pages/tags } |  |  | 0.817 |
+| walker |  | 745 | 16 | Fs::DirListing { dir: apps/web/pages/links } |  |  | 0.817 |
+| walker |  | 764 | 19 | Fs::DirListing { dir: apps/web/pages/admin } |  |  | 0.818 |
+| walker |  | 770 | 6 | Fs::DirListing { dir: apps/web/pages/preserved } |  |  | 0.818 |
+| walker |  | 826 | 56 | Fs::DirListing { dir: apps/web/pages/settings } |  |  | 0.819 |
+| walker |  | 834 | 8 | Fs::DirListing { dir: apps/web/pages/api } |  |  | 0.819 |
+| ns | 837 |  | 163 | Root scripts: prisma, format, test, coverage, postinstall | 1.8 |  | 0.768 |
+| walker |  | 839 | 5 | Fs::DirListing { dir: apps/web/pages/api/v2/dashboard } |  |  | 0.768 |
+| walker |  | 848 | 9 | Fs::DirListing { dir: apps/web/pages/public } |  |  | 0.769 |
+| walker |  | 854 | 6 | Fs::DirListing { dir: apps/web/pages/public/links } |  |  | 0.769 |
+| walker |  | 860 | 6 | Fs::DirListing { dir: apps/web/pages/public/preserved } |  |  | 0.769 |
+| walker |  | 872 | 12 | Fs::DirListing { dir: apps/web/pages/auth } |  |  | 0.769 |
+| walker |  | 904 | 32 | Json::Entry { file: package.json } |  |  | 0.813 |
+| walker |  | 925 | 21 | Fs::DirListing { dir: apps/web/templates } |  |  | 0.813 |
+| walker |  | 931 | 6 | Fs::DirListing { dir: apps/web/e2e/tests } |  |  | 0.813 |
+| walker |  | 936 | 5 | Fs::DirListing { dir: apps/web/e2e/tests/public } |  |  | 0.813 |
+| walker |  | 960 | 24 | Fs::DirListing { dir: apps/web/layouts } |  |  | 0.813 |
+| ns | 1082 |  | 245 | Feature list, first half (preservation, reading, organisation, sharing) | 1.9 |  | 0.752 |
+| walker |  | 1180 | 220 | Prisma::Toc { file: packages/prisma/schema.prisma } |  |  | 0.762 |
+| walker |  | 1200 | 20 | Fs::DirListing { dir: apps/web/lib/shared } |  |  | 0.762 |
+| walker |  | 1213 | 13 | Fs::DirListing { dir: apps/web/pages/public/collections/[id] } |  |  | 0.763 |
+| walker |  | 1249 | 36 | Fs::DirListing { dir: apps/worker/workers } |  |  | 0.763 |
+| ns | 1271 |  | 189 | Feature list, second half (sync, SSO, API keys, i18n, RSS, uploads) | 1.10 |  | 0.712 |
+| walker |  | 1321 | 72 | Fs::DirListing { dir: packages/router } |  |  | 0.713 |
+| walker |  | 1331 | 10 | Fs::DirListing { dir: apps/web/e2e/tests/global } |  |  | 0.713 |
+| walker |  | 1355 | 24 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 77 } |  |  | 0.714 |
+| walker |  | 1404 | 49 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 90 } |  |  | 0.716 |
+| walker |  | 1484 | 80 | Fs::DirListing { dir: apps/mobile } |  |  | 0.717 |
+| walker |  | 1488 | 4 | Fs::DirListing { dir: apps/mobile/styles } |  |  | 0.717 |
+| walker |  | 1494 | 6 | Fs::DirListing { dir: apps/mobile/assets } |  |  | 0.717 |
+| walker |  | 1530 | 36 | Fs::DirListing { dir: apps/mobile/app } |  |  | 0.717 |
+| walker |  | 1538 | 8 | Fs::DirListing { dir: apps/mobile/plugins } |  |  | 0.717 |
+| ns | 1539 |  | 268 | schema.prisma: datasource/generator plus every model and enum header, bodies elided | 2.1 |  | 0.665 |
+| walker |  | 1544 | 6 | Fs::DirListing { dir: apps/mobile/app/links } |  |  | 0.665 |
+| walker |  | 1550 | 6 | Fs::DirListing { dir: apps/mobile/assets/fonts } |  |  | 0.665 |
+| walker |  | 1561 | 11 | Fs::DirListing { dir: apps/mobile/types } |  |  | 0.665 |
+| walker |  | 1573 | 12 | Fs::DirListing { dir: apps/mobile/store } |  |  | 0.665 |
+| walker |  | 1596 | 23 | Fs::DirListing { dir: apps/mobile/lib } |  |  | 0.665 |
+| walker |  | 1617 | 21 | Fs::DirListing { dir: apps/mobile/app/(tabs) } |  |  | 0.665 |
+| walker |  | 1628 | 11 | Fs::DirListing { dir: apps/mobile/app/(tabs)/links } |  |  | 0.665 |
+| walker |  | 1645 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/collections } |  |  | 0.666 |
+| walker |  | 1662 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/dashboard } |  |  | 0.666 |
+| walker |  | 1679 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/settings } |  |  | 0.666 |
+| walker |  | 1696 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/tags } |  |  | 0.667 |
+| ns | 1697 |  | 158 | All five schema enums, fully expanded | 2.2 | 2.1 | 0.635 |
+| walker |  | 1720 | 24 | Fs::DirListing { dir: apps/mobile/assets/images } |  |  | 0.635 |
+| walker |  | 1746 | 26 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 304 } |  |  | 0.651 |
 | walker |  | 1781 | 35 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 83 } |  |  | 0.678 |
 | walker |  | 1991 | 210 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 166 } |  |  | 0.684 |
 | ns | 2083 |  | 386 | `Link` model — every field | 2.3 | 2.1 | 0.651 |

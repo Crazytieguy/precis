@@ -3,32 +3,32 @@ Score(3000)=0.793 I=0.896 C=0.703 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 54 | 54 | Fs::DirListing { dir: . } |  |  | 0.000 |
+| walker |  | 76 | 22 | Fs::DirListing { dir: packages } |  |  | 0.000 |
 | ns | 81 |  | 81 | Repository identity — README title + one-line definition | 1.1 |  | 0.000 |
-| walker |  | 135 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| ns | 135 |  | 54 | Complete repository root listing | 1.2 |  | 1.000 |
-| walker |  | 157 | 22 | Fs::DirListing { dir: packages } |  |  | 1.000 |
+| ns | 135 |  | 54 | Complete repository root listing | 1.2 |  | 0.633 |
+| walker |  | 157 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
 | ns | 192 |  | 57 | Workspace membership — packages/ and examples/ listings | 1.3 |  | 0.748 |
-| walker |  | 202 | 45 | Json::Identity { file: package.json } |  |  | 0.750 |
-| ns | 218 |  | 26 | pnpm workspace globs | 1.4 |  | 0.705 |
-| walker |  | 219 | 17 | Fs::DirListing { dir: packages/d2ts-benchmark } |  |  | 0.706 |
-| walker |  | 231 | 12 | Fs::DirListing { dir: packages/d2ts-benchmark/src } |  |  | 0.706 |
-| walker |  | 237 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.706 |
-| ns | 288 |  | 70 | README lede — what incremental execution buys you | 1.5 | 1.1 | 0.692 |
-| walker |  | 308 | 71 | Json::Scripts { file: package.json } |  |  | 0.701 |
-| walker |  | 316 | 8 | Fs::DirListing { dir: .changeset } |  |  | 0.701 |
-| walker |  | 341 | 25 | Fs::DirListing { dir: packages/d2ql } |  |  | 0.704 |
-| ns | 387 |  | 99 | README lede — ElectricSQL ShapeStreams and pipeline type inference | 1.6 | 1.1 | 0.667 |
-| walker |  | 410 | 69 | Fs::DirListing { dir: packages/d2ql/src } |  |  | 0.672 |
-| walker |  | 419 | 9 | Fs::DirListing { dir: packages/d2ql/src/query-builder } |  |  | 0.674 |
-| walker |  | 449 | 30 | Fs::DirListing { dir: packages/d2mini } |  |  | 0.680 |
-| walker |  | 482 | 33 | Fs::DirListing { dir: packages/d2mini/src } |  |  | 0.681 |
-| walker |  | 518 | 36 | Fs::DirListing { dir: packages/d2ts } |  |  | 0.691 |
-| walker |  | 562 | 44 | Fs::DirListing { dir: packages/d2ts/src } |  |  | 0.699 |
-| walker |  | 566 | 4 | Fs::DirListing { dir: packages/d2ts/src/electric } |  |  | 0.699 |
-| ns | 578 |  | 191 | Root package.json — identity and every workspace script | 1.7 |  | 0.627 |
-| walker |  | 586 | 20 | Fs::DirListing { dir: packages/d2ts/src/sqlite } |  |  | 0.627 |
-| walker |  | 671 | 85 | Json::Identity { file: packages/d2ts/package.json } |  |  | 0.630 |
-| walker |  | 728 | 57 | Fs::DirListing { dir: packages/d2ts/src/sqlite/operators } |  |  | 0.602 |
+| walker |  | 193 | 36 | Fs::DirListing { dir: packages/d2ts } |  |  | 0.751 |
+| ns | 218 |  | 26 | pnpm workspace globs | 1.4 |  | 0.706 |
+| walker |  | 237 | 44 | Fs::DirListing { dir: packages/d2ts/src } |  |  | 0.714 |
+| walker |  | 241 | 4 | Fs::DirListing { dir: packages/d2ts/src/electric } |  |  | 0.714 |
+| walker |  | 261 | 20 | Fs::DirListing { dir: packages/d2ts/src/sqlite } |  |  | 0.715 |
+| ns | 288 |  | 70 | README lede — what incremental execution buys you | 1.5 | 1.1 | 0.701 |
+| walker |  | 306 | 45 | Json::Identity { file: package.json } |  |  | 0.703 |
+| walker |  | 323 | 17 | Fs::DirListing { dir: packages/d2ts-benchmark } |  |  | 0.705 |
+| walker |  | 335 | 12 | Fs::DirListing { dir: packages/d2ts-benchmark/src } |  |  | 0.706 |
+| walker |  | 341 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.706 |
+| ns | 387 |  | 99 | README lede — ElectricSQL ShapeStreams and pipeline type inference | 1.6 | 1.1 | 0.669 |
+| walker |  | 412 | 71 | Json::Scripts { file: package.json } |  |  | 0.677 |
+| walker |  | 497 | 85 | Json::Identity { file: packages/d2ts/package.json } |  |  | 0.680 |
+| walker |  | 554 | 57 | Fs::DirListing { dir: packages/d2ts/src/sqlite/operators } |  |  | 0.685 |
+| walker |  | 562 | 8 | Fs::DirListing { dir: .changeset } |  |  | 0.685 |
+| ns | 578 |  | 191 | Root package.json — identity and every workspace script | 1.7 |  | 0.614 |
+| walker |  | 587 | 25 | Fs::DirListing { dir: packages/d2ql } |  |  | 0.619 |
+| walker |  | 656 | 69 | Fs::DirListing { dir: packages/d2ql/src } |  |  | 0.624 |
+| walker |  | 665 | 9 | Fs::DirListing { dir: packages/d2ql/src/query-builder } |  |  | 0.625 |
+| walker |  | 695 | 30 | Fs::DirListing { dir: packages/d2mini } |  |  | 0.633 |
+| walker |  | 728 | 33 | Fs::DirListing { dir: packages/d2mini/src } |  |  | 0.602 |
 | ns | 728 |  | 150 | Published package identity: d2ts and d2mini | 1.8 |  | 0.602 |
 | walker |  | 826 | 98 | Fs::DirListing { dir: packages/d2ts/src/operators } |  |  | 0.612 |
 | ns | 871 |  | 143 | Private package identity: d2ql and d2ts-benchmark | 1.9 | 1.8 | 0.562 |

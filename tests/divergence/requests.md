@@ -5,22 +5,22 @@ Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 47 |  | 47 | Identity lede: what the library is, and its version | 1.1 |  | 0.000 |
 | walker |  | 74 | 74 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 121 |  | 74 | Repository root listing (complete) | 1.2 |  | 0.671 |
-| ns | 215 |  | 94 | `src/requests/` module roster (complete) | 1.3 |  | 0.454 |
-| walker |  | 249 | 175 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.599 |
-| walker |  | 283 | 34 | Fs::DirListing { dir: ext } |  |  | 0.599 |
-| ns | 318 |  | 103 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.474 |
-| walker |  | 341 | 58 | Toml::Identity { file: pyproject.toml } |  |  | 0.475 |
-| walker |  | 395 | 54 | Fs::DirListing { dir: docs } |  |  | 0.479 |
-| walker |  | 399 | 4 | Fs::DirListing { dir: docs/_templates } |  |  | 0.479 |
-| walker |  | 408 | 9 | Fs::DirListing { dir: docs/_static } |  |  | 0.479 |
-| walker |  | 418 | 10 | Fs::DirListing { dir: docs/dev } |  |  | 0.480 |
-| walker |  | 432 | 14 | Fs::DirListing { dir: docs/_themes } |  |  | 0.480 |
-| walker |  | 453 | 21 | Fs::DirListing { dir: docs/user } |  |  | 0.483 |
-| ns | 465 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.497 |
-| walker |  | 493 | 40 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.555 |
-| walker |  | 531 | 38 | Fs::DirListing { dir: docs/community } |  |  | 0.563 |
-| ns | 583 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.528 |
-| walker |  | 625 | 94 | Fs::DirListing { dir: src/requests } |  |  | 0.720 |
+| walker |  | 168 | 94 | Fs::DirListing { dir: src/requests } |  |  | 0.770 |
+| ns | 215 |  | 94 | `src/requests/` module roster (complete) | 1.3 |  | 0.738 |
+| ns | 318 |  | 103 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.584 |
+| walker |  | 343 | 175 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.722 |
+| walker |  | 377 | 34 | Fs::DirListing { dir: ext } |  |  | 0.722 |
+| walker |  | 435 | 58 | Toml::Identity { file: pyproject.toml } |  |  | 0.722 |
+| ns | 465 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.697 |
+| walker |  | 489 | 54 | Fs::DirListing { dir: docs } |  |  | 0.702 |
+| walker |  | 493 | 4 | Fs::DirListing { dir: docs/_templates } |  |  | 0.702 |
+| walker |  | 502 | 9 | Fs::DirListing { dir: docs/_static } |  |  | 0.702 |
+| walker |  | 512 | 10 | Fs::DirListing { dir: docs/dev } |  |  | 0.703 |
+| walker |  | 526 | 14 | Fs::DirListing { dir: docs/_themes } |  |  | 0.703 |
+| walker |  | 547 | 21 | Fs::DirListing { dir: docs/user } |  |  | 0.707 |
+| ns | 583 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.663 |
+| walker |  | 587 | 40 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.711 |
+| walker |  | 625 | 38 | Fs::DirListing { dir: docs/community } |  |  | 0.720 |
 | ns | 681 |  | 98 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.638 |
 | ns | 761 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.611 |
 | ns | 884 |  | 123 | `docs/` tree listing (complete) | 1.9 |  | 0.654 |

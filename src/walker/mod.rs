@@ -7,7 +7,7 @@
 //! Source text is cached on [`WalkCtx`]; parse trees are not.
 
 use std::cell::{Cell, OnceCell};
-use std::collections::{BTreeSet, HashMap};
+use std::collections::{BTreeSet, HashMap, HashSet};
 use std::ops::Range;
 use std::panic::AssertUnwindSafe;
 use std::path::{Path, PathBuf};
@@ -141,6 +141,9 @@ pub struct WalkCtx {
     /// The one source file that carries a dominant share of the tree's
     /// essential source bytes, if any.
     dominant_source_file: OnceCell<Option<PathBuf>>,
+    /// The directories that each hold most of the tree's essential
+    /// source bytes.
+    source_spine: OnceCell<HashSet<PathBuf>>,
 }
 
 impl WalkCtx {
@@ -165,6 +168,7 @@ impl WalkCtx {
             essential_source: OnceCell::new(),
             primary_language: OnceCell::new(),
             dominant_source_file: OnceCell::new(),
+            source_spine: OnceCell::new(),
         }
     }
 
@@ -229,6 +233,18 @@ impl WalkCtx {
         *self
             .primary_language
             .get_or_init(|| survey::find_primary_language(self.essential_source()?))
+    }
+
+    /// Whether `dir`, below the root, holds more than half of the tree's
+    /// essential source bytes. Never true past the survey's entry cap.
+    pub(in crate::walker) fn is_on_source_spine(&self, dir: &Path) -> bool {
+        self.source_spine
+            .get_or_init(|| {
+                self.essential_source()
+                    .map(|source| survey::find_source_spine(source, &self.root))
+                    .unwrap_or_default()
+            })
+            .contains(dir)
     }
 
     fn essential_source(&self) -> Option<&EssentialSource> {

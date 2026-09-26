@@ -1,17 +1,17 @@
-Score(3000)=0.552 I=0.826 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.712/0.733/0.628/0.552/0.576/0.537/0.531
+Score(3000)=0.552 I=0.826 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.836/0.733/0.628/0.552/0.576/0.537/0.531
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 49 |  | 49 | Project name and one-line description | 1.1 |  | 0.000 |
 | walker |  | 52 | 52 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 56 | 4 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 61 | 5 | Fs::DirListing { dir: demo } |  |  | 0.000 |
-| ns | 101 |  | 52 | Repository root listing (complete) | 1.2 |  | 0.719 |
-| walker |  | 119 | 58 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| walker |  | 125 | 6 | Fs::DirListing { dir: cmd/tock } |  |  | 1.000 |
-| ns | 134 |  | 33 | Module import path and Go version | 1.3 |  | 0.912 |
-| walker |  | 144 | 19 | Fs::DirListing { dir: internal } |  |  | 0.923 |
-| walker |  | 150 | 6 | Fs::DirListing { dir: internal/adapters } |  |  | 0.929 |
+| walker |  | 71 | 19 | Fs::DirListing { dir: internal } |  |  | 0.000 |
+| walker |  | 77 | 6 | Fs::DirListing { dir: internal/adapters } |  |  | 0.000 |
+| walker |  | 81 | 4 | Fs::DirListing { dir: docs } |  |  | 0.000 |
+| walker |  | 86 | 5 | Fs::DirListing { dir: demo } |  |  | 0.000 |
+| ns | 101 |  | 52 | Repository root listing (complete) | 1.2 |  | 0.734 |
+| ns | 134 |  | 33 | Module import path and Go version | 1.3 |  | 0.669 |
+| walker |  | 144 | 58 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.922 |
+| walker |  | 150 | 6 | Fs::DirListing { dir: cmd/tock } |  |  | 0.929 |
 | walker |  | 157 | 7 | Fs::DirListing { dir: internal/services } |  |  | 0.929 |
 | walker |  | 161 | 4 | Fs::DirListing { dir: internal/services/ics } |  |  | 0.929 |
 | walker |  | 181 | 20 | Fs::DirListing { dir: assets } |  |  | 0.929 |
@@ -27,25 +27,25 @@ Score(3000)=0.552 I=0.826 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 276 | 7 | Fs::DirListing { dir: internal/core/ports } |  |  | 0.920 |
 | walker |  | 285 | 9 | Fs::DirListing { dir: internal/services/activity } |  |  | 0.920 |
 | ns | 294 |  | 77 | README feature bullets, part 2 (Bartib/TimeWarrior compat, themes, iCal) | 1.5 |  | 0.871 |
-| walker |  | 296 | 11 | Fs::DirListing { dir: internal/adapters/repositories } |  |  | 0.871 |
-| walker |  | 305 | 9 | Fs::DirListing { dir: internal/adapters/repositories/notes } |  |  | 0.871 |
-| walker |  | 314 | 9 | Fs::DirListing { dir: internal/adapters/repositories/timewarrior } |  |  | 0.871 |
-| walker |  | 328 | 14 | Fs::DirListing { dir: .github } |  |  | 0.871 |
-| walker |  | 336 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.871 |
 | ns | 362 |  | 68 | Binary entry point | 1.6 |  | 0.761 |
-| ns | 412 |  | 50 | Package tree: cmd/, internal/ and its layer directories | 1.7 |  | 0.809 |
-| ns | 493 |  | 81 | Domain, service and support package file listings (complete) | 1.8 |  | 0.782 |
-| ns | 619 |  | 126 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.644 |
-| walker |  | 669 | 333 | Plaintext::Whole { file: Makefile } |  |  | 0.644 |
-| walker |  | 687 | 18 | Fs::DirListing { dir: internal/adapters/repositories/file } |  |  | 0.661 |
-| ns | 724 |  | 105 | README section headings (all H2) | 1.10 |  | 0.622 |
-| walker |  | 783 | 96 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.690 |
-| walker |  | 827 | 44 | Markdown::CommandBlock { file: README.md, row: 49 } |  |  | 0.690 |
-| ns | 898 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.656 |
-| walker |  | 997 | 170 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.712 |
-| walker |  | 1015 | 18 | Fs::DirListing { dir: internal/core/ports/mocks } |  |  | 0.745 |
-| ns | 1022 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.715 |
-| walker |  | 1094 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.853 |
+| walker |  | 364 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.761 |
+| walker |  | 375 | 11 | Fs::DirListing { dir: internal/adapters/repositories } |  |  | 0.761 |
+| walker |  | 384 | 9 | Fs::DirListing { dir: internal/adapters/repositories/notes } |  |  | 0.761 |
+| walker |  | 393 | 9 | Fs::DirListing { dir: internal/adapters/repositories/timewarrior } |  |  | 0.761 |
+| walker |  | 407 | 14 | Fs::DirListing { dir: .github } |  |  | 0.761 |
+| ns | 412 |  | 50 | Package tree: cmd/, internal/ and its layer directories | 1.7 |  | 0.832 |
+| walker |  | 415 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.832 |
+| ns | 493 |  | 81 | Domain, service and support package file listings (complete) | 1.8 |  | 0.805 |
+| ns | 619 |  | 126 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.786 |
+| ns | 724 |  | 105 | README section headings (all H2) | 1.10 |  | 0.740 |
+| walker |  | 748 | 333 | Plaintext::Whole { file: Makefile } |  |  | 0.740 |
+| walker |  | 766 | 18 | Fs::DirListing { dir: internal/adapters/repositories/file } |  |  | 0.784 |
+| walker |  | 862 | 96 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.846 |
+| ns | 898 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.804 |
+| walker |  | 906 | 44 | Markdown::CommandBlock { file: README.md, row: 49 } |  |  | 0.804 |
+| ns | 1022 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.771 |
+| walker |  | 1076 | 170 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.823 |
+| walker |  | 1094 | 18 | Fs::DirListing { dir: internal/core/ports/mocks } |  |  | 0.853 |
 | walker |  | 1173 | 79 | Markdown::Section { file: README.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.853 |
 | ns | 1175 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.813 |
 | ns | 1253 |  | 78 | Domain sentinel errors | 2.4 |  | 0.794 |

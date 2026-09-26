@@ -1,8 +1,9 @@
-//! The repository survey: which language the tree is written in and
-//! which single source file, if any, carries a dominant share of it.
-//! One capped walk over the essential source answers both.
+//! The repository survey: which language the tree is written in, which
+//! single source file, if any, carries a dominant share of it, and which
+//! directories hold most of it. One capped walk over the essential source
+//! answers all three.
 
-use std::collections::{HashMap, VecDeque};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -114,6 +115,24 @@ pub(super) fn find_dominant_source_file(
         })
         .max_by(|a, b| a.1.cmp(&b.1).then_with(|| b.0.cmp(&a.0)))
         .map(|(path, _, _)| path.clone())
+}
+
+/// The directories below `root` that each hold more than half of the
+/// essential source bytes: at most one per level, so they form one chain
+/// down from the root, the repository's source spine.
+pub(super) fn find_source_spine(source: &EssentialSource, root: &Path) -> HashSet<PathBuf> {
+    let total: u64 = source.iter().map(|(_, len, _)| len).sum();
+    let mut bytes_under: HashMap<&Path, u64> = HashMap::new();
+    for (path, len, _) in source {
+        for dir in path.ancestors().skip(1).take_while(|dir| *dir != root) {
+            *bytes_under.entry(dir).or_default() += len;
+        }
+    }
+    bytes_under
+        .into_iter()
+        .filter(|&(_, bytes)| 2 * bytes > total)
+        .map(|(dir, _)| dir.to_path_buf())
+        .collect()
 }
 
 /// The language with the most bytes, ranked over a sorted vector rather
@@ -270,6 +289,26 @@ mod tests {
             let expected = expected.map(|path| tmp.path().join(path));
             assert_eq!(dominant_source_file_of(tmp.path()), expected);
         }
+    }
+
+    #[test]
+    fn survey_source_spine_is_the_chain_of_majority_directories() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        for (path, lines) in [
+            ("core/api.py", 30),
+            ("core/engine/run.py", 60),
+            ("side/tool.py", 20),
+            ("tests/test_all.py", 1000),
+        ] {
+            let path = root.join(path);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, "x = 1\n".repeat(lines)).unwrap();
+        }
+        let ctx = crate::walker::WalkCtx::new(root.to_path_buf());
+        let on_spine = |dir: &str| ctx.is_on_source_spine(&root.join(dir));
+        assert!(on_spine("core") && on_spine("core/engine"));
+        assert!(!ctx.is_on_source_spine(root) && !on_spine("side") && !on_spine("tests"));
     }
 
     #[test]

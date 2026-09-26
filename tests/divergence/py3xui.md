@@ -4,14 +4,14 @@ Score(3000)=0.614 I=0.871 C=0.432 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 56 | 56 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 74 |  | 74 | What py3xui is: distribution name, version, one-line purpose | 1.1 |  | 0.000 |
-| ns | 130 |  | 56 | Complete repository root listing | 1.2 |  | 0.571 |
-| ns | 212 |  | 82 | Top-level public exports: py3xui/__init__.py in full | 1.3 |  | 0.492 |
-| ns | 237 |  | 25 | py3xui/ package listing — the six sub-packages | 1.4 |  | 0.419 |
-| walker |  | 244 | 188 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.430 |
-| walker |  | 269 | 25 | Fs::DirListing { dir: py3xui } |  |  | 0.562 |
-| walker |  | 283 | 14 | Fs::DirListing { dir: py3xui/client } |  |  | 0.563 |
-| walker |  | 297 | 14 | Fs::DirListing { dir: py3xui/server } |  |  | 0.566 |
-| walker |  | 311 | 14 | Fs::DirListing { dir: py3xui/utils } |  |  | 0.571 |
+| walker |  | 81 | 25 | Fs::DirListing { dir: py3xui } |  |  | 0.000 |
+| walker |  | 95 | 14 | Fs::DirListing { dir: py3xui/client } |  |  | 0.000 |
+| walker |  | 109 | 14 | Fs::DirListing { dir: py3xui/server } |  |  | 0.000 |
+| walker |  | 123 | 14 | Fs::DirListing { dir: py3xui/utils } |  |  | 0.000 |
+| ns | 130 |  | 56 | Complete repository root listing | 1.2 |  | 0.628 |
+| ns | 212 |  | 82 | Top-level public exports: py3xui/__init__.py in full | 1.3 |  | 0.542 |
+| ns | 237 |  | 25 | py3xui/ package listing — the six sub-packages | 1.4 |  | 0.559 |
+| walker |  | 311 | 188 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.571 |
 | walker |  | 338 | 27 | Fs::DirListing { dir: dev } |  |  | 0.571 |
 | walker |  | 370 | 32 | Fs::DirListing { dir: py3xui/inbound } |  |  | 0.591 |
 | ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.558 |

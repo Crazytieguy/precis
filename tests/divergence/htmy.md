@@ -4,18 +4,18 @@ Score(3000)=0.788 I=0.926 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 33 | 33 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 72 |  | 72 | README identity: name, one-line description, pitch | 1.1 |  | 0.000 |
-| ns | 105 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.472 |
-| walker |  | 182 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| walker |  | 202 | 20 | Fs::DirListing { dir: docs } |  |  | 1.000 |
-| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.571 |
-| walker |  | 275 | 73 | Toml::Identity { file: pyproject.toml } |  |  | 0.572 |
-| walker |  | 282 | 7 | Fs::DirListing { dir: .github } |  |  | 0.572 |
-| walker |  | 301 | 19 | Fs::DirListing { dir: .github/workflows } |  |  | 0.573 |
-| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.511 |
-| walker |  | 368 | 67 | Fs::DirListing { dir: htmy } |  |  | 0.687 |
-| walker |  | 382 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.756 |
-| walker |  | 399 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
-| walker |  | 421 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 0.894 |
+| walker |  | 100 | 67 | Fs::DirListing { dir: htmy } |  |  | 0.000 |
+| ns | 105 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.556 |
+| walker |  | 114 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.582 |
+| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.502 |
+| walker |  | 263 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.846 |
+| walker |  | 283 | 20 | Fs::DirListing { dir: docs } |  |  | 0.846 |
+| walker |  | 300 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.846 |
+| walker |  | 322 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 1.000 |
+| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.892 |
+| walker |  | 395 | 73 | Toml::Identity { file: pyproject.toml } |  |  | 0.893 |
+| walker |  | 402 | 7 | Fs::DirListing { dir: .github } |  |  | 0.893 |
+| walker |  | 421 | 19 | Fs::DirListing { dir: .github/workflows } |  |  | 0.894 |
 | walker |  | 463 | 42 | Fs::DirListing { dir: docs/api } |  |  | 0.894 |
 | walker |  | 475 | 12 | Fs::DirListing { dir: docs/api/renderer } |  |  | 0.894 |
 | walker |  | 497 | 22 | Fs::DirListing { dir: examples } |  |  | 0.894 |

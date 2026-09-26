@@ -4,40 +4,40 @@ Score(3000)=0.662 I=0.865 C=0.506 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 57 | 57 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 64 |  | 64 | What Enclosed is: README title, tagline, opening sentence | 1.1 |  | 0.000 |
-| walker |  | 133 | 76 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| ns | 141 |  | 77 | README introduction: the zero-knowledge guarantee and note options | 1.2 |  | 0.707 |
-| walker |  | 158 | 25 | Fs::DirListing { dir: packages } |  |  | 0.707 |
-| walker |  | 222 | 64 | Json::Identity { file: package.json } |  |  | 0.707 |
-| ns | 223 |  | 82 | Repository shape: complete root listing and complete packages/ listing | 1.3 |  | 0.869 |
-| walker |  | 239 | 17 | Fs::DirListing { dir: packages/docs } |  |  | 0.869 |
-| walker |  | 258 | 19 | Fs::DirListing { dir: packages/deploy-cloudflare } |  |  | 0.870 |
-| walker |  | 281 | 23 | Fs::DirListing { dir: packages/app-server } |  |  | 0.870 |
-| walker |  | 307 | 26 | Fs::DirListing { dir: packages/crypto } |  |  | 0.870 |
-| walker |  | 333 | 26 | Fs::DirListing { dir: packages/lib } |  |  | 0.871 |
-| walker |  | 349 | 16 | Fs::DirListing { dir: packages/lib/src } |  |  | 0.873 |
-| walker |  | 354 | 5 | Fs::DirListing { dir: packages/lib/src/files } |  |  | 0.874 |
-| walker |  | 383 | 29 | Fs::DirListing { dir: packages/cli } |  |  | 0.874 |
-| ns | 385 |  | 162 | README 'Project Structure': role of each workspace package | 1.4 |  | 0.761 |
-| walker |  | 388 | 5 | Fs::DirListing { dir: packages/cli/bin } |  |  | 0.761 |
-| walker |  | 409 | 21 | Fs::DirListing { dir: packages/app-server/src } |  |  | 0.762 |
-| walker |  | 430 | 21 | Fs::DirListing { dir: packages/cli/src } |  |  | 0.762 |
-| walker |  | 440 | 10 | Fs::DirListing { dir: packages/cli/src/shared } |  |  | 0.763 |
-| walker |  | 451 | 11 | Fs::DirListing { dir: packages/cli/src/files } |  |  | 0.763 |
-| walker |  | 463 | 12 | Fs::DirListing { dir: packages/cli/src/view-note } |  |  | 0.764 |
-| walker |  | 478 | 15 | Fs::DirListing { dir: packages/app-server/src/modules } |  |  | 0.764 |
-| walker |  | 509 | 31 | Fs::DirListing { dir: packages/docs/src } |  |  | 0.765 |
-| walker |  | 519 | 10 | Fs::DirListing { dir: packages/docs/src/components } |  |  | 0.765 |
-| walker |  | 530 | 11 | Fs::DirListing { dir: packages/docs/src/resources } |  |  | 0.766 |
-| walker |  | 542 | 12 | Fs::DirListing { dir: packages/docs/src/data } |  |  | 0.766 |
-| ns | 546 |  | 161 | pnpm-workspace.yaml in full: workspace glob and dependency catalog | 1.5 |  | 0.639 |
-| walker |  | 556 | 14 | Fs::DirListing { dir: packages/docs/src/integrations } |  |  | 0.639 |
-| walker |  | 588 | 32 | Fs::DirListing { dir: packages/crypto/src } |  |  | 0.641 |
-| walker |  | 600 | 12 | Fs::DirListing { dir: packages/app-server/src/modules/shared } |  |  | 0.641 |
-| walker |  | 604 | 4 | Fs::DirListing { dir: packages/app-server/src/modules/shared/utils } |  |  | 0.641 |
-| walker |  | 667 | 63 | Fs::DirListing { dir: packages/app-client } |  |  | 0.641 |
-| walker |  | 693 | 26 | Fs::DirListing { dir: packages/app-client/src } |  |  | 0.642 |
-| walker |  | 697 | 4 | Fs::DirListing { dir: packages/app-client/src/assets } |  |  | 0.642 |
-| walker |  | 708 | 11 | Fs::DirListing { dir: packages/app-client/e2e-tests } |  |  | 0.642 |
+| walker |  | 82 | 25 | Fs::DirListing { dir: packages } |  |  | 0.000 |
+| ns | 141 |  | 77 | README introduction: the zero-knowledge guarantee and note options | 1.2 |  | 0.000 |
+| walker |  | 158 | 76 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.707 |
+| walker |  | 221 | 63 | Fs::DirListing { dir: packages/app-client } |  |  | 0.707 |
+| ns | 223 |  | 82 | Repository shape: complete root listing and complete packages/ listing | 1.3 |  | 0.868 |
+| walker |  | 247 | 26 | Fs::DirListing { dir: packages/app-client/src } |  |  | 0.869 |
+| walker |  | 251 | 4 | Fs::DirListing { dir: packages/app-client/src/assets } |  |  | 0.869 |
+| walker |  | 315 | 64 | Json::Identity { file: package.json } |  |  | 0.871 |
+| walker |  | 332 | 17 | Fs::DirListing { dir: packages/docs } |  |  | 0.871 |
+| walker |  | 351 | 19 | Fs::DirListing { dir: packages/deploy-cloudflare } |  |  | 0.871 |
+| walker |  | 362 | 11 | Fs::DirListing { dir: packages/app-client/e2e-tests } |  |  | 0.871 |
+| walker |  | 385 | 23 | Fs::DirListing { dir: packages/app-server } |  |  | 0.758 |
+| ns | 385 |  | 162 | README 'Project Structure': role of each workspace package | 1.4 |  | 0.758 |
+| walker |  | 411 | 26 | Fs::DirListing { dir: packages/crypto } |  |  | 0.759 |
+| walker |  | 437 | 26 | Fs::DirListing { dir: packages/lib } |  |  | 0.760 |
+| walker |  | 453 | 16 | Fs::DirListing { dir: packages/lib/src } |  |  | 0.761 |
+| walker |  | 458 | 5 | Fs::DirListing { dir: packages/lib/src/files } |  |  | 0.762 |
+| walker |  | 487 | 29 | Fs::DirListing { dir: packages/cli } |  |  | 0.762 |
+| walker |  | 492 | 5 | Fs::DirListing { dir: packages/cli/bin } |  |  | 0.762 |
+| walker |  | 513 | 21 | Fs::DirListing { dir: packages/app-server/src } |  |  | 0.763 |
+| walker |  | 534 | 21 | Fs::DirListing { dir: packages/cli/src } |  |  | 0.764 |
+| walker |  | 544 | 10 | Fs::DirListing { dir: packages/cli/src/shared } |  |  | 0.764 |
+| ns | 546 |  | 161 | pnpm-workspace.yaml in full: workspace glob and dependency catalog | 1.5 |  | 0.637 |
+| walker |  | 555 | 11 | Fs::DirListing { dir: packages/cli/src/files } |  |  | 0.638 |
+| walker |  | 567 | 12 | Fs::DirListing { dir: packages/cli/src/view-note } |  |  | 0.638 |
+| walker |  | 582 | 15 | Fs::DirListing { dir: packages/app-server/src/modules } |  |  | 0.639 |
+| walker |  | 613 | 31 | Fs::DirListing { dir: packages/docs/src } |  |  | 0.639 |
+| walker |  | 623 | 10 | Fs::DirListing { dir: packages/docs/src/components } |  |  | 0.639 |
+| walker |  | 634 | 11 | Fs::DirListing { dir: packages/docs/src/resources } |  |  | 0.640 |
+| walker |  | 646 | 12 | Fs::DirListing { dir: packages/docs/src/data } |  |  | 0.640 |
+| walker |  | 660 | 14 | Fs::DirListing { dir: packages/docs/src/integrations } |  |  | 0.640 |
+| walker |  | 692 | 32 | Fs::DirListing { dir: packages/crypto/src } |  |  | 0.642 |
+| walker |  | 704 | 12 | Fs::DirListing { dir: packages/app-server/src/modules/shared } |  |  | 0.642 |
+| walker |  | 708 | 4 | Fs::DirListing { dir: packages/app-server/src/modules/shared/utils } |  |  | 0.642 |
 | ns | 726 |  | 180 | Root package.json: version, package manager, engines, release and docker scripts | 1.6 |  | 0.567 |
 | walker |  | 759 | 51 | Json::Runtime { file: package.json } |  |  | 0.598 |
 | walker |  | 772 | 13 | Fs::DirListing { dir: packages/app-server/src/modules/storage } |  |  | 0.598 |

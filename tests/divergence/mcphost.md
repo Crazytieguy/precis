@@ -4,27 +4,27 @@ Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 40 | 40 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 63 |  | 63 | README title and one-line identity | 1.1 |  | 0.000 |
-| walker |  | 103 | 63 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| ns | 103 |  | 40 | Complete repository root listing | 1.2 |  | 1.000 |
-| walker |  | 118 | 15 | Fs::DirListing { dir: contribute } |  |  | 1.000 |
-| walker |  | 126 | 8 | Fs::DirListing { dir: contribute/conf } |  |  | 1.000 |
-| ns | 133 |  | 30 | Complete internal/ package listing | 1.3 |  | 0.747 |
-| walker |  | 150 | 24 | Fs::DirListing { dir: sdk } |  |  | 0.752 |
-| walker |  | 180 | 30 | Fs::DirListing { dir: internal } |  |  | 1.000 |
-| walker |  | 188 | 8 | Fs::DirListing { dir: internal/session } |  |  | 1.000 |
-| walker |  | 200 | 12 | Fs::DirListing { dir: internal/agent } |  |  | 1.000 |
-| ns | 207 |  | 74 | Complete cmd/ and sdk/ listings | 1.4 |  | 0.777 |
-| walker |  | 213 | 13 | Fs::DirListing { dir: internal/tokens } |  |  | 0.777 |
-| ns | 260 |  | 53 | Module path, Go version and toolchain | 1.5 |  | 0.726 |
-| walker |  | 266 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.798 |
-| walker |  | 302 | 36 | Fs::DirListing { dir: cmd } |  |  | 0.907 |
-| walker |  | 319 | 17 | Fs::DirListing { dir: internal/auth } |  |  | 0.907 |
-| walker |  | 325 | 6 | Fs::DirListing { dir: examples } |  |  | 0.908 |
-| walker |  | 335 | 10 | Fs::DirListing { dir: .github/workflows } |  |  | 0.910 |
-| walker |  | 370 | 35 | Fs::DirListing { dir: internal/models } |  |  | 0.915 |
-| walker |  | 375 | 5 | Fs::DirListing { dir: internal/models/anthropic } |  |  | 0.915 |
-| walker |  | 380 | 5 | Fs::DirListing { dir: internal/models/gemini } |  |  | 0.916 |
-| walker |  | 385 | 5 | Fs::DirListing { dir: internal/models/openai } |  |  | 0.917 |
+| walker |  | 70 | 30 | Fs::DirListing { dir: internal } |  |  | 0.000 |
+| ns | 103 |  | 40 | Complete repository root listing | 1.2 |  | 0.702 |
+| walker |  | 133 | 63 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 133 |  | 30 | Complete internal/ package listing | 1.3 |  | 1.000 |
+| walker |  | 168 | 35 | Fs::DirListing { dir: internal/models } |  |  | 1.000 |
+| walker |  | 183 | 15 | Fs::DirListing { dir: contribute } |  |  | 1.000 |
+| walker |  | 191 | 8 | Fs::DirListing { dir: contribute/conf } |  |  | 1.000 |
+| walker |  | 199 | 8 | Fs::DirListing { dir: internal/session } |  |  | 1.000 |
+| walker |  | 204 | 5 | Fs::DirListing { dir: internal/models/anthropic } |  |  | 1.000 |
+| ns | 207 |  | 74 | Complete cmd/ and sdk/ listings | 1.4 |  | 0.753 |
+| walker |  | 209 | 5 | Fs::DirListing { dir: internal/models/gemini } |  |  | 0.754 |
+| walker |  | 214 | 5 | Fs::DirListing { dir: internal/models/openai } |  |  | 0.755 |
+| walker |  | 238 | 24 | Fs::DirListing { dir: sdk } |  |  | 0.780 |
+| walker |  | 250 | 12 | Fs::DirListing { dir: internal/agent } |  |  | 0.783 |
+| ns | 260 |  | 53 | Module path, Go version and toolchain | 1.5 |  | 0.732 |
+| walker |  | 263 | 13 | Fs::DirListing { dir: internal/tokens } |  |  | 0.732 |
+| walker |  | 316 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.805 |
+| walker |  | 352 | 36 | Fs::DirListing { dir: cmd } |  |  | 0.914 |
+| walker |  | 369 | 17 | Fs::DirListing { dir: internal/auth } |  |  | 0.915 |
+| walker |  | 375 | 6 | Fs::DirListing { dir: examples } |  |  | 0.916 |
+| walker |  | 385 | 10 | Fs::DirListing { dir: .github/workflows } |  |  | 0.917 |
 | walker |  | 424 | 39 | Fs::DirListing { dir: internal/hooks } |  |  | 0.922 |
 | ns | 427 |  | 167 | All README section headings (locations only) | 1.6 |  | 0.789 |
 | walker |  | 464 | 40 | Fs::DirListing { dir: internal/builtin } |  |  | 0.795 |

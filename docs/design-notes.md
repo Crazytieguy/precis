@@ -336,6 +336,31 @@ key, not a vendored child's, is what expansion checks. These rules came
 from the robustness corpus; the grid was neutral or better for each
 once workspace members were exempt.
 
+## The source spine's listings are priced up
+
+A listing's value does not grow with the source under it, while its
+cost grows with its entries, so a central directory of a few dozen
+entries over a huge subtree (a monorepo's main package, a framework's
+module tree) lost to small peripheral listings and stayed a bare name
+even at 8000 tokens. The directories that each hold more than half of
+the survey's essential source bytes form one chain down from the root,
+and each one's listing head is valued twice (`fs::dir_listing_batches`).
+Measured on 2026-09-26 against the robustness and eval corpora and the
+grid:
+- Weighing by file count instead of bytes made test playgrounds and
+  board-support trees the spine (3000 −0.0044).
+- Boosting every directory in proportion to its share of the files, or
+  every directory holding 30% of the bytes, bought breadth the answer
+  keys don't reward (3000 −0.0076 and −0.0021).
+- Boosting a split listing's tail too spent huge spine directories'
+  budget on names.
+- 2× to 5× opened the same directories; 1.5× opened fewer.
+
+Past the survey's entry cap there is no spine. Opening a spine
+directory also opens its subdirectories' listings and its files at their
+plain values, so a repository whose spine was bare trades some peripheral
+rows for its names, and parses more.
+
 ## Threads and resource bounds
 
 - **Only parsing is parallel.** Everything that decides output runs on

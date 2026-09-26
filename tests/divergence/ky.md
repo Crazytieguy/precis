@@ -3,9 +3,9 @@ Score(3000)=0.729 I=0.907 C=0.586 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 40 | 40 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 52 | 12 | Fs::DirListing { dir: media } |  |  | 0.000 |
-| walker |  | 68 | 16 | Fs::DirListing { dir: source } |  |  | 0.000 |
-| walker |  | 76 | 8 | Fs::DirListing { dir: source/core } |  |  | 0.000 |
+| walker |  | 56 | 16 | Fs::DirListing { dir: source } |  |  | 0.000 |
+| walker |  | 64 | 8 | Fs::DirListing { dir: source/core } |  |  | 0.000 |
+| walker |  | 76 | 12 | Fs::DirListing { dir: media } |  |  | 0.000 |
 | ns | 81 |  | 81 | Readme lede: what ky is, what it targets | 1.1 |  | 0.000 |
 | walker |  | 97 | 21 | Fs::DirListing { dir: source/errors } |  |  | 0.000 |
 | ns | 121 |  | 40 | Complete repository root listing | 1.2 |  | 0.644 |

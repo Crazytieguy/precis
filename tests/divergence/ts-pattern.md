@@ -4,17 +4,17 @@ Score(3000)=0.709 I=0.836 C=0.601 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 48 | 48 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 60 |  | 60 | README title and one-line description of the library | 1.1 |  | 0.000 |
+| walker |  | 77 | 29 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 132 |  | 72 | src/index.ts in full — the complete public export surface | 1.2 |  | 0.000 |
-| walker |  | 178 | 130 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.577 |
-| ns | 180 |  | 48 | Complete repository root listing | 1.3 |  | 0.750 |
-| walker |  | 204 | 26 | Fs::DirListing { dir: docs } |  |  | 0.750 |
-| walker |  | 233 | 29 | Fs::DirListing { dir: src } |  |  | 0.761 |
-| walker |  | 241 | 8 | Fs::DirListing { dir: src/internals } |  |  | 0.768 |
-| walker |  | 247 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.768 |
-| ns | 273 |  | 93 | Complete listings of src/, src/internals/ and src/types/ | 1.4 |  | 0.588 |
-| walker |  | 320 | 73 | Json::Identity { file: package.json } |  |  | 0.594 |
-| ns | 357 |  | 84 | package.json identity: name, version, description, module type, entry source | 1.5 |  | 0.584 |
-| walker |  | 376 | 56 | Fs::DirListing { dir: src/types } |  |  | 0.794 |
+| walker |  | 133 | 56 | Fs::DirListing { dir: src/types } |  |  | 0.000 |
+| walker |  | 141 | 8 | Fs::DirListing { dir: src/internals } |  |  | 0.000 |
+| ns | 180 |  | 48 | Complete repository root listing | 1.3 |  | 0.512 |
+| walker |  | 271 | 130 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.823 |
+| ns | 273 |  | 93 | Complete listings of src/, src/internals/ and src/types/ | 1.4 |  | 0.819 |
+| walker |  | 297 | 26 | Fs::DirListing { dir: docs } |  |  | 0.819 |
+| walker |  | 303 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.820 |
+| ns | 357 |  | 84 | package.json identity: name, version, description, module type, entry source | 1.5 |  | 0.759 |
+| walker |  | 376 | 73 | Json::Identity { file: package.json } |  |  | 0.794 |
 | walker |  | 385 | 9 | Fs::DirListing { dir: .github } |  |  | 0.795 |
 | walker |  | 395 | 10 | Fs::DirListing { dir: examples } |  |  | 0.796 |
 | walker |  | 405 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.798 |

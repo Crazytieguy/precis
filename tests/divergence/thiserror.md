@@ -3,19 +3,19 @@ Score(3000)=0.593 I=0.846 C=0.416 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 38 | 38 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 42 | 4 | Fs::DirListing { dir: build } |  |  | 0.000 |
+| walker |  | 57 | 19 | Fs::DirListing { dir: impl } |  |  | 0.000 |
+| walker |  | 61 | 4 | Fs::DirListing { dir: build } |  |  | 0.000 |
 | ns | 86 |  | 86 | Crate identity: name, one-line purpose, version | 1.1 |  | 0.000 |
-| walker |  | 89 | 47 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.507 |
-| walker |  | 108 | 19 | Fs::DirListing { dir: impl } |  |  | 0.512 |
+| walker |  | 108 | 47 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.512 |
 | ns | 124 |  | 38 | Complete repository root listing | 1.2 |  | 0.605 |
-| walker |  | 133 | 25 | Fs::DirListing { dir: src } |  |  | 0.635 |
-| walker |  | 162 | 29 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.638 |
-| walker |  | 195 | 33 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.696 |
-| walker |  | 203 | 8 | Fs::DirListing { dir: .github } |  |  | 0.696 |
-| walker |  | 207 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.696 |
-| ns | 215 |  | 91 | Complete listings of both source trees: src/, impl/, impl/src/ | 1.3 |  | 0.498 |
-| walker |  | 243 | 36 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.499 |
-| walker |  | 290 | 47 | Fs::DirListing { dir: impl/src } |  |  | 0.747 |
+| walker |  | 155 | 47 | Fs::DirListing { dir: impl/src } |  |  | 0.658 |
+| walker |  | 180 | 25 | Fs::DirListing { dir: src } |  |  | 0.722 |
+| walker |  | 209 | 29 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.725 |
+| ns | 215 |  | 91 | Complete listings of both source trees: src/, impl/, impl/src/ | 1.3 |  | 0.706 |
+| walker |  | 242 | 33 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.746 |
+| walker |  | 250 | 8 | Fs::DirListing { dir: .github } |  |  | 0.746 |
+| walker |  | 254 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.746 |
+| walker |  | 290 | 36 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.747 |
 | ns | 313 |  | 98 | README canonical example, head: derive, #[from], positional {0} | 1.4 |  | 0.652 |
 | ns | 398 |  | 85 | README canonical example, tail: named-field variant, unit variant | 1.5 | 1.4 | 0.589 |
 | walker |  | 475 | 185 | Toml::Identity { file: Cargo.toml } |  |  | 0.795 |
