@@ -163,7 +163,8 @@ fn robustness_special_files_named_like_git_pointers_are_never_read() {
 /// runs on the rendering thread, so a walk recursing once per level
 /// overflows the stack and aborts the whole run. Rendering on a small
 /// stack makes such a walk fail here at a modest depth, and the time
-/// limit catches one quadratic in the depth.
+/// limit catches one quadratic in the depth. Each level takes its own
+/// row: a file of long rows is left unparsed as minified.
 #[test]
 fn robustness_deeply_nested_sources_render() {
     const DEPTH: usize = 20_000;
@@ -173,14 +174,14 @@ fn robustness_deeply_nested_sources_render() {
     };
     let chain = |head: &str, link: &str, tail: &str| format!("{head}{}{tail}", link.repeat(DEPTH));
     let files = [
-        ("member.ts", chain("export default a", ".b", ";\n")),
-        ("condition.ts", chain("export const x = a", " || a", ";\n")),
-        ("require.js", chain("const q = require('x')", ".b", ";\n")),
+        ("member.ts", chain("export default a", "\n.b", ";\n")),
+        ("condition.ts", chain("export const x = a", "\n|| a", ";\n")),
+        ("require.js", chain("const q = require('x')", "\n.b", ";\n")),
         (
             "generic.ts",
-            format!("export function f(x: {}) {{}}\n", nest("A<", "T", ">")),
+            format!("export function f(x: {}) {{}}\n", nest("A<\n", "T", ">")),
         ),
-        ("pointer.h", chain("int ", "*", "x;\n")),
+        ("pointer.h", chain("int ", "*\n", "x;\n")),
         ("gates.h", nest("#ifdef A\n", "int x;\n", "#endif\n")),
         (
             "alternates.h",
@@ -194,6 +195,17 @@ fn robustness_deeply_nested_sources_render() {
         (
             "__init__.py",
             chain("__all__ = [\"a\"]", " +\n[\"b\"]", "\n"),
+        ),
+        (
+            "exports.lua",
+            chain("return f(", "\nf(", &")\n".repeat(DEPTH + 1)),
+        ),
+        (
+            "receiver.go",
+            format!(
+                "package p\n\nfunc (r {}) M() {{}}\n",
+                nest("(*\n", "T", ")")
+            ),
         ),
     ];
     for (name, contents) in &files {

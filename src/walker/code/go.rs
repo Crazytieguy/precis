@@ -157,13 +157,15 @@ fn is_reachable(node: Node, file: &SourceFile) -> bool {
 
 /// The type name under pointers, parentheses, type arguments and a
 /// package qualifier: `T` of `*pkg.T[K]`.
-fn base_type_name(node: Node) -> Option<Node> {
-    match node.kind() {
-        "type_identifier" => Some(node),
-        "qualified_type" => base_type_name(node.child_by_field_name("name")?),
-        "generic_type" => base_type_name(node.child_by_field_name("type")?),
-        "pointer_type" | "parenthesized_type" => base_type_name(node.named_child(0)?),
-        _ => None,
+fn base_type_name(mut node: Node) -> Option<Node> {
+    loop {
+        node = match node.kind() {
+            "type_identifier" => return Some(node),
+            "qualified_type" => node.child_by_field_name("name")?,
+            "generic_type" => node.child_by_field_name("type")?,
+            "pointer_type" | "parenthesized_type" => node.named_child(0)?,
+            _ => return None,
+        };
     }
 }
 

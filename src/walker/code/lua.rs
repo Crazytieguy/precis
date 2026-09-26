@@ -83,21 +83,33 @@ fn module_export_nodes<'a>(file: &'a SourceFile) -> Vec<Node<'a>> {
 /// Table constructors an export hands out: returned tables, and the
 /// table arguments of a returned or top-level call.
 fn export_tables(export: Node) -> Vec<Node> {
-    let expressions = match export.kind() {
-        "table_constructor" => return vec![export],
-        "function_call" => export.child_by_field_name("arguments"),
-        _ => export
-            .children(&mut export.walk())
-            .find(|child| child.kind() == "expression_list"),
-    };
-    let Some(expressions) = expressions else {
-        return Vec::new();
-    };
-    expressions
-        .named_children(&mut expressions.walk())
-        .filter(|expression| matches!(expression.kind(), "table_constructor" | "function_call"))
-        .flat_map(export_tables)
-        .collect()
+    let mut tables = Vec::new();
+    let mut pending = vec![export];
+    while let Some(node) = pending.pop() {
+        let expressions = match node.kind() {
+            "table_constructor" => {
+                tables.push(node);
+                continue;
+            }
+            "function_call" => node.child_by_field_name("arguments"),
+            _ => node
+                .children(&mut node.walk())
+                .find(|child| child.kind() == "expression_list"),
+        };
+        let Some(expressions) = expressions else {
+            continue;
+        };
+        let first = pending.len();
+        pending.extend(
+            expressions
+                .named_children(&mut expressions.walk())
+                .filter(|expression| {
+                    matches!(expression.kind(), "table_constructor" | "function_call")
+                }),
+        );
+        pending[first..].reverse();
+    }
+    tables
 }
 
 /// Top-level fn-like declarations. Tables-as-classes
