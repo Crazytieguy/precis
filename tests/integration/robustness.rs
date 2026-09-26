@@ -706,30 +706,32 @@ fn robustness_non_utf8_names_never_alias_another_entry() {
     assert!(!out.contains(OUT_OF_ROOT_MARKER), "{out}");
 }
 
+/// `words` words of prose, twelve to a line.
+fn filler_prose(words: usize) -> String {
+    let text: Vec<&str> = ["alpha", "bravo", "charlie", "delta", "echo"]
+        .into_iter()
+        .cycle()
+        .take(words)
+        .collect();
+    text.chunks(12)
+        .map(|line| line.join(" "))
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
 /// A README section cut short by the budget ends before a verbatim block
 /// or after its closer, never between: an unclosed `<pre>` or fence
 /// swallows everything rendered after it.
 #[test]
 fn robustness_readme_partial_leaves_no_block_open() {
     let temp = tempfile::tempdir().unwrap();
-    let prose = |words: usize| {
-        let text: Vec<&str> = ["alpha", "bravo", "charlie", "delta", "echo"]
-            .into_iter()
-            .cycle()
-            .take(words)
-            .collect();
-        text.chunks(12)
-            .map(|line| line.join(" "))
-            .collect::<Vec<_>>()
-            .join("\n")
-    };
     let block = |opener: &str, closer: &str| {
         format!(
             "{}\n\n{opener}\n{}\n\n{}\n{closer}\n\n{}",
-            prose(150),
-            prose(60),
-            prose(60),
-            prose(300)
+            filler_prose(150),
+            filler_prose(60),
+            filler_prose(60),
+            filler_prose(300)
         )
     };
     write(
@@ -747,4 +749,29 @@ fn robustness_readme_partial_leaves_no_block_open() {
             assert_eq!(rows(opener), rows(closer), "budget {budget}:\n{out}");
         }
     }
+}
+
+/// The same holds for a Markdown file shown only by its head.
+#[test]
+fn robustness_markdown_head_partial_leaves_no_block_open() {
+    let temp = tempfile::tempdir().unwrap();
+    write(&temp.path().join("README.md"), "# Tool\n\nA tool.\n");
+    write(
+        &temp.path().join("NOTES.md"),
+        format!(
+            "Notes\n=====\n\n{}\n\n```text\n{}\n\n{}\n```\n\n{}\n",
+            filler_prose(40),
+            filler_prose(60),
+            filler_prose(60),
+            filler_prose(100)
+        ),
+    );
+    let mut cut_inside = false;
+    for budget in (100..=1200).step_by(10) {
+        let out = render(temp.path(), budget).unwrap();
+        let rows = |marker: &str| out.lines().filter(|row| row.ends_with(marker)).count();
+        assert_eq!(rows("→```text"), rows("→```"), "budget {budget}:\n{out}");
+        cut_inside |= rows("→```text") == 1 && out.contains("→```\n  …");
+    }
+    assert!(cut_inside);
 }

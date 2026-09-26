@@ -1196,7 +1196,11 @@ fn verbatim_blocks<'a>(lines: impl IntoIterator<Item = (usize, &'a str)>) -> Vec
 /// [`verbatim_blocks`]) opens with one unit of its first and last rows,
 /// so a terminal partial that stops inside a fence or `<pre>` still
 /// shows it closed.
-fn lines_content(file: &Path, source: &Source, mut rows: Vec<usize>) -> Option<BatchContent> {
+pub(super) fn lines_content(
+    file: &Path,
+    source: &Source,
+    mut rows: Vec<usize>,
+) -> Option<BatchContent> {
     rows.sort_unstable();
     rows.dedup();
     let mut blocks = verbatim_blocks(

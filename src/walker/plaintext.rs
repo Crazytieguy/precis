@@ -1343,7 +1343,15 @@ pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
             })
             .filter(|row| shown.is_none_or(|shown| !shown.contains(row)))
             .collect();
-        let Some(content) = single_file_lines_content(&file, &source, rows) else {
+        let is_markdown = file.extension().is_some_and(|extension| {
+            extension.eq_ignore_ascii_case("md") || extension.eq_ignore_ascii_case("markdown")
+        });
+        let content = if is_markdown {
+            super::markdown::lines_content(&file, &source, rows)
+        } else {
+            single_file_lines_content(&file, &source, rows)
+        };
+        let Some(content) = content else {
             continue;
         };
         let value = path_depth_factor(&file, ctx);
