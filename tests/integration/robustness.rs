@@ -348,6 +348,14 @@ fn robustness_credential_files_render_only_their_rows() {
         ),
         ("config/creds_staging.conf", format!("password={SECRET}\n")),
         ("infra/prod.tfvars", format!("db_password = \"{SECRET}\"\n")),
+        (
+            "schema.prisma",
+            format!(
+                "datasource db {{\n  provider = \"postgresql\"\n  \
+                 url      = \"postgresql://admin:{SECRET}@db/app\"\n}}\n\n\
+                 model User {{\n  id Int @id\n}}\n"
+            ),
+        ),
         ("notes.txt", key.clone()),
         ("src/keys.rs", format!("pub const KEY: &str = \"{key}\";\n")),
         (".env.example", "API_KEY=changeme\n".to_string()),
