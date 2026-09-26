@@ -213,7 +213,9 @@ must not undo:
   front-door file weights on top measured flat or negative (2026-09-25).
   For Go, a root library file named after its package at ×1.3–1.4
   measured +0.0014–0.0017 at 3000, under the bar: a helper file named
-  after its package opens ahead of the central one. Weighting the file
+  after its package opens ahead of the central one. Re-measured after
+  whole declarations became rosters (×1.4, `package main` excluded):
+  +0.0015 at 3000, avg7 flat, with 1000/1442 down 0.002–0.003. Weighting the file
   that holds the package comment instead measured negative.
   A program's `main`, and the file's other functions when `main` has at
   most two top-level statements, are `Whole` declarations, so their
@@ -300,4 +302,11 @@ corpus, which none of these bounds touch.
   roster opens, that file's `Decl` and `Doc` batches (ratio 200–400)
   drain before the next roster. Per-language file weights and hiding
   rules in `extract` measured flat or split by fixture (2026-09-25); a
-  fix belongs in the value model.
+  fix belongs in the value model. Two value-model tries lost
+  (2026-09-25): a sibling-reference prior (how many files of the
+  directory mention a name only this file's roster lists) at −0.030 as
+  a boost and −0.011 renormalized to mean 1, since it lifts code over
+  README and manifest batches and demotes re-export hubs nothing
+  references; and a steeper roster exponent on entries (bigger rosters
+  first) at −0.008. Pinning every file beside an entry file to depth 1
+  lost −0.044: the depth discount is what keeps code below the docs.
