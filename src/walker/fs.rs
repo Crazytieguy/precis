@@ -155,7 +155,26 @@ const LISTING_HEAD_ENTRIES: usize = 40;
 /// and a long listing of tests, vendored code or data stays one batch.
 /// The head is its essential subdirectories, then its source files,
 /// largest first, then everything else, up to [`LISTING_HEAD_ENTRIES`].
+/// Decided once per directory: the listing's batches and their expansion
+/// must agree on it, and a capped source probe can answer differently
+/// later in the run.
 fn listing_head(
+    dir: &Path,
+    children: &BTreeMap<String, EntryKind>,
+    ctx: &WalkCtx,
+) -> Option<Rc<BTreeSet<String>>> {
+    if let Some(head) = ctx.fs_state.listing_heads.borrow().get(dir) {
+        return head.clone();
+    }
+    let head = ranked_listing_head(dir, children, ctx).map(Rc::new);
+    ctx.fs_state
+        .listing_heads
+        .borrow_mut()
+        .insert(dir.to_path_buf(), head.clone());
+    head
+}
+
+fn ranked_listing_head(
     dir: &Path,
     children: &BTreeMap<String, EntryKind>,
     ctx: &WalkCtx,
@@ -417,6 +436,7 @@ pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
     shape_repeats: RefCell<HashMap<PathBuf, Rc<HashSet<String>>>>,
+    listing_heads: RefCell<HashMap<PathBuf, Option<Rc<BTreeSet<String>>>>>,
 }
 
 impl FsState {
