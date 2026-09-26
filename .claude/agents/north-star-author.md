@@ -217,9 +217,8 @@ computed. Rules:
   (verifying a roster matches the directory/symbol set) and mechanical
   TOML emission of hand-decided content — never for choosing batch
   order or membership.
-- Keep ids positionally sorted (1.x before 2.x, minor ascending); a
-  draft whose array order disagrees with its id order will be rejected
-  mechanically.
+- Keep ids positionally sorted (1.x before 2.x, minor ascending). The
+  validator doesn't check this, so re-read the ids after any move.
 
 ### Authorial constraints (not validator-enforced)
 
