@@ -447,10 +447,12 @@ identity precedence from the first spine token cost 3000 −0.007.
   `PRECIS_SESSION_HOOK`, yet their update script installs the latest
   binary, and uncapped output overflows the hook cap. Drop that branch
   once those plugin installs have had time to update.
-- **Scheduling grows super-linearly at very large budgets.** Runs at
-  3000 tokens and in the plugin stay under 1.5 s on the largest
-  corpus repositories, but zig takes 19.6 s at 100k tokens and llvm
-  27 s at 1M. `Scheduler::top_ranked` rescans every eligible batch per
-  pick, and scheduling a batch drops the cached cost of every other
-  batch on its file, so a file with hundreds of batches is re-costed
-  per pick. Only the CLI reaches these budgets.
+- **Very large budgets are slow.** Runs at 3000 tokens and in the
+  plugin stay under 1.5 s on the largest corpus repositories, but zig
+  takes 12 s at 100k tokens, llvm 14 s and TypeScript 13 s at 1M.
+  Ranking is incremental (a heap re-ranking only the batches whose
+  ratio inputs changed), so what remains is parsing every file of each
+  expanded directory (nearly all of zig's time) and re-costing: scheduling a
+  batch drops the cached cost of every other batch on its file, so a
+  file with hundreds of batches is re-costed per pick (more than half of
+  TypeScript's time at 1M). Only the CLI reaches these budgets.

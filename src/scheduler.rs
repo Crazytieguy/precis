@@ -21,7 +21,8 @@
 //! is the larger of a batch's tokens and its chars converted at the two
 //! budgets' ratio (`ranking_cost`).
 
-use std::collections::{BTreeSet, HashMap, HashSet};
+use std::cmp::Ordering;
+use std::collections::{BTreeSet, BinaryHeap, HashMap, HashSet};
 use std::path::PathBuf;
 use std::rc::Rc;
 
@@ -72,6 +73,14 @@ pub struct Scheduler<W: Walker> {
     scheduled_log: Vec<(BatchId, Cost)>,
     /// Cached exact marginal cost per emitted batch.
     cost_cache: HashMap<BatchId, Cost>,
+    /// Eligible batches by ratio, best on top. A batch whose ratio
+    /// inputs change is pushed again with a new generation, and the
+    /// entries it leaves behind are dropped when they surface.
+    ranking: BinaryHeap<RankedBatch>,
+    /// Generation of each batch's live [`Self::ranking`] entry, by id.
+    rank_generation: Vec<u32>,
+    /// Batches whose ratio must be recomputed before the next pick.
+    stale: Vec<BatchId>,
     /// File → span batches touching it. Applying a batch to a file can
     /// change the synthesized `…` marker delta of every other batch
     /// touching that file, so their cached costs are dropped when one
@@ -142,6 +151,9 @@ impl<W: Walker> Scheduler<W> {
             waiting: HashMap::new(),
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
+            ranking: BinaryHeap::new(),
+            rank_generation: Vec::new(),
+            stale: Vec::new(),
             batches_by_path: HashMap::new(),
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
@@ -262,34 +274,27 @@ impl<W: Walker> Scheduler<W> {
             }
             _ => {
                 self.eligible.insert(id);
+                self.stale.push(id);
             }
         }
         self.entries.push(batch);
+        self.rank_generation.push(0);
     }
 
     // ---- exact pool ----
 
     /// Top-ranked eligible batch + its cost.
     fn top_ranked(&mut self) -> Option<(BatchId, Cost)> {
-        let mut best: Option<(f64, BatchId, Cost)> = None;
-        for &id in &self.eligible {
-            if !self.cost_cache.contains_key(&id) {
-                let content = &self.entries[id.index()].content;
-                let c = self.tree.marginal_cost(content);
-                self.cost_cache.insert(id, c);
+        self.rerank_stale();
+        while let Some(top) = self.ranking.peek() {
+            if self.eligible.contains(&top.id)
+                && top.generation == self.rank_generation[top.id.index()]
+            {
+                break;
             }
-            let exact_cost = self.cost_cache[&id];
-            let ratio = self.ranking_ratio(id);
-            let better = best.as_ref().is_none_or(|(br, b_id, _)| {
-                ratio > *br
-                    || (ratio == *br
-                        && self.entries[id.index()].key < self.entries[b_id.index()].key)
-            });
-            if better {
-                best = Some((ratio, id, exact_cost));
-            }
+            self.ranking.pop();
         }
-        let (_, best, cost) = best?;
+        let best = self.ranking.peek()?.id;
         if self.spine_listing_tokens >= SPINE_LISTING_TOKEN_LIMIT
             && self.spine_listing(best) == Some(SpineListing::Below)
             && let Some(identity) = self
@@ -301,7 +306,33 @@ impl<W: Walker> Scheduler<W> {
         {
             return Some((identity, self.cost_cache[&identity]));
         }
-        Some((best, cost))
+        Some((best, self.cost_cache[&best]))
+    }
+
+    /// Pushes every stale eligible batch into the ranking at its
+    /// current ratio, costing it first if its cost isn't cached.
+    fn rerank_stale(&mut self) {
+        let mut stale = std::mem::take(&mut self.stale);
+        stale.sort_unstable();
+        stale.dedup();
+        for id in stale {
+            if !self.eligible.contains(&id) {
+                continue;
+            }
+            let entry = &self.entries[id.index()];
+            self.cost_cache
+                .entry(id)
+                .or_insert_with(|| self.tree.marginal_cost(&entry.content));
+            let ratio = self.ranking_ratio(id);
+            let generation = &mut self.rank_generation[id.index()];
+            *generation += 1;
+            self.ranking.push(RankedBatch {
+                ratio,
+                key: self.entries[id.index()].key.clone(),
+                id,
+                generation: *generation,
+            });
+        }
     }
 
     /// `id`'s value per unit of cost, with the adjustments that depend on
@@ -394,9 +425,13 @@ impl<W: Walker> Scheduler<W> {
         self.scheduled.insert(id);
         self.eligible.remove(&id);
         if let Some(released) = self.waiting.remove(&self.entries[id.index()].key) {
-            self.eligible.extend(released);
+            self.eligible.extend(&released);
+            self.stale.extend(released);
         }
-        self.dominant_file_entered |= self.dominant_file_batches.contains(&id);
+        if !self.dominant_file_entered && self.dominant_file_batches.contains(&id) {
+            self.dominant_file_entered = true;
+            self.stale.extend(&self.dominant_file_batches);
+        }
         self.scheduled_log.push((id, cost));
         self.consumed = self.consumed + cost;
         entry_content
@@ -444,12 +479,15 @@ impl<W: Walker> Scheduler<W> {
         // cost for batches touching the same files — the apply may
         // have changed their synthesized-marker deltas. Costs of
         // batches on untouched files stay stable under walker
-        // invariants (line-disjoint outside predecessor chains).
+        // invariants (line-disjoint outside predecessor chains). A code
+        // batch's spans lie in its key's file, so re-ranking these also
+        // covers that file's `Body` batches' new breadth pressure.
         self.cost_cache.remove(&id);
         if let BatchContent::Lines { spans, .. } = &entry_content {
             for run in spans.chunk_by(|a, b| a.path == b.path) {
                 for other in self.batches_by_path.get(&run[0].path).into_iter().flatten() {
                     self.cost_cache.remove(other);
+                    self.stale.push(*other);
                 }
             }
         }
@@ -502,3 +540,35 @@ impl<W: Walker> Scheduler<W> {
         set
     }
 }
+
+/// A `Scheduler::ranking` entry. Orders by ratio, then by key with the
+/// smaller key ranking higher. Ratios are never NaN, so `total_cmp`
+/// agrees with the float order.
+struct RankedBatch {
+    ratio: f64,
+    key: BatchKey,
+    id: BatchId,
+    generation: u32,
+}
+
+impl Ord for RankedBatch {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.ratio
+            .total_cmp(&other.ratio)
+            .then_with(|| other.key.cmp(&self.key))
+    }
+}
+
+impl PartialOrd for RankedBatch {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl PartialEq for RankedBatch {
+    fn eq(&self, other: &Self) -> bool {
+        self.cmp(other) == Ordering::Equal
+    }
+}
+
+impl Eq for RankedBatch {}
