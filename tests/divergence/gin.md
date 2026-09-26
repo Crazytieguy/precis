@@ -229,7 +229,10 @@ Score(3000)=0.590 I=0.652 C=0.533 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 9605 | 43 | Code::CodeKey { rung: Doc, file: context.go, decl: 135, sub: 0, line: 1309 } |  |  | 0.480 |
 | ns | 9624 |  | 172 | Run modes: GIN_MODE, the three mode constants, and the default writers | 6.1 |  | 0.476 |
 | ns | 9695 |  | 71 | mode.go: complete function roster | 6.2 | 6.1 | 0.474 |
-| walker |  | 9970 | 365 | Code::CodeKey { rung: Names, file: errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.474 |
+| walker |  | 9861 | 256 | Code::CodeKey { rung: Names, file: errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.474 |
+| walker |  | 9890 | 29 | Code::CodeKey { rung: Decl, file: errors.go, decl: 3, sub: 0, line: 32 } |  |  | 0.474 |
+| walker |  | 9961 | 71 | Code::CodeKey { rung: Decl, file: errors.go, decl: 2, sub: 0, line: 18 } |  |  | 0.474 |
+| walker |  | 9971 | 10 | Code::CodeKey { rung: Doc, file: errors.go, decl: 3, sub: 0, line: 32 } |  |  | 0.474 |
 | ns | 9972 |  | 277 | Built-in middleware and helper constructors: complete package-level roster | 6.3 |  | 0.466 |
-| walker |  | 9999 | 29 | Code::CodeKey { rung: Decl, file: errors.go, decl: 3, sub: 0, line: 32 } |  |  | 0.466 |
-| walker |  | 9999 | 0 | Code::CodeKey { rung: Decl, file: errors.go, decl: 2, sub: 0, line: 18 } |  |  | 0.466 |
+| walker |  | 9982 | 11 | Code::CodeKey { rung: Doc, file: errors.go, decl: 8, sub: 0, line: 82 } |  |  | 0.466 |
+| walker |  | 9993 | 11 | Code::CodeKey { rung: Doc, file: errors.go, decl: 9, sub: 0, line: 87 } |  |  | 0.466 |

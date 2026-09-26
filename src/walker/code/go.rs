@@ -10,8 +10,8 @@
 //! declarations. A `Deprecated:` doc paragraph
 //! joins the head, like a directive. Outside `package main`, what
 //! no importer can name (a lower-case declaration, spec or field, or a
-//! method on a lower-case type no exported function returns) is hidden,
-//! unless its file exports nothing. A file whose only exports are such
+//! method on a lower-case type) is hidden, unless its file exports
+//! nothing. A file whose only exports are such
 //! methods (an operator's `Evaluate`, an iterator's `Next`) lists those
 //! methods, not its private helpers. An exported struct with no exported
 //! field shows its opening and closing rows only. An interface shows
@@ -84,13 +84,12 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let mut api_only = false;
     let mut functions = Vec::new();
     let declarations = top_level_declarations(root);
-    let handed_out = handed_out_types(&declarations, file);
     let reaches_something = declarations
         .iter()
-        .any(|declaration| is_reachable(*declaration, file, &handed_out));
+        .any(|declaration| is_reachable(*declaration, file));
     let admits_callable = |node: Node| {
         if reaches_something {
-            is_reachable(node, file, &handed_out)
+            is_reachable(node, file)
         } else {
             declares_exported(node, file)
         }
@@ -144,46 +143,16 @@ fn is_exported(name: &str) -> bool {
     name.chars().next().is_some_and(char::is_uppercase)
 }
 
-/// An exported spec or function, or an exported method whose receiver
-/// type an importer can reach: an exported type, or one in `handed_out`.
-fn is_reachable(node: Node, file: &SourceFile, handed_out: &[&str]) -> bool {
+/// An exported spec or function, or an exported method on an exported
+/// type.
+fn is_reachable(node: Node, file: &SourceFile) -> bool {
     declares_exported(node, file)
         && node.child_by_field_name("receiver").is_none_or(|receiver| {
             let parameter = receiver.named_children(&mut receiver.walk()).next();
             parameter
                 .and_then(|parameter| base_type_name(parameter.child_by_field_name("type")?))
-                .is_some_and(|name| {
-                    let name = file.text(name);
-                    is_exported(name) || handed_out.contains(&name)
-                })
+                .is_some_and(|name| is_exported(file.text(name)))
         })
-}
-
-/// The type names in the results of the file's exported functions and
-/// methods: an importer calls methods on what a constructor returns even
-/// when it cannot name the type.
-fn handed_out_types<'a>(declarations: &[Node], file: &'a SourceFile) -> Vec<&'a str> {
-    let mut names = Vec::new();
-    for declaration in declarations {
-        if !matches!(
-            declaration.kind(),
-            "function_declaration" | "method_declaration"
-        ) || !declares_exported(*declaration, file)
-        {
-            continue;
-        }
-        let mut pending: Vec<Node> = declaration
-            .child_by_field_name("result")
-            .into_iter()
-            .collect();
-        while let Some(node) = pending.pop() {
-            if node.kind() == "type_identifier" {
-                names.push(file.text(node));
-            }
-            pending.extend(node.named_children(&mut node.walk()));
-        }
-    }
-    names
 }
 
 /// The type name under pointers, parentheses, type arguments and a
@@ -508,7 +477,6 @@ func NewPool() (*pool, error) { return nil, nil }
                 "Whole name [26, 27] head [26, 29] doc [] body [[27]]",
                 "Callable name [35] head [35] doc [] body []",
                 "Callable name [39] head [39] doc [] body []",
-                "Callable name [45] head [45] doc [] body []",
                 "Callable name [47] head [47] doc [] body []",
             ]
         );
