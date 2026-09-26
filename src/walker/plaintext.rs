@@ -21,18 +21,12 @@
 //! of every listed file they leave untouched ([`floor_batches`]).
 
 use std::collections::{HashMap, HashSet};
-use std::io::Read;
 use std::path::Path;
-use std::sync::Arc;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::fs_util::list_dir;
-use crate::render::Source;
 
-use super::{
-    WalkCtx, gated_read_source, gated_whole_file_content, path_depth_factor,
-    single_file_lines_content,
-};
+use super::{WalkCtx, gated_whole_file_content, path_depth_factor, single_file_lines_content};
 
 /// Line cap on a `Whole` plaintext batch.
 const PLAINTEXT_LINE_CAP: usize = 60;
@@ -1185,7 +1179,7 @@ fn is_annotation_only(trimmed: &str) -> bool {
 /// its content rows that are new. Block closers and
 /// [bare words](is_bare_word) are never held.
 fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, class: Class) {
-    let Some(source) = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE) else {
+    let Some(source) = ctx.read_source_within(file, SOURCE_TEXT_BYTE_GATE) else {
         return;
     };
     if super::code::has_generator_banner(&source)
@@ -1377,7 +1371,8 @@ fn classify_file(dir: &Path, name: &str, file: &Path, ctx: &WalkCtx) -> Option<C
         return Some(Class::Manifest);
     }
     if super::code::Language::from_path(file).is_some() {
-        return gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)
+        return ctx
+            .read_source_within(file, SOURCE_TEXT_BYTE_GATE)
             .is_some_and(|source| super::code::is_cpp_header(file, &source))
             .then_some(Class::LanguageSource);
     }
@@ -1387,7 +1382,8 @@ fn classify_file(dir: &Path, name: &str, file: &Path, ctx: &WalkCtx) -> Option<C
     classify_source_text(name).or_else(|| {
         (!name.contains('.')
             && !matches!(name, "gradlew" | "mvnw")
-            && gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)
+            && ctx
+                .read_source_within(file, SOURCE_TEXT_BYTE_GATE)
                 .is_some_and(|source| source.starts_with("#!")))
         .then_some(Class::FlatText)
     })
@@ -1401,7 +1397,7 @@ fn classify_file(dir: &Path, name: &str, file: &Path, ctx: &WalkCtx) -> Option<C
 /// renders whatever of its first [`SOURCE_TEXT_BYTE_GATE`] no batch shows;
 /// any other file stays a name when it is hidden, a license text, derived
 /// or machine-generated (and, like every read, when it is
-/// [refused](super::is_refused)).
+/// refused ([`crate::render::SourceCache::get`])).
 pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
     let mut shown: HashMap<&Path, HashSet<usize>> = HashMap::new();
     let mut listed: Vec<(&Path, &str)> = Vec::new();
@@ -1450,7 +1446,7 @@ pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
         } else {
             PLAINTEXT_BYTE_GATE
         };
-        let Some(source) = file_head(&file, ctx, head_bytes) else {
+        let Some(source) = ctx.source_cache().get_head(&file, head_bytes) else {
             continue;
         };
         if !is_named && is_machine_generated_text(&source) {
@@ -1496,40 +1492,6 @@ fn is_hidden(file: &Path, ctx: &WalkCtx) -> bool {
             .components()
             .any(|component| component.as_os_str().as_encoded_bytes().starts_with(b"."))
     })
-}
-
-/// `file`'s source as far as `head_bytes` reach into it: whole when a
-/// walker has already read it or it fits, else only its head. The head runs
-/// a few bytes past `head_bytes` so the line the cut falls in stays too long
-/// to select. Like a whole read, it holds no NUL byte and decodes bytes that
-/// aren't UTF-8 as U+FFFD. A head is cached under `file`'s own path, where
-/// the renderer reads it; no walker reads it as the whole file only because
-/// the floor runs once, after the pool has run dry and every expansion is
-/// done.
-fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source>> {
-    if let Some(source) = ctx.source_cache().cached(file) {
-        return Some(source);
-    }
-    let mut head = Vec::new();
-    std::fs::File::open(file)
-        .ok()?
-        .take((head_bytes + 4) as u64)
-        .read_to_end(&mut head)
-        .ok()?;
-    if head.contains(&0) {
-        return None;
-    }
-    let cut = head.len() > head_bytes;
-    let head = String::from_utf8_lossy(
-        head.strip_prefix(crate::render::UTF8_BYTE_ORDER_MARK)
-            .unwrap_or(&head),
-    );
-    if cut && super::head_holds_private_key(&head) {
-        return None;
-    }
-    ctx.source_cache()
-        .insert(file.to_path_buf(), Arc::from(head));
-    ctx.source_cache().cached(file)
 }
 
 /// The ops surface (how the project is built, deployed and versioned) and
@@ -1649,7 +1611,7 @@ fn recipe_roster_content(
     is_makefile: bool,
     ctx: &WalkCtx,
 ) -> Option<crate::content::BatchContent> {
-    let source = gated_read_source(file, ctx, BUILD_BYTE_GATE)?;
+    let source = ctx.read_source_within(file, BUILD_BYTE_GATE)?;
     if source.line_count() > BUILD_LINE_CAP {
         return None;
     }
@@ -1718,7 +1680,7 @@ fn root_makefile_targets(
     if !is_makefile_name(name) || ctx.depth_from_root(file) != 1 {
         return None;
     }
-    let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
+    let source = ctx.read_source_within(file, SOURCE_TEXT_BYTE_GATE)?;
     let mut rows = Vec::new();
     let mut declaration = Vec::new();
     let mut declaration_targets = Vec::new();

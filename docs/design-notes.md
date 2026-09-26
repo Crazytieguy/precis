@@ -164,25 +164,26 @@ never reached the ones answer keys rank.
   a regular file of at most `MAX_SOURCE_BYTES` with no NUL byte,
   decoding bytes that aren't UTF-8 as U+FFFD. Everything the cache
   holds, text and line index, is charged to one run-wide
-  `SOURCE_CACHE_BYTE_CAP`, reads (`get`) and handed-in heads (`insert`)
-  alike: the parse cap alone left the reads walkers make without
-  parsing (the C++-header probe, fallback-language and prose files)
-  unbounded. The spine survey reads its
-  candidates through `read_source` too; the floor's head read
-  (`plaintext::file_head`) has its own capped reader but sees only
-  listed files. Workspace membership
+  `SOURCE_CACHE_BYTE_CAP`, whole files and the floor's heads
+  (`get_head`) alike: the parse cap alone left the reads walkers make
+  without parsing (the C++-header probe, fallback-language and prose
+  files) unbounded. Every read, whole, gated by a caller's byte limit
+  (`get_within`) or a head, goes through the one reader
+  (`SourceCache::read`). The spine survey reads its candidates through
+  `read_source` too; the floor reads heads of listed files only.
+  Workspace membership
   canonicalizes member manifest paths without reading them, and the TS
   engine's nearest-`package.json` probe is a stat, which follows links
   but reads nothing.
 - **Credential files never render, whichever walker reads them.**
-  `walker::is_refused` — a credential file name (of the path or its link
-  target), or a PEM/PGP private-key block with key material under its
-  armor — is applied by `SourceCache` to everything it reads or is
-  handed, so a refused file lists by name only — a single-file walk of
-  one included, since naming the file doesn't make its secrets safe to
-  paste; no walker carries a check of its own, except that the floor,
-  which reads only a file's head, also refuses a head cut off inside a
-  private-key armor (`walker::head_holds_private_key`). The name rule exempts samples (`*.example`,
+  A credential file name (of the path or its link target,
+  `walker::is_refused_by_name`) or a PEM/PGP private-key block with key
+  material under its armor (`walker::holds_private_key`) is refused by
+  `SourceCache` for everything it reads, so a refused file lists by name
+  only — a single-file walk of one included, since naming the file
+  doesn't make its secrets safe to paste; no walker carries a check of
+  its own. A head cut off inside a private-key armor counts as holding
+  one. The name rule exempts samples (`*.example`,
   `*.sample`, `*.template`, `*.dist`), source code and documents, which
   are about credentials rather than holding them. A URL's password
   (`scheme://user:PASSWORD@host`) and the quoted literal of a

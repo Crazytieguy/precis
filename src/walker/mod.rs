@@ -263,8 +263,14 @@ impl WalkCtx {
     /// without listing it (a workspace manifest, an `__init__.py`) is held
     /// to the listing's rules — and see [`SourceCache::get`].
     pub fn read_source(&self, path: &Path) -> Option<Arc<Source>> {
+        self.read_source_within(path, MAX_SOURCE_BYTES)
+    }
+
+    /// [`Self::read_source`] of a file at most `byte_gate` long
+    /// ([`SourceCache::get_within`]).
+    pub fn read_source_within(&self, path: &Path, byte_gate: usize) -> Option<Arc<Source>> {
         lists_file(path, &self.dir_filter)
-            .then(|| self.source_cache.get(path))
+            .then(|| self.source_cache.get_within(path, byte_gate))
             .flatten()
     }
 
@@ -294,7 +300,7 @@ impl WalkCtx {
     /// read, so directories expanded later in the run parse less.
     pub(in crate::walker) fn read_for_parse(&self, path: &Path) -> Option<Arc<Source>> {
         let left = self.parse_bytes_left.get();
-        let source = gated_read_source(path, self, left)?;
+        let source = self.read_source_within(path, left)?;
         self.parse_bytes_left.set(left.saturating_sub(source.len()));
         Some(source)
     }
@@ -436,17 +442,12 @@ pub(crate) fn single_file_lines_content(
     })
 }
 
-/// Whether precis refuses to show any of `text`, read from `path`: a
+/// Whether precis refuses to show `path` without reading it: a
 /// credential file, by its own name or its link target's
-/// ([`plaintext::is_credential_name`]), text holding a private key, or a
-/// link to a file in its own directory (`CLAUDE.md -> AGENTS.md`), whose
-/// text shows under the target's row. [`SourceCache`] applies it to
-/// everything it holds, so no walker can show such a file.
-pub(crate) fn is_refused(path: &Path, text: &str) -> bool {
-    is_refused_by_name(path) || holds_private_key(text)
-}
-
-/// The half of [`is_refused`] that needs no read.
+/// ([`plaintext::is_credential_name`]), or a link to a file in its own
+/// directory (`CLAUDE.md -> AGENTS.md`), whose text shows under the
+/// target's row. [`SourceCache`] applies it, and [`holds_private_key`]
+/// to the text, to everything it reads, so no walker can show such a file.
 pub(crate) fn is_refused_by_name(path: &Path) -> bool {
     plaintext::is_credential_name(path)
         || path.canonicalize().is_ok_and(|target| {
@@ -467,8 +468,10 @@ pub(crate) fn is_refused_by_name(path: &Path) -> bool {
 /// header alone (a parser's constant, a documented placeholder) holds
 /// no key, whatever long token (a SHA-256 hex digest) follows it. A
 /// block with no closing armor counts when its first line past the armor
-/// headers is a whole armor line of base64.
-pub(crate) fn holds_private_key(text: &str) -> bool {
+/// headers is a whole armor line of base64, or at all when `text` was
+/// `cut` from the start of a longer file, since the key material may
+/// follow the cut.
+pub(crate) fn holds_private_key(text: &str, cut: bool) -> bool {
     let is_base64 = |ch: char| ch.is_ascii_alphanumeric() || ch == '+' || ch == '/';
     text.split("-----BEGIN ").skip(1).any(|block| {
         let Some((label, body)) = block.split_once("-----") else {
@@ -481,55 +484,29 @@ pub(crate) fn holds_private_key(text: &str) -> bool {
             Some((body, _)) => body
                 .split(|ch: char| !is_base64(ch))
                 .any(|run| run.len() >= 64),
-            None => body
-                .lines()
-                .skip(1)
-                .map(str::trim)
-                .find(|line| !line.is_empty() && !line.contains(':'))
-                .is_some_and(|line| {
-                    line.len() >= 64 && line.chars().all(|ch| is_base64(ch) || ch == '=')
-                }),
+            None => {
+                cut || body
+                    .lines()
+                    .skip(1)
+                    .map(str::trim)
+                    .find(|line| !line.is_empty() && !line.contains(':'))
+                    .is_some_and(|line| {
+                        line.len() >= 64 && line.chars().all(|ch| is_base64(ch) || ch == '=')
+                    })
+            }
         }
     })
 }
 
-/// [`holds_private_key`] for `head`, the start of a longer file: an
-/// armor header naming a private key that the head cuts off before its
-/// closing armor may open key material, so it counts too.
-pub(crate) fn head_holds_private_key(head: &str) -> bool {
-    holds_private_key(head)
-        || head.split("-----BEGIN ").skip(1).any(|block| {
-            !block.contains("-----END ")
-                && block
-                    .split_once("-----")
-                    .is_some_and(|(label, _)| label.contains("PRIVATE KEY"))
-        })
-}
-
-/// Cached read behind an FS-metadata byte pre-flight — skips the read
-/// (and returns `None`) when the size hint alone disqualifies the
-/// file. Bytes-per-line multipliers are per-format — callers keep
-/// their own gate constants.
-pub(crate) fn gated_read_source(
-    file: &Path,
-    ctx: &WalkCtx,
-    byte_gate: usize,
-) -> Option<Arc<Source>> {
-    if std::fs::metadata(file).is_ok_and(|m| m.len() as usize > byte_gate) {
-        return None;
-    }
-    ctx.read_source(file)
-}
-
-/// Whole-file content behind a size gate: [`gated_read_source`] byte
-/// pre-flight, then a line cap on the read source.
+/// Whole-file content of a file at most `byte_gate` long
+/// ([`WalkCtx::read_source_within`]) and `line_cap` lines.
 pub(crate) fn gated_whole_file_content(
     file: &Path,
     ctx: &WalkCtx,
     byte_gate: usize,
     line_cap: usize,
 ) -> Option<BatchContent> {
-    let source = gated_read_source(file, ctx, byte_gate)?;
+    let source = ctx.read_source_within(file, byte_gate)?;
     if source.line_count() > line_cap {
         return None;
     }
@@ -639,7 +616,7 @@ mod tests {
             format!("-----BEGIN RSA PRIVATE KEY-----\n{body}\n{body}\n"),
             format!("-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: GnuPG v2\n\n{body}\n"),
         ] {
-            assert!(holds_private_key(&text), "{text}");
+            assert!(holds_private_key(&text, false), "{text}");
         }
         for text in [
             "Paste your PRIVATE KEY into the settings page.\n".to_string(),
@@ -653,7 +630,7 @@ mod tests {
             format!("-----BEGIN CERTIFICATE-----\n{body}\n"),
             "-----BEGIN PRIVATE KEY-----\n<your key here>\n".to_string(),
         ] {
-            assert!(!holds_private_key(&text), "{text}");
+            assert!(!holds_private_key(&text, false), "{text}");
         }
     }
 
@@ -682,19 +659,19 @@ mod tests {
     fn walker_mod_a_head_cut_inside_a_private_key_holds_one() {
         let body = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7VJTUt9Us8cKj";
         let head = format!("-----BEGIN RSA PRIVATE KEY-----\n{}", "MIIE".repeat(8));
-        assert!(!holds_private_key(&head));
+        assert!(!holds_private_key(&head, false));
         for head in [
             head,
             format!("-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: GnuPG v2\n\n{body}\n"),
             format!("> -----BEGIN RSA PRIVATE KEY-----\n> {body}\n> "),
         ] {
-            assert!(head_holds_private_key(&head), "{head}");
+            assert!(holds_private_key(&head, true), "{head}");
         }
         for head in [
             "-----BEGIN CERTIFICATE-----\nMIIE\n-----END CERTIFICATE-----\n# notes\n".to_string(),
             format!("-----BEGIN CERTIFICATE-----\n{body}\n"),
         ] {
-            assert!(!head_holds_private_key(&head), "{head}");
+            assert!(!holds_private_key(&head, true), "{head}");
         }
     }
 
