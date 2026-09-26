@@ -23,23 +23,6 @@ Cargo.toml
   15→[features]
   16→# Use the nightly feature windows_process_extensions_main_thread_handle
   17→windows_process_extensions_main_thread_handle = []
-  19→[dependencies]
-  20→colored = "2.1"
-  21→indicatif = "=0.17.4"
-  22→statistical = "1.0"
-  23→csv = "1.3"
-  24→serde = { version = "1.0", features = ["derive"] }
-  25→serde_json = "1.0"
-  26→rust_decimal = "1.36"
-  27→rand = "0.8"
-  28→shell-words = "1.0"
-  29→thiserror = "2.0"
-  30→anyhow = "1.0"
-  31→
-  32→[target.'cfg(not(windows))'.dependencies]
-  33→libc = "0.2"
-  34→
-  35→[target.'cfg(windows)'.dependencies]
   …
 LICENSE-APACHE
 LICENSE-MIT
@@ -290,6 +273,24 @@ src/
     195→}
     …
     198→pub struct Options {
+    199→    /// Upper and lower bound for the number of benchmark runs
+    200→    pub run_bounds: RunBounds,
+    201→
+    202→    /// Number of warmup runs
+    203→    pub warmup_count: u64,
+    204→
+    205→    /// Minimum benchmarking time
+    206→    pub min_benchmarking_time: Second,
+    207→
+    208→    /// Whether or not to ignore non-zero exit codes
+    209→    pub command_failure_action: CmdFailureAction,
+    210→
+    211→    // Command to use as a reference for relative speed comparison
+    212→    pub reference_command: Option<String>,
+    213→
+    214→    // Name of the reference command
+    215→    pub reference_name: Option<String>,
+    216→
     …
     251→impl Default for Options {
     252→    fn default() -> Options {

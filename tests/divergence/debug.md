@@ -1,4 +1,4 @@
-Score(3000)=0.700 I=0.852 C=0.575 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.701/0.596/0.674/0.700/0.613/0.629/0.668
+Score(3000)=0.647 I=0.837 C=0.500 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.701/0.574/0.552/0.647/0.613/0.629/0.668
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -27,44 +27,44 @@ Score(3000)=0.700 I=0.852 C=0.575 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 1071 | 163 | Code::CodeKey { rung: Names, file: src/browser.js, decl: 0, sub: 0, line: 0 } |  |  | 0.650 |
 | walker |  | 1169 | 98 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.651 |
 | ns | 1229 |  | 168 | src/node.js — the node adapter's export contract | 2.4 |  | 0.582 |
-| walker |  | 1284 | 115 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.583 |
-| ns | 1343 |  | 114 | src/browser.js — the browser adapter's export contract | 2.5 |  | 0.575 |
-| walker |  | 1487 | 203 | Code::CodeKey { rung: Names, file: src/node.js, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
-| walker |  | 1512 | 25 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 3, sub: 0, line: 124 } |  |  | 0.598 |
-| ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.595 |
-| walker |  | 1559 | 47 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 1, sub: 0, line: 18 } |  |  | 0.605 |
-| walker |  | 1574 | 15 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 2, sub: 0, line: 27 } |  |  | 0.605 |
-| walker |  | 1612 | 38 | Code::CodeKey { rung: Doc, file: src/common.js, decl: 1, sub: 0, line: 7 } |  |  | 0.613 |
-| walker |  | 1621 | 9 | Code::CodeKey { rung: Body, file: src/node.js, decl: 8, sub: 0, line: 220 } |  |  | 0.613 |
-| ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.617 |
-| walker |  | 1656 | 35 | Code::CodeKey { rung: Names, file: src/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.619 |
-| walker |  | 1690 | 34 | Code::CodeKey { rung: Decl, file: src/index.js, decl: 1, sub: 0, line: 6 } |  |  | 0.639 |
-| walker |  | 1729 | 39 | Code::CodeKey { rung: Doc, file: src/index.js, decl: 1, sub: 0, line: 6 } |  |  | 0.680 |
-| ns | 1802 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.694 |
-| walker |  | 1855 | 126 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.698 |
-| walker |  | 1984 | 129 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.701 |
-| ns | 1988 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.673 |
-| walker |  | 2151 | 167 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.677 |
-| ns | 2155 |  | 167 | README: wildcard and exclusion syntax for `DEBUG` | 3.3 |  | 0.689 |
-| walker |  | 2180 | 29 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 4, sub: 0, line: 155 } |  |  | 0.689 |
-| ns | 2217 |  | 62 | README: every sub-`##` heading (`###`/`####`/`#####`) | 3.4 |  | 0.678 |
-| ns | 2438 |  | 221 | README: the canonical usage example | 3.5 |  | 0.644 |
-| walker |  | 2451 | 271 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.703 |
-| ns | 2645 |  | 207 | README: namespace colors — when they turn on, per environment | 3.6 |  | 0.685 |
-| walker |  | 2679 | 228 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.685 |
-| ns | 2843 |  | 198 | README: namespace naming conventions + the `DEBUG_*` → `util.inspect` options note | 3.7 |  | 0.691 |
-| walker |  | 2896 | 217 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.691 |
-| walker |  | 2928 | 32 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 6, sub: 0, line: 193 } |  |  | 0.691 |
-| ns | 2937 |  | 94 | README: checking and forcing `debug.enabled` | 3.8 |  | 0.700 |
-| ns | 3063 |  | 126 | README: `log.extend()` for sub-namespaces | 3.9 |  | 0.709 |
-| walker |  | 3134 | 206 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 0, line: 27 } |  |  | 0.709 |
-| walker |  | 3149 | 15 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 3, sub: 0, line: 27 } |  |  | 0.709 |
-| ns | 3188 |  | 125 | README: enabling debug dynamically via `enable()` / `disable()` | 3.10 |  | 0.687 |
-| walker |  | 3358 | 209 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 1, line: 27 } |  |  | 0.687 |
+| ns | 1343 |  | 114 | src/browser.js — the browser adapter's export contract | 2.5 |  | 0.574 |
+| walker |  | 1375 | 206 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 0, line: 27 } |  |  | 0.574 |
+| ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.544 |
+| walker |  | 1584 | 209 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 1, line: 27 } |  |  | 0.544 |
+| ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.552 |
+| walker |  | 1792 | 208 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 2, line: 27 } |  |  | 0.552 |
+| ns | 1802 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.573 |
+| walker |  | 1930 | 138 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 3, line: 27 } |  |  | 0.573 |
+| ns | 1988 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.551 |
+| walker |  | 2045 | 115 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.552 |
+| walker |  | 2060 | 15 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 3, sub: 0, line: 27 } |  |  | 0.552 |
+| ns | 2155 |  | 167 | README: wildcard and exclusion syntax for `DEBUG` | 3.3 |  | 0.535 |
+| ns | 2217 |  | 62 | README: every sub-`##` heading (`###`/`####`/`#####`) | 3.4 |  | 0.526 |
+| walker |  | 2263 | 203 | Code::CodeKey { rung: Names, file: src/node.js, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
+| walker |  | 2288 | 25 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 3, sub: 0, line: 124 } |  |  | 0.565 |
+| walker |  | 2335 | 47 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 1, sub: 0, line: 18 } |  |  | 0.573 |
+| walker |  | 2350 | 15 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 2, sub: 0, line: 27 } |  |  | 0.573 |
+| walker |  | 2388 | 38 | Code::CodeKey { rung: Doc, file: src/common.js, decl: 1, sub: 0, line: 7 } |  |  | 0.579 |
+| walker |  | 2397 | 9 | Code::CodeKey { rung: Body, file: src/node.js, decl: 8, sub: 0, line: 220 } |  |  | 0.579 |
+| walker |  | 2432 | 35 | Code::CodeKey { rung: Names, file: src/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.582 |
+| ns | 2438 |  | 221 | README: the canonical usage example | 3.5 |  | 0.553 |
+| walker |  | 2466 | 34 | Code::CodeKey { rung: Decl, file: src/index.js, decl: 1, sub: 0, line: 6 } |  |  | 0.570 |
+| walker |  | 2505 | 39 | Code::CodeKey { rung: Doc, file: src/index.js, decl: 1, sub: 0, line: 6 } |  |  | 0.604 |
+| walker |  | 2631 | 126 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.607 |
+| ns | 2645 |  | 207 | README: namespace colors — when they turn on, per environment | 3.6 |  | 0.591 |
+| walker |  | 2760 | 129 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.594 |
+| ns | 2843 |  | 198 | README: namespace naming conventions + the `DEBUG_*` → `util.inspect` options note | 3.7 |  | 0.603 |
+| walker |  | 2927 | 167 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.635 |
+| ns | 2937 |  | 94 | README: checking and forcing `debug.enabled` | 3.8 |  | 0.647 |
+| walker |  | 2956 | 29 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 4, sub: 0, line: 155 } |  |  | 0.647 |
+| ns | 3063 |  | 126 | README: `log.extend()` for sub-namespaces | 3.9 |  | 0.660 |
+| ns | 3188 |  | 125 | README: enabling debug dynamically via `enable()` / `disable()` | 3.10 |  | 0.639 |
+| walker |  | 3227 | 271 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.687 |
 | ns | 3368 |  | 180 | README: `enable(namespaces)` / `disable()` contract and the round-trip caveat | 3.11 |  | 0.666 |
+| walker |  | 3455 | 228 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.666 |
 | ns | 3558 |  | 190 | README: adding a custom formatter | 3.12 |  | 0.646 |
-| walker |  | 3566 | 208 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 2, line: 27 } |  |  | 0.646 |
-| walker |  | 3704 | 138 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 3, sub: 3, line: 27 } |  |  | 0.646 |
+| walker |  | 3672 | 217 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.646 |
+| walker |  | 3704 | 32 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 6, sub: 0, line: 193 } |  |  | 0.646 |
 | ns | 3730 |  | 172 | README: redirecting output by overriding `log` | 3.13 |  | 0.628 |
 | walker |  | 3740 | 36 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 5, sub: 0, line: 149 } |  |  | 0.628 |
 | walker |  | 3777 | 37 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 5, sub: 0, line: 167 } |  |  | 0.628 |

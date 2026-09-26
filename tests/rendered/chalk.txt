@@ -81,18 +81,8 @@ readme.md
   112→## API
   113→
   114→### chalk.`<style>[.<style>...](string, [string...])`
-  115→
-  116→Example: `chalk.red.bold.underline('Hello', 'world');`
-  117→
-  118→Chain [styles](#styles) and call the last one as a method with a string argument. Order doesn't matter, and later styles take precedent in case of a conflict. This simply means that `chalk.red.yellow.green` is equivalent to `chalk.green`.
-  119→
-  120→Multiple arguments will be separated by space.
-  121→
+  …
   122→### chalk.level
-  123→
-  124→Specifies the level of color support.
-  125→
-  126→Color support is automatically detected, but you can override it by setting the `level` property. You should however only do this in your own code as it applies globally to all Chalk consumers.
   …
   143→### supportsColor
   …
@@ -109,15 +99,6 @@ readme.md
   205→### Background colors
   …
   224→## 256 and Truecolor color support
-  225→
-  226→Chalk supports 256 colors and [Truecolor](https://github.com/termstandard/colors) (16 million colors) on supported terminal apps.
-  227→
-  228→Colors are downsampled from 16 million RGB values to an ANSI color format that is supported by the terminal emulator (or by specifying `{level: n}` as a Chalk option). For example, Chalk configured to run at level 1 (basic color support) will downsample an RGB value of #FF0000 (red) to 31 (ANSI escape for red).
-  229→
-  230→Examples:
-  231→
-  232→- `chalk.hex('#DEADED').underline('Hello, world!')`
-  233→- `chalk.rgb(15, 100, 204).inverse('Hello!')`
   …
   246→## Browser support
   247→
@@ -152,9 +133,7 @@ source/
     23→	*/
     24→	readonly level?: ColorSupportLevel;
     25→}
-    27→/**
-    28→Return a new Chalk instance.
-    29→*/
+    …
     30→export const Chalk: new (options?: Options) => ChalkInstance; // eslint-disable-line @typescript-eslint/naming-convention
     31→
     32→export interface ChalkInstance {
@@ -184,6 +163,93 @@ source/
     56→	```
     57→	*/
     58→	rgb: (red: number, green: number, blue: number) => this;
+    60→	/**
+    61→	Use HEX value to set text color.
+    62→
+    63→	@param color - Hexadecimal value representing the desired color.
+    64→
+    65→	@example
+    66→	```
+    67→	import chalk from 'chalk';
+    68→
+    69→	chalk.hex('#DEADED');
+    70→	```
+    71→	*/
+    72→	hex: (color: string) => this;
+    73→
+    74→	/**
+    75→	Use an [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set text color.
+    76→
+    77→	@example
+    78→	```
+    79→	import chalk from 'chalk';
+    80→
+    81→	chalk.ansi256(201);
+    82→	```
+    83→	*/
+    84→	ansi256: (index: number) => this;
+    85→
+    86→	/**
+    87→	Use RGB values to set background color.
+    88→
+    89→	@example
+    90→	```
+    91→	import chalk from 'chalk';
+    92→
+    93→	chalk.bgRgb(222, 173, 237);
+    94→	```
+    95→	*/
+    96→	bgRgb: (red: number, green: number, blue: number) => this;
+    98→	/**
+    99→	Use HEX value to set background color.
+    100→
+    101→	@param color - Hexadecimal value representing the desired color.
+    102→
+    103→	@example
+    104→	```
+    105→	import chalk from 'chalk';
+    106→
+    107→	chalk.bgHex('#DEADED');
+    108→	```
+    109→	*/
+    110→	bgHex: (color: string) => this;
+    111→
+    112→	/**
+    113→	Use a [8-bit unsigned number](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit) to set background color.
+    114→
+    115→	@example
+    116→	```
+    117→	import chalk from 'chalk';
+    118→
+    119→	chalk.bgAnsi256(201);
+    120→	```
+    121→	*/
+    122→	bgAnsi256: (index: number) => this;
+    124→	/**
+    125→	Modifier: Reset the current style.
+    126→	*/
+    127→	readonly reset: this;
+    128→
+    129→	/**
+    130→	Modifier: Make the text bold.
+    131→	*/
+    132→	readonly bold: this;
+    133→
+    134→	/**
+    135→	Modifier: Make the text have lower opacity.
+    136→	*/
+    137→	readonly dim: this;
+    138→
+    139→	/**
+    140→	Modifier: Make the text italic. *(Not widely supported)*
+    141→	*/
+    142→	readonly italic: this;
+    143→
+    144→	/**
+    145→	Modifier: Put a horizontal line below the text. *(Not widely supported)*
+    146→	*/
+    147→	readonly underline: this;
+    148→
     …
     231→}
     …
@@ -207,55 +273,20 @@ source/
     259→// } from '#supports-color';
     260→} from './vendor/supports-color/index.js';
     …
-    263→/**
-    264→@deprecated Use `ModifierName` instead.
-    265→
-    266→Basic modifier names.
-    267→*/
     268→export type Modifiers = ModifierName;
-    270→/**
-    271→@deprecated Use `ForegroundColorName` instead.
-    272→
-    273→Basic foreground color names.
-    274→
-    275→[More colors here.](https://github.com/chalk/chalk/blob/main/readme.md#256-and-truecolor-color-support)
-    276→*/
+    …
     277→export type ForegroundColor = ForegroundColorName;
-    279→/**
-    280→@deprecated Use `BackgroundColorName` instead.
-    281→
-    282→Basic background color names.
-    283→
-    284→[More colors here.](https://github.com/chalk/chalk/blob/main/readme.md#256-and-truecolor-color-support)
-    285→*/
+    …
     286→export type BackgroundColor = BackgroundColorName;
-    288→/**
-    289→@deprecated Use `ColorName` instead.
     …
     295→export type Color = ColorName;
-    297→/**
-    298→@deprecated Use `modifierNames` instead.
-    299→
-    300→Basic modifier names.
-    301→*/
+    …
     302→export const modifiers: readonly Modifiers[];
-    304→/**
-    305→@deprecated Use `foregroundColorNames` instead.
-    306→
-    307→Basic foreground color names.
-    308→*/
+    …
     309→export const foregroundColors: readonly ForegroundColor[];
-    311→/**
-    312→@deprecated Use `backgroundColorNames` instead.
-    313→
-    314→Basic background color names.
-    315→*/
+    …
     316→export const backgroundColors: readonly BackgroundColor[];
-    318→/**
-    319→@deprecated Use `colorNames` instead.
-    320→
-    321→Basic color names. The combination of foreground and background color names.
-    322→*/
+    …
     323→export const colors: readonly Color[];
     324→
     325→export default chalk;
@@ -263,8 +294,6 @@ source/
     …
     34→export class Chalk {
     35→	constructor(options) {
-    36→		// eslint-disable-next-line no-constructor-return
-    37→		return chalkFactory(options);
     …
     39→}
     …
@@ -295,11 +324,6 @@ source/
     225→export default chalk;
   index.test-d.ts
   utilities.js
-    …
-    2→export function stringReplaceAll(string, substring, replacer) {
-    …
-    21→export function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
-    …
   vendor/
     ansi-styles/
       index.d.ts

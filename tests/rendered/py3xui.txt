@@ -186,36 +186,6 @@ py3xui/
       18→class AsyncApi:
       …
       72→    def __init__(
-      73→        self,
-      74→        host: str,
-      75→        username: str,
-      76→        password: str,
-      77→        use_tls_verify: bool = True,
-      78→        custom_certificate_path: str | None = None,
-      79→        logger: Any | None = None,
-      80→    ):  # pylint: disable=R0913, R0917
-      …
-      98→    @property
-      99→    def session(self) -> str | None:
-      …
-      107→    @session.setter
-      108→    def session(self, value: str) -> None:
-      …
-      120→    @property
-      121→    def cookie_name(self) -> str | None:
-      …
-      129→    @cookie_name.setter
-      130→    def cookie_name(self, value: str | None) -> None:
-      …
-      144→    @classmethod
-      145→    def from_env(
-      146→        cls,
-      147→        use_tls_verify: bool | None = None,
-      148→        custom_certificate_path: str | None = None,
-      149→        logger: Any | None = None,
-      150→    ) -> AsyncApi:
-      …
-      194→    async def login(self, two_factor_code: str | int | None = None) -> None:
       …
     async_api_base.py
     async_api_client.py
@@ -257,6 +227,33 @@ py3xui/
       33→    UUID = "uuid"
       36→class Client(BaseModel):
       …
+      59→    email: str
+      60→    enable: bool
+      61→    id: int | str | None = Field(default=None)
+      62→    password: str = Field(default="")  # type: ignore
+      63→
+      64→    inbound_id: int | None = Field(default=None, alias=ClientFields.INBOUND_ID)  # type: ignore
+      65→
+      66→    up: int = 0
+      67→    down: int = 0
+      68→
+      69→    expiry_time: int = Field(default=0, alias=ClientFields.EXPIRY_TIME)  # type: ignore
+      70→
+      71→    total: int = 0
+      72→    reset: int | None = None
+      73→
+      74→    flow: str = ""
+      75→    method: str = ""
+      76→    limit_ip: int = Field(default=0, alias=ClientFields.LIMIT_IP)  # type: ignore
+      77→    sub_id: str = Field(default="", alias=ClientFields.SUB_ID)  # type: ignore
+      78→    comment: str = Field(default="", alias=ClientFields.COMMENT)  # type: ignore
+      79→    tg_id: int | str | None = Field(default="", alias=ClientFields.TG_ID)  # type: ignore
+      80→    total_gb: int = Field(default=0, alias=ClientFields.TOTAL_GB)  # type: ignore
+      81→    uuid: str | None = Field(default=None, alias=ClientFields.UUID)  # type: ignore
+      82→
+      83→    model_config = ConfigDict(
+      84→        populate_by_name=True,
+      85→    )
   inbound/
     README.md
     __init__.py
@@ -268,17 +265,6 @@ py3xui/
     bases.py
     inbound.py
     settings.py
-      …
-      9→class SettingsFields:
-      …
-      12→    CLIENTS = "clients"
-      13→    DECRYPTION = "decryption"
-      14→    FALLBACKS = "fallbacks"
-      17→class Settings(JsonStringModel):
-      …
-      26→    clients: list[Client] = []
-      27→    decryption: str = ""
-      28→    fallbacks: list = []
     sniffing.py
     stream_settings.py
   server/
@@ -287,9 +273,6 @@ py3xui/
       …
       2→from py3xui.server.server import RealityKeyPair, Server
     server.py
-      …
-      7→class ServerFields:
-      …
   utils/
     README.md
     __init__.py

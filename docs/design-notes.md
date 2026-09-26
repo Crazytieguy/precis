@@ -183,7 +183,10 @@ must not undo:
   roster is priced per entry (`entries^k`), so its ratio is its tokens
   per entry. An entry is a roster row, not a statement or declaration:
   a multi-line `export { … }` or `from x import (…)` lists one name per
-  row, and a Go grouped declaration one per spec. Pricing a
+  row, and a Go grouped declaration one per spec. A `Whole`
+  declaration's `Decl` is a roster too (a struct's fields, a class's
+  member names): it scales by `roster_mass` of its body entries, or a
+  large class ranks below its own members' docs. Pricing a
   re-export-only roster at the `Decl` tier measured worse (2026-09-25):
   barrels then outrank root listings at small budgets. Per-language pricing enters only through `is_entrypoint`
   (a depth pin), `file_weight` and what `extract` hides.

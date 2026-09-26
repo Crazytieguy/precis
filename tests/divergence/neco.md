@@ -151,4 +151,4 @@ Score(3000)=0.786 I=0.909 C=0.679 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | ns | 9939 |  | 112 | CI | 6.6 |  | 0.603 |
 | walker |  | 9971 | 92 | Code::CodeKey { rung: Decl, file: neco.c, decl: 97, sub: 0, line: 2229 } |  |  | 0.603 |
 | ns | 9984 |  | 45 | License | 6.7 |  | 0.601 |
-| walker |  | 9995 | 24 | Code::CodeKey { rung: Decl, file: neco.c, decl: 100, sub: 0, line: 2247 } |  |  | 0.601 |
+| walker |  | 9993 | 22 | Code::CodeKey { rung: Decl, file: neco.c, decl: 102, sub: 0, line: 2267 } |  |  | 0.601 |

@@ -152,6 +152,15 @@ src/chronos/
     40→    pad_token_id: int
     41→    eos_token_id: int
     42→    use_eos_token: bool
+    43→    model_type: Literal["causal", "seq2seq"]
+    44→    num_samples: int
+    45→    temperature: float
+    46→    top_k: int
+    47→    top_p: float
+    48→
+    49→    def __post_init__(self):
+    …
+    54→    def create_tokenizer(self) -> "ChronosTokenizer":
     …
     59→class ChronosTokenizer:
     …
@@ -239,9 +248,6 @@ src/chronos/
     514→        self,
     515→        inputs: Union[torch.Tensor, List[torch.Tensor]],
     516→        prediction_length: Optional[int] = None,
-    517→        quantile_levels: List[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
-    518→        **predict_kwargs,
-    519→    ) -> Tuple[torch.Tensor, torch.Tensor]:
     …
     535→    @classmethod
     536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):

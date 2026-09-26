@@ -19,7 +19,7 @@ use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile};
 use crate::batch::{Batch, BatchKey, CodeKey, Rung};
 use crate::content::{BatchContent, Render, Span};
-use crate::value::{DEFAULT_CONCAVITY_EXPONENT, code_rung_value};
+use crate::value::{DEFAULT_CONCAVITY_EXPONENT, code_rung_value, roster_mass};
 use crate::walker::{WalkCtx, file_depth_factor};
 
 /// Every batch of one file.
@@ -101,11 +101,13 @@ impl Emitter<'_> {
             ..decl_key.clone()
         };
         let mut head_items = vec![Item::new(decl.head.clone())];
+        let mut decl_value = value;
         if decl.shape == Shape::Whole {
             head_items.extend(decl.body.iter().cloned());
+            decl_value *= roster_mass(decl.body.len());
         }
         let decl_gate = self
-            .part(key(Rung::Decl), &head_items, parent.as_ref(), value)
+            .part(key(Rung::Decl), &head_items, parent.as_ref(), decl_value)
             .or(parent);
         self.part(key(Rung::Doc), &decl.doc, decl_gate.as_ref(), value);
         if decl.shape == Shape::Callable {

@@ -155,13 +155,13 @@ Score(3000)=0.548 I=0.622 C=0.482 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | ns | 6809 |  | 341 | Context request input: params, query, form, uploads — complete roster | 4.5 | 4.1 | 0.429 |
 | walker |  | 7005 | 204 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 1, line: 0 } |  |  | 0.432 |
 | walker |  | 7016 | 11 | Code::CodeKey { rung: Doc, file: context.go, decl: 12, sub: 0, line: 167 } |  |  | 0.432 |
-| walker |  | 7029 | 13 | Code::CodeKey { rung: Doc, file: context.go, decl: 2, sub: 0, line: 47 } |  |  | 0.432 |
 | ns | 7030 |  | 221 | Context headers, cookies and client IP: complete roster | 4.6 | 4.1 | 0.426 |
-| walker |  | 7043 | 14 | Code::CodeKey { rung: Doc, file: context.go, decl: 6, sub: 0, line: 57 } |  |  | 0.426 |
-| walker |  | 7058 | 15 | Code::CodeKey { rung: Doc, file: context.go, decl: 3, sub: 0, line: 50 } |  |  | 0.426 |
 | ns | 7100 |  | 70 | Context key/value store, with the typed-accessor family marked elided | 4.7 | 4.1 | 0.424 |
 | ns | 7259 |  | 159 | Content negotiation and Context's context.Context implementation | 4.8 | 4.1 | 0.420 |
-| walker |  | 7445 | 387 | Code::CodeKey { rung: Decl, file: context.go, decl: 7, sub: 0, line: 61 } |  |  | 0.465 |
+| walker |  | 7403 | 387 | Code::CodeKey { rung: Decl, file: context.go, decl: 7, sub: 0, line: 61 } |  |  | 0.465 |
+| walker |  | 7416 | 13 | Code::CodeKey { rung: Doc, file: context.go, decl: 2, sub: 0, line: 47 } |  |  | 0.465 |
+| walker |  | 7430 | 14 | Code::CodeKey { rung: Doc, file: context.go, decl: 6, sub: 0, line: 57 } |  |  | 0.465 |
+| walker |  | 7445 | 15 | Code::CodeKey { rung: Doc, file: context.go, decl: 3, sub: 0, line: 50 } |  |  | 0.465 |
 | ns | 7557 |  | 298 | Bind vs ShouldBind vs ShouldBindBodyWith: the semantic difference | 4.9 | 4.4 | 0.460 |
 | walker |  | 7624 | 179 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 2, line: 0 } |  |  | 0.475 |
 | walker |  | 7641 | 17 | Code::CodeKey { rung: Doc, file: context.go, decl: 15, sub: 0, line: 199 } |  |  | 0.475 |

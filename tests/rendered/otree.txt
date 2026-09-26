@@ -45,30 +45,11 @@ README.md
   …
   5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
   7→## Install
-  8→
-  9→Download binary files from [release page](https://github.com/fioncat/otree/releases).
-  10→
-  11→You can also build it from source (require `cargo` installed):
-  12→
-  13→```bash
-  14→cargo install --git https://github.com/fioncat/otree
-  15→```
-  16→
+  …
   17→### Arch Linux (AUR)
-  18→
-  19→You can install `otree` from the [AUR](https://aur.archlinux.org/packages/otree) with using an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers).
-  20→
-  21→```bash
-  22→paru -S otree
-  23→```
-  24→
+  …
   25→### macOS and Linux (Homebrew)
-  26→
-  27→You can install [`otree`](https://formulae.brew.sh/formula/otree) using [Homebrew](https://brew.sh).
-  28→
-  29→```bash
-  30→brew install otree
-  31→```
+  …
   33→## Usage
   …
   52→## Roadmap
@@ -109,6 +90,8 @@ src/
   clipboard.rs
   cmd.rs
     …
+    11→#[derive(Parser, Debug)]
+    12→#[command(disable_version_flag = true)]
     13→pub struct CommandArgs {
     …
     111→impl CommandArgs {
@@ -247,7 +230,19 @@ src/
     92→    }
     93→
     94→    if data.len() > max_data_size {
-    …
+    95→        bail!("the data size is too large, we limit the maximum size to {} to ensure TUI performance, you should try to reduce the read size. HINT: You can use command line arg `--max-data-size` or config option `data.max_data_size` to modify this limitation", humansize::format_size(max_data_size, humansize::BINARY));
+    96→    }
+    98→    let tree = Tree::parse(cfg.clone(), &data, content_type).context("parse data")?;
+    99→    let extension = tree.parser.extension();
+    100→
+    101→    let mut app = App::new(cfg.clone(), tree, fw);
+    102→
+    103→    if !cfg.header.disable {
+    104→        let header_ctx = HeaderContext::new(args.path, extension, data.len());
+    105→        app.set_header(&header_ctx);
+    106→    }
+    107→
+    108→    ui::start(app)
     109→}
     111→fn main() {
     112→    if let Err(err) = run() {

@@ -1,4 +1,4 @@
-Score(3000)=0.778 I=0.839 C=0.722 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.756/0.819/0.839/0.778/0.634/0.538/0.457
+Score(3000)=0.778 I=0.839 C=0.722 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.756/0.819/0.839/0.778/0.634/0.535/0.457
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -66,94 +66,91 @@ Score(3000)=0.778 I=0.839 C=0.722 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 3020 | 144 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 4, sub: 0, line: 54 } |  |  | 0.778 |
 | walker |  | 3028 | 8 | Code::CodeKey { rung: Doc, file: src/parser.h, decl: 7, sub: 0, line: 126 } |  |  | 0.778 |
 | ns | 3043 |  | 390 | main.c usage(): program, argument and mode options (-f through --) | 3.3 |  | 0.745 |
-| walker |  | 3081 | 53 | Code::CodeKey { rung: Names, file: src/exec_stack.h, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
-| walker |  | 3122 | 41 | Code::CodeKey { rung: Decl, file: src/exec_stack.h, decl: 1, sub: 0, line: 40 } |  |  | 0.745 |
-| walker |  | 3173 | 51 | Code::CodeKey { rung: Decl, file: src/exec_stack.h, decl: 4, sub: 0, line: 52 } |  |  | 0.745 |
-| walker |  | 3178 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.745 |
+| walker |  | 3203 | 175 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 5, sub: 0, line: 68 } |  |  | 0.745 |
 | ns | 3210 |  | 167 | main.c: process exit-status codes | 3.4 |  | 0.730 |
+| walker |  | 3370 | 167 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 5, sub: 1, line: 68 } |  |  | 0.730 |
 | ns | 3433 |  | 223 | main.c: the undocumented flags (--debug-dump-disasm, --debug-trace, --run-tests) | 3.5 |  | 0.714 |
-| walker |  | 3463 | 285 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 1, line: 0 } |  |  | 0.714 |
+| walker |  | 3526 | 156 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 5, sub: 2, line: 68 } |  |  | 0.714 |
 | ns | 3673 |  | 240 | Makefile.am: the TESTS list and test environment | 3.6 |  | 0.692 |
-| walker |  | 3702 | 239 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 2, line: 0 } |  |  | 0.692 |
-| walker |  | 3707 | 5 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 64, sub: 0, line: 205 } |  |  | 0.692 |
-| walker |  | 3714 | 7 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 60, sub: 0, line: 191 } |  |  | 0.692 |
-| walker |  | 3735 | 21 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 61, sub: 0, line: 195 } |  |  | 0.692 |
-| walker |  | 3779 | 44 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 62, sub: 0, line: 197 } |  |  | 0.692 |
-| walker |  | 3864 | 85 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 57, sub: 0, line: 178 } |  |  | 0.692 |
+| walker |  | 3683 | 157 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 5, sub: 3, line: 68 } |  |  | 0.692 |
 | ns | 3911 |  | 238 | tests/setup + tests/jqtest: how one test driver actually runs | 3.7 |  | 0.675 |
-| walker |  | 3982 | 118 | Code::CodeKey { rung: Names, file: src/locfile.h, decl: 0, sub: 0, line: 0 } |  |  | 0.675 |
-| walker |  | 3990 | 8 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 1, sub: 0, line: 6 } |  |  | 0.675 |
+| walker |  | 3923 | 240 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 5, sub: 4, line: 68 } |  |  | 0.675 |
+| walker |  | 3976 | 53 | Code::CodeKey { rung: Names, file: src/exec_stack.h, decl: 0, sub: 0, line: 0 } |  |  | 0.675 |
+| walker |  | 4017 | 41 | Code::CodeKey { rung: Decl, file: src/exec_stack.h, decl: 1, sub: 0, line: 40 } |  |  | 0.675 |
 | ns | 4024 |  | 113 | tests/jq.test: the three-line test format, with the first cases | 3.8 |  | 0.660 |
-| walker |  | 4067 | 77 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 2, sub: 0, line: 12 } |  |  | 0.660 |
-| walker |  | 4250 | 183 | Code::CodeKey { rung: Names, file: src/bytecode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.660 |
+| walker |  | 4068 | 51 | Code::CodeKey { rung: Decl, file: src/exec_stack.h, decl: 4, sub: 0, line: 52 } |  |  | 0.660 |
+| walker |  | 4073 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.660 |
 | ns | 4257 |  | 233 | jv.h: jv_kind enum and the jv struct | 4.1 |  | 0.634 |
-| walker |  | 4287 | 37 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 6, sub: 0, line: 59 } |  |  | 0.634 |
-| walker |  | 4364 | 77 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 2, sub: 0, line: 32 } |  |  | 0.634 |
+| walker |  | 4358 | 285 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 1, line: 0 } |  |  | 0.634 |
 | ns | 4411 |  | 154 | jv.h: the consume/produce refcount contract | 4.2 |  | 0.622 |
-| walker |  | 4487 | 123 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 5, sub: 0, line: 48 } |  |  | 0.622 |
-| walker |  | 4624 | 137 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 8, sub: 0, line: 72 } |  |  | 0.622 |
-| walker |  | 4768 | 144 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 1, sub: 0, line: 20 } |  |  | 0.622 |
-| walker |  | 4800 | 32 | Code::CodeKey { rung: Names, file: src/jv_private.h, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 4597 | 239 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 2, line: 0 } |  |  | 0.622 |
+| walker |  | 4602 | 5 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 64, sub: 0, line: 205 } |  |  | 0.622 |
+| walker |  | 4609 | 7 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 60, sub: 0, line: 191 } |  |  | 0.622 |
+| walker |  | 4630 | 21 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 61, sub: 0, line: 195 } |  |  | 0.622 |
+| walker |  | 4674 | 44 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 62, sub: 0, line: 197 } |  |  | 0.622 |
+| walker |  | 4759 | 85 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 57, sub: 0, line: 178 } |  |  | 0.622 |
 | ns | 4813 |  | 402 | jv.h: comparison, invalid-with-message, constructors, numbers, arrays | 4.3 |  | 0.594 |
-| walker |  | 4933 | 133 | Code::CodeKey { rung: Names, file: src/jv_alloc.h, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 5019 | 86 | Code::CodeKey { rung: Names, file: src/util.h, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 5034 | 15 | Code::CodeKey { rung: Decl, file: src/util.h, decl: 4, sub: 0, line: 44 } |  |  | 0.594 |
-| walker |  | 5052 | 18 | Code::CodeKey { rung: Decl, file: src/util.h, decl: 5, sub: 0, line: 62 } |  |  | 0.594 |
+| walker |  | 4877 | 118 | Code::CodeKey { rung: Names, file: src/locfile.h, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
+| walker |  | 4885 | 8 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 1, sub: 0, line: 6 } |  |  | 0.594 |
+| walker |  | 4962 | 77 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 2, sub: 0, line: 12 } |  |  | 0.594 |
 | ns | 5142 |  | 329 | jv.h: the string API | 4.4 |  | 0.579 |
-| walker |  | 5164 | 112 | Plaintext::DeclSurface { file: compile-ios.sh } |  |  | 0.579 |
-| walker |  | 5221 | 57 | Code::CodeKey { rung: Names, file: src/builtin.h, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
-| walker |  | 5341 | 120 | Code::CodeKey { rung: Decl, file: src/builtin.h, decl: 2, sub: 0, line: 10 } |  |  | 0.580 |
+| walker |  | 5145 | 183 | Code::CodeKey { rung: Names, file: src/bytecode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
+| walker |  | 5182 | 37 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 6, sub: 0, line: 59 } |  |  | 0.579 |
+| walker |  | 5259 | 77 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 2, sub: 0, line: 32 } |  |  | 0.579 |
 | ns | 5353 |  | 211 | jv.h: the object API and its iterator protocol | 4.5 |  | 0.569 |
-| walker |  | 5380 | 39 | Code::CodeKey { rung: Names, file: src/jq_parser.h, decl: 0, sub: 0, line: 0 } |  |  | 0.573 |
-| ns | 5549 |  | 196 | jv.h: path access, keys, ordering, sort/group/unique | 4.6 |  | 0.565 |
-| walker |  | 5615 | 235 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.565 |
-| walker |  | 5635 | 20 | Code::CodeKey { rung: Names, file: src/jv_utf8_tables.h, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5656 | 21 | Code::CodeKey { rung: Names, file: src/jv_dtoa_tsd.h, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| ns | 5811 |  | 262 | jv.h: parsing - flags, one-shot parsers, streaming jv_parser, jv_load_file | 4.7 |  | 0.551 |
-| walker |  | 5869 | 213 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 0, line: 0 } |  |  | 0.551 |
-| walker |  | 5885 | 16 | Code::CodeKey { rung: Decl, file: src/compile.h, decl: 3, sub: 0, line: 12 } |  |  | 0.551 |
-| walker |  | 6062 | 177 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 1, line: 0 } |  |  | 0.551 |
-| ns | 6129 |  | 318 | jv.h: print flags and the dump/show functions | 4.8 |  | 0.538 |
-| walker |  | 6244 | 182 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 2, line: 0 } |  |  | 0.538 |
-| ns | 6267 |  | 138 | jv.h: the convenience macro walls (existence, not bodies) | 4.9 |  | 0.530 |
-| walker |  | 6433 | 189 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 3, line: 0 } |  |  | 0.530 |
-| walker |  | 6615 | 182 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 4, line: 0 } |  |  | 0.538 |
-| walker |  | 6771 | 156 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 5, line: 0 } |  |  | 0.538 |
-| ns | 6773 |  | 506 | opcode_list.h: every opcode and its immediate kind | 5.1 |  | 0.514 |
-| walker |  | 6956 | 185 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 6, line: 0 } |  |  | 0.514 |
-| walker |  | 7002 | 46 | Code::CodeKey { rung: Decl, file: src/compile.h, decl: 72, sub: 0, line: 101 } |  |  | 0.514 |
-| walker |  | 7209 | 207 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 0, line: 0 } |  |  | 0.514 |
-| walker |  | 7214 | 5 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 13, sub: 0, line: 288 } |  |  | 0.514 |
-| ns | 7248 |  | 475 | parser.y: the complete token list | 5.2 |  | 0.492 |
-| walker |  | 7252 | 38 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 7, sub: 0, line: 267 } |  |  | 0.492 |
-| ns | 7435 |  | 187 | parser.y: operator precedence and associativity | 5.3 |  | 0.485 |
-| walker |  | 7453 | 201 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 1, line: 0 } |  |  | 0.485 |
-| walker |  | 7477 | 24 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 20, sub: 0, line: 345 } |  |  | 0.485 |
-| walker |  | 7507 | 30 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 18, sub: 0, line: 294 } |  |  | 0.485 |
-| walker |  | 7523 | 16 | Code::CodeKey { rung: Doc, file: src/lexer.h, decl: 19, sub: 0, line: 336 } |  |  | 0.485 |
-| walker |  | 7705 | 182 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 2, line: 0 } |  |  | 0.485 |
-| walker |  | 7728 | 23 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 29, sub: 0, line: 374 } |  |  | 0.485 |
-| walker |  | 7749 | 21 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 30, sub: 0, line: 379 } |  |  | 0.485 |
-| walker |  | 7903 | 154 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 3, line: 0 } |  |  | 0.485 |
+| walker |  | 5382 | 123 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 5, sub: 0, line: 48 } |  |  | 0.569 |
+| walker |  | 5519 | 137 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 8, sub: 0, line: 72 } |  |  | 0.569 |
+| ns | 5549 |  | 196 | jv.h: path access, keys, ordering, sort/group/unique | 4.6 |  | 0.560 |
+| walker |  | 5663 | 144 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 1, sub: 0, line: 20 } |  |  | 0.560 |
+| walker |  | 5695 | 32 | Code::CodeKey { rung: Names, file: src/jv_private.h, decl: 0, sub: 0, line: 0 } |  |  | 0.560 |
+| ns | 5811 |  | 262 | jv.h: parsing - flags, one-shot parsers, streaming jv_parser, jv_load_file | 4.7 |  | 0.546 |
+| walker |  | 5828 | 133 | Code::CodeKey { rung: Names, file: src/jv_alloc.h, decl: 0, sub: 0, line: 0 } |  |  | 0.546 |
+| walker |  | 5914 | 86 | Code::CodeKey { rung: Names, file: src/util.h, decl: 0, sub: 0, line: 0 } |  |  | 0.546 |
+| walker |  | 5929 | 15 | Code::CodeKey { rung: Decl, file: src/util.h, decl: 4, sub: 0, line: 44 } |  |  | 0.546 |
+| walker |  | 5947 | 18 | Code::CodeKey { rung: Decl, file: src/util.h, decl: 5, sub: 0, line: 62 } |  |  | 0.546 |
+| walker |  | 6059 | 112 | Plaintext::DeclSurface { file: compile-ios.sh } |  |  | 0.546 |
+| walker |  | 6116 | 57 | Code::CodeKey { rung: Names, file: src/builtin.h, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
+| ns | 6129 |  | 318 | jv.h: print flags and the dump/show functions | 4.8 |  | 0.535 |
+| walker |  | 6236 | 120 | Code::CodeKey { rung: Decl, file: src/builtin.h, decl: 2, sub: 0, line: 10 } |  |  | 0.535 |
+| ns | 6267 |  | 138 | jv.h: the convenience macro walls (existence, not bodies) | 4.9 |  | 0.527 |
+| walker |  | 6275 | 39 | Code::CodeKey { rung: Names, file: src/jq_parser.h, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| walker |  | 6510 | 235 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.530 |
+| walker |  | 6530 | 20 | Code::CodeKey { rung: Names, file: src/jv_utf8_tables.h, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| walker |  | 6551 | 21 | Code::CodeKey { rung: Names, file: src/jv_dtoa_tsd.h, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| walker |  | 6764 | 213 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| ns | 6773 |  | 506 | opcode_list.h: every opcode and its immediate kind | 5.1 |  | 0.507 |
+| walker |  | 6780 | 16 | Code::CodeKey { rung: Decl, file: src/compile.h, decl: 3, sub: 0, line: 12 } |  |  | 0.507 |
+| walker |  | 6957 | 177 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 1, line: 0 } |  |  | 0.507 |
+| walker |  | 7139 | 182 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 2, line: 0 } |  |  | 0.507 |
+| ns | 7248 |  | 475 | parser.y: the complete token list | 5.2 |  | 0.485 |
+| walker |  | 7328 | 189 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 3, line: 0 } |  |  | 0.485 |
+| ns | 7435 |  | 187 | parser.y: operator precedence and associativity | 5.3 |  | 0.478 |
+| walker |  | 7510 | 182 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 4, line: 0 } |  |  | 0.485 |
+| walker |  | 7666 | 156 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 5, line: 0 } |  |  | 0.485 |
+| walker |  | 7851 | 185 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 6, line: 0 } |  |  | 0.485 |
+| walker |  | 7897 | 46 | Code::CodeKey { rung: Decl, file: src/compile.h, decl: 72, sub: 0, line: 101 } |  |  | 0.485 |
+| walker |  | 8104 | 207 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 0, line: 0 } |  |  | 0.485 |
 | ns | 8106 |  | 671 | builtin.c: function_list, part 1 - libm, binops, conversions, keys, strings, paths, sorting | 5.4 |  | 0.469 |
-| walker |  | 8165 | 262 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 31, sub: 0, line: 384 } |  |  | 0.469 |
-| walker |  | 8419 | 254 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 31, sub: 1, line: 384 } |  |  | 0.469 |
+| walker |  | 8109 | 5 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 13, sub: 0, line: 288 } |  |  | 0.469 |
+| walker |  | 8147 | 38 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 7, sub: 0, line: 267 } |  |  | 0.469 |
+| walker |  | 8348 | 201 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 1, line: 0 } |  |  | 0.469 |
+| walker |  | 8372 | 24 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 20, sub: 0, line: 345 } |  |  | 0.469 |
+| walker |  | 8402 | 30 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 18, sub: 0, line: 294 } |  |  | 0.469 |
+| walker |  | 8418 | 16 | Code::CodeKey { rung: Doc, file: src/lexer.h, decl: 19, sub: 0, line: 336 } |  |  | 0.469 |
+| walker |  | 8600 | 182 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 2, line: 0 } |  |  | 0.469 |
 | ns | 8607 |  | 501 | builtin.c: function_list, part 2 - search, min/max, errors, env, regex, I/O, time | 5.5 |  | 0.457 |
-| walker |  | 8627 | 208 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 4, line: 0 } |  |  | 0.457 |
-| walker |  | 8823 | 196 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 5, line: 0 } |  |  | 0.457 |
-| walker |  | 9058 | 235 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 6, line: 0 } |  |  | 0.457 |
-| walker |  | 9067 | 9 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 69, sub: 0, line: 566 } |  |  | 0.457 |
-| walker |  | 9097 | 30 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 70, sub: 0, line: 569 } |  |  | 0.457 |
+| walker |  | 8623 | 23 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 29, sub: 0, line: 374 } |  |  | 0.457 |
+| walker |  | 8644 | 21 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 30, sub: 0, line: 379 } |  |  | 0.457 |
+| walker |  | 8798 | 154 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 3, line: 0 } |  |  | 0.457 |
+| walker |  | 9060 | 262 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 31, sub: 0, line: 384 } |  |  | 0.457 |
 | ns | 9119 |  | 512 | builtin.jq: every jq-defined builtin, part 1 (lines 1-115) | 5.6 |  | 0.435 |
-| walker |  | 9140 | 43 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 71, sub: 0, line: 572 } |  |  | 0.435 |
-| walker |  | 9365 | 225 | Code::CodeKey { rung: Names, file: src/jv_dtoa.h, decl: 0, sub: 0, line: 0 } |  |  | 0.435 |
-| walker |  | 9397 | 32 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.h, decl: 3, sub: 0, line: 6 } |  |  | 0.435 |
+| walker |  | 9314 | 254 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 31, sub: 1, line: 384 } |  |  | 0.435 |
 | ns | 9468 |  | 349 | builtin.jq: every jq-defined builtin, part 2 (lines 116-244) | 5.7 |  | 0.422 |
-| walker |  | 9555 | 158 | Code::CodeKey { rung: Names, file: src/jv_unicode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.422 |
-| walker |  | 9603 | 48 | Code::CodeKey { rung: Names, file: src/linker.h, decl: 0, sub: 0, line: 0 } |  |  | 0.426 |
-| walker |  | 9634 | 31 | Code::CodeKey { rung: Doc, file: src/lexer.h, decl: 21, sub: 0, line: 352 } |  |  | 0.426 |
-| walker |  | 9721 | 87 | Code::CodeKey { rung: Doc, file: src/jq.h, decl: 34, sub: 0, line: 60 } |  |  | 0.426 |
-| ns | 9778 |  | 310 | execute.c: struct jq_state, the whole interpreter state | 5.8 |  | 0.416 |
-| walker |  | 9943 | 222 | Code::CodeKey { rung: Names, file: src/jv.h, decl: 0, sub: 0, line: 0 } |  |  | 0.421 |
-| ns | 9977 |  | 199 | manual.yml: the section titles of the jq language reference | 6.1 |  | 0.417 |
-| walker |  | 9997 | 54 | Code::CodeKey { rung: Decl, file: src/jv.h, decl: 1, sub: 0, line: 19 } |  |  | 0.421 |
+| walker |  | 9522 | 208 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 4, line: 0 } |  |  | 0.422 |
+| walker |  | 9718 | 196 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 5, line: 0 } |  |  | 0.422 |
+| ns | 9778 |  | 310 | execute.c: struct jq_state, the whole interpreter state | 5.8 |  | 0.412 |
+| walker |  | 9953 | 235 | Code::CodeKey { rung: Names, file: src/lexer.h, decl: 0, sub: 6, line: 0 } |  |  | 0.412 |
+| walker |  | 9962 | 9 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 69, sub: 0, line: 566 } |  |  | 0.412 |
+| ns | 9977 |  | 199 | manual.yml: the section titles of the jq language reference | 6.1 |  | 0.408 |
+| walker |  | 9992 | 30 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 70, sub: 0, line: 569 } |  |  | 0.408 |
+| walker |  | 9992 | 0 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 71, sub: 0, line: 572 } |  |  | 0.408 |

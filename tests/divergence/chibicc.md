@@ -1,4 +1,4 @@
-Score(3000)=0.707 I=0.852 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.801/0.749/0.736/0.707/0.696/0.652/0.738
+Score(3000)=0.707 I=0.851 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.801/0.749/0.736/0.707/0.601/0.652/0.738
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,32 +44,32 @@ Score(3000)=0.707 I=0.852 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | walker |  | 2606 | 243 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 3, line: 0 } |  |  | 0.725 |
 | walker |  | 2647 | 41 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 38, sub: 0, line: 168 } |  |  | 0.726 |
 | ns | 2736 |  | 166 | parse.c file-header comment: how to read the parser | 3.1 |  | 0.704 |
-| walker |  | 2757 | 110 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 46, sub: 0, line: 362 } |  |  | 0.705 |
-| walker |  | 2891 | 134 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 44, sub: 0, line: 301 } |  |  | 0.707 |
-| walker |  | 2899 | 8 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 46, sub: 0, line: 362 } |  |  | 0.707 |
-| walker |  | 2908 | 9 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 35, sub: 0, line: 126 } |  |  | 0.707 |
-| ns | 3100 |  | 364 | preprocess.c file-header comment: the hideset macro-expansion algorithm | 3.2 |  | 0.672 |
-| ns | 3229 |  | 129 | Internal (non-exported) helpers of type.c, unicode.c and hashmap.c | 3.3 |  | 0.659 |
-| walker |  | 3230 | 322 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 36, sub: 0, line: 127 } |  |  | 0.663 |
-| walker |  | 3435 | 205 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 4, line: 0 } |  |  | 0.710 |
-| ns | 3561 |  | 332 | Function-name roster: main.c (the driver) | 3.4 |  | 0.673 |
-| walker |  | 3639 | 204 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 5, line: 0 } |  |  | 0.703 |
-| walker |  | 3664 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 79, sub: 0, line: 428 } |  |  | 0.703 |
-| walker |  | 3689 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 80, sub: 0, line: 434 } |  |  | 0.704 |
-| walker |  | 3859 | 170 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 6, line: 0 } |  |  | 0.735 |
-| ns | 3965 |  | 404 | Function-name roster: tokenize.c | 3.5 |  | 0.693 |
-| walker |  | 4289 | 430 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 45, sub: 0, line: 320 } |  |  | 0.696 |
-| ns | 4346 |  | 381 | Function-name roster: codegen.c | 3.6 |  | 0.661 |
-| walker |  | 4498 | 209 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.662 |
-| walker |  | 4505 | 7 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.663 |
-| walker |  | 4681 | 176 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 0, line: 176 } |  |  | 0.664 |
-| walker |  | 4687 | 6 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 39, sub: 0, line: 176 } |  |  | 0.664 |
-| ns | 4756 |  | 410 | Function-name roster: preprocess.c, token and macro machinery | 3.7 |  | 0.634 |
-| ns | 5022 |  | 266 | Function-name roster: preprocess.c, includes, directives and builtin macros | 3.8 | 3.7 | 0.616 |
-| walker |  | 5061 | 374 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 1, line: 228 } |  |  | 0.620 |
-| walker |  | 5242 | 181 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 1, line: 176 } |  |  | 0.622 |
-| ns | 5508 |  | 486 | parse.c forward-declaration block: the parser's function index | 3.9 |  | 0.585 |
-| walker |  | 5513 | 271 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 2, line: 176 } |  |  | 0.587 |
+| walker |  | 2781 | 134 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 44, sub: 0, line: 301 } |  |  | 0.706 |
+| walker |  | 2891 | 110 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 46, sub: 0, line: 362 } |  |  | 0.707 |
+| walker |  | 3067 | 176 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 0, line: 176 } |  |  | 0.708 |
+| walker |  | 3073 | 6 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 39, sub: 0, line: 176 } |  |  | 0.708 |
+| ns | 3100 |  | 364 | preprocess.c file-header comment: the hideset macro-expansion algorithm | 3.2 |  | 0.673 |
+| ns | 3229 |  | 129 | Internal (non-exported) helpers of type.c, unicode.c and hashmap.c | 3.3 |  | 0.660 |
+| walker |  | 3254 | 181 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 1, line: 176 } |  |  | 0.662 |
+| walker |  | 3525 | 271 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 2, line: 176 } |  |  | 0.664 |
+| ns | 3561 |  | 332 | Function-name roster: main.c (the driver) | 3.4 |  | 0.629 |
+| walker |  | 3847 | 322 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 36, sub: 0, line: 127 } |  |  | 0.633 |
+| ns | 3965 |  | 404 | Function-name roster: tokenize.c | 3.5 |  | 0.597 |
+| walker |  | 4056 | 209 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.598 |
+| walker |  | 4063 | 7 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.598 |
+| walker |  | 4071 | 8 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 46, sub: 0, line: 362 } |  |  | 0.598 |
+| ns | 4346 |  | 381 | Function-name roster: codegen.c | 3.6 |  | 0.568 |
+| walker |  | 4445 | 374 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 1, line: 228 } |  |  | 0.572 |
+| walker |  | 4454 | 9 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 35, sub: 0, line: 126 } |  |  | 0.573 |
+| ns | 4756 |  | 410 | Function-name roster: preprocess.c, token and macro machinery | 3.7 |  | 0.547 |
+| walker |  | 4884 | 430 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 45, sub: 0, line: 320 } |  |  | 0.550 |
+| ns | 5022 |  | 266 | Function-name roster: preprocess.c, includes, directives and builtin macros | 3.8 | 3.7 | 0.534 |
+| walker |  | 5089 | 205 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 4, line: 0 } |  |  | 0.571 |
+| walker |  | 5293 | 204 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 5, line: 0 } |  |  | 0.597 |
+| walker |  | 5318 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 79, sub: 0, line: 428 } |  |  | 0.597 |
+| walker |  | 5343 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 80, sub: 0, line: 434 } |  |  | 0.598 |
+| ns | 5508 |  | 486 | parse.c forward-declaration block: the parser's function index | 3.9 |  | 0.562 |
+| walker |  | 5513 | 170 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 6, line: 0 } |  |  | 0.587 |
 | ns | 5631 |  | 123 | TokenKind enum | 4.1 |  | 0.595 |
 | walker |  | 5680 | 167 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.595 |
 | ns | 5707 |  | 76 | File struct | 4.2 |  | 0.601 |

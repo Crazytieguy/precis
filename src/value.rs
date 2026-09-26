@@ -31,10 +31,10 @@ pub fn manifest_operational_value(depth: f64) -> f64 {
     839.0 * depth
 }
 
-/// Roster size at which [`roster_mass_factor`] is neutral; rosters this
-/// small already rank acceptably without help.
+/// Roster size at which [`roster_mass`] is neutral; rosters this small
+/// already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;
-/// Cap on the roster-mass boost (reached around ~40 entries).
+/// Cap on the listing roster-mass boost (reached around ~40 entries).
 const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 
 /// Ratio-neutralizing factor for "roster" batches — complete catalogs of
@@ -43,12 +43,18 @@ const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 /// with N, so `value/cost^k` systematically prefers tiny rosters over
 /// the complete catalogs NS authors anchor on. Scaling value by
 /// `(N / baseline)^k`, `k` = [`DEFAULT_CONCAVITY_EXPONENT`], pushes back
-/// against that. Boost-only (≥ 1) and capped: small rosters keep their
-/// existing rank rather than being demoted.
-pub fn roster_mass_factor(entries: usize) -> f64 {
+/// against that. Boost-only (≥ 1): small rosters keep their existing
+/// rank rather than being demoted. [`roster_mass_factor`] caps it for
+/// directory listings.
+pub fn roster_mass(entries: usize) -> f64 {
     (entries as f64 / ROSTER_MASS_BASELINE)
         .powf(DEFAULT_CONCAVITY_EXPONENT)
-        .clamp(1.0, ROSTER_MASS_FACTOR_CAP)
+        .max(1.0)
+}
+
+/// [`roster_mass`], capped.
+pub fn roster_mass_factor(entries: usize) -> f64 {
+    roster_mass(entries).min(ROSTER_MASS_FACTOR_CAP)
 }
 
 /// Base value of each code-engine rung (`walker::code`), before the file
@@ -56,8 +62,10 @@ pub fn roster_mass_factor(entries: usize) -> f64 {
 /// is (module doc, declaration), one for its depth (doc, body), and the
 /// roster's per-row value. The engine scales `Names` by `rows^k` (`k`
 /// the default concavity exponent), so a roster's scheduling ratio
-/// depends on its tokens per row, not on its length. `Names` is by far
-/// the most grid-sensitive of the three.
+/// depends on its tokens per row, not on its length, and a `Whole`
+/// declaration's `Decl` (fields, entries, a container's member roster) by
+/// [`roster_mass`] of its body entries. `Names` is by far the most
+/// grid-sensitive of the three.
 pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
     use crate::batch::Rung;
     match rung {

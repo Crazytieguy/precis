@@ -171,17 +171,17 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 7992 |  | 191 | Compile-time options | 4.3 |  | 0.418 |
 | walker |  | 8129 | 230 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 0, line: 2887 } |  |  | 0.418 |
 | ns | 8136 |  | 144 | Public header template | 4.4 |  | 0.412 |
-| walker |  | 8314 | 185 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 15, line: 0 } |  |  | 0.414 |
-| walker |  | 8330 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 130, sub: 0, line: 3137 } |  |  | 0.414 |
-| ns | 8331 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.409 |
-| walker |  | 8346 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 135, sub: 0, line: 3273 } |  |  | 0.409 |
-| walker |  | 8362 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 136, sub: 0, line: 3302 } |  |  | 0.409 |
-| walker |  | 8390 | 28 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 131, sub: 0, line: 3166 } |  |  | 0.409 |
-| ns | 8490 |  | 159 | Distribution manifest | 4.6 |  | 0.404 |
-| walker |  | 8610 | 220 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 1, line: 2887 } |  |  | 0.404 |
-| ns | 8655 |  | 165 | TODO / roadmap | 4.7 |  | 0.400 |
+| ns | 8331 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.407 |
+| walker |  | 8349 | 220 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 1, line: 2887 } |  |  | 0.407 |
+| walker |  | 8481 | 132 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 2, line: 2887 } |  |  | 0.407 |
+| ns | 8490 |  | 159 | Distribution manifest | 4.6 |  | 0.401 |
+| ns | 8655 |  | 165 | TODO / roadmap | 4.7 |  | 0.397 |
+| walker |  | 8666 | 185 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 15, line: 0 } |  |  | 0.400 |
 | ns | 8667 |  | 12 | CI workflows | 4.8 |  | 0.402 |
-| walker |  | 8742 | 132 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 2, line: 2887 } |  |  | 0.402 |
+| walker |  | 8682 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 130, sub: 0, line: 3137 } |  |  | 0.402 |
+| walker |  | 8698 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 135, sub: 0, line: 3273 } |  |  | 0.402 |
+| walker |  | 8714 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 136, sub: 0, line: 3302 } |  |  | 0.402 |
+| walker |  | 8742 | 28 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 131, sub: 0, line: 3166 } |  |  | 0.402 |
 | ns | 8811 |  | 144 | tests/ listing (complete) | 5.1 |  | 0.426 |
 | ns | 8898 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.423 |
 | walker |  | 8959 | 217 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 16, line: 0 } |  |  | 0.430 |

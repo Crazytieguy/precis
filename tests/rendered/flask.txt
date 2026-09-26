@@ -261,28 +261,6 @@ src/flask/
   __main__.py
   app.py
   blueprints.py
-    …
-    18→class Blueprint(SansioBlueprint):
-    19→    def __init__(
-    20→        self,
-    21→        name: str,
-    22→        import_name: str,
-    23→        static_folder: str | os.PathLike[str] | None = None,
-    24→        static_url_path: str | None = None,
-    25→        template_folder: str | os.PathLike[str] | None = None,
-    26→        url_prefix: str | None = None,
-    27→        subdomain: str | None = None,
-    28→        url_defaults: dict[str, t.Any] | None = None,
-    29→        root_path: str | None = None,
-    …
-    55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
-    …
-    82→    def send_static_file(self, filename: str) -> Response:
-    …
-    104→    def open_resource(
-    105→        self, resource: str, mode: str = "rb", encoding: str | None = "utf-8"
-    106→    ) -> t.IO[t.AnyStr]:
-    …
   cli.py
   config.py
   ctx.py
@@ -324,6 +302,24 @@ src/flask/
   wrappers.py
     …
     18→class Request(RequestBase):
+    …
+    31→    json_module: t.Any = json
+    32→
+    33→    #: The internal URL rule that matched the request.  This can be
+    34→    #: useful to inspect which methods are allowed for the URL from
+    35→    #: a before/after handler (``request.url_rule.methods``) etc.
+    36→    #: Though if the request's method was invalid for the URL rule,
+    37→    #: the valid list is available in ``routing_exception.valid_methods``
+    38→    #: instead (an attribute of the Werkzeug exception
+    39→    #: :exc:`~werkzeug.exceptions.MethodNotAllowed`)
+    40→    #: because the request was never internally bound.
+    41→    #:
+    42→    #: .. versionadded:: 0.6
+    43→    url_rule: Rule | None = None
+    45→    #: A dict of view arguments that matched the request.  If an exception
+    46→    #: happened when matching, this will be ``None``.
+    47→    view_args: dict[str, t.Any] | None = None
+    48→
     …
     222→class Response(ResponseBase):
     …
