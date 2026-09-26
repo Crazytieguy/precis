@@ -163,3 +163,44 @@ fn ns_simulate_detects_truncation_eliding_only_punctuation() {
         "never elides a word character",
     );
 }
+
+/// A batch left out of the simulation for a bad span yields one violation
+/// on its successor, not a phantom "not found" plus an overlap with the
+/// lines it would have inherited.
+#[test]
+fn ns_simulate_left_out_predecessor_does_not_cascade() {
+    let with_predecessor = |batch: String, predecessor: &str| {
+        batch.replacen(
+            "descriptor",
+            &format!("predecessor = \"{predecessor}\"\ndescriptor"),
+            1,
+        )
+    };
+    let found = violations(&[
+        lines("1", 1, 5, FULL),
+        with_predecessor(lines("2", 1, 99999, FULL), "1"),
+        with_predecessor(lines("3", 1, 1, ELLIPSIS), "2"),
+    ]);
+    assert_flags(&found[1], "span out of range");
+    assert_eq!(
+        found[2],
+        vec![
+            "predecessor \"2\" was left out of the simulation (fix its violations first)"
+                .to_string()
+        ]
+    );
+}
+
+#[test]
+fn ns_simulate_reports_the_cap_once() {
+    let found = violations(&[
+        lines("1", 1, 700, FULL),
+        lines("2", 701, 1400, FULL),
+        lines("3", 1401, 2010, FULL),
+    ]);
+    let capped = found
+        .iter()
+        .filter(|batch| batch.iter().any(|v| v.contains("cap exceeded")))
+        .count();
+    assert_eq!(capped, 1, "{found:?}");
+}

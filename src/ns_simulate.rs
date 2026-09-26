@@ -32,7 +32,12 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
     let source_cache = SourceCache::new();
     let mut tree = RenderedTree::new(fixture_root.to_path_buf(), source_cache.clone());
     let mut seen_ids: HashSet<&str> = HashSet::new();
+    let mut by_id: HashMap<&str, &NsBatch> = HashMap::new();
+    for batch in &ns.batches {
+        by_id.entry(&batch.id).or_insert(batch);
+    }
     let mut applied: HashMap<&str, BatchId> = HashMap::new();
+    let mut left_out: HashSet<&str> = HashSet::new();
     let mut applied_by: HashMap<BatchId, &str> = HashMap::new();
     let mut fs_owners: BTreeMap<(PathBuf, String), &str> = BTreeMap::new();
     let mut cumulative = 0;
@@ -46,12 +51,16 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
                 batch.id
             ));
         }
-        if let Some(predecessor) = &batch.predecessor
-            && !applied.contains_key(predecessor.as_str())
-        {
-            violations.push(format!(
-                "predecessor {predecessor:?} not found in prior batches"
-            ));
+        if let Some(predecessor) = &batch.predecessor {
+            if left_out.contains(predecessor.as_str()) {
+                violations.push(format!(
+                    "predecessor {predecessor:?} was left out of the simulation (fix its violations first)"
+                ));
+            } else if !applied.contains_key(predecessor.as_str()) {
+                violations.push(format!(
+                    "predecessor {predecessor:?} not found in prior batches"
+                ));
+            }
         }
         let record = |violations, cost_tokens, cumulative_tokens| SimulatedBatch {
             id: batch.id.clone(),
@@ -67,6 +76,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
         if let BatchContent::Lines { spans, .. } = &batch.content
             && validate_spans(spans, fixture_root, &source_cache, &mut violations)
         {
+            left_out.insert(&batch.id);
             out.push(record(violations, 0, cumulative));
             continue;
         }
@@ -74,6 +84,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
             Ok(content) => content,
             Err(e) => {
                 violations.push(format!("fs content resolution failed: {e}"));
+                left_out.insert(&batch.id);
                 out.push(record(violations, 0, cumulative));
                 continue;
             }
@@ -92,15 +103,16 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
                 "growth envelope: batch cost {cost} > {max_allowed} tokens (cumulative so far: {cumulative}; envelope = 100 + 0.3·cumulative). Split the batch, or rank smaller batches earlier."
             ));
         }
+        let cumulative_before = cumulative;
         cumulative += cost;
-        if cumulative > TOKEN_CAP {
+        if cumulative_before <= TOKEN_CAP && cumulative > TOKEN_CAP {
             violations.push(format!(
-                "cap exceeded: cumulative {cumulative} > {TOKEN_CAP} tokens"
+                "cap exceeded: cumulative {cumulative} > {TOKEN_CAP} tokens (every later batch is past it too)"
             ));
         }
 
         let batch_id = BatchId::new(position);
-        let ancestors = collect_ancestors(&batch.id, &ns.batches, &applied);
+        let ancestors = collect_ancestors(&batch.id, &by_id, &applied);
         for conflict in tree.apply(&content, batch_id, |id| ancestors.contains(&id)) {
             let owner = applied_by.get(&conflict.existing_owner).map_or_else(
                 || format!("{:?}", conflict.existing_owner),
@@ -251,21 +263,23 @@ fn validate_spans(
     blocking
 }
 
-/// Applied batches on `ns_id`'s predecessor chain.
+/// Applied batches on `ns_id`'s predecessor chain. The walk passes through
+/// batches left out of the simulation, so a batch whose predecessor has a
+/// violation still counts that predecessor's own ancestors as its own.
 fn collect_ancestors(
     ns_id: &str,
-    batches: &[NsBatch],
+    by_id: &HashMap<&str, &NsBatch>,
     applied: &HashMap<&str, BatchId>,
 ) -> HashSet<BatchId> {
     let mut out = HashSet::new();
+    let mut visited = HashSet::new();
     let mut current = ns_id;
-    while let Some(predecessor) = batches
-        .iter()
-        .find(|b| b.id == current)
-        .and_then(|b| b.predecessor.as_deref())
-        && let Some(&id) = applied.get(predecessor)
-        && out.insert(id)
+    while let Some(predecessor) = by_id
+        .get(current)
+        .and_then(|batch| batch.predecessor.as_deref())
+        && visited.insert(predecessor)
     {
+        out.extend(applied.get(predecessor));
         current = predecessor;
     }
     out
