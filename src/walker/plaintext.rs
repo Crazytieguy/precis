@@ -625,6 +625,12 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
     let lines: Vec<&str> = source.lines().collect();
     let in_block_comment = block_comment_interiors(&lines);
     let banner_end = boilerplate_banner_end(&lines, &in_block_comment);
+    let is_language = class == Class::LanguageSource;
+    let continues = if is_language {
+        continuation_lines(&lines, &in_block_comment)
+    } else {
+        vec![false; lines.len()]
+    };
     let mut rows: Vec<(usize, usize, SurfaceLine)> = Vec::new();
     for (index, (line, &in_block_comment)) in lines
         .iter()
@@ -633,7 +639,11 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
         .skip(banner_end)
     {
         let trimmed = line.trim();
-        if trimmed.is_empty() || trimmed.chars().count() > SOURCE_TEXT_MAX_LINE_CHARS {
+        if trimmed.is_empty()
+            || trimmed.chars().count() > SOURCE_TEXT_MAX_LINE_CHARS
+            || continues[index]
+            || (is_language && is_annotation_only(trimmed))
+        {
             continue;
         }
         let Some(kind) = classify_surface_line(trimmed, in_block_comment) else {
@@ -657,8 +667,8 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
     // function, a module) is what the roster is for; statements and
     // directives take the slots it leaves. A flat file's surface stays
     // its head.
-    if class == Class::LanguageSource {
-        let opens_block = block_openers(&lines);
+    if is_language {
+        let opens_block = block_openers(&lines, &continues);
         rows.sort_by_key(|&(_, line, kind)| kind == SurfaceLine::Decl && !opens_block[line - 1]);
     }
     for level in levels.into_iter().take(SOURCE_TEXT_MAX_INDENT_LEVELS) {
@@ -688,19 +698,112 @@ fn indentation(line: &str) -> usize {
 
 /// Per line, whether the next line with content is indented deeper — the
 /// line heads a block. A line of only brackets is skipped over, so an
-/// Allman-style `{` does not take the heading from the line above it.
-fn block_openers(lines: &[&str]) -> Vec<bool> {
+/// Allman-style `{` does not take the heading from the line above it, and
+/// so are `continues` lines, so a wrapped signature heads the block its
+/// last line opens while a multi-line annotation heads nothing.
+fn block_openers(lines: &[&str], continues: &[bool]) -> Vec<bool> {
     let mut opens = vec![false; lines.len()];
     let mut next_indent: Option<usize> = None;
     for (index, line) in lines.iter().enumerate().rev() {
         let indent = indentation(line);
         opens[index] = next_indent.is_some_and(|next| next > indent);
         let trimmed = line.trim();
-        if !trimmed.is_empty() && !is_block_closer(trimmed) {
+        if !trimmed.is_empty() && !is_block_closer(trimmed) && !continues[index] {
             next_indent = Some(indent);
         }
     }
     opens
+}
+
+/// Leading characters of a line indented under the one above it that
+/// carries on that line's expression — a method chain, a wrapped
+/// assignment or type, a guard, a pipe.
+const CONTINUATION_OPERATORS: &[char] = &['.', '=', '?', ':', '|', '&', '+', '-', ','];
+
+/// Per line, whether it continues a logical line begun above it: the rest
+/// of a `(` or `[` left open there (wrapped parameters, a multi-line
+/// annotation, a literal), a line led by a closing bracket, or a deeper
+/// line led by an operator. It declares nothing on its own. A line back
+/// at or above the indentation that opened the bracket ends it, so a
+/// miscounted bracket cannot swallow the rest of the file.
+fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
+    let mut continues = vec![false; lines.len()];
+    let mut depth = 0;
+    let mut head_indent = 0;
+    for (index, line) in lines.iter().enumerate() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || in_block_comment[index] || is_comment_line(trimmed) {
+            continue;
+        }
+        let indent = indentation(line);
+        let led_by_closer = trimmed.starts_with([')', ']', '}']);
+        if depth > 0 && indent <= head_indent && !led_by_closer {
+            depth = 0;
+        }
+        continues[index] = depth > 0
+            || led_by_closer
+            || (indent > head_indent && trimmed.starts_with(CONTINUATION_OPERATORS));
+        if depth == 0 && !continues[index] {
+            head_indent = indent;
+        }
+        depth = (depth + bracket_balance(trimmed)).max(0);
+    }
+    continues
+}
+
+/// Opening minus closing round and square brackets on a line, outside
+/// string and character literals and a trailing `//` comment. A `'` after
+/// a letter or digit is a Haskell prime or a digit separator, not a quote.
+fn bracket_balance(trimmed: &str) -> isize {
+    let mut balance = 0;
+    let mut quote: Option<char> = None;
+    let mut previous = ' ';
+    let mut chars = trimmed.chars().peekable();
+    while let Some(c) = chars.next() {
+        match quote {
+            Some(_) if c == '\\' => {
+                chars.next();
+            }
+            Some(open) if c == open => quote = None,
+            Some(_) => {}
+            None => match c {
+                '"' | '`' => quote = Some(c),
+                '\'' if !previous.is_alphanumeric() => quote = Some(c),
+                '/' if chars.peek() == Some(&'/') => break,
+                '(' | '[' => balance += 1,
+                ')' | ']' => balance -= 1,
+                _ => {}
+            },
+        }
+        previous = c;
+    }
+    balance
+}
+
+/// A line of annotations or attributes alone (`@Deprecated(`,
+/// `@MainActor`, `[Fact]`, `#[Route("/")]`): it qualifies the declaration
+/// below it and names nothing itself. Whitespace outside brackets means a
+/// declaration follows on the same line (`@Override public void run()`,
+/// Objective-C's `@interface Foo`).
+fn is_annotation_only(trimmed: &str) -> bool {
+    let body = trimmed
+        .strip_prefix('#')
+        .filter(|rest| rest.starts_with('['))
+        .unwrap_or(trimmed);
+    let mut chars = body.chars();
+    if !matches!(chars.next(), Some('@' | '[')) || !chars.next().is_some_and(char::is_alphabetic) {
+        return false;
+    }
+    let mut depth = 0;
+    for c in body.chars() {
+        match c {
+            '(' | '[' => depth += 1,
+            ')' | ']' => depth -= 1,
+            c if c.is_whitespace() && depth <= 0 => return false,
+            _ => {}
+        }
+    }
+    true
 }
 
 /// A fallback file's declaration surface, then — when the surface
@@ -1180,6 +1283,62 @@ mod tests {
             text(Class::LanguageSource)
         );
         assert!(!text(Class::FlatText).contains(&"function! plug#begin(...)"));
+    }
+
+    /// A multi-line annotation, a wrapped initializer and the tail of a
+    /// wrapped signature continue the line above them and never take a slot
+    /// from a declaration.
+    #[test]
+    fn plaintext_source_text_surface_skips_continuation_lines() {
+        let kotlin = [
+            "class A(",
+            "  val x: Int,",
+            ") {",
+            "  @Deprecated(",
+            "    message = \"x\",",
+            "  )",
+            "  fun old(): Int = 1",
+            "  private val RULE: Predicate",
+            "      = Rules::check",
+            "  fun keep(): Int = 2",
+            "  fun wrapped(",
+            "    y: Int,",
+            "  ): Int {",
+            "    return y",
+            "  }",
+            "}",
+        ]
+        .join("\n");
+        let lines: Vec<&str> = kotlin.lines().collect();
+        let text: Vec<&str> = surface_of(&kotlin).iter().map(|n| lines[n - 1]).collect();
+        assert_eq!(
+            text,
+            vec![
+                "class A(",
+                "  fun old(): Int = 1",
+                "  private val RULE: Predicate",
+                "  fun keep(): Int = 2",
+                "  fun wrapped(",
+            ]
+        );
+        let opens_block = block_openers(
+            &lines,
+            &continuation_lines(&lines, &vec![false; lines.len()]),
+        );
+        assert!(opens_block[0] && opens_block[10], "{opens_block:?}");
+        assert!(!opens_block[3], "{opens_block:?}");
+    }
+
+    #[test]
+    fn plaintext_source_text_bracket_balance_ignores_literals() {
+        assert_eq!(bracket_balance("foo(\"(\", ')', bar( // (("), 2);
+        assert_eq!(bracket_balance("foldl' (+) 0 xs"), 0);
+        assert!(is_annotation_only("@Deprecated("));
+        assert!(is_annotation_only(
+            "[UnconditionalSuppressMessage(\"x\", \"y\")]"
+        ));
+        assert!(!is_annotation_only("@Override public void run() {"));
+        assert!(!is_annotation_only("@interface Foo : NSObject"));
     }
 
     #[test]
