@@ -10,7 +10,9 @@
 //! - `ReadmeHeadline` — the first heading plus the lede: the first
 //!   substantive block before it and the blocks under it through the
 //!   first paragraph, stepping over chrome (badges, logos, nav rows,
-//!   badge tables); a headingless README's is its lede alone.
+//!   badge tables). A title over only chrome takes its first
+//!   subsection's heading and lede instead, when that opens with prose;
+//!   a headingless README's headline is its lede alone.
 //! - `Prelude` — the rest of the text above the first heading, chrome
 //!   excluded. Predecessor: the headline.
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
@@ -549,7 +551,24 @@ fn headline_rows(tree: &Tree, source: &str) -> Option<BTreeSet<usize>> {
     // `## About`) the first substantive paragraph IS the section body
     // and shouldn't pull in further content.
     let post: Vec<Node> = children_after(section, heading);
+    let bare_title = spec.len();
     extend_lede(&mut spec, &post, source, heading_level(heading) == 1);
+
+    // A title over nothing but chrome (`# Godot` → logo → `## 2D and 3D
+    // game engine`) leaves the lede to its first subsection.
+    if spec.len() == bare_title
+        && spec.first() == Some(&heading_first_row)
+        && let Some(&subsection) = post.iter().find(|node| is_section_boundary(node.kind()))
+        && let Some(sub_heading) = first_heading_child(subsection)
+        && let sub_blocks = children_after(subsection, sub_heading)
+        && sub_blocks
+            .iter()
+            .find(|block| !is_chrome_block(**block, source))
+            .is_some_and(|block| block.kind() == "paragraph")
+    {
+        extend_rows_inclusive(&mut spec, sub_heading, source);
+        extend_lede(&mut spec, &sub_blocks, source, false);
+    }
 
     debug_assert!(
         spec.contains(&heading_first_row),
@@ -2381,6 +2400,35 @@ mod tests {
             &[5],
             &[1, 3],
         ),
+        // A title over only chrome takes its first subsection's lede, and
+        // stops there.
+        (
+            "markdown_bare_title_takes_first_subsection_lede",
+            "# Widget\n\
+                   \n\
+                   <p align=\"center\"><img src=\"logo.png\"></p>\n\
+                   \n\
+                   ## A gadget renderer\n\
+                   \n\
+                   Widget renders gadgets.\n\
+                   \n\
+                   It also does more.\n\
+                   \n\
+                   ## Install\n",
+            &[1, 5, 7],
+            &[3, 9, 11],
+        ),
+        // ... but not a subsection that opens with a list rather than prose.
+        (
+            "markdown_bare_title_skips_a_list_first_subsection",
+            "# Widget\n\
+                   \n\
+                   ## News\n\
+                   \n\
+                   - 1.0 released\n",
+            &[1],
+            &[3, 5],
+        ),
     ];
 
     #[test]
@@ -2402,18 +2450,6 @@ mod tests {
                 );
             }
         }
-    }
-
-    // Nested H1→H2 immediately. Headline must NOT pull the H2 body into
-    // itself; only the H1 heading row is covered (exact set, not just membership).
-    #[test]
-    fn markdown_nested_subsection_not_pulled_in() {
-        let src = "# Title\n\
-                   \n\
-                   ## Sub\n\
-                   \n\
-                   sub body\n";
-        assert_eq!(covered(src).into_iter().collect::<Vec<_>>(), vec![1]);
     }
 
     /// Short bold tagline followed by a prose lede: the extension

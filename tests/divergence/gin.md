@@ -1,63 +1,63 @@
-Score(3000)=0.590 I=0.652 C=0.533 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.751/0.713/0.627/0.590/0.547/0.491/0.498
+Score(3000)=0.590 I=0.652 C=0.533 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.751/0.719/0.637/0.590/0.547/0.491/0.498
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 98 |  | 98 | Package identity: module path, Go version, framework version | 1.1 |  | 0.000 |
 | ns | 186 |  | 88 | README lede: what Gin is and what it is for | 1.2 |  | 0.000 |
 | walker |  | 229 | 229 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 240 | 11 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
-| walker |  | 244 | 4 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 251 | 7 | Fs::DirListing { dir: internal } |  |  | 0.000 |
-| walker |  | 266 | 15 | Fs::DirListing { dir: ginS } |  |  | 0.000 |
-| walker |  | 297 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.162 |
-| walker |  | 306 | 9 | Fs::DirListing { dir: internal/fs } |  |  | 0.162 |
-| walker |  | 317 | 11 | Fs::DirListing { dir: internal/bytesconv } |  |  | 0.163 |
-| walker |  | 321 | 4 | Fs::DirListing { dir: examples } |  |  | 0.163 |
-| ns | 324 |  | 138 | doc.go: the canonical hello-world call site | 1.3 | 1.1 | 0.087 |
-| walker |  | 344 | 23 | Fs::DirListing { dir: codec/json } |  |  | 0.089 |
-| walker |  | 419 | 75 | Fs::DirListing { dir: render } |  |  | 0.090 |
-| walker |  | 434 | 15 | Fs::DirListing { dir: testdata } |  |  | 0.092 |
-| ns | 444 |  | 120 | README key-feature list (first half) | 1.4 |  | 0.078 |
-| walker |  | 453 | 19 | Fs::DirListing { dir: .github } |  |  | 0.078 |
-| walker |  | 475 | 22 | Fs::DirListing { dir: .github/workflows } |  |  | 0.078 |
-| walker |  | 484 | 9 | Fs::DirListing { dir: testdata/protoexample } |  |  | 0.079 |
-| ns | 569 |  | 125 | README key-feature list (second half) + Go version prerequisite | 1.5 |  | 0.071 |
-| walker |  | 640 | 156 | Fs::DirListing { dir: binding } |  |  | 0.080 |
-| ns | 661 |  | 92 | docs/doc.md top-level section map | 1.6 |  | 0.069 |
-| walker |  | 841 | 201 | Code::CodeKey { rung: ModuleDoc, file: doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
-| ns | 890 |  | 229 | Complete repository root listing | 1.7 |  | 0.751 |
-| walker |  | 955 | 114 | Plaintext::Whole { file: Makefile } |  |  | 0.751 |
+| walker |  | 233 | 4 | Fs::DirListing { dir: docs } |  |  | 0.000 |
+| walker |  | 240 | 7 | Fs::DirListing { dir: internal } |  |  | 0.000 |
+| ns | 324 |  | 138 | doc.go: the canonical hello-world call site | 1.3 | 1.1 | 0.000 |
+| walker |  | 369 | 129 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 384 | 15 | Fs::DirListing { dir: ginS } |  |  | 0.000 |
+| walker |  | 415 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.086 |
+| walker |  | 424 | 9 | Fs::DirListing { dir: internal/fs } |  |  | 0.087 |
+| walker |  | 435 | 11 | Fs::DirListing { dir: internal/bytesconv } |  |  | 0.087 |
+| walker |  | 439 | 4 | Fs::DirListing { dir: examples } |  |  | 0.087 |
+| ns | 444 |  | 120 | README key-feature list (first half) | 1.4 |  | 0.074 |
+| walker |  | 462 | 23 | Fs::DirListing { dir: codec/json } |  |  | 0.076 |
+| walker |  | 537 | 75 | Fs::DirListing { dir: render } |  |  | 0.077 |
+| walker |  | 552 | 15 | Fs::DirListing { dir: testdata } |  |  | 0.078 |
+| ns | 569 |  | 125 | README key-feature list (second half) + Go version prerequisite | 1.5 |  | 0.070 |
+| walker |  | 571 | 19 | Fs::DirListing { dir: .github } |  |  | 0.070 |
+| walker |  | 593 | 22 | Fs::DirListing { dir: .github/workflows } |  |  | 0.070 |
+| walker |  | 602 | 9 | Fs::DirListing { dir: testdata/protoexample } |  |  | 0.071 |
+| ns | 661 |  | 92 | docs/doc.md top-level section map | 1.6 |  | 0.061 |
+| walker |  | 758 | 156 | Fs::DirListing { dir: binding } |  |  | 0.069 |
+| ns | 890 |  | 229 | Complete repository root listing | 1.7 |  | 0.425 |
+| walker |  | 959 | 201 | Code::CodeKey { rung: ModuleDoc, file: doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.751 |
+| walker |  | 1073 | 114 | Plaintext::Whole { file: Makefile } |  |  | 0.751 |
 | ns | 1121 |  | 231 | binding/ and render/ directory listings | 1.8 |  | 0.761 |
-| walker |  | 1150 | 195 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.761 |
 | ns | 1236 |  | 115 | Remaining source/data directory listings (codec, ginS, internal, docs, examples, testdata) | 1.9 |  | 0.742 |
-| walker |  | 1378 | 228 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.743 |
-| walker |  | 1418 | 40 | Code::CodeKey { rung: Decl, file: gin.go, decl: 5, sub: 0, line: 68 } |  |  | 0.745 |
-| ns | 1434 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.713 |
-| walker |  | 1515 | 97 | Code::CodeKey { rung: Decl, file: gin.go, decl: 7, sub: 0, line: 79 } |  |  | 0.713 |
-| walker |  | 1521 | 6 | Code::CodeKey { rung: Doc, file: gin.go, decl: 7, sub: 0, line: 79 } |  |  | 0.713 |
-| walker |  | 1532 | 11 | Code::CodeKey { rung: Doc, file: gin.go, decl: 6, sub: 0, line: 76 } |  |  | 0.717 |
-| walker |  | 1544 | 12 | Code::CodeKey { rung: Doc, file: gin.go, decl: 3, sub: 0, line: 57 } |  |  | 0.721 |
-| walker |  | 1558 | 14 | Code::CodeKey { rung: Doc, file: gin.go, decl: 2, sub: 0, line: 54 } |  |  | 0.727 |
-| walker |  | 1576 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 1, sub: 0, line: 51 } |  |  | 0.734 |
-| walker |  | 1595 | 19 | Code::CodeKey { rung: Doc, file: gin.go, decl: 10, sub: 0, line: 236 } |  |  | 0.734 |
-| ns | 1684 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.665 |
-| walker |  | 1766 | 171 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 1, line: 0 } |  |  | 0.666 |
-| walker |  | 1781 | 15 | Code::CodeKey { rung: Doc, file: gin.go, decl: 17, sub: 0, line: 312 } |  |  | 0.666 |
-| walker |  | 1799 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 18, sub: 0, line: 321 } |  |  | 0.666 |
-| ns | 2020 |  | 336 | IRoutes / IRouter: the complete route-registration interface | 2.3 |  | 0.625 |
-| walker |  | 2077 | 278 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 2, line: 0 } |  |  | 0.627 |
-| walker |  | 2091 | 14 | Code::CodeKey { rung: Doc, file: gin.go, decl: 31, sub: 0, line: 662 } |  |  | 0.627 |
-| walker |  | 2109 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 22, sub: 0, line: 348 } |  |  | 0.627 |
-| walker |  | 2129 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 12, sub: 0, line: 259 } |  |  | 0.627 |
-| walker |  | 2149 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 13, sub: 0, line: 265 } |  |  | 0.627 |
-| walker |  | 2169 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 20, sub: 0, line: 332 } |  |  | 0.627 |
-| walker |  | 2191 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 5, sub: 0, line: 68 } |  |  | 0.635 |
-| walker |  | 2213 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 19, sub: 0, line: 326 } |  |  | 0.635 |
-| walker |  | 2236 | 23 | Code::CodeKey { rung: Doc, file: gin.go, decl: 4, sub: 0, line: 60 } |  |  | 0.635 |
-| ns | 2441 |  | 421 | Engine constructor New(): every default value | 2.4 | 2.2 | 0.594 |
-| walker |  | 2544 | 308 | GoMod::File { file: go.mod } |  |  | 0.594 |
-| ns | 2634 |  | 193 | Default(), RouterGroup struct, and the IRouter assertions | 2.5 | 2.3 | 0.574 |
-| walker |  | 2728 | 184 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.585 |
+| walker |  | 1248 | 175 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.742 |
+| walker |  | 1334 | 86 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.757 |
+| ns | 1434 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.715 |
+| walker |  | 1562 | 228 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.719 |
+| walker |  | 1602 | 40 | Code::CodeKey { rung: Decl, file: gin.go, decl: 5, sub: 0, line: 68 } |  |  | 0.727 |
+| ns | 1684 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.658 |
+| walker |  | 1699 | 97 | Code::CodeKey { rung: Decl, file: gin.go, decl: 7, sub: 0, line: 79 } |  |  | 0.659 |
+| walker |  | 1705 | 6 | Code::CodeKey { rung: Doc, file: gin.go, decl: 7, sub: 0, line: 79 } |  |  | 0.659 |
+| walker |  | 1716 | 11 | Code::CodeKey { rung: Doc, file: gin.go, decl: 6, sub: 0, line: 76 } |  |  | 0.662 |
+| walker |  | 1728 | 12 | Code::CodeKey { rung: Doc, file: gin.go, decl: 3, sub: 0, line: 57 } |  |  | 0.665 |
+| walker |  | 1742 | 14 | Code::CodeKey { rung: Doc, file: gin.go, decl: 2, sub: 0, line: 54 } |  |  | 0.671 |
+| walker |  | 1760 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 1, sub: 0, line: 51 } |  |  | 0.678 |
+| walker |  | 1779 | 19 | Code::CodeKey { rung: Doc, file: gin.go, decl: 10, sub: 0, line: 236 } |  |  | 0.678 |
+| walker |  | 1950 | 171 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 1, line: 0 } |  |  | 0.679 |
+| walker |  | 1965 | 15 | Code::CodeKey { rung: Doc, file: gin.go, decl: 17, sub: 0, line: 312 } |  |  | 0.679 |
+| walker |  | 1983 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 18, sub: 0, line: 321 } |  |  | 0.679 |
+| ns | 2020 |  | 336 | IRoutes / IRouter: the complete route-registration interface | 2.3 |  | 0.636 |
+| walker |  | 2261 | 278 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 2, line: 0 } |  |  | 0.639 |
+| walker |  | 2275 | 14 | Code::CodeKey { rung: Doc, file: gin.go, decl: 31, sub: 0, line: 662 } |  |  | 0.639 |
+| walker |  | 2293 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 22, sub: 0, line: 348 } |  |  | 0.639 |
+| walker |  | 2313 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 12, sub: 0, line: 259 } |  |  | 0.639 |
+| walker |  | 2333 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 13, sub: 0, line: 265 } |  |  | 0.639 |
+| walker |  | 2353 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 20, sub: 0, line: 332 } |  |  | 0.639 |
+| walker |  | 2375 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 5, sub: 0, line: 68 } |  |  | 0.647 |
+| walker |  | 2397 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 19, sub: 0, line: 326 } |  |  | 0.647 |
+| walker |  | 2420 | 23 | Code::CodeKey { rung: Doc, file: gin.go, decl: 4, sub: 0, line: 60 } |  |  | 0.647 |
+| ns | 2441 |  | 421 | Engine constructor New(): every default value | 2.4 | 2.2 | 0.605 |
+| ns | 2634 |  | 193 | Default(), RouterGroup struct, and the IRouter assertions | 2.5 | 2.3 | 0.585 |
+| walker |  | 2728 | 308 | GoMod::File { file: go.mod } |  |  | 0.585 |
 | ns | 2829 |  | 195 | Run* server entry points: all six transports | 2.6 |  | 0.584 |
 | walker |  | 2912 | 184 | Code::CodeKey { rung: Names, file: routergroup.go, decl: 0, sub: 0, line: 0 } |  |  | 0.585 |
 | walker |  | 2929 | 17 | Code::CodeKey { rung: Decl, file: routergroup.go, decl: 3, sub: 0, line: 55 } |  |  | 0.586 |
