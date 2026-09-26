@@ -3,9 +3,7 @@
 //! A file's declarations are its API:
 //! - exported declarations and the locals an `export { … }` clause,
 //!   `export default X`, `export = X` or a CommonJS `module.exports` /
-//!   `exports.x` assignment names; in a file that is one AMD `define` or
-//!   UMD wrapper call, the factory body is the top level and its `return`
-//!   exports;
+//!   `exports.x` assignment names;
 //! - every top-level declaration of a `.d.ts` (ambient declarations are
 //!   implicitly exported);
 //! - every top-level declaration and control-flow statement of an
@@ -62,8 +60,7 @@ fn grammar(path: &Path) -> tree_sitter::Language {
 
 fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
-    let scope = module_factory_body(file, root).unwrap_or(root);
-    let statements: Vec<Node> = scope.named_children(&mut scope.walk()).collect();
+    let statements: Vec<Node> = root.named_children(&mut root.walk()).collect();
 
     let mut scan = ExportScan::default();
     let classified: Vec<(Node, TopLevel)> = statements
@@ -122,41 +119,6 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         }
     }
     model
-}
-
-/// The body of the factory function a file that is one AMD
-/// `define([…], function (…) { … })` or UMD
-/// `(function (root, factory) { … })(this, function (…) { … })` call wraps
-/// its code in: the module's real top level, whose `return` exports.
-fn module_factory_body<'tree>(file: &SourceFile, root: Node<'tree>) -> Option<Node<'tree>> {
-    let mut cursor = root.walk();
-    let mut statements = root
-        .named_children(&mut cursor)
-        .filter(|statement| statement.kind() != "comment" && !is_directive(*statement));
-    let (Some(statement), None) = (statements.next(), statements.next()) else {
-        return None;
-    };
-    if statement.kind() != "expression_statement" {
-        return None;
-    }
-    let mut call = statement.named_child(0)?;
-    while call.kind() == "parenthesized_expression" {
-        call = call.named_child(0)?;
-    }
-    if call.kind() != "call_expression" {
-        return None;
-    }
-    let mut callee = call.child_by_field_name("function")?;
-    while callee.kind() == "parenthesized_expression" {
-        callee = callee.named_child(0)?;
-    }
-    let is_wrapper = (callee.kind() == "identifier" && file.text(callee) == "define")
-        || is_function_kind(callee.kind());
-    let arguments = call.child_by_field_name("arguments")?;
-    let factory = arguments.named_children(&mut arguments.walk()).last()?;
-    let body = factory.child_by_field_name("body")?;
-    (is_wrapper && is_function_kind(factory.kind()) && body.kind() == "statement_block")
-        .then_some(body)
 }
 
 /// `'use strict'` and other string-literal statements.
@@ -286,11 +248,6 @@ impl<'source> ExportScan<'source> {
                 }
             }
             "ambient_declaration" => TopLevel::Local(unwrap_ambient(statement)),
-            // A module factory's `return X`.
-            "return_statement" => match statement.named_child(0) {
-                Some(value) => self.exported_value(file, value),
-                None => TopLevel::Skip,
-            },
             "lexical_declaration" | "variable_declaration"
                 if is_require_declaration(file, statement) =>
             {
@@ -1742,52 +1699,6 @@ exports.Store = Store;
                 "  Callable name [3] head [3] doc [] body [[4]]",
                 "  Callable name [6] head [6] doc [] body []",
             ]
-        );
-    }
-
-    #[test]
-    fn typescript_amd_and_umd_factories_export_what_they_return() {
-        let amd = extract_source(
-            "client/js/area.js",
-            "\
-define(['lib/class'], function(Class) {
-    function helper() {}
-    var Area = Class.extend({
-        init: function(x) {
-            this.x = x;
-        },
-    });
-    return Area;
-});
-",
-        );
-        assert_eq!(rows(&amd.reexports), [vec![8]]);
-        assert_eq!(
-            describe(&amd),
-            [
-                "Whole name [3] head [3, 7] doc [] body [[4]]",
-                "  Callable name [4] head [4] doc [] body [[5]]",
-            ]
-        );
-        let umd = extract_source(
-            "src/lib.js",
-            "\
-/** License. */
-(function (root, factory) {
-  if (typeof define === 'function') define(factory);
-  else root.Lib = factory();
-}(this, function () {
-  'use strict';
-  /** Makes one. */
-  function Lib() {}
-  return Lib;
-}));
-",
-        );
-        assert_eq!(rows(&umd.reexports), [vec![9]]);
-        assert_eq!(
-            describe(&umd),
-            ["Callable name [8] head [8] doc [[7]] body []"]
         );
     }
 
