@@ -109,7 +109,6 @@ README.md
   55→Build a statically linked version:
   56→
   57→```console
-  58→make LDFLAGS=-all-static
   …
   67→## Community & Support
   68→
@@ -129,12 +128,14 @@ compile-ios.sh
   6→oniguruma='6.9.10'
   7→
   8→unset CFLAGS
-  9→unset CXXFLAGS
-  10→unset LDFLAGS
   …
   13→usage(){
   …
+  15→${0##*/}: usage
+  …
   51→t_exit() {
+  …
+  54→A error as occurred.
   …
   66→cd "${builddir}/"
   …

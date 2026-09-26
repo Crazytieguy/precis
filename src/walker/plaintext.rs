@@ -943,27 +943,22 @@ fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
     continues
 }
 
-/// Per line, whether it sits inside a multi-line string opened on an
-/// earlier line — a `"""` or `'''` literal, or a heredoc (`<<<'EOF'`,
-/// `<<~SQL`) — through the line that closes it. Its text is data, however
+/// Per line, whether it sits inside a `"""` or `'''` string opened on an
+/// earlier line, through the line that closes it. Its text is data, however
 /// much it looks like code. A string that never closes marks nothing.
 fn string_interiors(lines: &[&str]) -> Vec<bool> {
-    let mut rows_by_leading_identifier: Option<HashMap<&str, Vec<usize>>> = None;
     let mut inside = vec![false; lines.len()];
     let mut index = 0;
     while index < lines.len() {
-        let closing_row = match multiline_string_end(lines[index]) {
-            Some((end, true)) => rows_by_leading_identifier
-                .get_or_insert_with(|| index_rows_by_leading_identifier(lines))
-                .get(end)
-                .and_then(|rows| rows.get(rows.partition_point(|&row| row <= index)))
-                .copied(),
-            Some((end, false)) => lines[index + 1..]
-                .iter()
-                .position(|line| line.contains(end))
-                .map(|offset| index + 1 + offset),
-            None => None,
-        };
+        let closing_row = ["\"\"\"", "'''"]
+            .into_iter()
+            .find(|delimiter| lines[index].matches(delimiter).count() % 2 == 1)
+            .and_then(|delimiter| {
+                lines[index + 1..]
+                    .iter()
+                    .position(|line| line.contains(delimiter))
+            })
+            .map(|offset| index + 1 + offset);
         if let Some(last) = closing_row {
             inside[index + 1..=last].fill(true);
             index = last;
@@ -971,65 +966,6 @@ fn string_interiors(lines: &[&str]) -> Vec<bool> {
         index += 1;
     }
     inside
-}
-
-/// The rows each identifier leads, in order — where a heredoc opened with
-/// that identifier can close. Looked up rather than scanned for, so a line
-/// that only looks like an opener (`1<<BITS`) costs no pass over the rest
-/// of the file.
-fn index_rows_by_leading_identifier<'a>(lines: &[&'a str]) -> HashMap<&'a str, Vec<usize>> {
-    let mut rows: HashMap<&str, Vec<usize>> = HashMap::new();
-    for (row, line) in lines.iter().enumerate() {
-        let identifier = leading_identifier(line.trim_start());
-        if !identifier.is_empty() {
-            rows.entry(identifier).or_default().push(row);
-        }
-    }
-    rows
-}
-
-fn leading_identifier(text: &str) -> &str {
-    let end = text
-        .find(|c: char| !is_identifier_char(c))
-        .unwrap_or(text.len());
-    &text[..end]
-}
-
-fn is_identifier_char(c: char) -> bool {
-    c.is_alphanumeric() || c == '_'
-}
-
-/// For a line that opens a multi-line string, the token that ends it and
-/// whether that token is a heredoc identifier, which ends it only at the
-/// start of a line. A heredoc's identifier must start upper-case, so a
-/// shift (`a << b`) or a stream insertion is not read as one; set off by a
-/// space (a shell's `cat << EOF`), it must be all upper-case and end the
-/// command, so a shift by a constant (`1 << BITS;`) is not either.
-fn multiline_string_end(line: &str) -> Option<(&str, bool)> {
-    if let Some(delimiter) = ["\"\"\"", "'''"]
-        .into_iter()
-        .find(|delimiter| line.matches(delimiter).count() % 2 == 1)
-    {
-        return Some((delimiter, false));
-    }
-    let (_, rest) = line.split_once("<<")?;
-    let rest = rest.trim_start_matches(['<', '~', '-']);
-    let is_spaced = rest.starts_with(' ');
-    let rest = rest.trim_start().trim_start_matches(['\'', '"']);
-    let identifier = leading_identifier(rest);
-    let ends_command = || {
-        identifier
-            .chars()
-            .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_')
-            && rest[identifier.len()..]
-                .trim_start_matches(['\'', '"'])
-                .trim_start()
-                .chars()
-                .next()
-                .is_none_or(|c| c == '>' || c == '|')
-    };
-    (identifier.starts_with(|c: char| c.is_ascii_uppercase()) && (!is_spaced || ends_command()))
-        .then_some((identifier, true))
 }
 
 /// Opening minus closing round and square brackets on a line, outside
@@ -1943,47 +1879,14 @@ mod tests {
         }
     }
 
-    /// Code inside a heredoc or a triple-quoted string is data, not the
-    /// file's declarations.
+    /// Code inside a triple-quoted string is data, not the file's
+    /// declarations.
     #[test]
     fn plaintext_source_text_surface_skips_multiline_string_interiors() {
-        let php = "<?php\nclass A {\n    function f() { return <<<'EOF'\nif (x) {\n    y();\n}\nEOF;\n    }\n}\n";
-        let text = surface(php);
-        assert_eq!(
-            text,
-            vec!["<?php", "class A {", "    function f() { return <<<'EOF'"]
-        );
-
         let elixir = "defmodule Router do\n  @doc \"\"\"\n  ## Examples\n\n  from any scope.\n  \"\"\"\n  def pipeline(plug) do\n    plug\n  end\nend\n";
         let text = surface(elixir);
         assert!(!text.contains(&"  ## Examples"), "{text:?}");
         assert!(text.contains(&"  def pipeline(plug) do"), "{text:?}");
-
-        let shift = "int mask = 1<<BITS;\nint next() {\n  return 1;\n}\n";
-        assert!(
-            string_interiors(&shift.lines().collect::<Vec<_>>())
-                .iter()
-                .all(|inside| !inside)
-        );
-
-        for (line, closes_at) in [
-            ("cat << 'EOF' > out.txt", Some("EOF")),
-            ("cat << USAGE", Some("USAGE")),
-            ("int mask = 1 << BITS;", None),
-            ("std::cout << NAME << std::endl;", None),
-        ] {
-            assert_eq!(
-                multiline_string_end(line).map(|(end, _)| end),
-                closes_at,
-                "{line}"
-            );
-        }
-
-        let closer_above_opener = "EOF\nx = <<EOF\n  EOF_NOT\nEOF;\nEOF\n";
-        assert_eq!(
-            string_interiors(&closer_above_opener.lines().collect::<Vec<_>>()),
-            vec![false, false, true, true, false]
-        );
     }
 
     /// Descent reaches past one wrapper line (a Ruby `module`) and a doc
