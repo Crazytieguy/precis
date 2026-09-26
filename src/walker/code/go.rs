@@ -80,20 +80,31 @@ fn top_level_declarations(root: Node) -> Vec<Node> {
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let mut model = FileModel::default();
-    let mut is_program = false;
-    let mut api_only = false;
     let mut functions = Vec::new();
+    let package = root
+        .named_children(&mut root.walk())
+        .find(|child| child.kind() == "package_clause");
+    let is_program = package.is_some_and(|package| {
+        package
+            .named_children(&mut package.walk())
+            .any(|name| name.kind() == "package_identifier" && file.text(name) == "main")
+    });
     let declarations = top_level_declarations(root);
+    let api_only = !is_program
+        && declarations
+            .iter()
+            .any(|declaration| declares_exported(*declaration, file));
     let reaches_something = declarations
         .iter()
         .any(|declaration| is_reachable(*declaration, file));
-    let admits_callable = |node: Node| {
-        if reaches_something {
-            is_reachable(node, file)
-        } else {
-            declares_exported(node, file)
-        }
+    let is_listed: fn(Node, &SourceFile) -> bool = if reaches_something {
+        is_reachable
+    } else {
+        declares_exported
     };
+    if let Some(package) = package {
+        (model.module_doc, _) = doc_and_directives(package, file);
+    }
     for child in root.named_children(&mut root.walk()) {
         let decl = match child.kind() {
             "comment" if file.text(child).starts_with("//go:build") => {
@@ -101,17 +112,6 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                     return FileModel::default();
                 }
                 model.reexports.push(Item::new(file.node_rows(child)));
-                continue;
-            }
-            "package_clause" => {
-                (model.module_doc, _) = doc_and_directives(child, file);
-                is_program = child
-                    .named_children(&mut child.walk())
-                    .any(|name| name.kind() == "package_identifier" && file.text(name) == "main");
-                api_only = !is_program
-                    && declarations
-                        .iter()
-                        .any(|declaration| declares_exported(*declaration, file));
                 continue;
             }
             "function_declaration" if is_program => {
@@ -122,7 +122,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 decl
             }
             "function_declaration" | "method_declaration"
-                if !api_only || admits_callable(child) =>
+                if !api_only || is_listed(child, file) =>
             {
                 callable(child, file)
             }
