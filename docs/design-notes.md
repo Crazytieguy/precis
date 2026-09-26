@@ -365,6 +365,13 @@ once workspace members were exempt.
   `PRECIS_SESSION_HOOK`, yet their update script installs the latest
   binary, and uncapped output overflows the hook cap. Drop that branch
   once those plugin installs have had time to update.
+- **Scheduling grows super-linearly at very large budgets.** Runs at
+  3000 tokens and in the plugin stay under 1.5 s on the largest
+  corpus repositories, but zig takes 19.6 s at 100k tokens and llvm
+  27 s at 1M. `Scheduler::top_ranked` rescans every eligible batch per
+  pick, and scheduling a batch drops the cached cost of every other
+  batch on its file, so a file with hundreds of batches is re-costed
+  per pick. Only the CLI reaches these budgets.
 - **Python parsing is quadratic in a run of comment lines.** A `def`
   followed by 20,000 `#` rows takes 2 s and 40,000 take 7 s, all of it
   inside tree-sitter-python's parse (lexer re-advancing over the run);

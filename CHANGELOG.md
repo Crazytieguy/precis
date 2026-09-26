@@ -15,8 +15,8 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
   - A `…` row marks hidden source in a file, or hidden entries in a directory.
   - A source line longer than 500 characters is cut short with `…`.
   - A row like `src/main/java/` is a chain of directories that each hold only the next.
-  - `(empty)` marks a zero-byte file, or a directory holding nothing precis lists. An entry with nothing under it wasn't expanded.
-  - Symlinks that resolve outside the tree, broken symlinks and special files such as FIFOs are omitted.
+  - `(empty)` marks a zero-byte file, or a directory holding nothing precis lists. An entry with nothing under it wasn't expanded, or couldn't be read.
+  - Symlinks that resolve outside the tree, broken symlinks and special files such as FIFOs are omitted. A link to a file in its own directory (`CLAUDE.md -> AGENTS.md`) is listed, and its text shows only under the target.
 - Dotfiles such as `.github/` and `.gitignore` are listed. v0.1 hid every hidden entry.
 - `.gitignore` rules apply when the path is the root of a git repository. They are no longer inherited from an enclosing repository.
 - YAML and other JSON/TOML files are no longer summarized by their top-level keys. Manifests, small root JSON configs, compose files and Taskfiles are covered instead. Other YAML files appear in the tree only.
@@ -33,7 +33,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
 - A credential file appears by name only, whichever part of precis would read it: dotenv files (not samples such as `.env.example`), data, config and script files named for secrets, credentials, tokens, passwords or API keys, `.key` and `.pem` files, `.tfvars`, service-account keys, tool auth files, links to any of these, and any file holding a private key. A password written into a URL, and a quoted literal assigned to a credential-named key in code or config (`password: "…"`, `API_KEY = "…"`), shows as `…`. Links that resolve outside the path or onto an ignored entry are left out.
 - A single file can still be passed as the path. precis shows its structure first, then spends whatever budget is left on the file's text from the top, so a file that fits prints whole.
 - Translations, archived subtrees, third-party code, and game-engine `.meta`/`.import`/`.uid` sidecars no longer crowd out a repository's own code.
-- Without `--char-budget`, the output at a smaller token budget is always a subset of the output at a larger one.
+- Without `--char-budget`, every entry and source line the output at a smaller token budget shows, the output at a larger one shows too, though a directory-chain row may run on further (`.claude/` becomes `.claude/skills/review/`).
 - Faster and lighter on large trees. Files over 8 MiB are not parsed, parse trees are freed once rendered, and probes below the visible tree stop after 20,000 entries, so a non-git tree as large as a home directory no longer stalls the session hook.
 - The plugin sizes its `--char-budget` at runtime to what is left of Claude Code's 10,000-unit hook cap after the help text, and ranks content by whichever of the two budgets it uses up faster. Previously it used a fixed 9,500 characters.
 - Fixed: a panic (stack overflow in the tokenizer) on very large non-git trees.
