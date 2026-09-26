@@ -101,15 +101,15 @@ Score(3000)=0.705 I=0.835 C=0.595 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | ns | 5188 |  | 207 | `getSelectionKeys` and `flatMap` in full — closing src/internals/helpers.ts | 3.5 |  | 0.610 |
 | walker |  | 5192 | 40 | Code::CodeKey { rung: Doc, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.615 |
 | walker |  | 5275 | 83 | Code::CodeKey { rung: Names, file: src/internals/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
-| walker |  | 5289 | 14 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.617 |
-| walker |  | 5319 | 30 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.618 |
-| walker |  | 5364 | 45 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 3, sub: 0, line: 32 } |  |  | 0.620 |
-| walker |  | 5412 | 48 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 5, sub: 0, line: 132 } |  |  | 0.623 |
-| ns | 5416 |  | 228 | The `MatchExpression` class and its complete method roster | 3.6 |  | 0.604 |
-| walker |  | 5579 | 167 | Code::CodeKey { rung: Names, file: src/internals/symbols.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.621 |
-| ns | 5635 |  | 219 | `isMatching`'s runtime implementation — the arity dispatch | 3.7 |  | 0.610 |
-| walker |  | 5672 | 93 | Json::Whole { file: jsr.json } |  |  | 0.610 |
-| walker |  | 5779 | 107 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 35, sub: 0, line: 1221 } |  |  | 0.610 |
+| walker |  | 5305 | 30 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.617 |
+| walker |  | 5350 | 45 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 3, sub: 0, line: 32 } |  |  | 0.619 |
+| walker |  | 5398 | 48 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 5, sub: 0, line: 132 } |  |  | 0.621 |
+| ns | 5416 |  | 228 | The `MatchExpression` class and its complete method roster | 3.6 |  | 0.603 |
+| walker |  | 5565 | 167 | Code::CodeKey { rung: Names, file: src/internals/symbols.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
+| ns | 5635 |  | 219 | `isMatching`'s runtime implementation — the arity dispatch | 3.7 |  | 0.609 |
+| walker |  | 5658 | 93 | Json::Whole { file: jsr.json } |  |  | 0.609 |
+| walker |  | 5765 | 107 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 35, sub: 0, line: 1221 } |  |  | 0.609 |
+| walker |  | 5779 | 14 | Code::CodeKey { rung: Body, file: src/internals/helpers.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.610 |
 | walker |  | 5888 | 109 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 28, sub: 0, line: 782 } |  |  | 0.610 |
 | walker |  | 5997 | 109 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 34, sub: 0, line: 1211 } |  |  | 0.610 |
 | ns | 6030 |  | 395 | `MatchExpression.with()` — multi-pattern, guard and selection semantics | 3.8 | 3.6 | 0.589 |

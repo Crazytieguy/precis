@@ -649,7 +649,7 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
     let name_row = name_row(node).unwrap_or(span.start);
     let kind = node.kind();
     if is_function_kind(kind) {
-        return callable(file, span, name_row, node.child_by_field_name("body"));
+        return function_callable(file, span, name_row, node);
     }
     if is_class_kind(kind) {
         return class(file, span, name_row, node.child_by_field_name("body"));
@@ -707,11 +707,8 @@ fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node
     if value.kind() == "array" {
         return whole(file, span, vec![name_row], Some(value));
     }
-    if let Some(block) = wrapped_function_block(value) {
-        return callable(file, span, name_row, Some(block));
-    }
-    if is_function_kind(value.kind()) {
-        return callable(file, span, name_row, None);
+    if let Some(function) = wrapped_function(value) {
+        return function_callable(file, span, name_row, function);
     }
     match last_object_argument(value) {
         Some(object) => class(file, span, name_row, Some(object)),
@@ -744,15 +741,20 @@ fn last_object_argument(value: Node) -> Option<Node> {
     }
 }
 
-/// The statement block of a function value, seen through parentheses and
-/// the first argument of wrapper calls (`memo(forwardRef((p, r) => {…}))`).
+/// The statement block of a function value, seen through [`wrapped_function`].
 fn wrapped_function_block(value: Node) -> Option<Node> {
+    wrapped_function(value)?
+        .child_by_field_name("body")
+        .filter(|body| body.kind() == "statement_block")
+}
+
+/// A function value, seen through parentheses and the first argument of
+/// wrapper calls (`memo(forwardRef((p, r) => {…}))`).
+fn wrapped_function(value: Node) -> Option<Node> {
     let mut node = value;
     loop {
         if is_function_kind(node.kind()) {
-            return node
-                .child_by_field_name("body")
-                .filter(|body| body.kind() == "statement_block");
+            return Some(node);
         }
         node = match node.kind() {
             "call_expression" => node.child_by_field_name("arguments")?.named_child(0)?,
@@ -784,6 +786,28 @@ fn name_row(node: Node) -> Option<usize> {
         single_declarator(node).and_then(|declarator| declarator.child_by_field_name("name"))
     })?;
     Some(name.start_position().row + 1)
+}
+
+/// A function's parts: [`callable`] over its statement block or, for an
+/// arrow function whose body is an expression, the head through the `=>`
+/// row and the rest of the expression as one body item.
+fn function_callable(file: &SourceFile, span: Span, name_row: usize, function: Node) -> DeclInfo {
+    let body = function.child_by_field_name("body");
+    if body.is_none_or(|body| body.kind() == "statement_block") {
+        return callable(file, span, name_row, body);
+    }
+    let mut cursor = function.walk();
+    let arrow_row = function
+        .children(&mut cursor)
+        .find(|child| child.kind() == "=>")
+        .map_or(span.end, |arrow| arrow.start_position().row + 1);
+    let head_end = arrow_row.max(name_row);
+    let mut decl = callable(file, span, name_row, None);
+    if head_end < span.end {
+        decl.head = (span.start..=head_end).collect();
+        decl.body = vec![Item::new(head_end + 1..=span.end)];
+    }
+    decl
 }
 
 /// Head through the row before the first statement (at least through the
@@ -1032,6 +1056,35 @@ export function add(
             [
                 "Callable name [1] head [1] doc [] body []",
                 "Callable name [2] head [2] doc [] body []",
+            ]
+        );
+    }
+
+    #[test]
+    fn code_typescript_expression_bodied_arrow_keeps_its_body_out_of_the_head() {
+        let model = extract_source(
+            "src/card.tsx",
+            "\
+export const Card = (p: CardProps) => (
+  <div>
+    <button>OK</button>
+  </div>
+);
+export const validate = (options) =>
+  check(options, rules);
+export const Row = memo((p: RowProps) => (
+  <tr />
+));
+export const one = () => 1;
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [1] head [1] doc [] body [[2, 3, 4, 5]]",
+                "Callable name [6] head [6] doc [] body [[7]]",
+                "Callable name [8] head [8] doc [] body [[9, 10]]",
+                "Callable name [11] head [11] doc [] body []",
             ]
         );
     }
