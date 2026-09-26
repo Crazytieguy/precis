@@ -371,10 +371,15 @@ plain values, so a repository whose spine was bare trades some peripheral
 rows for its names, and parses more. In a large tree those sub-listings
 are many and cheap, and they outranked the root manifest, the root build
 file and the README's command blocks until the budget ran out. So once
-the spine's listings have spent half the budget, an eligible root
-identity batch outranks any listing below the spine
-(`Scheduler::top_ranked`). Two other ways to curb that cascade lost on
-the grid, because answer keys of smaller repositories want the spine's
+the spine's listings have spent 5000 tokens, an eligible root identity
+batch outranks any listing below the spine (`Scheduler::top_ranked`).
+The limit is a token count, not a share of the budget: a share moves
+with the budget, so a larger budget could take a sub-listing where a
+smaller one took the identity and drop rows the smaller output showed
+(the subset property above). No corpus fixture reaches 5000 spine
+listing tokens within the grid's schedule; a 1500-token limit fired on
+several and cost 6240 −0.0008 and 9000 −0.0017. Two other ways to
+curb that cascade lost on the grid, because answer keys of smaller repositories want the spine's
 sub-listings early: pricing each sub-listing by its share of its
 parent's source (3000 −0.023), and a breadth pressure on them after
 1000 to 4000 spine tokens (3000 −0.004 to −0.007). Giving the root

@@ -116,7 +116,7 @@ fn run_fixture(name: &str, rev: &str) -> (String, PathBuf, Schedule) {
 /// at one budget is still shown at a larger one.
 #[test]
 fn fixture_baselines_replay_matches_direct_render() {
-    for fixture in ["mitt", "sds", "middleclass"] {
+    for fixture in ["mitt", "sds", "middleclass", "enclosed"] {
         let fixture_dir = repo_path(&format!("tests/fixtures/{fixture}"));
         let schedule = render_schedule(&fixture_dir, SCHEDULE_BUDGET)
             .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));

@@ -15,7 +15,7 @@
 //! lower the more of its file's code is scheduled (breadth pressure),
 //! and a batch drawn only from the tree's dominant source file ranks
 //! higher once that file has been entered. Once the source spine's
-//! listings have spent half the budget, the root's identity (a root
+//! listings have spent a fixed token count, the root's identity (a root
 //! manifest or build file, a root README command block) outranks the
 //! listings below the spine. Under a char budget, `cost`
 //! is the larger of a batch's tokens and its chars converted at the two
@@ -109,9 +109,11 @@ const BREADTH_PRESSURE_TOKEN_SCALE: f64 = 1000.0;
 /// repository's orientation.
 const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
 
-/// Share of the token budget the source spine's listings may spend
-/// before the root's identity outranks the listings below the spine.
-const SPINE_LISTING_BUDGET_SHARE: f64 = 0.5;
+/// Tokens the source spine's listings may spend before the root's
+/// identity outranks the listings below the spine. A fixed count rather
+/// than a share of the budget, so a smaller budget's schedule stays a
+/// prefix of a larger one's.
+const SPINE_LISTING_TOKEN_LIMIT: usize = 5_000;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum SpineListing {
@@ -288,7 +290,7 @@ impl<W: Walker> Scheduler<W> {
             }
         }
         let (_, best, cost) = best?;
-        if self.spine_listing_tokens as f64 >= self.token_budget as f64 * SPINE_LISTING_BUDGET_SHARE
+        if self.spine_listing_tokens >= SPINE_LISTING_TOKEN_LIMIT
             && self.spine_listing(best) == Some(SpineListing::Below)
             && let Some(identity) = self
                 .eligible
