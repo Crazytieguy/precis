@@ -307,7 +307,8 @@ fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
 /// the blocks of an `if` / `try` statement, nested ones included. The row
 /// opening each block (`if …:`, `else:`, `except …:`) joins the head and
 /// name rows of the block's first definition, so the roster says under
-/// which condition it exists.
+/// which condition it exists, and the statement's own `if …:` / `try:`
+/// row joins its first definition, so an `else:` never lists alone.
 fn definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> {
     if !matches!(statement.kind(), "if_statement" | "try_statement") {
         return definition(file, statement).into_iter().collect();
@@ -323,6 +324,13 @@ fn definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> {
             decl.head.insert(0, opening_row);
             decl.name_rows.insert(0, opening_row);
         }
+    }
+    let statement_row = statement.start_position().row + 1;
+    if let Some(decl) = decls.first_mut()
+        && !decl.head.contains(&statement_row)
+    {
+        decl.head.insert(0, statement_row);
+        decl.name_rows.insert(0, statement_row);
     }
     decls
 }
@@ -470,9 +478,11 @@ fn suite_statements(inner: Node) -> Vec<Node> {
     statements
 }
 
-/// A class suite (after its docstring): methods become members, listed in
-/// the body by their name rows; every other statement (fields, `if`
-/// blocks) is a body [`Item`] with the comments directly above it. A
+/// A class suite (after its docstring): methods, including those in an
+/// `if` / `try` block (see [`definitions`]), become members, listed in
+/// the body by their name rows; every other statement (fields, blocks
+/// defining nothing) is a body [`Item`] with the comments directly above
+/// it. A
 /// nested class is flattened into the suite: its head is one item, its
 /// doc, fields and member name rows follow, and its methods become
 /// members, so it lists as a roster rather than as its whole source.
@@ -487,16 +497,16 @@ fn class_body(
     let mut members = Vec::new();
     let mut run: Vec<Node> = Vec::new();
     for node in statements {
-        if !matches!(
-            node.kind(),
-            "function_definition" | "class_definition" | "decorated_definition"
-        ) {
-            run.push(*node);
+        let defined = definitions(file, *node);
+        if defined.is_empty() {
+            if !matches!(
+                node.kind(),
+                "function_definition" | "class_definition" | "decorated_definition"
+            ) {
+                run.push(*node);
+            }
             continue;
         }
-        let Some(member) = definition(file, *node) else {
-            continue;
-        };
         let last_statement_end = run
             .iter()
             .rfind(|pending| pending.kind() != "comment")
@@ -507,16 +517,18 @@ fn class_body(
             run.pop();
         }
         body.extend(file.node_items(run.drain(..), after_row));
-        match member.shape {
-            Shape::Callable => {
-                body.push(Item::new(member.name_rows.iter().copied()));
-                members.push(member);
-            }
-            Shape::Whole => {
-                body.push(Item::new(member.head));
-                body.extend(member.doc);
-                body.extend(member.body);
-                members.extend(member.members);
+        for member in defined {
+            match member.shape {
+                Shape::Callable => {
+                    body.push(Item::new(member.name_rows.iter().copied()));
+                    members.push(member);
+                }
+                Shape::Whole => {
+                    body.push(Item::new(member.head));
+                    body.extend(member.doc);
+                    body.extend(member.body);
+                    members.extend(member.members);
+                }
             }
         }
     }
@@ -631,6 +643,37 @@ from .__about__ import __version__
             &format!("{imports}__all__ = [\"Engine\", \"run\", \"helper\"]\n"),
         );
         assert_eq!(rows(&model.reexports), vec![vec![1], vec![3], vec![4]]);
+    }
+
+    #[test]
+    fn python_methods_under_class_level_if_are_members() {
+        let model = extract_source(
+            "thing.py",
+            "\
+class Thing:
+    if TYPE_CHECKING:
+        def typed_only(self): ...
+    if sys.version_info >= (3, 11):
+        def modern(self):
+            return 1
+    else:
+        def modern(self):
+            return 0
+    if DEBUG:
+        level = 1
+    def public(self): ...
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1] doc [] body [[2, 3], [4, 5], [7, 8], [10, 11], [12]]",
+                "  Callable name [2, 3] head [2, 3] doc [] body []",
+                "  Callable name [4, 5] head [4, 5] doc [] body [[6]]",
+                "  Callable name [7, 8] head [7, 8] doc [] body [[9]]",
+                "  Callable name [12] head [12] doc [] body []",
+            ]
+        );
     }
 
     #[test]
@@ -831,7 +874,7 @@ else:
                 "Callable name [2] head [2] doc [] body [[3]]",
                 "Callable name [4, 6] head [4, 6] doc [] body [[7]]",
                 "Callable name [8] head [8] doc [] body []",
-                "Callable name [9, 12, 13] head [9, 12, 13] doc [] body []",
+                "Callable name [9, 10, 12, 13] head [9, 10, 12, 13] doc [] body []",
                 "Callable name [14, 15] head [14, 15] doc [] body [[16]]",
             ]
         );
