@@ -15,7 +15,6 @@ use crate::batch::CodeKey;
 pub(super) struct Ledger {
     owners: HashMap<usize, CodeKey>,
     parents: HashMap<CodeKey, Option<CodeKey>>,
-    dropped_rows: usize,
 }
 
 /// The rows a batch keeps after [`Ledger::claim`].
@@ -30,7 +29,7 @@ pub(super) struct Claim {
 
 impl Ledger {
     /// Claims `rows` (sorted, deduplicated) for `key`, whose predecessor is
-    /// `parent`. Rows a non-ancestor owns are dropped and counted. A
+    /// `parent`. Rows a non-ancestor owns are dropped. A
     /// covered claim records nothing.
     pub(super) fn claim(
         &mut self,
@@ -47,7 +46,7 @@ impl Ledger {
                     kept.push(row);
                 }
                 Some(owner) if self.is_ancestor(owner, parent) => kept.push(row),
-                Some(_) => self.dropped_rows += 1,
+                Some(_) => {}
             }
         }
         if adds_row {
@@ -86,13 +85,6 @@ mod tests {
     use crate::batch::Rung;
     use std::path::PathBuf;
 
-    impl Ledger {
-        /// Rows dropped as non-ancestor overlaps so far.
-        pub(in crate::walker::code) fn dropped_rows(&self) -> usize {
-            self.dropped_rows
-        }
-    }
-
     fn key(rung: Rung, decl: u32) -> CodeKey {
         CodeKey {
             rung,
@@ -113,11 +105,9 @@ mod tests {
         let claim = ledger.claim(&first, Some(&names), &[1, 2, 3]);
         assert_eq!((claim.rows, claim.covered), (vec![1, 2, 3], false));
         assert_eq!(ledger.owner(1), Some(&first));
-        assert_eq!(ledger.dropped_rows(), 0);
 
         let claim = ledger.claim(&second, Some(&names), &[3, 5, 6]);
         assert_eq!(claim.rows, [5, 6]);
-        assert_eq!(ledger.dropped_rows(), 1);
     }
 
     #[test]

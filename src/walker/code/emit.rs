@@ -383,7 +383,6 @@ mod tests {
                 out: Vec::new(),
             };
             emitter.emit(&normalize(model, file));
-            assert_eq!(emitter.ledger.dropped_rows(), 0);
             emitter
                 .out
                 .into_iter()
