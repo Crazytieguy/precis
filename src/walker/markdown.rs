@@ -1,7 +1,7 @@
 //! README walker: the one root README (see [`root_readme`]). Markdown is
-//! parsed with `tree-sitter-md`'s block grammar; reST, AsciiDoc and plain
-//! text are line-scanned into the same shapes (see
-//! [`line_scanned_readme`]). Every other document is left to the listing,
+//! parsed with `tree-sitter-md`'s block grammar; reST and AsciiDoc (and an
+//! extensionless README without ATX headings) are line-scanned into the
+//! same shapes (see [`line_scanned_readme`]). Every other document is left to the listing,
 //! which names it.
 //!
 //! In document order:
@@ -71,6 +71,11 @@ const OVERSIZE_HARD_CHUNK_CHAR_CAP: usize = 4_096;
 /// batch.
 const HEADLINE_BLOCK_BYTE_GATE: usize = 16 * 1024;
 
+/// Maximum character count for the stripped content of a "tagline"
+/// block, beyond which the extension is suppressed because the block
+/// is itself the substantive lede.
+const HEADLINE_TAGLINE_MAX_CHARS: usize = 90;
+
 /// Source-byte ceiling on the `Prelude` batch. The hero region of a
 /// normal README is well under this; the cap only stops a README that
 /// puts its whole body above the first heading from shipping as one
@@ -91,17 +96,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             return out;
         };
         let (headline, ranges) = line_scanned_readme(&source, markup);
-        let mut headline_emitted: Option<BatchKey> = None;
-        if let Some(content) = build_headline_content(&file, &source, &headline) {
-            let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
-            out.push(Batch {
-                key: key.clone().into(),
-                predecessor: None,
-                content,
-                value: README_HEADLINE_VALUE,
-            });
-            headline_emitted = Some(BatchKey::Markdown(key));
-        }
+        let headline_emitted = push_headline(&mut out, &file, &source, &headline);
         push_sections(&mut out, &file, &source, &ranges, None, headline_emitted);
         return out;
     }
@@ -113,19 +108,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let outline_rows = outline_rows(&tree, &source, headline.as_ref());
     let outline_emits = !outline_rows.is_empty();
 
-    let mut headline_emitted: Option<BatchKey> = None;
-    if let Some(spec) = &headline
-        && let Some(content) = build_headline_content(&file, &source, spec)
-    {
-        let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
-        out.push(Batch {
-            key: key.clone().into(),
-            predecessor: None,
-            content,
-            value: README_HEADLINE_VALUE,
-        });
-        headline_emitted = Some(BatchKey::Markdown(key));
-    }
+    let headline_emitted = headline
+        .as_ref()
+        .and_then(|spec| push_headline(&mut out, &file, &source, spec));
     if let Some(spec) = &headline {
         let rows = prelude_remainder_rows(&tree, &source, spec);
         if let Some(content) = single_file_lines_content(&file, &source, rows) {
@@ -138,7 +123,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         }
     }
     let mut outline_emitted: Option<BatchKey> = None;
-    if let Some(content) = build_outline_content(&file, &source, &outline_rows) {
+    let outline_content = single_file_lines_content(
+        &file,
+        &source,
+        outline_rows
+            .iter()
+            .flat_map(|&(start, end)| start..=end)
+            .collect(),
+    );
+    if let Some(content) = outline_content {
         let key = MarkdownKey::HeadingsOutline { file: file.clone() };
         out.push(Batch {
             key: key.clone().into(),
@@ -158,6 +151,26 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         outline_emitted.or(headline_emitted),
     );
     out
+}
+
+/// Emit the `ReadmeHeadline` batch over `rows`, returning its key.
+fn push_headline(
+    out: &mut Vec<Batch>,
+    file: &Path,
+    source: &Source,
+    rows: &BTreeSet<usize>,
+) -> Option<BatchKey> {
+    let content = single_file_lines_content(file, source, rows.iter().copied().collect())?;
+    let key = BatchKey::from(MarkdownKey::ReadmeHeadline {
+        file: file.to_path_buf(),
+    });
+    out.push(Batch {
+        key: key.clone(),
+        predecessor: None,
+        content,
+        value: README_HEADLINE_VALUE,
+    });
+    Some(key)
 }
 
 /// Emit one `Section` batch per range. Each gates on
@@ -244,23 +257,6 @@ fn parse_inline(text: &str) -> Option<Tree> {
 }
 
 // --- content builders ---
-
-fn build_headline_content(
-    file: &Path,
-    source: &Source,
-    rows: &BTreeSet<usize>,
-) -> Option<BatchContent> {
-    single_file_lines_content(file, source, rows.iter().copied().collect())
-}
-
-fn build_outline_content(
-    file: &Path,
-    source: &Source,
-    rows: &[(usize, usize)],
-) -> Option<BatchContent> {
-    let full = rows.iter().flat_map(|&(start, end)| start..=end).collect();
-    single_file_lines_content(file, source, full)
-}
 
 /// Heading row ranges for `HeadingsOutline` — levels 1–3, or 1–2 when
 /// that is too many, with any headline-covered headings dropped — or
@@ -530,7 +526,7 @@ fn line_scanned_readme(source: &str, markup: ReadmeMarkup) -> (BTreeSet<usize>, 
         ) {
             return None;
         }
-        let rows = rst_content_rows(&src_lines, h.title_row, section_end(i));
+        let rows = rst_content_rows(&src_lines, h.underline_row + 1, section_end(i));
         rst_lede(&src_lines, &rows).map(|lede| (i, rows, lede))
     }) {
         covered_rows.extend(&rows[lede]);
@@ -877,11 +873,6 @@ fn is_short_substantive_block(block: Node, source: &str) -> bool {
     stripped.chars().count() <= HEADLINE_TAGLINE_MAX_CHARS
 }
 
-/// Maximum character count for the stripped content of a "tagline"
-/// block, beyond which the extension is suppressed because the block
-/// is itself the substantive lede.
-const HEADLINE_TAGLINE_MAX_CHARS: usize = 90;
-
 /// Strip markdown / HTML markup from a block's raw source for the
 /// purposes of measuring its "content length". Removes `<...>` HTML
 /// tags, leading `>` block-quote markers, and common emphasis markup
@@ -1136,9 +1127,8 @@ fn row_tokens(src_lines: &[&str], row: usize) -> usize {
 }
 
 /// The fence delimiter at the start of an already-trimmed line — its
-/// marker char and run length (≥ 3) — if any. Shared with Rust doc
-/// comment extraction (rustdoc is markdown).
-pub(in crate::walker) fn fence_marker(trimmed: &str) -> Option<(char, usize)> {
+/// marker char and run length (≥ 3) — if any.
+fn fence_marker(trimmed: &str) -> Option<(char, usize)> {
     let c = trimmed.chars().next()?;
     if c != '`' && c != '~' {
         return None;
@@ -1154,7 +1144,7 @@ pub(in crate::walker) fn fence_marker(trimmed: &str) -> Option<(char, usize)> {
 /// a ``` line carrying a trailing word leaves the fence. Getting the
 /// second half wrong desynchronizes the fence state and exposes the
 /// blank rows behind it as cut points.
-pub(in crate::walker) fn fence_closes(trimmed: &str, open: (char, usize)) -> bool {
+fn fence_closes(trimmed: &str, open: (char, usize)) -> bool {
     let (open_char, open_run) = open;
     fence_marker(trimmed).is_some_and(|(c, run)| {
         c == open_char && run >= open_run && trimmed[run..].trim().is_empty()
