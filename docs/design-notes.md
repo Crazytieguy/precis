@@ -186,7 +186,17 @@ code to a single language.**
   primary language (most essential source bytes), and the dominant-file
   rule reads the same primary language, so a core written in an
   unparsed language is not crowded out by side clients the code engine
-  parses.
+  parses. Its depth excludes the directories that spell the file's
+  declared `package`/`namespace` (JVM, .NET and PHP layouts mirror the
+  package path), or a Java library prices below its root build script.
+  Nested Gradle scripts are module manifests, left to the listing.
+- A fallback surface carries no imports: they say what a file uses, and
+  in a roster among many files their rows cost the next file's
+  declarations. Its four-declaration level stop keeps a roster compact;
+  only the single-file outline descends past it, and only into type
+  bodies. Extending the dir-mode roster the same way cost library-file
+  breadth (8,000-token renders of fallback repos: 1,616 -> 1,490 files
+  with rows) at a flat grid.
 
 ## Output notation
 
