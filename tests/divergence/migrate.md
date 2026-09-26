@@ -12,13 +12,13 @@ Score(3000)=0.546 I=0.696 C=0.428 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 244 |  | 100 | Core design premise: dumb drivers, migrate glues | 1.3 |  | 0.413 |
 | ns | 323 |  | 79 | Root package doc comment (migrate.go) | 1.4 |  | 0.343 |
 | walker |  | 327 | 122 | Fs::DirListing { dir: database } |  |  | 0.369 |
-| walker |  | 333 | 6 | Fs::DirListing { dir: database/crate } |  |  | 0.369 |
-| walker |  | 339 | 6 | Fs::DirListing { dir: database/shell } |  |  | 0.369 |
-| walker |  | 348 | 9 | Fs::DirListing { dir: database/multistmt } |  |  | 0.369 |
-| walker |  | 357 | 9 | Fs::DirListing { dir: database/snowflake } |  |  | 0.369 |
-| walker |  | 366 | 9 | Fs::DirListing { dir: database/stub } |  |  | 0.369 |
-| walker |  | 375 | 9 | Fs::DirListing { dir: internal/url } |  |  | 0.369 |
-| walker |  | 410 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.369 |
+| walker |  | 362 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.369 |
+| walker |  | 368 | 6 | Fs::DirListing { dir: database/crate } |  |  | 0.369 |
+| walker |  | 374 | 6 | Fs::DirListing { dir: database/shell } |  |  | 0.369 |
+| walker |  | 383 | 9 | Fs::DirListing { dir: database/multistmt } |  |  | 0.369 |
+| walker |  | 392 | 9 | Fs::DirListing { dir: database/snowflake } |  |  | 0.369 |
+| walker |  | 401 | 9 | Fs::DirListing { dir: database/stub } |  |  | 0.369 |
+| walker |  | 410 | 9 | Fs::DirListing { dir: internal/url } |  |  | 0.369 |
 | walker |  | 414 | 4 | Fs::DirListing { dir: .circleci } |  |  | 0.369 |
 | walker |  | 430 | 16 | Fs::DirListing { dir: database/mongodb } |  |  | 0.369 |
 | walker |  | 446 | 16 | Fs::DirListing { dir: database/mysql } |  |  | 0.369 |

@@ -11,16 +11,16 @@ Score(3000)=0.755 I=0.910 C=0.627 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 121 | 38 | Fs::DirListing { dir: src } |  |  | 1.000 |
 | walker |  | 129 | 8 | Fs::DirListing { dir: config } |  |  | 1.000 |
 | walker |  | 144 | 15 | Fs::DirListing { dir: docs } |  |  | 1.000 |
-| walker |  | 160 | 16 | Fs::DirListing { dir: src/config } |  |  | 1.000 |
-| walker |  | 168 | 8 | Fs::DirListing { dir: config/themes } |  |  | 1.000 |
-| walker |  | 203 | 35 | Fs::DirListing { dir: src/ui } |  |  | 1.000 |
-| ns | 211 |  | 94 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.783 |
-| walker |  | 246 | 43 | Fs::DirListing { dir: src/parse } |  |  | 1.000 |
-| walker |  | 254 | 8 | Fs::DirListing { dir: .github } |  |  | 1.000 |
-| ns | 268 |  | 57 | Cargo package identity — name, version, description | 1.5 |  | 0.967 |
-| walker |  | 270 | 16 | Fs::DirListing { dir: .github/workflows } |  |  | 0.967 |
-| ns | 303 |  | 35 | All README H2 section headings | 1.6 |  | 0.923 |
-| walker |  | 411 | 141 | Toml::Identity { file: Cargo.toml } |  |  | 0.865 |
+| ns | 211 |  | 94 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.679 |
+| ns | 268 |  | 57 | Cargo package identity — name, version, description | 1.5 |  | 0.654 |
+| walker |  | 285 | 141 | Toml::Identity { file: Cargo.toml } |  |  | 0.697 |
+| walker |  | 301 | 16 | Fs::DirListing { dir: src/config } |  |  | 0.708 |
+| ns | 303 |  | 35 | All README H2 section headings | 1.6 |  | 0.675 |
+| walker |  | 309 | 8 | Fs::DirListing { dir: config/themes } |  |  | 0.676 |
+| walker |  | 344 | 35 | Fs::DirListing { dir: src/ui } |  |  | 0.759 |
+| walker |  | 387 | 43 | Fs::DirListing { dir: src/parse } |  |  | 0.959 |
+| walker |  | 395 | 8 | Fs::DirListing { dir: .github } |  |  | 0.959 |
+| walker |  | 411 | 16 | Fs::DirListing { dir: .github/workflows } |  |  | 0.865 |
 | ns | 411 |  | 108 | README Usage — how the binary is invoked | 1.7 | 1.6 | 0.865 |
 | walker |  | 474 | 63 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.906 |
 | ns | 508 |  | 97 | README pointers to config file and reference docs | 1.8 | 1.7 | 0.866 |

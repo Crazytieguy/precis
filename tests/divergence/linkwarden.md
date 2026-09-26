@@ -13,15 +13,15 @@ Score(3000)=0.741 I=0.896 C=0.612 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 247 | 23 | Fs::DirListing { dir: packages/prisma } |  |  | 1.000 |
 | walker |  | 256 | 9 | Fs::DirListing { dir: packages/prisma/client } |  |  | 1.000 |
 | ns | 259 |  | 81 | Complete apps/web listing | 1.4 |  | 0.749 |
-| walker |  | 282 | 26 | Fs::DirListing { dir: apps/worker } |  |  | 0.749 |
-| walker |  | 287 | 5 | Fs::DirListing { dir: apps/worker/templates } |  |  | 0.749 |
-| ns | 321 |  | 62 | Workspace globs in the root package.json | 1.5 |  | 0.702 |
-| walker |  | 368 | 81 | Fs::DirListing { dir: apps/web } |  |  | 0.939 |
-| walker |  | 386 | 18 | Fs::DirListing { dir: apps/web/e2e } |  |  | 0.939 |
-| walker |  | 390 | 4 | Fs::DirListing { dir: apps/web/styles } |  |  | 0.939 |
-| walker |  | 433 | 43 | Json::Identity { file: package.json } |  |  | 0.949 |
+| walker |  | 299 | 43 | Json::Identity { file: package.json } |  |  | 0.751 |
+| ns | 321 |  | 62 | Workspace globs in the root package.json | 1.5 |  | 0.713 |
+| walker |  | 340 | 41 | Json::Scripts { file: package.json } |  |  | 0.713 |
+| walker |  | 366 | 26 | Fs::DirListing { dir: apps/worker } |  |  | 0.713 |
+| walker |  | 371 | 5 | Fs::DirListing { dir: apps/worker/templates } |  |  | 0.713 |
+| walker |  | 452 | 81 | Fs::DirListing { dir: apps/web } |  |  | 0.949 |
 | ns | 460 |  | 139 | Workspace package names — every `name` field under apps/ and packages/ | 1.6 |  | 0.879 |
-| walker |  | 474 | 41 | Json::Scripts { file: package.json } |  |  | 0.879 |
+| walker |  | 470 | 18 | Fs::DirListing { dir: apps/web/e2e } |  |  | 0.879 |
+| walker |  | 474 | 4 | Fs::DirListing { dir: apps/web/styles } |  |  | 0.879 |
 | walker |  | 478 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.879 |
 | walker |  | 491 | 13 | Fs::DirListing { dir: packages/types } |  |  | 0.879 |
 | walker |  | 495 | 4 | Fs::DirListing { dir: apps/web/e2e/data } |  |  | 0.879 |

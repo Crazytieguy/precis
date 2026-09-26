@@ -10,10 +10,10 @@ Score(3000)=0.779 I=0.876 C=0.692 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | ns | 191 |  | 84 | Repository root listing (complete) | 1.3 |  | 0.868 |
 | walker |  | 195 | 15 | Fs::DirListing { dir: images } |  |  | 0.868 |
 | walker |  | 218 | 23 | Fs::DirListing { dir: docs } |  |  | 0.869 |
-| walker |  | 233 | 15 | Fs::DirListing { dir: server/finders } |  |  | 0.869 |
-| walker |  | 249 | 16 | Fs::DirListing { dir: server/routers } |  |  | 0.869 |
 | ns | 254 |  | 63 | server/ top-level listing (complete) | 1.4 |  | 0.852 |
-| walker |  | 318 | 69 | Json::Identity { file: package.json } |  |  | 0.923 |
+| walker |  | 287 | 69 | Json::Identity { file: package.json } |  |  | 0.923 |
+| walker |  | 302 | 15 | Fs::DirListing { dir: server/finders } |  |  | 0.923 |
+| walker |  | 318 | 16 | Fs::DirListing { dir: server/routers } |  |  | 0.923 |
 | ns | 319 |  | 65 | client/ top-level listing (complete) | 1.5 |  | 0.775 |
 | walker |  | 337 | 19 | Fs::DirListing { dir: server/auth } |  |  | 0.775 |
 | walker |  | 402 | 65 | Fs::DirListing { dir: client } |  |  | 0.933 |

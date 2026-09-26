@@ -7,10 +7,10 @@ Score(3000)=0.689 I=0.905 C=0.525 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.484 |
 | walker |  | 152 | 102 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
 | walker |  | 247 | 95 | Fs::DirListing { dir: src/flask } |  |  | 1.000 |
-| walker |  | 261 | 14 | Fs::DirListing { dir: src/flask/json } |  |  | 1.000 |
-| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.901 |
-| walker |  | 278 | 17 | Fs::DirListing { dir: src/flask/sansio } |  |  | 1.000 |
-| walker |  | 365 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 1.000 |
+| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.834 |
+| walker |  | 334 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 0.836 |
+| walker |  | 348 | 14 | Fs::DirListing { dir: src/flask/json } |  |  | 0.903 |
+| walker |  | 365 | 17 | Fs::DirListing { dir: src/flask/sansio } |  |  | 1.000 |
 | walker |  | 395 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.914 |
 | ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.914 |
 | walker |  | 404 | 9 | Fs::DirListing { dir: examples } |  |  | 0.914 |

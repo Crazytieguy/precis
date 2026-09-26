@@ -8,13 +8,13 @@ Score(3000)=0.726 I=0.884 C=0.597 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 63 | 4 | Fs::DirListing { dir: assets } |  |  | 1.000 |
 | ns | 89 |  | 56 | All README H2 section headings | 1.2 |  | 0.537 |
 | walker |  | 95 | 32 | Fs::DirListing { dir: nanovllm } |  |  | 0.577 |
-| walker |  | 101 | 6 | Fs::DirListing { dir: nanovllm/models } |  |  | 0.577 |
-| walker |  | 109 | 8 | Fs::DirListing { dir: nanovllm/utils } |  |  | 0.577 |
-| ns | 115 |  | 26 | Complete repository root listing | 1.3 |  | 0.730 |
-| walker |  | 133 | 24 | Fs::DirListing { dir: nanovllm/engine } |  |  | 0.738 |
-| ns | 147 |  | 32 | Complete nanovllm/ package listing | 1.4 |  | 0.759 |
-| ns | 225 |  | 78 | The complete public API: __init__.py and llm.py | 1.5 |  | 0.651 |
-| walker |  | 227 | 94 | Toml::Identity { file: pyproject.toml } |  |  | 0.652 |
+| ns | 115 |  | 26 | Complete repository root listing | 1.3 |  | 0.729 |
+| ns | 147 |  | 32 | Complete nanovllm/ package listing | 1.4 |  | 0.750 |
+| walker |  | 189 | 94 | Toml::Identity { file: pyproject.toml } |  |  | 0.751 |
+| walker |  | 195 | 6 | Fs::DirListing { dir: nanovllm/models } |  |  | 0.752 |
+| walker |  | 203 | 8 | Fs::DirListing { dir: nanovllm/utils } |  |  | 0.753 |
+| ns | 225 |  | 78 | The complete public API: __init__.py and llm.py | 1.5 |  | 0.646 |
+| walker |  | 227 | 24 | Fs::DirListing { dir: nanovllm/engine } |  |  | 0.652 |
 | walker |  | 258 | 31 | Fs::DirListing { dir: nanovllm/layers } |  |  | 0.664 |
 | ns | 302 |  | 77 | README Key Features bullets | 1.6 |  | 0.617 |
 | walker |  | 314 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.817 |

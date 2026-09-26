@@ -11,16 +11,16 @@ Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 168 | 35 | Fs::DirListing { dir: internal/models } |  |  | 1.000 |
 | walker |  | 183 | 15 | Fs::DirListing { dir: contribute } |  |  | 1.000 |
 | walker |  | 191 | 8 | Fs::DirListing { dir: contribute/conf } |  |  | 1.000 |
-| walker |  | 199 | 8 | Fs::DirListing { dir: internal/session } |  |  | 1.000 |
-| walker |  | 204 | 5 | Fs::DirListing { dir: internal/models/anthropic } |  |  | 1.000 |
 | ns | 207 |  | 74 | Complete cmd/ and sdk/ listings | 1.4 |  | 0.753 |
-| walker |  | 209 | 5 | Fs::DirListing { dir: internal/models/gemini } |  |  | 0.754 |
-| walker |  | 214 | 5 | Fs::DirListing { dir: internal/models/openai } |  |  | 0.755 |
-| walker |  | 238 | 24 | Fs::DirListing { dir: sdk } |  |  | 0.780 |
-| walker |  | 250 | 12 | Fs::DirListing { dir: internal/agent } |  |  | 0.783 |
-| ns | 260 |  | 53 | Module path, Go version and toolchain | 1.5 |  | 0.732 |
-| walker |  | 263 | 13 | Fs::DirListing { dir: internal/tokens } |  |  | 0.732 |
-| walker |  | 316 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.805 |
+| walker |  | 244 | 53 | GoMod::Identity { file: go.mod } |  |  | 0.763 |
+| walker |  | 252 | 8 | Fs::DirListing { dir: internal/session } |  |  | 0.763 |
+| walker |  | 257 | 5 | Fs::DirListing { dir: internal/models/anthropic } |  |  | 0.764 |
+| ns | 260 |  | 53 | Module path, Go version and toolchain | 1.5 |  | 0.777 |
+| walker |  | 262 | 5 | Fs::DirListing { dir: internal/models/gemini } |  |  | 0.778 |
+| walker |  | 267 | 5 | Fs::DirListing { dir: internal/models/openai } |  |  | 0.779 |
+| walker |  | 291 | 24 | Fs::DirListing { dir: sdk } |  |  | 0.802 |
+| walker |  | 303 | 12 | Fs::DirListing { dir: internal/agent } |  |  | 0.804 |
+| walker |  | 316 | 13 | Fs::DirListing { dir: internal/tokens } |  |  | 0.805 |
 | walker |  | 352 | 36 | Fs::DirListing { dir: cmd } |  |  | 0.914 |
 | walker |  | 369 | 17 | Fs::DirListing { dir: internal/auth } |  |  | 0.915 |
 | walker |  | 375 | 6 | Fs::DirListing { dir: examples } |  |  | 0.916 |

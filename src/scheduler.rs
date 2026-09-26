@@ -14,12 +14,11 @@
 //! live here rather than in a batch's value: a code `Body` batch ranks
 //! lower the more of its file's code is scheduled (breadth pressure),
 //! and a batch drawn only from the tree's dominant source file ranks
-//! higher once that file has been entered. Once the source spine's
-//! listings have spent a fixed token count, the root's identity (a root
-//! manifest or build file, a root README command block) outranks the
-//! listings below the spine. Under a char budget, `cost`
-//! is the larger of a batch's tokens and its chars converted at the two
-//! budgets' ratio (`ranking_cost`).
+//! higher once that file has been entered. Until the root's identity (a
+//! root manifest or build file) has been read, it outranks the listings
+//! below the source spine. Under a char budget, `cost` is the larger of a
+//! batch's tokens and its chars converted at the two budgets' ratio
+//! (`ranking_cost`).
 
 use std::cmp::Ordering;
 use std::collections::{BTreeSet, BinaryHeap, HashMap, HashSet};
@@ -27,8 +26,7 @@ use std::path::PathBuf;
 use std::rc::Rc;
 
 use crate::batch::{
-    Batch, BatchId, BatchKey, CodeKey, FsKey, GoModKey, JsonKey, MarkdownKey, PlaintextKey, Rung,
-    TomlKey,
+    Batch, BatchId, BatchKey, CodeKey, FsKey, GoModKey, JsonKey, PlaintextKey, Rung, TomlKey,
 };
 use crate::content::BatchContent;
 use crate::render::{Cost, RenderedTree};
@@ -97,9 +95,9 @@ pub struct Scheduler<W: Walker> {
     /// Code tokens scheduled per source file — drives the
     /// breadth-pressure ratio penalty.
     code_tokens_per_file: HashMap<PathBuf, usize>,
-    /// Tokens scheduled on listings of the source spine's directories
-    /// and the directories below them.
-    spine_listing_tokens: usize,
+    /// Whether a [root identity](Self::is_root_identity) batch has been
+    /// scheduled.
+    root_identity_read: bool,
 }
 
 /// Breadth-pressure scale: a `Body` batch of a source file that already
@@ -118,18 +116,6 @@ const BREADTH_PRESSURE_TOKEN_SCALE: f64 = 1000.0;
 /// escalates depth rather than pulling one file in front of the
 /// repository's orientation.
 const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
-
-/// Tokens the source spine's listings may spend before the root's
-/// identity outranks the listings below the spine. A fixed count rather
-/// than a share of the budget, so a smaller budget's schedule stays a
-/// prefix of a larger one's.
-const SPINE_LISTING_TOKEN_LIMIT: usize = 5_000;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum SpineListing {
-    On,
-    Below,
-}
 
 impl<W: Walker> Scheduler<W> {
     pub fn new(ctx: WalkCtx, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
@@ -159,7 +145,7 @@ impl<W: Walker> Scheduler<W> {
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
             code_tokens_per_file: HashMap::new(),
-            spine_listing_tokens: 0,
+            root_identity_read: false,
         }
     }
 
@@ -297,8 +283,8 @@ impl<W: Walker> Scheduler<W> {
             self.ranking.pop();
         }
         let best = self.ranking.peek()?.id;
-        if self.spine_listing_tokens >= SPINE_LISTING_TOKEN_LIMIT
-            && self.spine_listing(best) == Some(SpineListing::Below)
+        if !self.root_identity_read
+            && self.is_listing_below_spine(best)
             && let Some(identity) = self
                 .eligible
                 .iter()
@@ -360,35 +346,26 @@ impl<W: Walker> Scheduler<W> {
         ) * (self.breadth_pressure(id) * self.dominant_file_boost(id))
     }
 
-    /// Where `id` sits relative to the source spine, if it lists a
-    /// directory on the spine or below it.
-    fn spine_listing(&self, id: BatchId) -> Option<SpineListing> {
+    /// Whether `id` lists a directory below the source spine and off it.
+    fn is_listing_below_spine(&self, id: BatchId) -> bool {
         let BatchKey::Fs(FsKey::DirListing { dir } | FsKey::DirListingTail { dir }) =
             &self.entries[id.index()].key
         else {
-            return None;
+            return false;
         };
-        if self.ctx.is_on_source_spine(dir) {
-            Some(SpineListing::On)
-        } else if dir
-            .ancestors()
-            .skip(1)
-            .any(|ancestor| self.ctx.is_on_source_spine(ancestor))
-        {
-            Some(SpineListing::Below)
-        } else {
-            None
-        }
+        !self.ctx.is_on_source_spine(dir)
+            && dir
+                .ancestors()
+                .skip(1)
+                .any(|ancestor| self.ctx.is_on_source_spine(ancestor))
     }
 
     /// A batch that says what the repository is and how to build it: the
-    /// identity block or head of a root manifest or build file, or a
-    /// command block of the root README.
+    /// identity block or head of a root manifest or build file.
     fn is_root_identity(&self, id: BatchId) -> bool {
         let (BatchKey::Toml(TomlKey::Identity { file })
         | BatchKey::Json(JsonKey::Identity { file })
         | BatchKey::GoMod(GoModKey::Identity { file })
-        | BatchKey::Markdown(MarkdownKey::CommandBlock { file, .. })
         | BatchKey::Plaintext(
             PlaintextKey::DeclSurface { file } | PlaintextKey::Whole { file },
         )) = &self.entries[id.index()].key
@@ -479,8 +456,8 @@ impl<W: Walker> Scheduler<W> {
         );
 
         let entry_content = self.apply_and_record(id, cost);
-        if self.spine_listing(id).is_some() {
-            self.spine_listing_tokens += cost.tokens;
+        if self.is_root_identity(id) {
+            self.root_identity_read = true;
         }
         if let BatchKey::Code(key) = &self.entries[id.index()].key {
             *self
@@ -586,3 +563,37 @@ impl PartialEq for RankedBatch {
 }
 
 impl Eq for RankedBatch {}
+
+#[cfg(test)]
+mod tests {
+    /// Each of the spine's forty sub-listings outranks the build file's
+    /// head, and together they fill the budget.
+    #[test]
+    fn scheduler_root_identity_outranks_the_spines_sublistings() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        let write = |path: &str, text: &str| {
+            let path = root.join(path);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, text).unwrap();
+        };
+        write(
+            "CMakeLists.txt",
+            &format!(
+                "cmake_minimum_required(VERSION 3.20)\nproject(engine C)\n{}",
+                "target_sources(engine PRIVATE src/core/alpha.c src/core/beta.c src/core/gamma.c)\n"
+                    .repeat(40)
+            ),
+        );
+        for module in 0..40 {
+            for file in ["a", "b"] {
+                write(
+                    &format!("src/mod{module}/{file}.c"),
+                    &"int f(void) { return 0; }\n".repeat(20),
+                );
+            }
+        }
+        let output = crate::render(root, 400, None).unwrap();
+        assert!(output.contains("project(engine C)"), "{output}");
+    }
+}

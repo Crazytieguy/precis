@@ -7,23 +7,23 @@ Score(3000)=0.567 I=0.807 C=0.398 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 152 |  | 73 | lib/core, lib/cancel, lib/defaults rosters | 1.3 |  | 0.000 |
 | walker |  | 153 | 153 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 182 | 29 | Fs::DirListing { dir: lib } |  |  | 0.355 |
-| walker |  | 190 | 8 | Fs::DirListing { dir: lib/defaults } |  |  | 0.361 |
-| ns | 196 |  | 44 | lib/adapters, lib/platform, lib/env rosters | 1.4 |  | 0.289 |
-| walker |  | 201 | 11 | Fs::DirListing { dir: lib/env } |  |  | 0.303 |
-| walker |  | 206 | 5 | Fs::DirListing { dir: lib/env/classes } |  |  | 0.303 |
-| walker |  | 218 | 12 | Fs::DirListing { dir: sandbox } |  |  | 0.303 |
-| walker |  | 231 | 13 | Fs::DirListing { dir: lib/platform } |  |  | 0.360 |
-| walker |  | 235 | 4 | Fs::DirListing { dir: lib/platform/common } |  |  | 0.360 |
-| walker |  | 242 | 7 | Fs::DirListing { dir: lib/platform/browser } |  |  | 0.360 |
-| walker |  | 249 | 7 | Fs::DirListing { dir: lib/platform/node } |  |  | 0.360 |
-| walker |  | 260 | 11 | Fs::DirListing { dir: lib/platform/node/classes } |  |  | 0.360 |
-| walker |  | 275 | 15 | Fs::DirListing { dir: lib/platform/browser/classes } |  |  | 0.360 |
-| walker |  | 291 | 16 | Fs::DirListing { dir: lib/cancel } |  |  | 0.384 |
-| walker |  | 311 | 20 | Fs::DirListing { dir: lib/adapters } |  |  | 0.509 |
-| walker |  | 315 | 4 | Fs::DirListing { dir: .husky } |  |  | 0.509 |
-| walker |  | 321 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.509 |
-| ns | 353 |  | 157 | Complete public export block of index.js | 1.5 |  | 0.397 |
-| walker |  | 397 | 76 | Json::Identity { file: package.json } |  |  | 0.587 |
+| ns | 196 |  | 44 | lib/adapters, lib/platform, lib/env rosters | 1.4 |  | 0.284 |
+| walker |  | 258 | 76 | Json::Identity { file: package.json } |  |  | 0.485 |
+| walker |  | 266 | 8 | Fs::DirListing { dir: lib/defaults } |  |  | 0.491 |
+| walker |  | 277 | 11 | Fs::DirListing { dir: lib/env } |  |  | 0.507 |
+| walker |  | 282 | 5 | Fs::DirListing { dir: lib/env/classes } |  |  | 0.507 |
+| walker |  | 294 | 12 | Fs::DirListing { dir: sandbox } |  |  | 0.507 |
+| walker |  | 307 | 13 | Fs::DirListing { dir: lib/platform } |  |  | 0.576 |
+| walker |  | 311 | 4 | Fs::DirListing { dir: lib/platform/common } |  |  | 0.576 |
+| walker |  | 318 | 7 | Fs::DirListing { dir: lib/platform/browser } |  |  | 0.576 |
+| walker |  | 325 | 7 | Fs::DirListing { dir: lib/platform/node } |  |  | 0.576 |
+| walker |  | 336 | 11 | Fs::DirListing { dir: lib/platform/node/classes } |  |  | 0.576 |
+| walker |  | 351 | 15 | Fs::DirListing { dir: lib/platform/browser/classes } |  |  | 0.576 |
+| ns | 353 |  | 157 | Complete public export block of index.js | 1.5 |  | 0.450 |
+| walker |  | 367 | 16 | Fs::DirListing { dir: lib/cancel } |  |  | 0.472 |
+| walker |  | 387 | 20 | Fs::DirListing { dir: lib/adapters } |  |  | 0.587 |
+| walker |  | 391 | 4 | Fs::DirListing { dir: .husky } |  |  | 0.587 |
+| walker |  | 397 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.587 |
 | walker |  | 446 | 49 | Fs::DirListing { dir: lib/core } |  |  | 0.786 |
 | ns | 451 |  | 98 | Entry points: ESM source, CJS bundle, types, CDN builds | 1.6 | 1.1 | 0.730 |
 | ns | 604 |  | 153 | Repository root listing (complete) | 1.7 |  | 0.786 |

@@ -12,10 +12,10 @@ Score(3000)=0.552 I=0.826 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | ns | 134 |  | 33 | Module import path and Go version | 1.3 |  | 0.669 |
 | walker |  | 144 | 58 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.922 |
 | walker |  | 150 | 6 | Fs::DirListing { dir: cmd/tock } |  |  | 0.929 |
-| walker |  | 157 | 7 | Fs::DirListing { dir: internal/services } |  |  | 0.929 |
-| walker |  | 161 | 4 | Fs::DirListing { dir: internal/services/ics } |  |  | 0.929 |
-| walker |  | 181 | 20 | Fs::DirListing { dir: assets } |  |  | 0.929 |
-| walker |  | 214 | 33 | GoMod::Identity { file: go.mod } |  |  | 1.000 |
+| walker |  | 183 | 33 | GoMod::Identity { file: go.mod } |  |  | 1.000 |
+| walker |  | 190 | 7 | Fs::DirListing { dir: internal/services } |  |  | 1.000 |
+| walker |  | 194 | 4 | Fs::DirListing { dir: internal/services/ics } |  |  | 1.000 |
+| walker |  | 214 | 20 | Fs::DirListing { dir: assets } |  |  | 1.000 |
 | ns | 217 |  | 83 | README feature bullets, part 1 (storage, notes, TUI, footprint) | 1.4 |  | 0.920 |
 | walker |  | 223 | 9 | Fs::DirListing { dir: internal/config } |  |  | 0.920 |
 | walker |  | 232 | 9 | Fs::DirListing { dir: internal/extra } |  |  | 0.920 |

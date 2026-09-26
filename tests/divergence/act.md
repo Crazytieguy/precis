@@ -7,12 +7,12 @@ Score(3000)=0.604 I=0.875 C=0.417 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | ns | 135 |  | 86 | main.go: process entry point | 1.2 |  | 0.000 |
 | walker |  | 168 | 41 | Fs::DirListing { dir: pkg } |  |  | 0.000 |
 | ns | 176 |  | 41 | pkg/: complete package list | 1.3 |  | 0.417 |
-| walker |  | 177 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.417 |
-| walker |  | 190 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.417 |
-| walker |  | 206 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.418 |
-| ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.330 |
-| walker |  | 225 | 19 | Fs::DirListing { dir: pkg/schema } |  |  | 0.330 |
-| walker |  | 257 | 32 | GoMod::Identity { file: go.mod } |  |  | 0.333 |
+| walker |  | 200 | 32 | GoMod::Identity { file: go.mod } |  |  | 0.421 |
+| walker |  | 209 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.421 |
+| walker |  | 222 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.333 |
+| ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.333 |
+| walker |  | 238 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.333 |
+| walker |  | 257 | 19 | Fs::DirListing { dir: pkg/schema } |  |  | 0.333 |
 | ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.429 |
 | ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.388 |
 | walker |  | 442 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.578 |

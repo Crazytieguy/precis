@@ -6,14 +6,14 @@ Score(3000)=0.788 I=0.926 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 72 |  | 72 | README identity: name, one-line description, pitch | 1.1 |  | 0.000 |
 | walker |  | 100 | 67 | Fs::DirListing { dir: htmy } |  |  | 0.000 |
 | ns | 105 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.556 |
-| walker |  | 114 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.582 |
-| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.502 |
-| walker |  | 263 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.846 |
-| walker |  | 283 | 20 | Fs::DirListing { dir: docs } |  |  | 0.846 |
-| walker |  | 300 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.846 |
-| walker |  | 322 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 1.000 |
-| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.892 |
-| walker |  | 395 | 73 | Toml::Identity { file: pyproject.toml } |  |  | 0.893 |
+| walker |  | 173 | 73 | Toml::Identity { file: pyproject.toml } |  |  | 0.558 |
+| walker |  | 187 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.584 |
+| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.504 |
+| walker |  | 336 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.848 |
+| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.756 |
+| walker |  | 356 | 20 | Fs::DirListing { dir: docs } |  |  | 0.756 |
+| walker |  | 373 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.756 |
+| walker |  | 395 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 0.893 |
 | walker |  | 402 | 7 | Fs::DirListing { dir: .github } |  |  | 0.893 |
 | walker |  | 421 | 19 | Fs::DirListing { dir: .github/workflows } |  |  | 0.894 |
 | walker |  | 463 | 42 | Fs::DirListing { dir: docs/api } |  |  | 0.894 |

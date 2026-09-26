@@ -11,9 +11,9 @@ Score(3000)=0.745 I=0.914 C=0.607 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 197 | 28 | Fs::DirListing { dir: images } |  |  | 0.601 |
 | walker |  | 238 | 41 | Fs::DirListing { dir: docs } |  |  | 0.616 |
 | ns | 252 |  | 79 | Source roster: complete listing of peepdb/ and peepdb/db/ | 1.4 |  | 0.441 |
-| walker |  | 283 | 45 | Fs::DirListing { dir: peepdb/db } |  |  | 0.692 |
-| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.647 |
-| walker |  | 359 | 76 | Toml::Identity { file: project.toml } |  |  | 0.945 |
+| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.412 |
+| walker |  | 314 | 76 | Toml::Identity { file: project.toml } |  |  | 0.676 |
+| walker |  | 359 | 45 | Fs::DirListing { dir: peepdb/db } |  |  | 0.945 |
 | walker |  | 369 | 10 | Fs::DirListing { dir: .github/workflows } |  |  | 0.947 |
 | ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.845 |
 | walker |  | 396 | 27 | Toml::Operational { file: project.toml } |  |  | 0.846 |

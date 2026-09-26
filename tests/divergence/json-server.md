@@ -10,10 +10,10 @@ Score(3000)=0.749 I=0.915 C=0.614 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 195 |  | 111 | Query-capability cheat sheet (README 120-127) | 1.2 |  | 0.000 |
 | walker |  | 242 | 115 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.054 |
 | ns | 243 |  | 48 | Repository root listing (complete) | 1.3 |  | 0.438 |
-| walker |  | 259 | 17 | Fs::DirListing { dir: src/adapters } |  |  | 0.463 |
-| walker |  | 264 | 5 | Fs::DirListing { dir: .husky } |  |  | 0.464 |
-| ns | 331 |  | 88 | Complete src/ and src/adapters/ listing | 1.4 |  | 0.495 |
-| walker |  | 333 | 69 | Json::Identity { file: package.json } |  |  | 0.503 |
+| walker |  | 311 | 69 | Json::Identity { file: package.json } |  |  | 0.446 |
+| walker |  | 328 | 17 | Fs::DirListing { dir: src/adapters } |  |  | 0.470 |
+| ns | 331 |  | 88 | Complete src/ and src/adapters/ listing | 1.4 |  | 0.502 |
+| walker |  | 333 | 5 | Fs::DirListing { dir: .husky } |  |  | 0.503 |
 | walker |  | 341 | 8 | Fs::DirListing { dir: .github } |  |  | 0.506 |
 | walker |  | 350 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.510 |
 | walker |  | 359 | 9 | Fs::DirListing { dir: fixtures } |  |  | 0.516 |

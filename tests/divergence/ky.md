@@ -4,18 +4,18 @@ Score(3000)=0.729 I=0.907 C=0.586 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 40 | 40 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 56 | 16 | Fs::DirListing { dir: source } |  |  | 0.000 |
-| walker |  | 64 | 8 | Fs::DirListing { dir: source/core } |  |  | 0.000 |
-| walker |  | 76 | 12 | Fs::DirListing { dir: media } |  |  | 0.000 |
 | ns | 81 |  | 81 | Readme lede: what ky is, what it targets | 1.1 |  | 0.000 |
-| walker |  | 97 | 21 | Fs::DirListing { dir: source/errors } |  |  | 0.000 |
-| ns | 121 |  | 40 | Complete repository root listing | 1.2 |  | 0.644 |
-| ns | 237 |  | 116 | Complete `source/` tree: every library file | 1.3 |  | 0.394 |
-| ns | 313 |  | 76 | package.json identity: name, version, description, license, repository | 1.4 |  | 0.369 |
-| walker |  | 326 | 229 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.587 |
-| walker |  | 359 | 33 | Fs::DirListing { dir: source/types } |  |  | 0.730 |
-| walker |  | 397 | 38 | Fs::DirListing { dir: source/utils } |  |  | 0.948 |
-| ns | 415 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.854 |
-| walker |  | 468 | 71 | Json::Identity { file: package.json } |  |  | 0.890 |
+| ns | 121 |  | 40 | Complete repository root listing | 1.2 |  | 0.619 |
+| walker |  | 127 | 71 | Json::Identity { file: package.json } |  |  | 0.632 |
+| walker |  | 135 | 8 | Fs::DirListing { dir: source/core } |  |  | 0.640 |
+| walker |  | 147 | 12 | Fs::DirListing { dir: media } |  |  | 0.640 |
+| walker |  | 168 | 21 | Fs::DirListing { dir: source/errors } |  |  | 0.657 |
+| ns | 237 |  | 116 | Complete `source/` tree: every library file | 1.3 |  | 0.402 |
+| ns | 313 |  | 76 | package.json identity: name, version, description, license, repository | 1.4 |  | 0.409 |
+| walker |  | 397 | 229 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.636 |
+| ns | 415 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.571 |
+| walker |  | 430 | 33 | Fs::DirListing { dir: source/types } |  |  | 0.695 |
+| walker |  | 468 | 38 | Fs::DirListing { dir: source/utils } |  |  | 0.890 |
 | walker |  | 479 | 11 | Fs::DirListing { dir: .github } |  |  | 0.891 |
 | walker |  | 483 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.891 |
 | walker |  | 514 | 31 | Json::Runtime { file: package.json } |  |  | 0.892 |

@@ -6,11 +6,11 @@ Score(3000)=0.669 I=0.831 C=0.538 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | ns | 83 |  | 83 | Readme lede: what Beszel is | 1.1 |  | 0.000 |
 | walker |  | 94 | 39 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.428 |
 | walker |  | 160 | 66 | Fs::DirListing { dir: internal } |  |  | 0.470 |
-| walker |  | 164 | 4 | Fs::DirListing { dir: internal/users } |  |  | 0.470 |
-| walker |  | 170 | 6 | Fs::DirListing { dir: internal/cmd } |  |  | 0.470 |
-| walker |  | 174 | 4 | Fs::DirListing { dir: internal/cmd/hub } |  |  | 0.470 |
 | ns | 190 |  | 107 | Readme Architecture section: hub vs agent | 1.2 |  | 0.260 |
-| walker |  | 208 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.260 |
+| walker |  | 194 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.260 |
+| walker |  | 198 | 4 | Fs::DirListing { dir: internal/users } |  |  | 0.260 |
+| walker |  | 204 | 6 | Fs::DirListing { dir: internal/cmd } |  |  | 0.260 |
+| walker |  | 208 | 4 | Fs::DirListing { dir: internal/cmd/hub } |  |  | 0.260 |
 | walker |  | 234 | 26 | Fs::DirListing { dir: supplemental } |  |  | 0.261 |
 | walker |  | 239 | 5 | Fs::DirListing { dir: supplemental/guides } |  |  | 0.261 |
 | ns | 245 |  | 55 | Repository root listing (complete) | 1.3 |  | 0.554 |

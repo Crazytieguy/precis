@@ -11,10 +11,10 @@ Score(3000)=0.793 I=0.896 C=0.703 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 193 | 36 | Fs::DirListing { dir: packages/d2ts } |  |  | 0.751 |
 | ns | 218 |  | 26 | pnpm workspace globs | 1.4 |  | 0.706 |
 | walker |  | 237 | 44 | Fs::DirListing { dir: packages/d2ts/src } |  |  | 0.714 |
-| walker |  | 241 | 4 | Fs::DirListing { dir: packages/d2ts/src/electric } |  |  | 0.714 |
-| walker |  | 261 | 20 | Fs::DirListing { dir: packages/d2ts/src/sqlite } |  |  | 0.715 |
-| ns | 288 |  | 70 | README lede — what incremental execution buys you | 1.5 | 1.1 | 0.701 |
-| walker |  | 306 | 45 | Json::Identity { file: package.json } |  |  | 0.703 |
+| walker |  | 282 | 45 | Json::Identity { file: package.json } |  |  | 0.716 |
+| walker |  | 286 | 4 | Fs::DirListing { dir: packages/d2ts/src/electric } |  |  | 0.716 |
+| ns | 288 |  | 70 | README lede — what incremental execution buys you | 1.5 | 1.1 | 0.702 |
+| walker |  | 306 | 20 | Fs::DirListing { dir: packages/d2ts/src/sqlite } |  |  | 0.703 |
 | walker |  | 323 | 17 | Fs::DirListing { dir: packages/d2ts-benchmark } |  |  | 0.705 |
 | walker |  | 335 | 12 | Fs::DirListing { dir: packages/d2ts-benchmark/src } |  |  | 0.706 |
 | walker |  | 341 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.706 |

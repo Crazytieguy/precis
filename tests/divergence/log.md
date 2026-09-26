@@ -9,20 +9,20 @@ Score(3000)=0.610 I=0.802 C=0.464 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | walker |  | 119 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
 | ns | 121 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.813 |
 | walker |  | 129 | 10 | Fs::DirListing { dir: rfcs } |  |  | 0.814 |
-| walker |  | 149 | 20 | Fs::DirListing { dir: src/kv } |  |  | 1.000 |
-| walker |  | 153 | 4 | Fs::DirListing { dir: benches } |  |  | 1.000 |
-| ns | 156 |  | 35 | Listings for the remaining directories | 1.4 |  | 0.877 |
-| walker |  | 159 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.891 |
-| walker |  | 167 | 8 | Fs::DirListing { dir: tests } |  |  | 0.935 |
-| walker |  | 177 | 10 | Code::CodeKey { rung: ModuleDoc, file: src/kv/key.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.935 |
-| walker |  | 186 | 9 | Fs::DirListing { dir: test_max_level_features } |  |  | 1.000 |
-| walker |  | 214 | 28 | Code::CodeKey { rung: ModuleDoc, file: src/__private_api.rs, decl: 0, sub: 0, line: 0 } |  |  | 1.000 |
-| ns | 223 |  | 67 | Facade semantics: the noop fallback | 1.5 |  | 0.934 |
-| walker |  | 270 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.934 |
-| ns | 304 |  | 81 | Facade semantics: what a log request is | 1.6 |  | 0.878 |
-| walker |  | 334 | 64 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.878 |
-| ns | 431 |  | 127 | Cargo.toml package block: version, licence, MSRV, edition | 1.7 |  | 0.779 |
-| walker |  | 525 | 191 | Toml::Identity { file: Cargo.toml } |  |  | 0.897 |
+| ns | 156 |  | 35 | Listings for the remaining directories | 1.4 |  | 0.708 |
+| ns | 223 |  | 67 | Facade semantics: the noop fallback | 1.5 |  | 0.661 |
+| ns | 304 |  | 81 | Facade semantics: what a log request is | 1.6 |  | 0.621 |
+| walker |  | 320 | 191 | Toml::Identity { file: Cargo.toml } |  |  | 0.638 |
+| walker |  | 340 | 20 | Fs::DirListing { dir: src/kv } |  |  | 0.781 |
+| walker |  | 344 | 4 | Fs::DirListing { dir: benches } |  |  | 0.789 |
+| walker |  | 350 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.801 |
+| walker |  | 358 | 8 | Fs::DirListing { dir: tests } |  |  | 0.841 |
+| walker |  | 368 | 10 | Code::CodeKey { rung: ModuleDoc, file: src/kv/key.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.841 |
+| walker |  | 377 | 9 | Fs::DirListing { dir: test_max_level_features } |  |  | 0.898 |
+| walker |  | 405 | 28 | Code::CodeKey { rung: ModuleDoc, file: src/__private_api.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.898 |
+| ns | 431 |  | 127 | Cargo.toml package block: version, licence, MSRV, edition | 1.7 |  | 0.897 |
+| walker |  | 461 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.897 |
+| walker |  | 525 | 64 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.897 |
 | ns | 565 |  | 134 | Cargo features, part 1: the twelve compile-time level filters | 1.8 |  | 0.767 |
 | walker |  | 570 | 45 | Code::CodeKey { rung: ModuleDoc, file: src/kv/value.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.767 |
 | walker |  | 618 | 48 | Code::CodeKey { rung: ModuleDoc, file: src/kv/source.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.767 |

@@ -8,13 +8,13 @@ Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 139 |  | 48 | Repository root listing | 1.2 |  | 1.000 |
 | ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.768 |
 | walker |  | 299 | 160 | Fs::DirListing { dir: src/posting } |  |  | 0.810 |
-| walker |  | 313 | 14 | Fs::DirListing { dir: src/posting/importing } |  |  | 0.810 |
-| walker |  | 329 | 16 | Code::CodeKey { rung: ModuleDoc, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
 | ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.734 |
-| walker |  | 369 | 40 | Fs::DirListing { dir: docs } |  |  | 0.734 |
-| walker |  | 373 | 4 | Fs::DirListing { dir: docs/overrides } |  |  | 0.734 |
-| walker |  | 377 | 4 | Fs::DirListing { dir: docs/stylesheets } |  |  | 0.734 |
-| walker |  | 452 | 75 | Toml::Identity { file: pyproject.toml } |  |  | 0.734 |
+| walker |  | 374 | 75 | Toml::Identity { file: pyproject.toml } |  |  | 0.734 |
+| walker |  | 388 | 14 | Fs::DirListing { dir: src/posting/importing } |  |  | 0.734 |
+| walker |  | 404 | 16 | Code::CodeKey { rung: ModuleDoc, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.734 |
+| walker |  | 444 | 40 | Fs::DirListing { dir: docs } |  |  | 0.734 |
+| walker |  | 448 | 4 | Fs::DirListing { dir: docs/overrides } |  |  | 0.734 |
+| walker |  | 452 | 4 | Fs::DirListing { dir: docs/stylesheets } |  |  | 0.734 |
 | walker |  | 460 | 8 | Fs::DirListing { dir: .github } |  |  | 0.734 |
 | walker |  | 472 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.734 |
 | walker |  | 496 | 24 | Toml::Operational { file: pyproject.toml } |  |  | 0.734 |

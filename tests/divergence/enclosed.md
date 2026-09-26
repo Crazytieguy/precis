@@ -9,9 +9,9 @@ Score(3000)=0.662 I=0.865 C=0.506 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 158 | 76 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.707 |
 | walker |  | 221 | 63 | Fs::DirListing { dir: packages/app-client } |  |  | 0.707 |
 | ns | 223 |  | 82 | Repository shape: complete root listing and complete packages/ listing | 1.3 |  | 0.868 |
-| walker |  | 247 | 26 | Fs::DirListing { dir: packages/app-client/src } |  |  | 0.869 |
-| walker |  | 251 | 4 | Fs::DirListing { dir: packages/app-client/src/assets } |  |  | 0.869 |
-| walker |  | 315 | 64 | Json::Identity { file: package.json } |  |  | 0.871 |
+| walker |  | 285 | 64 | Json::Identity { file: package.json } |  |  | 0.870 |
+| walker |  | 311 | 26 | Fs::DirListing { dir: packages/app-client/src } |  |  | 0.871 |
+| walker |  | 315 | 4 | Fs::DirListing { dir: packages/app-client/src/assets } |  |  | 0.871 |
 | walker |  | 332 | 17 | Fs::DirListing { dir: packages/docs } |  |  | 0.871 |
 | walker |  | 351 | 19 | Fs::DirListing { dir: packages/deploy-cloudflare } |  |  | 0.871 |
 | walker |  | 362 | 11 | Fs::DirListing { dir: packages/app-client/e2e-tests } |  |  | 0.871 |

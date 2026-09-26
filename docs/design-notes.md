@@ -379,21 +379,27 @@ Past the survey's entry cap there is no spine. Opening a spine
 directory also opens its subdirectories' listings and its files at their
 plain values, so a repository whose spine was bare trades some peripheral
 rows for its names, and parses more. In a large tree those sub-listings
-are many and cheap, and they outranked the root manifest, the root build
-file and the README's command blocks until the budget ran out. So once
-the spine's listings have spent 5000 tokens, an eligible root identity
-batch outranks any listing below the spine (`Scheduler::top_ranked`).
-The limit is a token count, not a share of the budget: a share moves
-with the budget, so a larger budget could take a sub-listing where a
-smaller one took the identity and drop rows the smaller output showed
-(the subset property above). No corpus fixture reaches 5000 spine
-listing tokens within the grid's schedule; a 1500-token limit fired on
-several and cost 6240 −0.0008 and 9000 −0.0017. Two other ways to
-curb that cascade lost on the grid, because answer keys of smaller repositories want the spine's
-sub-listings early: pricing each sub-listing by its share of its
-parent's source (3000 −0.023), and a breadth pressure on them after
-1000 to 4000 spine tokens (3000 −0.004 to −0.007). Giving the root
-identity precedence from the first spine token cost 3000 −0.007.
+are many and cheap, and they outranked the root manifest and the root
+build file until the budget ran out, at every budget from the plugin's
+up. So until a root identity batch (a root manifest's identity block, or
+the head of a root build or manifest file) has been read, the best
+eligible one outranks any listing below the spine
+(`Scheduler::top_ranked`). The rule reads only the schedule, never the
+budget, so a smaller budget's output stays a subset of a larger one's.
+It is bounded to the first identity batch: promoting every root
+manifest and build file ahead of the spine's sub-listings cost 3000
+−0.007, since the answer keys of smaller repositories want those
+sub-listings early; even the first costs 1000 −0.0023 where a
+workspace's long root manifest now comes before the member listings.
+A README command block does not count: it satisfied
+the rule in repositories whose build file then went unread. This
+replaced a promotion of every root identity batch once the spine's
+listings had spent 5000 tokens, which the plugin's budget never reached;
+without it a very large tree at 8000 tokens spends more on names under
+its spine, and less on its secondary build files. Pricing each
+sub-listing by its share of its parent's source cost 3000 −0.023, and a
+breadth pressure on them after 1000 to 4000 spine tokens 3000 −0.004 to
+−0.007.
 
 ## Threads and resource bounds
 

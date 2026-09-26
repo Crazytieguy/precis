@@ -6,14 +6,14 @@ Score(3000)=0.692 I=0.862 C=0.555 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | ns | 54 |  | 54 | package.json name, version, description, license | 1.1 |  | 0.000 |
 | walker |  | 68 | 22 | Fs::DirListing { dir: source } |  |  | 0.000 |
 | walker |  | 77 | 9 | Fs::DirListing { dir: source/vendor } |  |  | 0.000 |
-| walker |  | 86 | 9 | Fs::DirListing { dir: source/vendor/ansi-styles } |  |  | 0.000 |
-| walker |  | 98 | 12 | Fs::DirListing { dir: media } |  |  | 0.000 |
-| ns | 100 |  | 46 | Complete repository root listing | 1.2 |  | 0.613 |
-| ns | 172 |  | 72 | package.json entry points: `main`, `exports`, `repository`, `type` | 1.3 |  | 0.529 |
-| walker |  | 203 | 105 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.530 |
-| walker |  | 221 | 18 | Fs::DirListing { dir: source/vendor/supports-color } |  |  | 0.562 |
-| ns | 230 |  | 58 | Complete `source/` tree including both vendored packages | 1.4 |  | 0.586 |
-| walker |  | 287 | 66 | Json::Identity { file: package.json } |  |  | 0.909 |
+| ns | 100 |  | 46 | Complete repository root listing | 1.2 |  | 0.597 |
+| walker |  | 143 | 66 | Json::Identity { file: package.json } |  |  | 1.000 |
+| walker |  | 152 | 9 | Fs::DirListing { dir: source/vendor/ansi-styles } |  |  | 1.000 |
+| walker |  | 164 | 12 | Fs::DirListing { dir: media } |  |  | 1.000 |
+| ns | 172 |  | 72 | package.json entry points: `main`, `exports`, `repository`, `type` | 1.3 |  | 0.892 |
+| ns | 230 |  | 58 | Complete `source/` tree including both vendored packages | 1.4 |  | 0.785 |
+| walker |  | 269 | 105 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.786 |
+| walker |  | 287 | 18 | Fs::DirListing { dir: source/vendor/supports-color } |  |  | 0.909 |
 | walker |  | 295 | 8 | Fs::DirListing { dir: examples } |  |  | 0.910 |
 | walker |  | 306 | 11 | Fs::DirListing { dir: .github } |  |  | 0.913 |
 | walker |  | 310 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.915 |

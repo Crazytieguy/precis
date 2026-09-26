@@ -7,21 +7,21 @@ Score(3000)=0.668 I=0.893 C=0.500 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 96 |  | 96 | Crate identity: package name, description, homepage, licence | 1.1 |  | 0.000 |
 | ns | 141 |  | 45 | Repository root listing (complete) | 1.2 |  | 0.509 |
 | walker |  | 158 | 69 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.509 |
-| walker |  | 171 | 13 | Fs::DirListing { dir: src/parameter } |  |  | 0.510 |
-| walker |  | 188 | 17 | Fs::DirListing { dir: src/output } |  |  | 0.516 |
-| walker |  | 208 | 20 | Fs::DirListing { dir: src/timer } |  |  | 0.527 |
-| ns | 217 |  | 76 | Cargo.toml: version 1.20.0, edition, MSRV, build script | 1.3 | 1.1 | 0.450 |
-| walker |  | 233 | 25 | Fs::DirListing { dir: doc } |  |  | 0.451 |
-| walker |  | 261 | 28 | Fs::DirListing { dir: src/util } |  |  | 0.510 |
-| ns | 261 |  | 44 | src/ listing: the flat modules and six subdirectories | 1.4 |  | 0.510 |
-| walker |  | 296 | 35 | Fs::DirListing { dir: src/export } |  |  | 0.521 |
-| walker |  | 304 | 8 | Fs::DirListing { dir: .github } |  |  | 0.522 |
-| walker |  | 309 | 5 | Fs::DirListing { dir: .github/workflows } |  |  | 0.523 |
-| walker |  | 322 | 13 | Code::CodeKey { rung: ModuleDoc, file: src/util/units.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.523 |
-| ns | 343 |  | 82 | README feature list, first five bullets (rest elided) | 1.5 |  | 0.473 |
-| ns | 409 |  | 66 | README feature list, remaining bullets | 1.6 | 1.5 | 0.449 |
-| ns | 471 |  | 62 | src/benchmark/ and src/export/ listings (complete) | 1.7 |  | 0.419 |
-| walker |  | 494 | 172 | Toml::Identity { file: Cargo.toml } |  |  | 0.811 |
+| ns | 217 |  | 76 | Cargo.toml: version 1.20.0, edition, MSRV, build script | 1.3 | 1.1 | 0.434 |
+| ns | 261 |  | 44 | src/ listing: the flat modules and six subdirectories | 1.4 |  | 0.471 |
+| walker |  | 330 | 172 | Toml::Identity { file: Cargo.toml } |  |  | 1.000 |
+| walker |  | 343 | 13 | Fs::DirListing { dir: src/parameter } |  |  | 0.904 |
+| ns | 343 |  | 82 | README feature list, first five bullets (rest elided) | 1.5 |  | 0.904 |
+| walker |  | 360 | 17 | Fs::DirListing { dir: src/output } |  |  | 0.908 |
+| walker |  | 380 | 20 | Fs::DirListing { dir: src/timer } |  |  | 0.914 |
+| walker |  | 405 | 25 | Fs::DirListing { dir: doc } |  |  | 0.915 |
+| ns | 409 |  | 66 | README feature list, remaining bullets | 1.6 | 1.5 | 0.870 |
+| walker |  | 433 | 28 | Fs::DirListing { dir: src/util } |  |  | 0.883 |
+| walker |  | 468 | 35 | Fs::DirListing { dir: src/export } |  |  | 0.883 |
+| ns | 471 |  | 62 | src/benchmark/ and src/export/ listings (complete) | 1.7 |  | 0.810 |
+| walker |  | 476 | 8 | Fs::DirListing { dir: .github } |  |  | 0.811 |
+| walker |  | 481 | 5 | Fs::DirListing { dir: .github/workflows } |  |  | 0.811 |
+| walker |  | 494 | 13 | Code::CodeKey { rung: ModuleDoc, file: src/util/units.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.811 |
 | walker |  | 529 | 35 | Toml::Operational { file: Cargo.toml } |  |  | 0.811 |
 | ns | 549 |  | 78 | src/output/, src/parameter/, src/timer/, src/util/ listings (complete) | 1.8 |  | 0.830 |
 | walker |  | 550 | 21 | Fs::DirListing { dir: tests } |  |  | 0.833 |

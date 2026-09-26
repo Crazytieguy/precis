@@ -9,24 +9,24 @@ Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 79 | 8 | Fs::DirListing { dir: sps-net } |  |  | 0.000 |
 | ns | 81 |  | 81 | README identity: what sps is | 1.1 |  | 0.000 |
 | walker |  | 104 | 25 | Fs::DirListing { dir: sps-core/src } |  |  | 0.000 |
-| walker |  | 115 | 11 | Fs::DirListing { dir: sps-core/src/build } |  |  | 0.000 |
-| walker |  | 127 | 12 | Fs::DirListing { dir: sps-core/src/check } |  |  | 0.000 |
-| ns | 128 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.514 |
-| walker |  | 139 | 12 | Fs::DirListing { dir: sps-core/src/pipeline } |  |  | 0.520 |
-| walker |  | 153 | 14 | Fs::DirListing { dir: sps-core/src/utils } |  |  | 0.526 |
-| walker |  | 170 | 17 | Fs::DirListing { dir: sps-core/src/uninstall } |  |  | 0.536 |
-| walker |  | 187 | 17 | Fs::DirListing { dir: sps-core/src/upgrade } |  |  | 0.547 |
-| walker |  | 207 | 20 | Fs::DirListing { dir: sps-core/src/install } |  |  | 0.564 |
-| walker |  | 222 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.565 |
-| ns | 223 |  | 95 | README deprecation warning: sps will be superseded by sps2 | 1.3 |  | 0.484 |
-| walker |  | 238 | 16 | Fs::DirListing { dir: sps-core/src/install/bottle } |  |  | 0.485 |
-| walker |  | 272 | 34 | Fs::DirListing { dir: sps-core/src/build/compile } |  |  | 0.491 |
-| walker |  | 290 | 18 | Fs::DirListing { dir: sps/src } |  |  | 0.495 |
-| walker |  | 302 | 12 | Fs::DirListing { dir: sps/src/pipeline } |  |  | 0.501 |
-| ns | 336 |  | 113 | README section headings (all H2s) | 1.4 |  | 0.408 |
-| walker |  | 342 | 40 | Fs::DirListing { dir: sps/src/cli } |  |  | 0.440 |
-| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.383 |
-| walker |  | 419 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.514 |
+| ns | 128 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.506 |
+| walker |  | 181 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.549 |
+| walker |  | 192 | 11 | Fs::DirListing { dir: sps-core/src/build } |  |  | 0.553 |
+| walker |  | 204 | 12 | Fs::DirListing { dir: sps-core/src/check } |  |  | 0.557 |
+| walker |  | 216 | 12 | Fs::DirListing { dir: sps-core/src/pipeline } |  |  | 0.562 |
+| ns | 223 |  | 95 | README deprecation warning: sps will be superseded by sps2 | 1.3 |  | 0.481 |
+| walker |  | 230 | 14 | Fs::DirListing { dir: sps-core/src/utils } |  |  | 0.486 |
+| walker |  | 247 | 17 | Fs::DirListing { dir: sps-core/src/uninstall } |  |  | 0.494 |
+| walker |  | 264 | 17 | Fs::DirListing { dir: sps-core/src/upgrade } |  |  | 0.503 |
+| walker |  | 284 | 20 | Fs::DirListing { dir: sps-core/src/install } |  |  | 0.516 |
+| walker |  | 299 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.517 |
+| walker |  | 315 | 16 | Fs::DirListing { dir: sps-core/src/install/bottle } |  |  | 0.518 |
+| ns | 336 |  | 113 | README section headings (all H2s) | 1.4 |  | 0.421 |
+| walker |  | 349 | 34 | Fs::DirListing { dir: sps-core/src/build/compile } |  |  | 0.426 |
+| walker |  | 367 | 18 | Fs::DirListing { dir: sps/src } |  |  | 0.429 |
+| walker |  | 379 | 12 | Fs::DirListing { dir: sps/src/pipeline } |  |  | 0.434 |
+| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.480 |
+| walker |  | 419 | 40 | Fs::DirListing { dir: sps/src/cli } |  |  | 0.514 |
 | walker |  | 440 | 21 | Fs::DirListing { dir: sps-net/src } |  |  | 0.515 |
 | walker |  | 448 | 8 | Fs::DirListing { dir: .github } |  |  | 0.516 |
 | walker |  | 452 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.516 |
