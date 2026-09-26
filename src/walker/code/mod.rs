@@ -549,6 +549,28 @@ pub(super) mod test_support {
         items.iter().map(|item| item.rows.clone()).collect()
     }
 
+    /// One line per declaration (members indented): shape, name rows,
+    /// head, doc and body.
+    pub(crate) fn describe(model: &FileModel) -> Vec<String> {
+        fn line(decl: &DeclInfo, indent: &str) -> String {
+            format!(
+                "{indent}{:?} name {:?} head {:?} doc {:?} body {:?}",
+                decl.shape,
+                decl.name_rows,
+                decl.head,
+                rows(&decl.doc),
+                rows(&decl.body),
+            )
+        }
+        model
+            .decls
+            .iter()
+            .flat_map(|decl| {
+                std::iter::once(line(decl, "")).chain(decl.members.iter().map(|m| line(m, "  ")))
+            })
+            .collect()
+    }
+
     fn part_rows(items: &[Item]) -> HashSet<usize> {
         items
             .iter()

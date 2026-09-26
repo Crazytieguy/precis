@@ -512,7 +512,7 @@ fn rustdoc_paragraphs(rows: Vec<usize>, file: &SourceFile) -> Vec<Item> {
 
 #[cfg(test)]
 mod tests {
-    use super::super::test_support::rows;
+    use super::super::test_support::{describe, rows};
     use super::*;
 
     fn extract_source(file_name: &str, source: &str) -> (SourceFile, FileModel) {
@@ -702,16 +702,13 @@ pub fn run(
 pub fn one_line() -> u8 { 1 }
 ";
         let (_, model) = extract_source("a.rs", source);
-        let run = &model.decls[0];
-        assert_eq!(run.shape, Shape::Callable);
-        assert_eq!(run.name_rows, vec![3]);
-        assert_eq!(run.head, vec![2, 3, 4, 5]);
-        assert_eq!(rows(&run.doc), vec![vec![1]]);
-        assert_eq!(rows(&run.body), vec![vec![6, 7], vec![8]]);
-
-        let one_line = &model.decls[1];
-        assert_eq!(one_line.head, vec![11]);
-        assert!(one_line.body.is_empty());
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [3] head [2, 3, 4, 5] doc [[1]] body [[6, 7], [8]]",
+                "Callable name [11] head [11] doc [] body []",
+            ]
+        );
     }
 
     #[test]
@@ -729,15 +726,15 @@ pub const LIMIT: usize = 3;
 pub struct Point { pub x: i32 }
 ";
         let (_, model) = extract_source("a.rs", source);
-        let kind = &model.decls[0];
-        assert_eq!(kind.shape, Shape::Whole);
-        assert_eq!(kind.name_rows, vec![2]);
-        assert_eq!(kind.head, vec![1, 2, 7]);
-        assert_eq!(rows(&kind.body), vec![vec![3, 4], vec![5, 6]]);
-        for (decl, row) in model.decls[1..].iter().zip(8..) {
-            assert_eq!(decl.head, vec![row]);
-            assert!(decl.body.is_empty());
-        }
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [2] head [1, 2, 7] doc [] body [[3, 4], [5, 6]]",
+                "Whole name [8] head [8] doc [] body []",
+                "Whole name [9] head [9] doc [] body []",
+                "Whole name [10] head [10] doc [] body []",
+            ]
+        );
     }
 
     #[test]
@@ -758,19 +755,16 @@ pub(crate) trait Internal {
 }
 ";
         let (_, model) = extract_source("a.rs", source);
-        let store = &model.decls[0];
-        assert_eq!(store.head, vec![1, 10]);
-        assert_eq!(rows(&store.body), vec![vec![2], vec![5], vec![7]]);
-        let members: Vec<_> = store
-            .members
-            .iter()
-            .map(|member| member.name_rows.clone())
-            .collect();
-        assert_eq!(members, vec![vec![5], vec![7]]);
-        assert_eq!(rows(&store.members[0].doc), vec![vec![4]]);
-        assert_eq!(store.members[1].head, vec![7]);
-        assert_eq!(rows(&store.members[1].body), vec![vec![8]]);
-        assert_eq!(model.decls[1].members.len(), 1);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1, 10] doc [] body [[2], [5], [7]]",
+                "  Callable name [5] head [5] doc [[4]] body []",
+                "  Callable name [7] head [7] doc [] body [[8]]",
+                "Whole name [11] head [11, 13] doc [] body [[12]]",
+                "  Callable name [12] head [12] doc [] body []",
+            ]
+        );
     }
 
     #[test]
@@ -784,10 +778,14 @@ extern \"C\" {
 }
 ";
         let (_, model) = extract_source("a.rs", source);
-        let block = &model.decls[1];
-        assert_eq!(block.head, vec![2, 6]);
-        assert_eq!(rows(&block.body), vec![vec![4], vec![5]]);
-        assert_eq!(rows(&block.members[0].doc), vec![vec![3]]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1] doc [] body []",
+                "Whole name [2] head [2, 6] doc [] body [[4], [5]]",
+                "  Callable name [4] head [4] doc [[3]] body []",
+            ]
+        );
     }
 
     #[test]
@@ -800,8 +798,13 @@ impl Foo {
 }
 ";
         let (_, model) = extract_source("a.rs", source);
-        let foo = &model.decls[1];
-        assert_eq!(rows(&foo.body), vec![vec![4]]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1] doc [] body []",
+                "Whole name [2] head [2, 5] doc [] body [[4]]",
+            ]
+        );
     }
 
     #[test]
@@ -816,14 +819,11 @@ impl Opt<u8> {
     pub fn check(&self) {}
 }
 ";
-        let (file, model) = extract_source("a.rs", source);
+        let (_, model) = extract_source("a.rs", source);
         assert_eq!(
-            roster(&file, &model.decls),
-            vec!["pub enum Opt<T> { None, Some(T) }"]
+            describe(&model),
+            ["Whole name [4] head [2, 3, 4] doc [[1]] body []"]
         );
-        let opt = &model.decls[0];
-        assert_eq!(opt.head, vec![2, 3, 4]);
-        assert_eq!(rows(&opt.doc), vec![vec![1]]);
     }
 
     #[test]
@@ -852,24 +852,21 @@ pub trait Sealed {}
 impl Sealed for Engine {}
 ";
         let (_, model) = extract_source("a.rs", source);
-        let impls: Vec<_> = model
-            .decls
-            .iter()
-            .filter(|decl| !decl.members.is_empty())
-            .map(|decl| {
-                let members: Vec<_> = decl
-                    .members
-                    .iter()
-                    .map(|member| member.name_rows[0])
-                    .collect();
-                (decl.name_rows[0], members)
-            })
-            .collect();
-        assert_eq!(impls, vec![(3, vec![4, 5]), (8, vec![9]), (13, vec![14])]);
-        assert_eq!(model.decls.len(), 6);
-        let display = &model.decls[3];
-        assert_eq!(display.head, vec![8, 12]);
-        assert_eq!(rows(&display.body), vec![vec![9]]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1] doc [] body []",
+                "Whole name [2] head [2] doc [] body []",
+                "Whole name [3] head [3, 7] doc [] body [[4], [5]]",
+                "  Callable name [4] head [4] doc [] body []",
+                "  Callable name [5] head [5] doc [] body []",
+                "Whole name [8] head [8, 12] doc [] body [[9]]",
+                "  Callable name [9] head [9] doc [] body [[10]]",
+                "Whole name [13] head [13, 15] doc [] body [[14]]",
+                "  Callable name [14] head [14] doc [] body []",
+                "Whole name [21] head [21] doc [] body []",
+            ]
+        );
     }
 
     #[test]
@@ -952,12 +949,11 @@ macro_rules! __private {
     () => {};
 }
 ";
-        let (file, model) = extract_source("a.rs", source);
-        assert_eq!(roster(&file, &model.decls), vec!["macro_rules! bail {"]);
-        let bail = &model.decls[0];
-        assert_eq!(bail.head, vec![2, 3, 10]);
-        assert_eq!(rows(&bail.body), vec![vec![4, 5, 6], vec![7, 8, 9]]);
-        assert_eq!(rows(&bail.doc), vec![vec![1]]);
+        let (_, model) = extract_source("a.rs", source);
+        assert_eq!(
+            describe(&model),
+            ["Whole name [3] head [2, 3, 10] doc [[1]] body [[4, 5, 6], [7, 8, 9]]"]
+        );
     }
 
     #[test]
@@ -1021,23 +1017,14 @@ bitflags! {
 thread_local!(static DEPTH: Cell<u8> = Cell::new(0));
 ";
         let (_, model) = extract_source("a.rs", source);
-        let decls: Vec<_> = model
-            .decls
-            .iter()
-            .map(|decl| {
-                assert_eq!(decl.shape, Shape::Whole);
-                (decl.name_rows.clone(), decl.head.clone(), rows(&decl.body))
-            })
-            .collect();
         assert_eq!(
-            decls,
-            vec![
-                (vec![4], vec![2, 5], vec![vec![3, 4]]),
-                (vec![8, 9], vec![7, 10], vec![vec![8], vec![9]]),
-                (vec![12], vec![11, 15], vec![vec![12, 13, 14]]),
-                (vec![16], vec![16], vec![]),
+            describe(&model),
+            [
+                "Whole name [4] head [2, 5] doc [[1]] body [[3, 4]]",
+                "Whole name [8, 9] head [7, 10] doc [] body [[8], [9]]",
+                "Whole name [12] head [11, 15] doc [] body [[12, 13, 14]]",
+                "Whole name [16] head [16] doc [] body []",
             ]
         );
-        assert_eq!(rows(&model.decls[0].doc), vec![vec![1]]);
     }
 }

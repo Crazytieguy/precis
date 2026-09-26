@@ -501,7 +501,7 @@ fn class_body(
 mod tests {
     use std::path::PathBuf;
 
-    use super::super::test_support::rows;
+    use super::super::test_support::{describe, rows};
     use super::*;
 
     fn extract_source(relative_path: &str, source: &str) -> FileModel {
@@ -606,15 +606,12 @@ def greet(
     # done
 ",
         );
-        let [decl] = model.decls.as_slice() else {
-            panic!("one decl: {:?}", model.decls);
-        };
-        assert_eq!(decl.shape, Shape::Callable);
-        assert_eq!(decl.name_rows, vec![1, 2, 3, 5]);
-        assert_eq!(decl.head, vec![1, 2, 3, 4, 5]);
-        assert_eq!(rows(&decl.doc), vec![vec![6], vec![8, 9]]);
-        assert_eq!(rows(&decl.body), vec![vec![10, 11], vec![12], vec![13]]);
-        assert!(decl.members.is_empty());
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [1, 2, 3, 5] head [1, 2, 3, 4, 5] doc [[6], [8, 9]] body [[10, 11], [12], [13]]"
+            ]
+        );
     }
 
     #[test]
@@ -628,11 +625,10 @@ def run():
     go()
 ",
         );
-        let [decl] = model.decls.as_slice() else {
-            panic!("one decl: {:?}", model.decls);
-        };
-        assert_eq!(rows(&decl.doc), vec![vec![3]]);
-        assert_eq!(rows(&decl.body), vec![vec![2, 4]]);
+        assert_eq!(
+            describe(&model),
+            ["Callable name [1] head [1] doc [[3]] body [[2, 4]]"]
+        );
     }
 
     #[test]
@@ -646,17 +642,12 @@ def _helper(x):  # noqa
     return x
 ",
         );
-        let summary: Vec<_> = model
-            .decls
-            .iter()
-            .map(|decl| (decl.head.clone(), decl.doc.len(), rows(&decl.body)))
-            .collect();
         assert_eq!(
-            summary,
-            vec![
-                (vec![1], 0, vec![]),
-                (vec![2], 0, vec![]),
-                (vec![3], 0, vec![vec![4]]),
+            describe(&model),
+            [
+                "Callable name [1] head [1] doc [] body []",
+                "Callable name [2] head [2] doc [] body []",
+                "Callable name [3] head [3] doc [] body [[4]]",
             ]
         );
     }
@@ -689,46 +680,15 @@ class Config(Base):  # the config
         ordering = [\"name\"]
 ",
         );
-        let [class] = model.decls.as_slice() else {
-            panic!("one decl: {:?}", model.decls);
-        };
-        assert_eq!(class.shape, Shape::Whole);
-        assert_eq!(class.name_rows, vec![1, 2]);
-        assert_eq!(class.head, vec![1, 2]);
-        assert_eq!(rows(&class.doc), vec![vec![3]]);
         assert_eq!(
-            rows(&class.body),
-            vec![
-                vec![5, 6],
-                vec![7],
-                vec![10, 11],
-                vec![15],
-                vec![18],
-                vec![20],
-                vec![21]
+            describe(&model),
+            [
+                "Whole name [1, 2] head [1, 2] doc [[3]] body [[5, 6], [7], [10, 11], [15], [18], [20], [21]]",
+                "  Callable name [10, 11] head [10, 11] doc [[12]] body [[13]]",
+                "  Callable name [15] head [15] doc [] body [[16]]",
+                "  Callable name [18] head [18] doc [] body []",
             ]
         );
-        let members: Vec<_> = class
-            .members
-            .iter()
-            .map(|member| {
-                (
-                    member.name_rows.clone(),
-                    member.head.clone(),
-                    rows(&member.doc),
-                    rows(&member.body),
-                )
-            })
-            .collect();
-        assert_eq!(
-            members,
-            vec![
-                (vec![10, 11], vec![10, 11], vec![vec![12]], vec![vec![13]],),
-                (vec![15], vec![15], vec![], vec![vec![16]],),
-                (vec![18], vec![18], vec![], vec![]),
-            ]
-        );
-        assert!(class.members.iter().all(|member| member.members.is_empty()));
     }
 
     #[test]
@@ -751,29 +711,13 @@ class Basic:
             def run(self): ...
 ",
         );
-        let [class] = model.decls.as_slice() else {
-            panic!("one decl: {:?}", model.decls);
-        };
         assert_eq!(
-            rows(&class.body),
-            vec![
-                vec![2],
-                vec![4],
-                vec![5],
-                vec![6],
-                vec![8],
-                vec![12],
-                vec![13]
+            describe(&model),
+            [
+                "Whole name [1] head [1] doc [] body [[2], [4], [5], [6], [8], [12], [13]]",
+                "  Callable name [8] head [8] doc [] body [[9], [10]]",
+                "  Callable name [13] head [13] doc [] body []",
             ]
-        );
-        let members: Vec<_> = class
-            .members
-            .iter()
-            .map(|member| (member.name_rows.clone(), rows(&member.body)))
-            .collect();
-        assert_eq!(
-            members,
-            vec![(vec![8], vec![vec![9], vec![10]]), (vec![13], vec![])]
         );
     }
 
@@ -799,56 +743,16 @@ class Wide(
     pass
 ",
         );
-        let summary: Vec<_> = model
-            .decls
-            .iter()
-            .map(|decl| {
-                let members: Vec<_> = decl
-                    .members
-                    .iter()
-                    .map(|member| member.name_rows.clone())
-                    .collect();
-                (decl.name_rows.clone(), members, rows(&decl.body))
-            })
-            .collect();
         assert_eq!(
-            summary,
-            vec![
-                (
-                    vec![1],
-                    vec![vec![2, 3], vec![4, 5], vec![9, 11]],
-                    vec![vec![2, 3], vec![4, 5], vec![9, 11]]
-                ),
-                (vec![12, 14], vec![], vec![vec![15]]),
+            describe(&model),
+            [
+                "Whole name [1] head [1] doc [] body [[2, 3], [4, 5], [9, 11]]",
+                "  Callable name [2, 3] head [2, 3] doc [] body []",
+                "  Callable name [4, 5] head [4, 5] doc [] body []",
+                "  Callable name [9, 11] head [6, 7, 8, 9, 10, 11] doc [] body []",
+                "Whole name [12, 14] head [12, 13, 14] doc [] body [[15]]",
             ]
         );
-    }
-
-    #[test]
-    fn python_type_stub_parses_like_a_module() {
-        assert!(
-            Language::from_path(Path::new("stub.pyi"))
-                .is_some_and(|language| language.extensions == LANGUAGE.extensions)
-        );
-        let model = extract_source(
-            "pkg/stub.pyi",
-            "\
-class Params:
-    @property
-    def port(self) -> int: ...
-    @port.setter
-    def port(self, value: int) -> None: ...
-",
-        );
-        let [class] = model.decls.as_slice() else {
-            panic!("one decl: {:?}", model.decls);
-        };
-        let members: Vec<_> = class
-            .members
-            .iter()
-            .map(|member| member.name_rows.clone())
-            .collect();
-        assert_eq!(members, vec![vec![2, 3], vec![4, 5]]);
     }
 
     #[test]
@@ -874,19 +778,14 @@ else:
             return fcntl.flock(f)
 ",
         );
-        let summary: Vec<_> = model
-            .decls
-            .iter()
-            .map(|decl| (decl.name_rows.clone(), decl.head.clone()))
-            .collect();
         assert_eq!(
-            summary,
-            vec![
-                (vec![2], vec![2]),
-                (vec![4, 6], vec![4, 6]),
-                (vec![8], vec![8]),
-                (vec![9, 12, 13], vec![9, 12, 13]),
-                (vec![14, 15], vec![14, 15]),
+            describe(&model),
+            [
+                "Callable name [2] head [2] doc [] body [[3]]",
+                "Callable name [4, 6] head [4, 6] doc [] body [[7]]",
+                "Callable name [8] head [8] doc [] body []",
+                "Callable name [9, 12, 13] head [9, 12, 13] doc [] body []",
+                "Callable name [14, 15] head [14, 15] doc [] body [[16]]",
             ]
         );
     }
@@ -907,30 +806,29 @@ class Wikicode:
         return x
 ";
         let model = extract_source("wikicode.py", source);
-        let summary: Vec<_> = model
-            .decls
-            .iter()
-            .map(|decl| {
-                let members: Vec<_> = decl
-                    .members
-                    .iter()
-                    .map(|member| member.name_rows.clone())
-                    .collect();
-                (decl.name_rows.clone(), members)
-            })
-            .collect();
-        assert_eq!(summary, vec![(vec![5], vec![]), (vec![7], vec![vec![10]])]);
-        assert_eq!(rows(&model.decls[1].body), vec![vec![10]]);
-        let stub = extract_source(
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [5] head [5] doc [] body [[6]]",
+                "Whole name [7] head [7] doc [] body [[10]]",
+                "  Callable name [10] head [10] doc [] body [[11]]",
+            ]
+        );
+        assert!(
+            Language::from_path(Path::new("stub.pyi"))
+                .is_some_and(|language| language.extensions == LANGUAGE.extensions)
+        );
+        let model = extract_source(
             "wikicode.pyi",
             &source[..source.find("def filter(x):").unwrap()],
         );
-        let stub_names: Vec<_> = stub
-            .decls
-            .iter()
-            .map(|decl| decl.name_rows.clone())
-            .collect();
-        assert_eq!(stub_names, vec![vec![1, 2], vec![3, 4]]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [1, 2] head [1, 2] doc [] body []",
+                "Callable name [3, 4] head [3, 4] doc [] body []",
+            ]
+        );
     }
 
     #[test]
@@ -956,14 +854,15 @@ class Node:
         \"\"\"Close it.\"\"\"
 ",
         );
-        let docs: Vec<_> = model.decls.iter().map(|decl| rows(&decl.doc)).collect();
-        assert_eq!(docs, vec![vec![vec![3]], vec![]]);
-        let member_docs: Vec<_> = model.decls[1]
-            .members
-            .iter()
-            .map(|member| rows(&member.doc))
-            .collect();
-        assert_eq!(member_docs, vec![vec![vec![10]], vec![vec![16]]]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Callable name [4, 5] head [4, 5] doc [[3]] body [[6]]",
+                "Whole name [8] head [8] doc [] body [[9], [11], [15]]",
+                "  Callable name [11] head [11] doc [[10]] body [[12]]",
+                "  Callable name [15] head [15] doc [[16]] body []",
+            ]
+        );
     }
 
     #[test]
@@ -983,20 +882,14 @@ if TYPE_CHECKING:
     HIDDEN = 1
 ",
         );
-        let summary: Vec<_> = model
-            .decls
-            .iter()
-            .map(|decl| (decl.name_rows.clone(), decl.head.clone(), decl.shape))
-            .collect();
         assert_eq!(
-            summary,
-            vec![
-                (vec![1], vec![1, 2, 3], Shape::Whole),
-                (vec![4], vec![4], Shape::Whole),
-                (vec![8], vec![8], Shape::Whole),
+            describe(&model),
+            [
+                "Whole name [1] head [1, 2, 3] doc [] body []",
+                "Whole name [4] head [4] doc [] body []",
+                "Whole name [8] head [8] doc [] body []",
             ]
         );
-        assert!(model.decls.iter().all(|decl| decl.body.is_empty()));
     }
 
     #[test]

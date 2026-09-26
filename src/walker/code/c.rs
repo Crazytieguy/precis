@@ -611,7 +611,7 @@ fn is_inline(node: Node, file: &SourceFile) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::super::test_support::rows;
+    use super::super::test_support::{describe, rows};
     use super::*;
 
     fn model(file_name: &str, source: &str) -> FileModel {
@@ -624,6 +624,10 @@ mod tests {
             .iter()
             .map(|decl| decl.name_rows.clone())
             .collect()
+    }
+
+    fn heads_of(model: &FileModel) -> Vec<Vec<usize>> {
+        model.decls.iter().map(|decl| decl.head.clone()).collect()
     }
 
     #[test]
@@ -722,17 +726,10 @@ int packed(void);
 int use_cfg(void);
 #endif
 ";
-        let model = model("r3.h", source);
-        let heads: Vec<Vec<usize>> = model
-            .decls
-            .iter()
-            .map(|decl| {
-                let mut head = decl.head.clone();
-                head.sort_unstable();
-                head
-            })
-            .collect();
-        assert_eq!(heads, vec![vec![3, 4, 5], vec![6, 7, 8], vec![14]]);
+        assert_eq!(
+            heads_of(&model("r3.h", source)),
+            vec![vec![3, 4, 5], vec![6, 7, 8], vec![14]]
+        );
     }
 
     #[test]
@@ -758,17 +755,8 @@ int api(void);
 int after;
 #endif
 ";
-        let heads: Vec<Vec<usize>> = model("globals.h", source)
-            .decls
-            .iter()
-            .map(|decl| {
-                let mut head = decl.head.clone();
-                head.sort_unstable();
-                head
-            })
-            .collect();
         assert_eq!(
-            heads,
+            heads_of(&model("globals.h", source)),
             vec![
                 vec![3, 4],
                 vec![5, 6, 7],
@@ -854,6 +842,8 @@ int add(int a,
         assert_eq!(rows(&add.body), vec![vec![20]]);
     }
 
+    /// An aggregate body lists its fields; a prototype returning a
+    /// struct is all head.
     #[test]
     fn c_anonymous_typedef_lists_its_name_row() {
         let source = "\
@@ -870,36 +860,20 @@ typedef enum {
 
 struct Node {
     NodeKind kind; };
-";
-        let model = model("krep.h", source);
-        let [params, kind, node] = &model.decls[..] else {
-            panic!("{:?}", model.decls);
-        };
-        assert_eq!(params.name_rows, vec![1, 5]);
-        assert_eq!(params.head, vec![1, 5]);
-        assert_eq!(rows(&params.body), vec![vec![2, 3], vec![4]]);
-        assert_eq!(kind.name_rows, vec![7, 10]);
-        assert_eq!(kind.head, vec![7, 10]);
-        assert_eq!(rows(&kind.body), vec![vec![8], vec![9]]);
-        assert_eq!(node.head, vec![12]);
-        assert_eq!(rows(&node.body), vec![vec![13]]);
-    }
-
-    #[test]
-    fn c_prototypes_returning_structs_are_all_head() {
-        let source = "\
 struct tm *gmtime_r(const time_t *timep,
                     struct tm *result);
 enum color { RED } paint(void);
 ";
-        let model = model("time.h", source);
-        let heads: Vec<_> = model.decls.iter().map(|decl| decl.head.clone()).collect();
-        assert_eq!(heads, vec![vec![1, 2], vec![3]]);
-        assert!(
-            model
-                .decls
-                .iter()
-                .all(|decl| decl.body.is_empty() && decl.shape == Shape::Whole)
+        let model = model("krep.h", source);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1, 5] head [1, 5] doc [] body [[2, 3], [4]]",
+                "Whole name [7, 10] head [7, 10] doc [] body [[8], [9]]",
+                "Whole name [12] head [12] doc [] body [[13]]",
+                "Whole name [14] head [14, 15] doc [] body []",
+                "Whole name [16] head [16] doc [] body []",
+            ]
         );
     }
 

@@ -367,15 +367,11 @@ fn is_spec(node: &Node) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::super::model::Shape;
+    use super::super::test_support::describe;
     use super::*;
 
     fn extract_source(source: &str) -> FileModel {
         super::super::test_support::extract_source(&LANGUAGE, "a.go", source)
-    }
-
-    fn body_rows(decl: &DeclInfo) -> Vec<Vec<usize>> {
-        super::super::test_support::rows(&decl.body)
     }
 
     #[test]
@@ -404,18 +400,14 @@ func Exported(
 ",
         );
         assert_eq!(model.module_doc, [Item::new([1])]);
-        let run = &model.decls[0];
         assert_eq!(
-            (run.head.clone(), run.name_rows.clone()),
-            (vec![5, 6, 7], vec![5])
+            describe(&model),
+            [
+                "Callable name [5] head [5, 6, 7] doc [[4]] body [[8, 9], [10]]",
+                "Callable name [13] head [13] doc [] body []",
+                "Callable name [15] head [15, 16, 17] doc [] body [[18]]",
+            ]
         );
-        assert_eq!(run.doc, [Item::new([4])]);
-        assert_eq!(body_rows(run), [vec![8, 9], vec![10]]);
-        let helper = &model.decls[1];
-        assert_eq!((helper.head.as_slice(), helper.body.len()), (&[13][..], 0));
-        let shared_open_row = &model.decls[2];
-        assert_eq!(shared_open_row.head, [15, 16, 17]);
-        assert_eq!(body_rows(shared_open_row), [vec![18]]);
     }
 
     #[test]
@@ -433,12 +425,13 @@ const (
 var x, Y = 1, 2
 ",
         );
-        let group = &model.decls[0];
-        assert_eq!(group.name_rows, [3, 5, 6]);
-        assert_eq!(group.head, [3, 7]);
-        assert_eq!(body_rows(group), [vec![4, 5], vec![6]]);
-        let single = &model.decls[1];
-        assert_eq!((single.head.as_slice(), single.body.len()), (&[9][..], 0));
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [3, 5, 6] head [3, 7] doc [] body [[4, 5], [6]]",
+                "Whole name [9] head [9] doc [] body []",
+            ]
+        );
     }
 
     /// Outside `package main`, a declaration, spec, field or interface
@@ -494,28 +487,19 @@ func (p *pool) Get() {}
 func NewPool() (*pool, error) { return nil, nil }
 ",
         );
-        let roster: Vec<Vec<usize>> = model
-            .decls
-            .iter()
-            .map(|decl| decl.name_rows.clone())
-            .collect();
         assert_eq!(
-            roster,
+            describe(&model),
             [
-                vec![7],
-                vec![13],
-                vec![18],
-                vec![22, 23],
-                vec![31],
-                vec![35],
-                vec![41],
-                vec![43]
+                "Whole name [7] head [7, 11] doc [] body [[8], [10]]",
+                "Whole name [13] head [13, 16] doc [] body [[14]]",
+                "Whole name [18] head [18, 20] doc [] body [[19]]",
+                "Whole name [22, 23] head [22, 25] doc [] body [[23]]",
+                "Callable name [31] head [31] doc [] body []",
+                "Callable name [35] head [35] doc [] body []",
+                "Callable name [41] head [41] doc [] body []",
+                "Callable name [43] head [43] doc [] body []",
             ]
         );
-        assert_eq!(body_rows(&model.decls[0]), [vec![8], vec![10]]);
-        assert_eq!(body_rows(&model.decls[1]), [vec![14]]);
-        assert_eq!(body_rows(&model.decls[2]), [vec![19]]);
-        assert_eq!(body_rows(&model.decls[3]), [vec![23]]);
         let internal = extract_source("package cmd\n\nvar rootCmd = 1\n\nfunc run() {}\n");
         assert_eq!(internal.decls.len(), 2);
     }
@@ -538,14 +522,21 @@ func Foo() {}
 ",
         );
         assert_eq!(model.module_doc, [Item::new([1, 2]), Item::new([3])]);
-        assert_eq!(model.decls[0].doc, [Item::new([6, 7]), Item::new([8, 9])]);
+        assert_eq!(
+            describe(&model),
+            ["Callable name [10] head [10] doc [[6, 7], [8, 9]] body []"]
+        );
     }
 
-    /// A directive stays with its declaration even when the doc is hidden.
+    /// A directive stays with its declaration even when the doc is hidden;
+    /// a build constraint joins the roster.
     #[test]
     fn go_directives_are_head_not_doc() {
         let model = extract_source(
             "\
+//go:build linux && !purego
+
+// Package ov does things.
 //go:generate mockery
 package ov
 
@@ -560,31 +551,17 @@ func Gosched() {
 }
 ",
         );
-        assert!(model.module_doc.is_empty());
-        let template = &model.decls[0];
-        assert_eq!(template.doc, [Item::new([4, 5])]);
-        assert_eq!(template.head, [6, 7]);
-        let gosched = &model.decls[1];
-        assert!(gosched.doc.is_empty());
-        assert_eq!(gosched.head, [9, 10]);
-        assert!(is_directive("//nolint:errcheck") && is_directive("//export Add"));
-        assert!(!is_directive("// Note: prose") && !is_directive("//TODO: fix"));
-    }
-
-    #[test]
-    fn go_build_constraint_joins_the_roster() {
-        let model = extract_source(
-            "\
-//go:build linux && !purego
-
-// Package foo does things.
-package foo
-
-func Sum() {}
-",
-        );
         assert_eq!(model.reexports, [Item::new([1])]);
         assert_eq!(model.module_doc, [Item::new([3])]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [10] head [9, 10] doc [[7, 8]] body []",
+                "Callable name [13] head [12, 13] doc [] body [[14]]",
+            ]
+        );
+        assert!(is_directive("//nolint:errcheck") && is_directive("//export Add"));
+        assert!(!is_directive("// Note: prose") && !is_directive("//TODO: fix"));
     }
 
     #[test]
@@ -603,12 +580,13 @@ type config struct {
 func (c *config) load() {}
 ",
         );
-        let config = &model.decls[0];
         assert_eq!(
-            (config.head.clone(), config.shape),
-            (vec![3, 8], Shape::Whole)
+            describe(&model),
+            [
+                "Whole name [3] head [3, 8] doc [] body [[4], [6, 7]]",
+                "Callable name [10] head [10] doc [] body []",
+            ]
         );
-        assert_eq!(body_rows(config), [vec![4], vec![6, 7]]);
     }
 
     #[test]
@@ -657,9 +635,12 @@ func main() {
 func setup() {}
 ",
         );
-        let shapes: Vec<Shape> = model.decls.iter().map(|decl| decl.shape).collect();
-        assert_eq!(shapes, [Shape::Whole, Shape::Callable]);
-        assert_eq!(model.decls[0].head, [3, 7]);
-        assert_eq!(body_rows(&model.decls[0]), [vec![4], vec![5], vec![6]]);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [3] head [3, 7] doc [] body [[4], [5], [6]]",
+                "Callable name [9] head [9] doc [] body []",
+            ]
+        );
     }
 }

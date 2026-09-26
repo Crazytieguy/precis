@@ -1074,7 +1074,7 @@ fn is_file_header(comment: Node, text: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::super::test_support::rows;
+    use super::super::test_support::{describe, rows};
     use super::*;
 
     fn extract_in(files: &[(&str, &str)], target: &str) -> FileModel {
@@ -1083,28 +1083,6 @@ mod tests {
 
     fn extract_source(relative: &str, source: &str) -> FileModel {
         extract_in(&[(relative, source)], relative)
-    }
-
-    /// One line per declaration (members indented): shape, name rows,
-    /// head, doc and body.
-    fn describe(model: &FileModel) -> Vec<String> {
-        fn line(decl: &DeclInfo, indent: &str) -> String {
-            format!(
-                "{indent}{:?} name {:?} head {:?} doc {:?} body {:?}",
-                decl.shape,
-                decl.name_rows,
-                decl.head,
-                rows(&decl.doc),
-                rows(&decl.body),
-            )
-        }
-        model
-            .decls
-            .iter()
-            .flat_map(|decl| {
-                std::iter::once(line(decl, "")).chain(decl.members.iter().map(|m| line(m, "  ")))
-            })
-            .collect()
     }
 
     #[test]
@@ -1547,49 +1525,43 @@ export { local, type Shape };
         assert!(script.decls.is_empty());
     }
 
+    /// A published `f()` or `new C()` publishes the local it calls.
     #[test]
-    fn typescript_default_export_resolves_to_the_local_implementation() {
-        let model = extract_source(
-            "src/client.ts",
-            "\
-function createInstance() {
-  return new Client();
-}
-const instance = createInstance();
-function unrelated() {}
-export default instance;
-",
-        );
-        assert_eq!(rows(&model.reexports), [vec![6]]);
-        assert_eq!(
-            describe(&model),
-            [
-                "Callable name [1] head [1] doc [] body [[2]]",
-                "Whole name [4] head [4] doc [] body []",
-            ]
-        );
-    }
-
-    #[test]
-    fn typescript_exported_singleton_keeps_its_class() {
-        let model = extract_source(
-            "src/client.js",
-            "\
-class Client {
-  request() {}
-}
-const client = new Client();
-export default client;
-",
-        );
-        assert_eq!(
-            describe(&model),
-            [
-                "Whole name [1] head [1, 3] doc [] body [[2]]",
-                "  Callable name [2] head [2] doc [] body []",
-                "Whole name [4] head [4] doc [] body []",
-            ]
-        );
+    fn typescript_published_factory_call_publishes_its_callee() {
+        let cases: [(&str, &str, &[&str]); 3] = [
+            (
+                "src/client.ts",
+                "function createInstance() {\n  return new Client();\n}\nconst instance = createInstance();\nfunction unrelated() {}\nexport default instance;\n",
+                &[
+                    "Callable name [1] head [1] doc [] body [[2]]",
+                    "Whole name [4] head [4] doc [] body []",
+                ],
+            ),
+            (
+                "src/client.js",
+                "class Client {\n  request() {}\n}\nconst client = new Client();\nexport default client;\n",
+                &[
+                    "Whole name [1] head [1, 3] doc [] body [[2]]",
+                    "  Callable name [2] head [2] doc [] body []",
+                    "Whole name [4] head [4] doc [] body []",
+                ],
+            ),
+            (
+                "lib/cli.js",
+                "function Cli() {\n  this.opts = [];\n}\nfunction other() {}\nmodule.exports = new Cli();\n",
+                &[
+                    "Callable name [1] head [1] doc [] body [[2]]",
+                    "Whole name [5] head [5] doc [] body []",
+                ],
+            ),
+        ];
+        for (relative, source, expected) in cases {
+            assert_eq!(
+                describe(&extract_source(relative, source)),
+                expected,
+                "{source}"
+            );
+        }
     }
 
     #[test]
@@ -1803,21 +1775,6 @@ define(['lib/class'], function(Class) {
         assert_eq!(
             describe(&umd),
             ["Callable name [8] head [8] doc [[7]] body []"]
-        );
-    }
-
-    #[test]
-    fn typescript_commonjs_published_constructor_call_publishes_the_constructor() {
-        let model = extract_source(
-            "lib/cli.js",
-            "function Cli() {\n  this.opts = [];\n}\nfunction other() {}\nmodule.exports = new Cli();\n",
-        );
-        assert_eq!(
-            describe(&model),
-            [
-                "Callable name [1] head [1] doc [] body [[2]]",
-                "Whole name [5] head [5] doc [] body []",
-            ]
         );
     }
 
