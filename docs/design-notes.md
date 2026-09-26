@@ -175,7 +175,12 @@ code to a single language.**
   named after the repository, for Cargo and JS alike. A private root
   `package.json`'s entry-point scripts (build/test/lint/…) price at its
   identity value, since that identity is nearly empty; pricing every
-  root's scripts that way lost at 1000–1442 (superstruct, linkding).
+  root's scripts that way lost 0.001–0.0025 at 1000–1442.
+- A Makefile or justfile short enough to render whole keeps every
+  recipe body but its housekeeping ones' (release, dist, install, clean,
+  …). Keeping only build/test/run bodies lost 0.001 at 3000: NS keys buy
+  dev-workflow recipes with arbitrary names (init, serve, e2e), and
+  format recipes too.
 - A root manifest in any other format (Maven, Composer, Cabal, sbt,
   CMake, GitHub Actions, …) gets no walker of its own: the
   plaintext fallback renders its flat surface, which in these formats is
