@@ -657,26 +657,6 @@ mod tests {
     }
 
     #[test]
-    fn fs_locale_mirrors_are_named_not_listed() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        for dir in [
-            "pages/common",
-            "pages.ar/common",
-            "pages.pt_BR/common",
-            "glossary/node",
-            "glossary/node.js",
-        ] {
-            std::fs::create_dir_all(root.join(dir)).unwrap();
-        }
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert!(should_recurse_dir(&root.join("pages"), &ctx));
-        assert!(!should_recurse_dir(&root.join("pages.ar"), &ctx));
-        assert!(!should_recurse_dir(&root.join("pages.pt_BR"), &ctx));
-        assert!(should_recurse_dir(&root.join("glossary/node.js"), &ctx));
-    }
-
-    #[test]
     fn fs_wide_siblings_of_one_shape_defer_all_but_the_first() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
@@ -744,84 +724,67 @@ mod tests {
     }
 
     #[test]
-    fn fs_unpacked_releases_are_named_not_listed() {
+    fn fs_mirrors_releases_and_build_output_are_named_not_listed() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
-        for (dir, license) in [
-            ("docs/prism-master", true),
-            ("third/miniz-3.0.2", true),
-            ("drivers/i2c-master", false),
-            ("packages/core-main", false),
-            ("packages/ui-main", true),
+        for dir in [
+            ".git",
+            "pages/common",
+            "pages.ar/common",
+            "pages.pt_BR/common",
+            "glossary/node",
+            "glossary/node.js",
+            "docs/prism-master",
+            "third/miniz-3.0.2",
+            "drivers/i2c-master",
+            "packages/core-main",
+            "packages/ui-main",
+            "src/build",
+            "build",
+            "tools/build",
+            "target",
         ] {
             std::fs::create_dir_all(root.join(dir)).unwrap();
-            if license {
-                std::fs::write(root.join(dir).join("LICENSE"), "").unwrap();
-            }
         }
-        std::fs::write(
-            root.join("package.json"),
-            r#"{"name": "monorepo", "workspaces": ["packages/*"]}"#,
-        )
-        .unwrap();
-        std::fs::write(
-            root.join("packages/ui-main/package.json"),
-            r#"{"name": "ui-main"}"#,
-        )
-        .unwrap();
+        for (file, text) in [
+            ("docs/prism-master/LICENSE", ""),
+            ("third/miniz-3.0.2/LICENSE", ""),
+            ("packages/ui-main/LICENSE", ""),
+            (
+                "package.json",
+                r#"{"name": "monorepo", "workspaces": ["packages/*"]}"#,
+            ),
+            ("packages/ui-main/package.json", r#"{"name": "ui-main"}"#),
+            ("src/build/mod.rs", ""),
+            ("build/probe.rs", ""),
+            (".gitignore", "generated.rs\n"),
+            ("tools/build/generated.rs", ""),
+            ("tools/build/CMakeCache.txt", ""),
+        ] {
+            std::fs::write(root.join(file), text).unwrap();
+        }
         let ctx = WalkCtx::new(root.to_path_buf());
         let recurses = |dir: &str| should_recurse_dir(&root.join(dir), &ctx);
-        assert!(!recurses("docs/prism-master"));
-        assert!(!recurses("third/miniz-3.0.2"));
-        assert!(recurses("drivers/i2c-master"));
-        assert!(recurses("packages/core-main"));
-        assert!(recurses("packages/ui-main"));
-    }
-
-    #[test]
-    fn fs_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        let source_build = root.join("src/build");
-        let source_build_child = source_build.join("compile");
-        let root_build = root.join("build");
-        let target_build = root.join("target/debug/build/generated/src/build");
-        std::fs::create_dir_all(&source_build_child).unwrap();
-        std::fs::create_dir_all(&root_build).unwrap();
-        std::fs::create_dir_all(&target_build).unwrap();
-        std::fs::write(source_build.join("mod.rs"), "pub mod compile;\n").unwrap();
-        std::fs::write(
-            source_build_child.join("compile.rs"),
-            "pub fn compile() {}\n",
-        )
-        .unwrap();
-        std::fs::write(root_build.join("probe.rs"), "pub fn probe() {}\n").unwrap();
-        std::fs::write(target_build.join("mod.rs"), "pub fn generated() {}\n").unwrap();
-
-        let lists = |dir: &Path, listed: &Path| {
-            let ctx = WalkCtx::new(root.to_path_buf());
-            let key = FsKey::DirListing {
-                dir: dir.to_path_buf(),
-            };
-            expand_listed(&key, &ctx).0.iter().any(|batch| {
-                matches!(&batch.key, BatchKey::Fs(FsKey::DirListing { dir }) if dir == listed)
-            })
-        };
-        assert!(lists(&root.join("src"), &source_build));
-        assert!(lists(root, &root_build));
-        assert!(!lists(root, &root.join("target")));
-    }
-
-    #[test]
-    fn fs_build_dirs_holding_only_ignored_rust_stay_unlisted() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        std::fs::create_dir(root.join(".git")).unwrap();
-        std::fs::write(root.join(".gitignore"), "generated.rs\n").unwrap();
-        std::fs::create_dir(root.join("build")).unwrap();
-        std::fs::write(root.join("build/generated.rs"), "fn g() {}\n").unwrap();
-        std::fs::write(root.join("build/CMakeCache.txt"), "").unwrap();
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert!(!should_recurse_dir(&root.join("build"), &ctx));
+        for dir in [
+            "pages",
+            "glossary/node.js",
+            "drivers/i2c-master",
+            "packages/core-main",
+            "packages/ui-main",
+            "src/build",
+            "build",
+        ] {
+            assert!(recurses(dir), "{dir}");
+        }
+        for dir in [
+            "pages.ar",
+            "pages.pt_BR",
+            "docs/prism-master",
+            "third/miniz-3.0.2",
+            "tools/build",
+            "target",
+        ] {
+            assert!(!recurses(dir), "{dir}");
+        }
     }
 }
