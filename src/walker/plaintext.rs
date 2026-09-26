@@ -1426,7 +1426,10 @@ fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source
         return None;
     }
     let cut = head.len() > head_bytes;
-    let head = String::from_utf8_lossy(&head);
+    let head = String::from_utf8_lossy(
+        head.strip_prefix(crate::render::UTF8_BYTE_ORDER_MARK)
+            .unwrap_or(&head),
+    );
     if cut && super::head_holds_private_key(&head) {
         return None;
     }

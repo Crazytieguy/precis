@@ -110,6 +110,8 @@ pub(crate) const MAX_SOURCE_BYTES: usize = 8 * 1024 * 1024;
 /// one-character-per-line files in one listing held 1.8 GB.
 const SOURCE_CACHE_BYTE_CAP: usize = 256 * 1024 * 1024;
 
+pub(crate) const UTF8_BYTE_ORDER_MARK: &[u8] = b"\xEF\xBB\xBF";
+
 /// Shared source-file cache — read and index each file at most once per run.
 #[derive(Clone, Debug, Default)]
 pub struct SourceCache(Rc<RefCell<CachedSources>>);
@@ -132,7 +134,8 @@ impl SourceCache {
     /// [`SOURCE_CACHE_BYTE_CAP`]: nothing else is source, and a FIFO or
     /// device named by a link could block or read forever. Bytes that
     /// aren't UTF-8 (a Latin-1 name in a license header) read as U+FFFD
-    /// rather than hiding the whole file.
+    /// rather than hiding the whole file. A leading byte-order mark is
+    /// dropped, so the first line reads like any other.
     pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
         if let Some(cached) = self.cached(path) {
             return Some(cached);
@@ -156,7 +159,8 @@ impl SourceCache {
         if bytes.len() > MAX_SOURCE_BYTES || bytes.contains(&0) {
             return None;
         }
-        let text = String::from_utf8_lossy(&bytes);
+        let text =
+            String::from_utf8_lossy(bytes.strip_prefix(UTF8_BYTE_ORDER_MARK).unwrap_or(&bytes));
         if crate::walker::holds_private_key(&text) {
             return None;
         }
@@ -1146,6 +1150,15 @@ mod tests {
         cache.insert(head.clone(), Arc::from("a\nb\n"));
         assert!(cache.cached(&head).is_none());
         assert!(cache.get(&first).is_some());
+    }
+
+    #[test]
+    fn render_source_cache_drops_a_leading_byte_order_mark() {
+        let temp = tempfile::tempdir().unwrap();
+        let path = temp.path().join("Program.cs");
+        std::fs::write(&path, "\u{feff}using System;\n").unwrap();
+        let source = SourceCache::new().get(&path).unwrap();
+        assert_eq!(source.line(1), Some("using System;"));
     }
 
     fn one_span(path: PathBuf, line: usize, render: Render) -> BatchContent {
