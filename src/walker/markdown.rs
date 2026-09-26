@@ -1573,36 +1573,22 @@ fn heading_level(heading: Node) -> usize {
 /// links point at page sections (`href="#…"`), e.g. an
 /// `Overview • Quick Start • Examples` menu. Decorative chrome, not lede.
 fn is_html_nav_block(block: Node, source: &str) -> bool {
+    static ANCHOR_ELEMENT: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new("(?s)<a .*?</a>").unwrap());
     if block.kind() != "html_block" {
         return false;
     }
-    let text = &source[block.start_byte()..block.end_byte()];
+    let text = &source[block.byte_range()];
     if text.matches("href=\"#").count() + text.matches("href='#").count() >= 2 {
         return true;
     }
     // Same construct with absolute URLs (`<a>Demo</a> • <a>Docs</a> •
     // <a>CLI</a>`): two or more anchors with nothing but separator
     // punctuation between them once the anchors themselves are removed.
-    let (anchors, rest) = strip_anchor_elements(text);
-    anchors >= 2 && is_separator_gap(&strip_html_entities(&strip_html_tags(&rest)))
-}
-
-/// Remove whole `<a …>…</a>` elements, returning the anchor count and
-/// the surrounding text.
-fn strip_anchor_elements(html: &str) -> (usize, String) {
-    let mut count = 0;
-    let mut rest = String::with_capacity(html.len());
-    let mut cursor = 0usize;
-    while let Some(open) = html[cursor..].find("<a ").map(|i| cursor + i) {
-        let Some(close) = html[open..].find("</a>").map(|i| open + i + "</a>".len()) else {
-            break;
-        };
-        rest.push_str(&html[cursor..open]);
-        count += 1;
-        cursor = close;
-    }
-    rest.push_str(&html[cursor..]);
-    (count, rest)
+    ANCHOR_ELEMENT.find_iter(text).count() >= 2
+        && is_separator_gap(&strip_html_entities(&strip_html_tags(
+            &ANCHOR_ELEMENT.replace_all(text, ""),
+        )))
 }
 
 /// Replace `&nbsp;`-style character references with a space so entity
