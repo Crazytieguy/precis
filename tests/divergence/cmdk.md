@@ -31,7 +31,7 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 933 | 23 | Fs::DirListing { dir: website/components/cmdk } |  |  | 0.814 |
 | ns | 1043 |  | 279 | README section map (all H2 + H3 headings) | 1.7 |  | 0.713 |
 | walker |  | 1078 | 145 | Json::Entry { file: cmdk/package.json } |  |  | 0.782 |
-| walker |  | 1112 | 34 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.817 |
+| walker |  | 1112 | 34 | Plaintext::DeclSurface { file: pnpm-workspace.yaml } |  |  | 0.817 |
 | ns | 1225 |  | 182 | ARCHITECTURE: the core invariant + section map | 1.8 |  | 0.771 |
 | ns | 1361 |  | 136 | README testing steps (verbatim) | 1.9 | 1.7 | 0.708 |
 | walker |  | 1400 | 288 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.824 |

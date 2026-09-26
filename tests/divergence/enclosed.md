@@ -128,12 +128,13 @@ Score(3000)=0.662 I=0.865 C=0.506 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 4036 |  | 256 | @enclosed/crypto entry points: the eight exported names and the web/node swap | 2.11 |  | 0.616 |
 | ns | 4311 |  | 275 | Key derivation parameters: generateBaseKey and deriveMasterKey (web implementation) | 2.12 | 2.11 | 0.597 |
 | walker |  | 4368 | 519 | Plaintext::Whole { file: Dockerfile } |  |  | 0.598 |
-| ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.588 |
-| walker |  | 4531 | 163 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.613 |
-| ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.604 |
-| walker |  | 4777 | 246 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.628 |
-| ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.662 |
-| walker |  | 4938 | 161 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.698 |
+| walker |  | 4476 | 108 | Plaintext::DeclSurface { file: pnpm-workspace.yaml } |  |  | 0.617 |
+| ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.607 |
+| walker |  | 4529 | 53 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.626 |
+| ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.617 |
+| walker |  | 4692 | 163 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.642 |
+| ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.676 |
+| walker |  | 4938 | 246 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.698 |
 | walker |  | 5021 | 83 | Plaintext::DeclSurface { file: packages/docs/src/components/credential-inputs.vue } |  |  | 0.698 |
 | walker |  | 5036 | 15 | Plaintext::DeclSurface { file: packages/docs/src/public/robots.txt } |  |  | 0.698 |
 | walker |  | 5104 | 68 | Json::Identity { file: packages/deploy-cloudflare/package.json } |  |  | 0.698 |

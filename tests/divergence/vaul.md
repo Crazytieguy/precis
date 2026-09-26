@@ -14,7 +14,7 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 285 | 71 | Fs::DirListing { dir: src } |  |  | 0.743 |
 | walker |  | 319 | 34 | Json::Dependencies { file: package.json } |  |  | 0.743 |
 | ns | 334 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.620 |
-| walker |  | 342 | 23 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.620 |
+| walker |  | 342 | 23 | Plaintext::DeclSurface { file: pnpm-workspace.yaml } |  |  | 0.620 |
 | walker |  | 394 | 52 | Fs::DirListing { dir: test } |  |  | 0.622 |
 | ns | 402 |  | 68 | README: the unmaintained notice (whole file) | 1.5 |  | 0.618 |
 | walker |  | 531 | 137 | Json::Scripts { file: package.json } |  |  | 0.629 |

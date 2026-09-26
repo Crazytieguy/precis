@@ -256,7 +256,7 @@ Score(3000)=0.722 I=0.919 C=0.567 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 9191 | 42 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 17, sub: 0, line: 180 } |  |  | 0.538 |
 | walker |  | 9257 | 66 | Json::Identity { file: docs/package.json } |  |  | 0.538 |
 | walker |  | 9321 | 64 | Code::CodeKey { rung: Doc, file: widgets/images/imageList.widget.js, decl: 7, sub: 0, line: 81 } |  |  | 0.538 |
-| walker |  | 9328 | 7 | Plaintext::Whole { file: .nvmrc } |  |  | 0.538 |
+| walker |  | 9328 | 7 | Plaintext::DeclSurface { file: .nvmrc } |  |  | 0.538 |
 | walker |  | 9380 | 52 | Code::CodeKey { rung: Body, file: widgets/services/servicesStatus.widget.js, decl: 3, sub: 0, line: 22 } |  |  | 0.538 |
 | walker |  | 9425 | 45 | Code::CodeKey { rung: Body, file: widgets/containers/containerSortList.widget.js, decl: 5, sub: 0, line: 47 } |  |  | 0.538 |
 | ns | 9448 |  | 269 | widgets/toolbar.widget.js: the per-mode command extension map | 7.4 |  | 0.530 |

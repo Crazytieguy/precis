@@ -47,7 +47,7 @@ Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | ns | 1604 |  | 98 | packages/d2ts/src/operators — complete operator file roster | 2.4 |  | 0.826 |
 | walker |  | 1832 | 383 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.828 |
 | ns | 1844 |  | 240 | packages/d2ts/src/operators/index.ts — exported operator set | 2.5 | 2.4 | 0.775 |
-| walker |  | 1858 | 26 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.791 |
+| walker |  | 1858 | 26 | Plaintext::DeclSurface { file: pnpm-workspace.yaml } |  |  | 0.791 |
 | walker |  | 1869 | 11 | Code::CodeKey { rung: Names, file: eslint.base.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.791 |
 | walker |  | 1893 | 24 | Fs::DirListing { dir: examples/electric } |  |  | 0.792 |
 | walker |  | 1901 | 8 | Fs::DirListing { dir: examples/electric/src } |  |  | 0.792 |

@@ -95,11 +95,6 @@ const DOTENV_BYTE_GATE: usize = 64 * 1024;
 /// Plaintext file class — drives the (filename → signal preset) table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
-    /// Toolchain facts a reader needs before running anything: runtime
-    /// version pins and the pnpm workspace's package globs. Ignore
-    /// lists, editor / lint / format config and CI or hook YAML are left
-    /// to the listing.
-    Tooling,
     /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
     /// `Dockerfile`, compose files). A root one too long to render whole
     /// shows its flat surface, as [`Class::FlatText`] does.
@@ -128,8 +123,12 @@ pub(crate) enum Class {
 pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     let lower = name.to_ascii_lowercase();
     match name {
+        // Toolchain facts a reader needs before running anything: runtime
+        // version pins and the pnpm workspace's package globs. Ignore lists,
+        // editor / lint / format config and CI or hook YAML are left to the
+        // listing.
         ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
-            return Some(Class::Tooling);
+            return Some(Class::FlatText);
         }
         // `Taskfile.yaml` is a `Makefile` in YAML clothing and a `justfile` one
         // in its own syntax — the task runner's target roster.
@@ -1427,7 +1426,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx, package_depth: usize) -
         }
         Class::Manifest => crate::value::manifest_identity_value(1.0, 1.0),
         Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
-        Class::Tooling | Class::FlatText => 488.0,
+        Class::FlatText => 488.0,
     };
     let depth = ctx.depth_from_root(file).saturating_sub(package_depth);
     tier * crate::value::depth_factor(depth) * ctx.non_essential_factor(file)
@@ -2259,10 +2258,10 @@ mod tests {
             // Dotfiles by class.
             (".gitignore", None),
             (".editorconfig", None),
-            (".nvmrc", Some(Class::Tooling)),
-            (".python-version", Some(Class::Tooling)),
-            (".tool-versions", Some(Class::Tooling)),
-            ("pnpm-workspace.yaml", Some(Class::Tooling)),
+            (".nvmrc", Some(Class::FlatText)),
+            (".python-version", Some(Class::FlatText)),
+            (".tool-versions", Some(Class::FlatText)),
+            ("pnpm-workspace.yaml", Some(Class::FlatText)),
             ("Makefile", Some(Class::Build)),
             ("Taskfile.yaml", Some(Class::Build)),
             ("Taskfile.yml", Some(Class::Build)),
@@ -2518,20 +2517,16 @@ mod tests {
     }
 
     /// Drive the full `FsWalker` + scheduler against a real directory. A
-    /// named file renders whole, its first `PLAINTEXT_LINE_CAP` lines when
-    /// it runs longer, and never when its bytes overflow the gate. Once the
-    /// walkers' batches are all scheduled, a file no walker claims renders
-    /// its head; a license text, credentials and hidden files stay names,
-    /// and a sidecar the listing leaves out stays unnamed.
+    /// named file renders. Once the walkers' batches are all scheduled, a
+    /// file no walker claims renders its head; a license text, credentials
+    /// and hidden files stay names, and a sidecar the listing leaves out
+    /// stays unnamed.
     #[test]
     fn plaintext_real_dir_renders_named_files_and_the_floor() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
-        let tool_versions: String = std::iter::once("rust 1.80.0\n".to_string())
-            .chain((1..PLAINTEXT_LINE_CAP + 5).map(|i| format!("line {i}\n")))
-            .collect();
         let files = [
-            (".tool-versions", tool_versions.as_str()),
+            (".tool-versions", "rust 1.80.0\n"),
             (".gitignore", &format!("{}\n", "x".repeat(250)).repeat(60)),
             ("chapter.tex", "\\section{Intro}\nFirst words.\n"),
             ("LICENSE", "MIT License\n\nCopyright (c) Yoav\n"),
@@ -2597,7 +2592,6 @@ mod tests {
                 .map(|span| (span.start, span.end))
                 .collect()
         };
-        assert_eq!(whole_rows(".tool-versions"), [(1, PLAINTEXT_LINE_CAP)]);
         assert_eq!(whole_rows(".gitignore"), []);
         assert_eq!(whole_rows("LICENSE"), []);
     }
