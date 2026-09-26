@@ -230,6 +230,24 @@ code to a single language.**
   namespace it tests, and discounting it let test surfaces take a
   library's budget. Nested Gradle scripts are module manifests, left to
   the listing.
+- **A fallback row shows once per run.** A line whose trimmed text an
+  earlier fallback file's surface or whole-file batch holds is left out
+  of the later file's: prologues every file opens with (`open! Core`,
+  `<script setup lang="ts">`, `pipeline {`, an author line) repeated
+  under up to 59 files of one 8,000-token render.
+  "Earlier" is emission order, which follows the schedule and never the
+  budget, so the subset property holds; the first holder may go
+  unscheduled, which costs nothing worth showing. Two parts keep it from
+  reshaping ranking: a skipped line still counts toward a complete
+  roster, or C++ headers whose column zero is a shared `namespace`
+  descended into class bodies and priced out their siblings; and the
+  surface's value scales by the share of the lines it passed over that
+  are new, or near-copies (scripts differing in one name) ranked above
+  real surfaces for being cheap. Block closers and one-word lines
+  (`let`, `in`, `else`) never count as shown: they are syntax whose
+  meaning is their position, and discounting them demoted every Nix
+  file for sharing `let … in` with its siblings, a root `flake.nix`
+  included.
 - A fallback surface carries no imports: they say what a file uses, and
   in a roster among many files their rows cost the next file's
   declarations. Its four-declaration level stop keeps a roster compact;

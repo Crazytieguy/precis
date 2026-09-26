@@ -6,7 +6,7 @@
 //! predecessor scheduling, and applies content to the rendered tree.
 //! Source text is cached on [`WalkCtx`]; parse trees are not.
 
-use std::cell::{Cell, OnceCell};
+use std::cell::{Cell, OnceCell, RefCell};
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::ops::Range;
 use std::panic::AssertUnwindSafe;
@@ -144,6 +144,10 @@ pub struct WalkCtx {
     /// The directories that each hold most of the tree's essential
     /// source bytes.
     source_spine: OnceCell<HashSet<PathBuf>>,
+    /// The trimmed text of every row a fallback surface or whole-file
+    /// batch has taken so far in the run, but block closers and one-word
+    /// lines.
+    fallback_row_texts: RefCell<HashSet<String>>,
 }
 
 impl WalkCtx {
@@ -169,6 +173,7 @@ impl WalkCtx {
             primary_language: OnceCell::new(),
             dominant_source_file: OnceCell::new(),
             source_spine: OnceCell::new(),
+            fallback_row_texts: RefCell::default(),
         }
     }
 

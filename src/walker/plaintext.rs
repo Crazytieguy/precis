@@ -656,7 +656,18 @@ fn block_comment_interiors(lines: &[&str]) -> Vec<bool> {
 /// past a complete roster through the members of its types
 /// ([`in_type_bodies`]), so a file whose column zero holds one large class
 /// among small ones still lists that class's members.
-fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usize>, usize) {
+///
+/// A line in `shown_elsewhere` takes no slot, so the slot goes to the
+/// file's next line, but counts toward a complete roster: a header whose
+/// column zero repeats its siblings' (`namespace leveldb {`) still stops
+/// there rather than descending into its class bodies. The last element
+/// counts the lines passed over.
+fn declaration_surface(
+    source: &str,
+    class: Class,
+    decl_cap: usize,
+    shown_elsewhere: &HashSet<String>,
+) -> (Vec<usize>, usize, usize) {
     let lines: Vec<&str> = source.lines().collect();
     let in_block_comment = block_comment_interiors(&lines);
     let banner_end = boilerplate_banner_end(&lines, &in_block_comment);
@@ -708,6 +719,7 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
 
     let caps = [SOURCE_TEXT_COMMENT_LINES, decl_cap];
     let mut used = [0usize; 2];
+    let mut repeated = [0usize; 2];
     let mut selected: Vec<usize> = Vec::new();
     let mut is_roster_complete = false;
     // In a language file the roster is for types and functions;
@@ -755,16 +767,20 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
             if used[slot] == caps[slot] {
                 continue;
             }
+            if shown_elsewhere.contains(lines[line - 1].trim()) {
+                repeated[slot] += 1;
+                continue;
+            }
             used[slot] += 1;
             selected.push(line);
         }
-        is_roster_complete |= used[1] >= SOURCE_TEXT_MIN_DECLS;
+        is_roster_complete |= used[1] + repeated[1] >= SOURCE_TEXT_MIN_DECLS;
         if used[1] == caps[1] || (is_roster_complete && type_members.is_none()) {
             break;
         }
     }
     selected.sort_unstable();
-    (selected, banner_end)
+    (selected, banner_end, repeated[0] + repeated[1])
 }
 
 fn indentation(line: &str) -> usize {
@@ -1157,6 +1173,13 @@ fn is_annotation_only(trimmed: &str) -> bool {
 /// license banner behind it. Nothing when the file is unreadable,
 /// machine-generated, or has no surface. Line length says nothing about
 /// prose, which is often written one paragraph per line.
+///
+/// Neither batch repeats a line an earlier file's batches hold, and the
+/// surface is worth the share of the rows it passed over that are new: a
+/// prologue every file opens with (`open! Core`, `<script setup
+/// lang="ts">`, an author line) says nothing about the file past its
+/// first showing. Block closers and [bare words](is_bare_word) are never
+/// held.
 fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, class: Class) {
     let Some(source) = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE) else {
         return;
@@ -1178,7 +1201,23 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
         } else {
             class
         };
-    let (selected, banner_end) = declaration_surface(&source, surface_class, decl_cap);
+    let row_text = |line: usize| source.line(line).unwrap_or_default().trim();
+    let mut shown_elsewhere = ctx.fallback_row_texts.borrow_mut();
+    let (selected, banner_end, repeated_rows) =
+        declaration_surface(&source, surface_class, decl_cap, &shown_elsewhere);
+    let fits_whole =
+        source.len() <= PLAINTEXT_BYTE_GATE && source.line_count() <= PLAINTEXT_LINE_CAP;
+    let whole_rows: Vec<usize> = (banner_end + 1..=source.line_count())
+        .filter(|&line| !shown_elsewhere.contains(row_text(line)))
+        .collect();
+    shown_elsewhere.extend(
+        (if fits_whole { &whole_rows } else { &selected })
+            .iter()
+            .map(|&line| row_text(line))
+            .filter(|text| !is_block_closer(text) && !is_bare_word(text))
+            .map(str::to_owned),
+    );
+    drop(shown_elsewhere);
     let surface_rows = selected.len();
     let Some(content) = single_file_lines_content(file, &source, selected) else {
         return;
@@ -1187,26 +1226,22 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
         file: file.to_path_buf(),
     }
     .into();
-    let value = class_value(class, file, ctx, package_directories(file, &source));
+    let value = class_value(class, file, ctx, package_directories(file, &source))
+        * surface_rows as f64
+        / (surface_rows + repeated_rows) as f64;
     out.push(Batch {
         key: surface_key.clone(),
         predecessor: None,
         content,
         value,
     });
-    let content_rows = source
-        .lines()
-        .skip(banner_end)
-        .filter(|line| !line.trim().is_empty())
+    let content_rows = whole_rows
+        .iter()
+        .filter(|&&line| !row_text(line).is_empty())
         .count();
     if surface_rows < content_rows
-        && source.len() <= PLAINTEXT_BYTE_GATE
-        && source.line_count() <= PLAINTEXT_LINE_CAP
-        && let Some(content) = single_file_lines_content(
-            file,
-            &source,
-            (banner_end + 1..=source.line_count()).collect(),
-        )
+        && fits_whole
+        && let Some(content) = single_file_lines_content(file, &source, whole_rows)
     {
         out.push(Batch {
             key: PlaintextKey::Whole {
@@ -1218,6 +1253,12 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
             value,
         });
     }
+}
+
+/// A line of one word and nothing else (`let`, `in`, `else`, `begin`):
+/// like a block closer, it is syntax whose meaning is where it sits.
+fn is_bare_word(trimmed: &str) -> bool {
+    trimmed.chars().all(|c| c.is_alphanumeric() || c == '_')
 }
 
 /// A shell or PowerShell function definition: `name() {`, `function name {`.
@@ -1712,7 +1753,8 @@ mod tests {
     /// The lines a surface selects, for readable assertions.
     fn surface_text(source: &str, class: Class) -> Vec<&str> {
         let lines: Vec<&str> = source.lines().collect();
-        let (rows, _) = declaration_surface(source, class, SOURCE_TEXT_DECL_LINES);
+        let (rows, ..) =
+            declaration_surface(source, class, SOURCE_TEXT_DECL_LINES, &HashSet::new());
         rows.iter().map(|n| lines[n - 1]).collect()
     }
 
@@ -1948,6 +1990,44 @@ mod tests {
                 .any(|span| (span.start..=span.end).contains(&function_row)),
             "{spans:?}"
         );
+    }
+
+    /// A line one file's surface already shows (`open! Core` atop every
+    /// module) is left off the next file's, whose surface is worth only
+    /// the share of its rows that are new.
+    #[test]
+    fn plaintext_source_text_repeated_row_shows_once() {
+        let dir = tempfile::tempdir().unwrap();
+        for name in ["a", "b"] {
+            let source = format!("open! Core\n\nlet {name} = 1\nlet shared = 2\n");
+            std::fs::write(dir.path().join(format!("{name}.ml")), source).unwrap();
+        }
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let surfaces: Vec<(Vec<usize>, f64)> = expand_in_dir(dir.path(), &ctx)
+            .into_iter()
+            .filter(|batch| {
+                matches!(
+                    batch.key,
+                    BatchKey::Plaintext(PlaintextKey::DeclSurface { .. })
+                )
+            })
+            .map(|batch| {
+                let crate::content::BatchContent::Lines { spans, .. } = &batch.content else {
+                    panic!("expected a lines batch");
+                };
+                let rows = spans
+                    .iter()
+                    .flat_map(|span| span.start..=span.end)
+                    .collect();
+                (rows, batch.value)
+            })
+            .collect();
+        let [(first_rows, first_value), (second_rows, second_value)] = &surfaces[..] else {
+            panic!("expected two surfaces: {surfaces:?}");
+        };
+        assert!(first_rows.contains(&1), "{first_rows:?}");
+        assert_eq!(second_rows, &[3]);
+        assert!((second_value * 3.0 - first_value).abs() < 1e-9);
     }
 
     /// A flat config's indented value list is content, not a wrapped
@@ -2260,7 +2340,8 @@ mod tests {
                      \nextension Request: Equatable {\n}\n\nextension Request: Hashable {\n}\n\
                      \nextension Request {\n    func helper() {}\n}\n\nfunc main() {\n    let x = 1\n}\n";
         let lines: Vec<&str> = swift.lines().collect();
-        let (rows, _) = declaration_surface(swift, Class::LanguageSource, usize::MAX);
+        let (rows, ..) =
+            declaration_surface(swift, Class::LanguageSource, usize::MAX, &HashSet::new());
         let text: Vec<&str> = rows.iter().map(|n| lines[n - 1].trim()).collect();
         for needle in [
             "public func resume() -> Self {",
@@ -2586,7 +2667,8 @@ mod tests {
         let closing = source.lines().count();
         assert_eq!(rows, [(1, 1), (3, 8), (closing - 1, closing)]);
         assert!(expand_in_dir(&root.join("module"), &ctx).is_empty());
-        assert_eq!(expand_in_dir(&root.join("src"), &ctx).len(), 1);
+        let fresh_ctx = WalkCtx::new(root.to_path_buf());
+        assert_eq!(expand_in_dir(&root.join("src"), &fresh_ctx).len(), 1);
     }
 
     /// A root manifest in a TOML dialect whose identity sits outside the

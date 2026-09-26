@@ -1,4 +1,4 @@
-Score(3000)=0.640 I=0.785 C=0.521 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.825/0.732/0.621/0.640/0.605/0.583/0.541
+Score(3000)=0.640 I=0.785 C=0.521 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.825/0.732/0.621/0.640/0.605/0.583/0.542
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -133,58 +133,58 @@ Score(3000)=0.640 I=0.785 C=0.521 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 6536 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_warnings.py, decl: 1, sub: 0, line: 4 } |  |  | 0.581 |
 | walker |  | 6545 | 9 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 8, sub: 0, line: 48 } |  |  | 0.581 |
 | ns | 6627 |  | 196 | `PluginManager.__init__`: the complete state of a plugin manager | 3.11 | 2.1 | 0.574 |
-| walker |  | 6629 | 84 | Plaintext::DeclSurface { file: downstream/tox.sh } |  |  | 0.574 |
-| walker |  | 6658 | 29 | Plaintext::Whole { file: downstream/tox.sh } |  |  | 0.574 |
-| walker |  | 6745 | 87 | Plaintext::DeclSurface { file: downstream/conda.sh } |  |  | 0.574 |
-| walker |  | 6787 | 42 | Plaintext::Whole { file: downstream/conda.sh } |  |  | 0.574 |
-| walker |  | 6819 | 32 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 4, sub: 0, line: 24 } |  |  | 0.579 |
-| walker |  | 6896 | 77 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 33, sub: 0, line: 499 } |  |  | 0.584 |
-| walker |  | 6987 | 91 | Plaintext::DeclSurface { file: downstream/pytest.sh } |  |  | 0.584 |
+| walker |  | 6632 | 87 | Plaintext::DeclSurface { file: downstream/conda.sh } |  |  | 0.574 |
+| walker |  | 6674 | 42 | Plaintext::Whole { file: downstream/conda.sh } |  |  | 0.574 |
+| walker |  | 6706 | 32 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 4, sub: 0, line: 24 } |  |  | 0.579 |
+| walker |  | 6783 | 77 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 33, sub: 0, line: 499 } |  |  | 0.584 |
+| walker |  | 6862 | 79 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 17, sub: 0, line: 293 } |  |  | 0.584 |
+| walker |  | 6942 | 80 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 12, sub: 0, line: 164 } |  |  | 0.584 |
 | ns | 6993 |  | 366 | Historic hooks end to end: `set_specification`, `call_historic`, `_maybe_apply_history` | 3.12 | 2.4 | 0.569 |
-| walker |  | 7016 | 29 | Plaintext::Whole { file: downstream/pytest.sh } |  |  | 0.569 |
-| walker |  | 7095 | 79 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 17, sub: 0, line: 293 } |  |  | 0.569 |
-| walker |  | 7175 | 80 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 12, sub: 0, line: 164 } |  |  | 0.569 |
+| walker |  | 7023 | 81 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 9, sub: 0, line: 77 } |  |  | 0.569 |
+| walker |  | 7058 | 35 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 19, sub: 0, line: 242 } |  |  | 0.569 |
 | ns | 7193 |  | 200 | Complete attribute sets of `HookImpl` and `HookSpec` (`__slots__`) | 3.13 |  | 0.582 |
-| walker |  | 7268 | 93 | Plaintext::DeclSurface { file: downstream/datasette.sh } |  |  | 0.582 |
-| walker |  | 7298 | 30 | Plaintext::Whole { file: downstream/datasette.sh } |  |  | 0.582 |
-| walker |  | 7379 | 81 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 9, sub: 0, line: 77 } |  |  | 0.582 |
-| walker |  | 7474 | 95 | Plaintext::DeclSurface { file: downstream/hatch.sh } |  |  | 0.582 |
-| walker |  | 7503 | 29 | Plaintext::Whole { file: downstream/hatch.sh } |  |  | 0.567 |
 | ns | 7503 |  | 310 | `load_setuptools_entrypoints`: how third-party plugins are discovered | 3.14 | 2.1 | 0.567 |
-| walker |  | 7538 | 35 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 19, sub: 0, line: 242 } |  |  | 0.567 |
-| walker |  | 7646 | 108 | Plaintext::DeclSurface { file: downstream/devpi.sh } |  |  | 0.567 |
-| walker |  | 7694 | 48 | Plaintext::Whole { file: downstream/devpi.sh } |  |  | 0.567 |
+| walker |  | 7599 | 541 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: false } |  |  | 0.567 |
+| walker |  | 7611 | 12 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 5, sub: 0, line: 22 } |  |  | 0.567 |
 | ns | 7697 |  | 194 | Blocking semantics: `set_blocked`, `is_blocked`, `unblock` | 3.15 | 2.1 | 0.563 |
-| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.556 |
-| walker |  | 8235 | 541 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: false } |  |  | 0.556 |
-| walker |  | 8247 | 12 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 5, sub: 0, line: 22 } |  |  | 0.556 |
-| ns | 8259 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.541 |
-| walker |  | 8345 | 98 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 34, sub: 0, line: 516 } |  |  | 0.542 |
-| walker |  | 8387 | 42 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 35, sub: 0, line: 487 } |  |  | 0.542 |
-| walker |  | 8431 | 44 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 29, sub: 0, line: 379 } |  |  | 0.542 |
-| walker |  | 8477 | 46 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 4, sub: 0, line: 52 } |  |  | 0.549 |
-| walker |  | 8490 | 13 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 12, sub: 0, line: 64 } |  |  | 0.549 |
-| walker |  | 8540 | 50 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 36, sub: 0, line: 512 } |  |  | 0.538 |
-| ns | 8540 |  | 281 | The eggsample host program: wiring a PluginManager and calling a hook | 4.3 |  | 0.538 |
-| walker |  | 8678 | 138 | Plaintext::DeclSurface { file: downstream/python-lsp-server.sh } |  |  | 0.538 |
-| walker |  | 8709 | 31 | Code::CodeKey { rung: Doc, file: src/pluggy/_callers.py, decl: 2, sub: 0, line: 27 } |  |  | 0.538 |
-| ns | 8760 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.530 |
-| walker |  | 8775 | 66 | Code::CodeKey { rung: Body, file: src/pluggy/__init__.py, decl: 1, sub: 0, line: 32 } |  |  | 0.541 |
-| walker |  | 8836 | 61 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 10, sub: 0, line: 80 } |  |  | 0.541 |
-| walker |  | 8853 | 17 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 13, sub: 0, line: 67 } |  |  | 0.541 |
-| walker |  | 8916 | 63 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 20, sub: 0, line: 252 } |  |  | 0.541 |
-| walker |  | 8979 | 63 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 11, sub: 0, line: 91 } |  |  | 0.541 |
-| walker |  | 9044 | 65 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 33, sub: 0, line: 434 } |  |  | 0.541 |
-| walker |  | 9062 | 18 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 11, sub: 0, line: 60 } |  |  | 0.541 |
-| ns | 9096 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.529 |
-| ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.525 |
-| walker |  | 9267 | 205 | Plaintext::Whole { file: downstream/python-lsp-server.sh } |  |  | 0.525 |
-| ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.516 |
-| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.512 |
-| walker |  | 9825 | 558 | Plaintext::Whole { file: tox.ini } |  |  | 0.522 |
-| ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.522 |
-| walker |  | 9912 | 87 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 16, sub: 0, line: 201 } |  |  | 0.522 |
-| ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.519 |
-| ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.522 |
-| walker |  | 9968 | 56 | Code::CodeKey { rung: Doc, file: src/pluggy/_callers.py, decl: 5, sub: 0, line: 82 } |  |  | 0.522 |
-| walker |  | 9983 | 15 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 24, sub: 0, line: 304 } |  |  | 0.522 |
+| walker |  | 7709 | 98 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 34, sub: 0, line: 516 } |  |  | 0.564 |
+| walker |  | 7751 | 42 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 35, sub: 0, line: 487 } |  |  | 0.564 |
+| walker |  | 7795 | 44 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 29, sub: 0, line: 379 } |  |  | 0.564 |
+| walker |  | 7841 | 46 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 4, sub: 0, line: 52 } |  |  | 0.572 |
+| walker |  | 7854 | 13 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 12, sub: 0, line: 64 } |  |  | 0.572 |
+| walker |  | 7904 | 50 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 36, sub: 0, line: 512 } |  |  | 0.572 |
+| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.564 |
+| walker |  | 7935 | 31 | Code::CodeKey { rung: Doc, file: src/pluggy/_callers.py, decl: 2, sub: 0, line: 27 } |  |  | 0.564 |
+| walker |  | 8001 | 66 | Code::CodeKey { rung: Body, file: src/pluggy/__init__.py, decl: 1, sub: 0, line: 32 } |  |  | 0.577 |
+| walker |  | 8062 | 61 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 10, sub: 0, line: 80 } |  |  | 0.577 |
+| walker |  | 8079 | 17 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 13, sub: 0, line: 67 } |  |  | 0.577 |
+| walker |  | 8142 | 63 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 20, sub: 0, line: 252 } |  |  | 0.577 |
+| walker |  | 8205 | 63 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 11, sub: 0, line: 91 } |  |  | 0.577 |
+| ns | 8259 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.561 |
+| walker |  | 8270 | 65 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 33, sub: 0, line: 434 } |  |  | 0.561 |
+| walker |  | 8288 | 18 | Code::CodeKey { rung: Body, file: src/pluggy/_tracing.py, decl: 11, sub: 0, line: 60 } |  |  | 0.561 |
+| walker |  | 8364 | 76 | Plaintext::DeclSurface { file: downstream/datasette.sh } |  |  | 0.561 |
+| walker |  | 8386 | 22 | Plaintext::Whole { file: downstream/datasette.sh } |  |  | 0.561 |
+| ns | 8540 |  | 281 | The eggsample host program: wiring a PluginManager and calling a hook | 4.3 |  | 0.550 |
+| ns | 8760 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.541 |
+| walker |  | 8944 | 558 | Plaintext::Whole { file: tox.ini } |  |  | 0.542 |
+| walker |  | 9031 | 87 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 16, sub: 0, line: 201 } |  |  | 0.542 |
+| walker |  | 9087 | 56 | Code::CodeKey { rung: Doc, file: src/pluggy/_callers.py, decl: 5, sub: 0, line: 82 } |  |  | 0.542 |
+| ns | 9096 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.530 |
+| walker |  | 9184 | 97 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 24, sub: 0, line: 304 } |  |  | 0.530 |
+| ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.526 |
+| walker |  | 9283 | 99 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 9, sub: 0, line: 67 } |  |  | 0.526 |
+| walker |  | 9382 | 99 | Plaintext::DeclSurface { file: downstream/devpi.sh } |  |  | 0.526 |
+| walker |  | 9402 | 20 | Plaintext::Whole { file: downstream/devpi.sh } |  |  | 0.526 |
+| ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.517 |
+| walker |  | 9505 | 103 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 30, sub: 0, line: 395 } |  |  | 0.521 |
+| walker |  | 9571 | 66 | Plaintext::DeclSurface { file: downstream/hatch.sh } |  |  | 0.521 |
+| walker |  | 9592 | 21 | Plaintext::Whole { file: downstream/hatch.sh } |  |  | 0.521 |
+| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.516 |
+| walker |  | 9751 | 159 | Plaintext::DeclSurface { file: downstream/python-lsp-server.sh } |  |  | 0.516 |
+| ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.525 |
+| walker |  | 9893 | 142 | Plaintext::Whole { file: downstream/python-lsp-server.sh } |  |  | 0.525 |
+| ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.523 |
+| walker |  | 9925 | 32 | Code::CodeKey { rung: Body, file: src/pluggy/_result.py, decl: 9, sub: 0, line: 67 } |  |  | 0.523 |
+| ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.525 |
+| walker |  | 9995 | 70 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 15, sub: 0, line: 176 } |  |  | 0.525 |
