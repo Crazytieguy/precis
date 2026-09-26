@@ -1202,7 +1202,7 @@ fn command_block(
     src_lines: &[&str],
 ) -> Option<CommandBlockRows> {
     fn first_shell_block<'a>(node: Node<'a>, source: &str) -> Option<Node<'a>> {
-        if node.kind() == "fenced_code_block" {
+        if matches!(node.kind(), "fenced_code_block" | "indented_code_block") {
             return is_shell_block(node, source).then_some(node);
         }
         let mut cursor = node.walk();
@@ -1278,8 +1278,8 @@ const SHELL_LANGUAGES: [&str; 10] = [
     "bat",
 ];
 
-/// A fenced block that holds shell commands: untagged, or tagged with a
-/// shell language.
+/// A code block that holds shell commands: indented, untagged, or tagged
+/// with a shell language.
 fn is_shell_block(block: Node, source: &str) -> bool {
     let Some(info) = first_child_of_kind(block, "info_string") else {
         return true;
