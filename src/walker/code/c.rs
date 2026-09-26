@@ -445,8 +445,13 @@ fn is_disabled_preproc_if(node: Node, file: &SourceFile) -> bool {
 /// name the block tests (`#ifndef X` / `#define X …`).
 fn feature_gate_is_declaration_only(node: Node, file: &SourceFile) -> Option<bool> {
     let mut declaration_found = false;
-    let mut cursor = node.walk();
-    for child in node.named_children(&mut cursor) {
+    let condition = node
+        .child_by_field_name("condition")
+        .or_else(|| node.child_by_field_name("name"));
+    for child in named_children(Some(node)) {
+        if Some(child) == condition {
+            continue;
+        }
         match child.kind() {
             "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
             | "enum_specifier" => declaration_found = true,
@@ -460,16 +465,6 @@ fn feature_gate_is_declaration_only(node: Node, file: &SourceFile) -> Option<boo
             | "preproc_elifdef" => {
                 declaration_found |= feature_gate_is_declaration_only(child, file)?;
             }
-            // Condition / name tokens of the `#if` / `#ifdef` itself.
-            "identifier"
-            | "binary_expression"
-            | "parenthesized_expression"
-            | "unary_expression"
-            | "call_expression"
-            | "preproc_defined"
-            | "number_literal"
-            | "char_literal"
-            | "string_literal" => {}
             _ => return None,
         }
     }
