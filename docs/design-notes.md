@@ -76,8 +76,12 @@ never reached the ones answer keys rank.
   command-titled heading: a guide's first block is as often a commit
   template, a fork's clone or a package-manager install as a build
   step. The grid barely sees guides, so they were judged on real-world
-  output. `AGENTS.md` stays out: where a repository has both, `CLAUDE.md`
-  usually links or imports it, so the host already loads it.
+  output. `AGENTS.md` stays out: Claude Code loads it in place of a
+  missing `CLAUDE.md`, and in all 26 repositories of the eval,
+  robustness and breadth corpora that have both, one is a symlink to,
+  an `@`-import of or a copy of the other. Eval answerers see neither
+  file, so judges asking for `AGENTS.md` content measure the eval, not
+  the product.
 - **Only sections titled for building, testing, running or development
   sell a `CommandBlock`**: their leading shell blocks, one per top-level
   section, behind the outline, with the section gated on it (the
