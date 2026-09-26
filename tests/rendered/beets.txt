@@ -197,6 +197,11 @@ beets/
         15→"""This module provides the default commands for beets' command-line
         16→interface.
         17→"""
+        19→from beets.util.deprecation import deprecate_imports
+        20→
+        21→from .completion import completion_cmd
+        22→from .config import config_cmd
+        23→from .fields import fields_cmd
         …
       completion.py
       completion_base.sh
@@ -264,13 +269,6 @@ beetsplug/
       16→Beets library. Attempts to implement a compatible protocol to allow
       17→use of the wide range of MPD clients.
       18→"""
-      …
-      28→from string import Template
-      29→from typing import TYPE_CHECKING, ClassVar
-      …
-      33→from beets import dbcore
-      34→from beets.library import Item
-      35→from beets.plugins import BeetsPlugin
       …
     gstplayer.py
   bpm.py

@@ -248,8 +248,6 @@ rich/
   __init__.py
     1→"""Rich text and beautiful formatting in the terminal."""
     …
-    4→from typing import IO, TYPE_CHECKING, Any, Callable, Optional, Union
-    5→
     6→from ._extension import load_ipython_extension  # noqa: F401
     7→
     8→__all__ = ["get_console", "reconfigure", "print", "inspect", "print_json"]
@@ -329,13 +327,16 @@ rich/
   _unicode_data/
     __init__.py
       …
-      12→from importlib import import_module
-      13→from typing import TYPE_CHECKING, cast
-      14→
       15→from rich._unicode_data._versions import VERSIONS
       …
       20→VERSION_ORDER = sorted(
-      …
+      21→    [
+      22→        tuple(
+      23→            map(int, version.split(".")),
+      24→        )
+      25→        for version in VERSIONS
+      26→    ]
+      27→)
       28→VERSION_SET = frozenset(VERSIONS)
       29→
       30→
@@ -380,6 +381,10 @@ rich/
   color_triplet.py
   columns.py
   console.py
+    …
+    64→JUPYTER_DEFAULT_COLUMNS = 115
+    65→JUPYTER_DEFAULT_LINES = 100
+    …
   constrain.py
   containers.py
   control.py

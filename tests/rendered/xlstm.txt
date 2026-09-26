@@ -178,8 +178,6 @@ xlstm/
         vanilla/
           __init__.py
             …
-            4→from typing import Callable
-            …
             7→from .slstm import slstm_forward_pointwise as slstm_forward_pointwise_slstm
             8→from .lstm import slstm_forward_pointwise as slstm_forward_pointwise_lstm
             9→
@@ -253,6 +251,7 @@ xlstm/
     …
     15→@dataclass
     16→class xLSTMBlockStackConfig:
+    17→    mlstm_block: Optional[mLSTMBlockConfig] = None
     …
     77→class xLSTMBlockStack(nn.Module):
     78→    config_class = xLSTMBlockStackConfig

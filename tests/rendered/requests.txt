@@ -228,10 +228,6 @@ src/requests/
     …
     99→def _check_cryptography(cryptography_version: str) -> None:
     …
-    150→from urllib3.exceptions import DependencyWarning
-    …
-    156→from logging import NullHandler
-    157→
     158→from . import packages, utils
     159→from .__version__ import (
     160→    __author__,
@@ -351,4 +347,6 @@ tests/
   utils.py
 tox.ini
   1→[tox]
+  2→envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}
+  3→
   …
