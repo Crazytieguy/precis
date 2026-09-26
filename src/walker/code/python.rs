@@ -14,8 +14,8 @@
 //!   it (`) -> T:`), so a roster never lists an unclosed `def f(`.
 //! - **Doc**: the docstring opening a `def` / `class` body, or else the
 //!   `#` comments directly above the definition.
-//! - **Module doc**: an entry file's (a dunder-named module:
-//!   `__init__.py`, `__main__.py`, `__version__.py`) module docstring and
+//! - **Module doc**: a dunder-named module's (`__init__.py`,
+//!   `__main__.py`, `__version__.py`) module docstring and
 //!   dunder assignments other than `__all__`. Other modules' docstrings and
 //!   leading `#` comments (shebangs, license headers) are in no part, and
 //!   their dunder assignments are ordinary constants.
@@ -37,6 +37,7 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile, file_name, file_stem};
+use crate::fs_util::lists_file;
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -70,7 +71,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     } else {
         Vec::new()
     };
-    let is_entry = is_entrypoint(&file.path, ctx);
+    let is_entry = file_stem(&file.path).is_some_and(is_dunder);
     let root = file.tree.root_node();
     let mut first_statement = true;
     let mut reexported_names: HashSet<&str> = HashSet::new();
@@ -131,8 +132,20 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     model
 }
 
-fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
+/// A dunder module (`__init__.py`, `__main__.py`, `__version__.py`) of a
+/// top-level package: a package directory whose parent is none. A
+/// subpackage's `__init__.py` and a `__main__.py` outside any package
+/// are ordinary modules at their own depth.
+fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
+    let is_package = |dir: &Path| {
+        ["__init__.py", "__init__.pyi"]
+            .iter()
+            .any(|init| lists_file(&dir.join(init), ctx.dir_filter()))
+    };
     file_stem(path).is_some_and(is_dunder)
+        && path
+            .parent()
+            .is_some_and(|dir| is_package(dir) && !dir.parent().is_some_and(is_package))
 }
 
 /// A module a package `__init__.py` above it imports names from
@@ -513,8 +526,6 @@ fn class_body(
 
 #[cfg(test)]
 mod tests {
-    use std::path::PathBuf;
-
     use super::super::test_support::{describe, rows};
     use super::*;
 
@@ -968,14 +979,26 @@ _first = second = 0
     }
 
     #[test]
-    fn python_entrypoints_are_dunder_named_modules() {
-        let ctx = WalkCtx::new(PathBuf::from("/repo"));
-        let entrypoint = |path: &str| is_entrypoint(Path::new(path), &ctx);
-        assert!(entrypoint("/repo/pkg/__init__.py"));
-        assert!(entrypoint("/repo/pkg/__init__.pyi"));
-        assert!(entrypoint("/repo/pkg/__main__.py"));
-        assert!(entrypoint("/repo/pkg/__version__.py"));
-        assert!(!entrypoint("/repo/pkg/main.py"));
-        assert!(!entrypoint("/repo/pkg/_private.py"));
+    fn python_entrypoints_are_dunder_modules_of_top_level_packages() {
+        let dir = tempfile::tempdir().unwrap();
+        for file in [
+            "src/pkg/__init__.py",
+            "src/pkg/sub/__init__.py",
+            "stubs/__init__.pyi",
+            "tools/android/__main__.py",
+        ] {
+            let path = dir.path().join(file);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, "").unwrap();
+        }
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let entrypoint = |path: &str| is_entrypoint(&dir.path().join(path), &ctx);
+        assert!(entrypoint("src/pkg/__init__.py"));
+        assert!(entrypoint("src/pkg/__main__.py"));
+        assert!(entrypoint("src/pkg/__version__.py"));
+        assert!(entrypoint("stubs/__init__.pyi"));
+        assert!(!entrypoint("src/pkg/main.py"));
+        assert!(!entrypoint("src/pkg/sub/__init__.py"));
+        assert!(!entrypoint("tools/android/__main__.py"));
     }
 }

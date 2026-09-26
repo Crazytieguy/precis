@@ -76,21 +76,6 @@ beets/
       15→"""DBCore is an abstract database package that forms the basis for beets'
       16→Library.
       17→"""
-      19→from .db import Database, Index, Model, Results
-      20→from .query import (
-      21→    AndQuery,
-      22→    FieldQuery,
-      23→    InvalidQueryError,
-      24→    MatchQuery,
-      25→    OrQuery,
-      26→    Query,
-      27→)
-      28→from .queryparse import (
-      29→    parse_sorted_query,
-      30→    query_from_strings,
-      31→    sort_from_strings,
-      32→)
-      33→from .types import Type
       …
     db.py
     pathutils.py
@@ -103,14 +88,6 @@ beets/
       15→"""Provides the basic, interface-agnostic workflow for importing and
       16→autotagging music files.
       17→"""
-      19→from .session import ImportAbortError, ImportSession
-      20→from .tasks import (
-      21→    Action,
-      22→    ArchiveImportTask,
-      23→    ImportTask,
-      24→    SentinelImportTask,
-      25→    SingletonImportTask,
-      26→)
       …
     session.py
     stages.py
@@ -141,50 +118,13 @@ beets/
       17→CLI commands are implemented in the ui.commands module.
       18→"""
       …
-      36→from beets import config, library, logging, plugins, util
-      …
     commands/
       __init__.py
         …
         15→"""This module provides the default commands for beets' command-line
         16→interface.
         17→"""
-        19→from beets.util.deprecation import deprecate_imports
-        20→
-        21→from .completion import completion_cmd
-        22→from .config import config_cmd
-        23→from .fields import fields_cmd
-        24→from .help import HelpCommand
-        25→from .import_ import import_cmd
-        26→from .list import list_cmd
-        27→from .modify import modify_cmd
-        28→from .move import move_cmd
-        29→from .remove import remove_cmd
-        30→from .stats import stats_cmd
-        31→from .update import update_cmd
-        32→from .version import version_cmd
-        33→from .write import write_cmd
-        34→
-        35→
-        36→def __getattr__(name: str):
-        37→    """Handle deprecated imports."""
         …
-        50→default_commands = [
-        51→    fields_cmd,
-        52→    HelpCommand(),
-        53→    import_cmd,
-        54→    list_cmd,
-        55→    update_cmd,
-        56→    remove_cmd,
-        57→    stats_cmd,
-        58→    version_cmd,
-        59→    modify_cmd,
-        60→    move_cmd,
-        61→    write_cmd,
-        62→    config_cmd,
-        63→    completion_cmd,
-        64→]
-        67→__all__ = ["default_commands"]
       completion.py
       completion_base.sh
       config.py
@@ -377,6 +317,72 @@ beetsplug/
     __init__.py
       …
       15→"""A Web interface to beets."""
+      …
+      34→if t.TYPE_CHECKING:
+      35→
+      36→    class LibraryCtx(flask.ctx._AppCtxGlobals):
+      37→        lib: beets.library.Library
+      …
+      46→def _rep(obj, expand=False):
+      …
+      83→def json_generator(items, root, expand=False):
+      …
+      103→def is_expand():
+      …
+      109→def is_delete():
+      …
+      117→def get_method():
+      …
+      122→def resource(name, patchable=False):
+      …
+      176→def resource_query(name, patchable=False):
+      …
+      223→def resource_list(name):
+      …
+      241→def _get_unique_table_field_values(model, field, sort_field):
+      …
+      252→class IdListConverter(BaseConverter):
+      …
+      255→    def to_python(self, value):
+      …
+      264→    def to_url(self, value):
+      …
+      268→class QueryConverter(PathConverter):
+      …
+      271→    def to_python(self, value):
+      …
+      279→    def to_url(self, value):
+      …
+      283→class EverythingConverter(PathConverter):
+      284→    part_isolating = False
+      285→    regex = ".*?"
+      …
+      290→app = flask.Flask(__name__)
+      …
+      296→@app.before_request
+      297→def before_request():
+      …
+      304→@app.route("/item/<idlist:ids>", methods=["GET", "DELETE", "PATCH"])
+      305→@resource("items", patchable=True)
+      306→def get_item(id):
+      …
+      310→@app.route("/item/")
+      311→@app.route("/item/query/")
+      312→@resource_list("items")
+      313→def all_items():
+      …
+      317→@app.route("/item/<int:item_id>/file")
+      318→def item_file(item_id):
+      …
+      338→@app.route("/item/query/<query:queries>", methods=["GET", "DELETE", "PATCH"])
+      339→@resource_query("items", patchable=True)
+      340→def item_query(queries):
+      …
+      344→@app.route("/item/path/<everything:path>")
+      345→def item_at_path(path):
+      …
+      354→@app.route("/item/values/<string:key>")
+      355→def item_unique_field_values(key):
       …
     static/
       backbone.js

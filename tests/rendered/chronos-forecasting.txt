@@ -178,12 +178,6 @@ src/chronos/
   chronos.py
   chronos2/
     __init__.py
-      …
-      6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
-      7→from .model import Chronos2Model
-      8→from .pipeline import Chronos2Pipeline
-      9→from .dataset import Chronos2Dataset
-      …
     config.py
     dataset.py
     layers.py
@@ -274,6 +268,14 @@ src/chronos/
     403→class ChronosBoltPipeline(BaseChronosPipeline):
     404→    forecast_type: ForecastType = ForecastType.QUANTILES
     405→    default_context_length: int = 2048
+    406→
+    407→    def __init__(self, model: ChronosBoltModelForForecasting):
+    …
+    411→    @property
+    412→    def model_context_length(self) -> int:
+    …
+    415→    @property
+    416→    def model_prediction_length(self) -> int:
     …
   df_utils.py
   utils.py

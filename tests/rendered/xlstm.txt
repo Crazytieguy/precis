@@ -67,6 +67,19 @@ experiments/
     utils.py
   lr_scheduler.py
   main.py
+    …
+    21→dataset_registry: dict[str, Type[DataGen]] = {
+    22→    "form_language": FormLangDatasetGenerator
+    23→}
+    25→torch_dtype_map: dict[str, torch.dtype] = {
+    26→    "float32": torch.float32,
+    27→    "bfloat16": torch.bfloat16,
+    28→    "float16": torch.float16,
+    29→}
+    32→def load_dataset(name, kwargs):
+    …
+    37→def main(cfg: DictConfig):
+    …
   metrics.py
   parity_xlstm01.yaml
   parity_xlstm10.yaml
@@ -123,6 +136,16 @@ res/
   desc_xlstm_overview.svg
   xlstm_7b_poster.svg
 setup.cfg
+  1→[metadata]
+  2→version = 2.0.5
+  3→name = xlstm
+  4→description = A novel LSTM variant with promising performance compared to Transformers.
+  5→long_description = file: README.md
+  6→long_description_content_type = text/markdown
+  7→project_urls =
+  …
+  9→classifiers =
+  …
 tests/
   __init__.py (empty)
   conftest.py
@@ -134,13 +157,7 @@ tests/
 xlstm/
   __init__.py
     1→__version__ = "2.0.5"
-    3→from .blocks.mlstm.block import mLSTMBlock, mLSTMBlockConfig
-    4→from .blocks.mlstm.layer import mLSTMLayer, mLSTMLayerConfig
-    5→from .blocks.slstm.block import sLSTMBlock, sLSTMBlockConfig
-    6→from .blocks.slstm.layer import sLSTMLayer, sLSTMLayerConfig
-    7→from .components.feedforward import FeedForwardConfig, GatedFeedForward
-    8→from .xlstm_block_stack import xLSTMBlockStack, xLSTMBlockStackConfig
-    9→from .xlstm_lm_model import xLSTMLMModel, xLSTMLMModelConfig
+    …
   blocks/
     __init__.py (empty)
     mlstm/
@@ -182,39 +199,6 @@ xlstm/
           util.h
         vanilla/
           __init__.py
-            …
-            7→from .slstm import slstm_forward_pointwise as slstm_forward_pointwise_slstm
-            8→from .lstm import slstm_forward_pointwise as slstm_forward_pointwise_lstm
-            9→
-            10→
-            11→slstm_pointwise_function_registry: dict[str, Callable] = {
-            12→    "slstm": slstm_forward_pointwise_slstm,
-            13→    "lstm": slstm_forward_pointwise_lstm,
-            14→}
-            17→def slstm_forward(
-            18→    x: torch.Tensor,  # [S, B, G*I]
-            19→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
-            20→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
-            21→    b: torch.Tensor,  # [T*H]
-            22→    pointwise_forward: Callable[
-            23→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
-            24→        tuple[torch.Tensor, torch.Tensor],
-            25→    ],
-            26→    constants: dict[str, float] = {},
-            27→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-            …
-            77→def slstm_forward_step(
-            78→    x: torch.Tensor,  # [B, G*I]
-            79→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
-            80→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
-            81→    b: torch.Tensor,  # [T*H]
-            82→    pointwise_forward: Callable[
-            83→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
-            84→        tuple[torch.Tensor, torch.Tensor],
-            85→    ],
-            86→    constants: dict[str, float] = {},
-            87→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-            …
           lstm.py
           slstm.py
     xlstm_block.py
@@ -222,41 +206,76 @@ xlstm/
     __init__.py (empty)
     conv.py
     feedforward.py
+      …
+      12→_act_fn_registry = {
+      13→    "gelu": nn.functional.gelu,
+      14→    "relu": nn.functional.relu,
+      15→    "relu^2": lambda x: torch.square(nn.functional.relu(x)),
+      16→    "sigmoid": nn.functional.sigmoid,
+      17→    "swish": nn.functional.silu,
+      18→    "selu": nn.functional.selu,
+      19→}
+      22→def get_act_fn(act_fn_name: str) -> Callable[[torch.Tensor], torch.Tensor]:
+      …
+      31→@dataclass
+      32→class FeedForwardConfig(UpProjConfigMixin):
+      33→    proj_factor: float = 1.3
+      34→    act_fn: str = "gelu"
+      35→    embedding_dim: int = -1
+      36→    dropout: float = 0.0
+      37→    bias: bool = False
+      38→    ff_type: Literal["ffn_gated"] = "ffn_gated"
+      39→
+      40→    _num_blocks: int = 1
+      41→
+      42→    def __post_init__(self):
+      …
+      49→class GatedFeedForward(nn.Module):
+      50→    config_class = FeedForwardConfig
+      51→
+      52→    def __init__(self, config: FeedForwardConfig):
+      …
+      72→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
+      …
+      77→    def reset_parameters(self):
+      …
+      90→def create_feedforward(config: FeedForwardConfig) -> nn.Module:
+      …
     init.py
     linear_headwise.py
     ln.py
     util.py
   utils.py
-    …
-    11→@dataclass
-    12→class UpProjConfigMixin:
-    13→    proj_factor: float = None  # will be overridden by subclasses
-    14→    round_proj_up_dim_up: bool = True
-    15→    round_proj_up_to_multiple_of: int = 64
-    16→
-    17→    # internal
-    18→    _proj_up_dim: int = None  # will be computed from embedding_dim and proj_factor
-    19→
-    20→    def _set_proj_up_dim(self, embedding_dim: int) -> None:
-    …
-    32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
-    33→    def __init__(self, **kwargs):
-    …
-    36→    def get_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
-    …
-    61→    def get_weight_decay_optim_group_param_names(self, **kwargs) -> tuple[Sequence[str], Sequence[str]]:
-    …
-    77→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
-    …
-    97→    def _get_weight_decay_optim_groups_for_modules(
-    98→        self, modules: list["WeightDecayOptimGroupMixin"], **kwargs
-    99→    ) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
-    …
   xlstm_block_stack.py
     …
     15→@dataclass
     16→class xLSTMBlockStackConfig:
     17→    mlstm_block: Optional[mLSTMBlockConfig] = None
+    18→    slstm_block: Optional[sLSTMBlockConfig] = None
+    19→
+    20→    context_length: int = -1
+    21→    num_blocks: int = 1
+    22→    embedding_dim: int = 128
+    23→    add_post_blocks_norm: bool = True
+    24→    bias: bool = False
+    25→    dropout: float = 0.0
+    26→
+    27→    # The block indices at which sLSTM blocks are placed.
+    28→    # Indexing starts from 0.
+    29→    slstm_at: Union[list[int], Literal["all"]] = field(default_factory=list)
+    30→
+    31→    # _block_map is a string that specifies which block is used at which position
+    32→    # 0: use the mLSTM block
+    33→    # 1: use the sLSTM block
+    34→    _block_map: str = None
+    35→
+    36→    @property
+    37→    def block_map(self) -> list[int]:
+    …
+    40→    def _create_block_map(self) -> str:
+    41→        """Creates the block map, that specifies which block is used at which position."""
+    …
+    52→    def __post_init__(self):
     …
     77→class xLSTMBlockStack(nn.Module):
     78→    config_class = xLSTMBlockStackConfig
@@ -275,12 +294,20 @@ xlstm/
     …
   xlstm_large/
     __init__.py
-      1→from .model import xLSTMLarge, xLSTMLargeConfig
-      2→from .model import mLSTMLayer, mLSTMLayerConfig
     components.py
     from_pretrained.py
     generate.py
     model.py
+      …
+      24→mLSTMLayerStateType = tuple[torch.Tensor, torch.Tensor, torch.Tensor]
+      25→mLSTMStateType = dict[int, mLSTMLayerStateType]
+      26→
+      27→WeightModeType = Literal["single", "fused"]
+      28→
+      29→
+      30→@dataclass
+      31→class xLSTMLargeConfig:
+      …
     utils.py
   xlstm_lm_model.py
     …

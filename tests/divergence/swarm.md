@@ -1,4 +1,4 @@
-Score(3000)=0.745 I=0.907 C=0.612 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.621/0.699/0.745/0.820/0.713/0.707
+Score(3000)=0.739 I=0.901 C=0.606 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.613/0.698/0.739/0.820/0.713/0.707
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -34,57 +34,57 @@ Score(3000)=0.745 I=0.907 C=0.612 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 1041 | 19 | Fs::DirListing { dir: examples/airline/evals } |  |  | 0.701 |
 | walker |  | 1066 | 25 | Code::CodeKey { rung: Names, file: swarm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
 | ns | 1070 |  | 72 | `swarm/util.py`: complete function roster | 2.4 |  | 0.692 |
-| walker |  | 1079 | 13 | Code::CodeKey { rung: Names, file: swarm/repl/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.702 |
-| ns | 1139 |  | 69 | `swarm/repl/repl.py`: complete function roster | 2.5 |  | 0.682 |
-| walker |  | 1154 | 75 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.682 |
-| walker |  | 1188 | 34 | Fs::DirListing { dir: examples/basic } |  |  | 0.685 |
-| walker |  | 1222 | 34 | Fs::DirListing { dir: examples/customer_service_streaming } |  |  | 0.687 |
-| ns | 1245 |  | 106 | `Swarm.run()` full signature with defaults | 2.6 | 2.2 | 0.648 |
-| walker |  | 1249 | 27 | Fs::DirListing { dir: examples/customer_service_streaming/configs } |  |  | 0.648 |
-| walker |  | 1261 | 12 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools } |  |  | 0.648 |
-| walker |  | 1269 | 8 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools/query_docs } |  |  | 0.648 |
-| walker |  | 1277 | 8 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools/send_email } |  |  | 0.648 |
-| walker |  | 1285 | 8 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools/submit_ticket } |  |  | 0.648 |
-| walker |  | 1319 | 34 | Fs::DirListing { dir: examples/customer_service_streaming/src } |  |  | 0.649 |
-| walker |  | 1323 | 4 | Fs::DirListing { dir: examples/customer_service_streaming/src/runs } |  |  | 0.649 |
-| walker |  | 1327 | 4 | Fs::DirListing { dir: examples/customer_service_streaming/src/tasks } |  |  | 0.649 |
-| walker |  | 1332 | 5 | Fs::DirListing { dir: examples/customer_service_streaming/src/evals } |  |  | 0.649 |
-| ns | 1337 |  | 92 | `run_and_stream()` full signature | 2.7 | 2.2 | 0.619 |
-| walker |  | 1351 | 19 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm } |  |  | 0.619 |
-| walker |  | 1365 | 14 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm/engines } |  |  | 0.620 |
-| walker |  | 1447 | 82 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.622 |
-| ns | 1482 |  | 145 | Internal `Swarm` method signatures: completion + tool dispatch | 2.8 | 2.2 | 0.578 |
-| walker |  | 1489 | 42 | Fs::DirListing { dir: examples/support_bot } |  |  | 0.580 |
-| walker |  | 1526 | 37 | Code::CodeKey { rung: Names, file: swarm/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
-| ns | 1574 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.563 |
-| walker |  | 1649 | 123 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 2, sub: 0, line: 26 } |  |  | 0.614 |
-| walker |  | 1701 | 52 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.638 |
-| ns | 1748 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.592 |
-| walker |  | 1762 | 61 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 4, sub: 0, line: 32 } |  |  | 0.637 |
-| walker |  | 1846 | 84 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 7, sub: 0, line: 139 } |  |  | 0.679 |
-| ns | 1914 |  | 166 | `client.run()` semantics and the five-step loop | 3.1 |  | 0.661 |
-| walker |  | 1941 | 95 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 8, sub: 0, line: 231 } |  |  | 0.705 |
-| walker |  | 2031 | 90 | Plaintext::DeclSurface { file: setup.cfg } |  |  | 0.706 |
-| ns | 2068 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.695 |
-| walker |  | 2084 | 53 | Code::CodeKey { rung: Names, file: swarm/repl/repl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.705 |
-| walker |  | 2100 | 16 | Code::CodeKey { rung: Decl, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.715 |
-| ns | 2242 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.704 |
-| walker |  | 2259 | 159 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.707 |
-| walker |  | 2331 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.722 |
-| walker |  | 2394 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.728 |
-| ns | 2398 |  | 156 | `Response` fields table (complete) | 3.4 |  | 0.718 |
-| walker |  | 2427 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.728 |
-| walker |  | 2462 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.746 |
-| walker |  | 2550 | 88 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 2, sub: 0, line: 14 } |  |  | 0.782 |
-| walker |  | 2577 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 3, sub: 0, line: 27 } |  |  | 0.782 |
-| ns | 2603 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.766 |
-| ns | 2766 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.753 |
-| walker |  | 2865 | 288 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.753 |
-| ns | 2897 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.745 |
-| walker |  | 3017 | 152 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.745 |
-| ns | 3018 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.733 |
-| ns | 3172 |  | 154 | Streaming: the two Swarm-specific event types | 3.9 |  | 0.724 |
-| walker |  | 3219 | 202 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.726 |
+| ns | 1139 |  | 69 | `swarm/repl/repl.py`: complete function roster | 2.5 |  | 0.673 |
+| walker |  | 1141 | 75 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.673 |
+| walker |  | 1175 | 34 | Fs::DirListing { dir: examples/basic } |  |  | 0.676 |
+| walker |  | 1209 | 34 | Fs::DirListing { dir: examples/customer_service_streaming } |  |  | 0.677 |
+| walker |  | 1236 | 27 | Fs::DirListing { dir: examples/customer_service_streaming/configs } |  |  | 0.677 |
+| ns | 1245 |  | 106 | `Swarm.run()` full signature with defaults | 2.6 | 2.2 | 0.639 |
+| walker |  | 1248 | 12 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools } |  |  | 0.639 |
+| walker |  | 1256 | 8 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools/query_docs } |  |  | 0.639 |
+| walker |  | 1264 | 8 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools/send_email } |  |  | 0.639 |
+| walker |  | 1272 | 8 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools/submit_ticket } |  |  | 0.639 |
+| walker |  | 1306 | 34 | Fs::DirListing { dir: examples/customer_service_streaming/src } |  |  | 0.640 |
+| walker |  | 1310 | 4 | Fs::DirListing { dir: examples/customer_service_streaming/src/runs } |  |  | 0.640 |
+| walker |  | 1314 | 4 | Fs::DirListing { dir: examples/customer_service_streaming/src/tasks } |  |  | 0.640 |
+| walker |  | 1319 | 5 | Fs::DirListing { dir: examples/customer_service_streaming/src/evals } |  |  | 0.640 |
+| ns | 1337 |  | 92 | `run_and_stream()` full signature | 2.7 | 2.2 | 0.610 |
+| walker |  | 1338 | 19 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm } |  |  | 0.610 |
+| walker |  | 1352 | 14 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm/engines } |  |  | 0.611 |
+| walker |  | 1434 | 82 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.613 |
+| walker |  | 1476 | 42 | Fs::DirListing { dir: examples/support_bot } |  |  | 0.615 |
+| ns | 1482 |  | 145 | Internal `Swarm` method signatures: completion + tool dispatch | 2.8 | 2.2 | 0.572 |
+| walker |  | 1513 | 37 | Code::CodeKey { rung: Names, file: swarm/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.575 |
+| ns | 1574 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.555 |
+| walker |  | 1636 | 123 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 2, sub: 0, line: 26 } |  |  | 0.606 |
+| walker |  | 1688 | 52 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.631 |
+| ns | 1748 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.585 |
+| walker |  | 1749 | 61 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 4, sub: 0, line: 32 } |  |  | 0.630 |
+| walker |  | 1833 | 84 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 7, sub: 0, line: 139 } |  |  | 0.672 |
+| ns | 1914 |  | 166 | `client.run()` semantics and the five-step loop | 3.1 |  | 0.655 |
+| walker |  | 1928 | 95 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 8, sub: 0, line: 231 } |  |  | 0.699 |
+| walker |  | 2018 | 90 | Plaintext::DeclSurface { file: setup.cfg } |  |  | 0.699 |
+| ns | 2068 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.688 |
+| walker |  | 2071 | 53 | Code::CodeKey { rung: Names, file: swarm/repl/repl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.698 |
+| walker |  | 2087 | 16 | Code::CodeKey { rung: Decl, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.708 |
+| ns | 2242 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.697 |
+| walker |  | 2246 | 159 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.700 |
+| walker |  | 2318 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
+| walker |  | 2381 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.722 |
+| ns | 2398 |  | 156 | `Response` fields table (complete) | 3.4 |  | 0.711 |
+| walker |  | 2414 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.722 |
+| walker |  | 2449 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.740 |
+| walker |  | 2537 | 88 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 2, sub: 0, line: 14 } |  |  | 0.775 |
+| walker |  | 2564 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 3, sub: 0, line: 27 } |  |  | 0.775 |
+| ns | 2603 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.760 |
+| ns | 2766 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.747 |
+| walker |  | 2852 | 288 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.747 |
+| ns | 2897 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.739 |
+| walker |  | 3004 | 152 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.739 |
+| ns | 3018 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.727 |
+| ns | 3172 |  | 154 | Streaming: the two Swarm-specific event types | 3.9 |  | 0.718 |
+| walker |  | 3206 | 202 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.720 |
+| walker |  | 3219 | 13 | Code::CodeKey { rung: Names, file: swarm/repl/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.726 |
 | ns | 3369 |  | 197 | Examples index: what each example directory demonstrates | 3.10 |  | 0.733 |
 | walker |  | 3397 | 178 | Plaintext::Whole { file: setup.cfg } |  |  | 0.734 |
 | walker |  | 3408 | 11 | Fs::DirListing { dir: tests/test_runs } |  |  | 0.734 |

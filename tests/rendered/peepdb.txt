@@ -181,6 +181,29 @@ peepdb/
     196→def add_key_security():
     …
   core.py
+    …
+    18→logger = logging.getLogger(__name__)
+    …
+    21→console_handler = logging.StreamHandler()
+    …
+    27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
+    …
+    56→def peep_db(db_type: str,
+    57→            host: str,
+    58→            user: str,
+    59→            password: str,
+    60→            database: str,
+    61→            table: str = None,
+    62→            format: str = 'table',
+    63→            page: int = 1,
+    64→            page_size: int = 100,
+    65→            scientific: bool = False,
+    66→            trusted: bool = False) -> Any:
+    …
+    101→def format_as_table(data: Dict[str, Any]) -> str:
+    …
+    118→def format_value(value, scientific: bool, output_format: str):
+    …
   db/
     __init__.py
       1→from .base import BaseDatabase
@@ -215,49 +238,13 @@ peepdb/
       37→    def __exit__(self, exc_type, exc_val, exc_tb):
       38→        self.disconnect()
     firebase.py
-      …
-      7→logger = logging.getLogger(__name__)
-      8→
-      9→class FirebaseDatabase(BaseDatabase):
-      10→    def __init__(self, service_account_path: str, **kwargs):
-      …
-      15→    def connect(self):
-      …
-      26→    def disconnect(self):
-      …
-      30→    def fetch_tables(self) -> List[str]:
-      …
-      39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
     mariadb.py
     mongodb.py
     mssql.py
-      …
-      6→class MSSQLDatabase(BaseDatabase):
-      7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
-      …
-      12→    def connect(self) -> None:
-      …
-      28→    def disconnect(self) -> None:
-      …
-      35→    def fetch_tables(self) -> List[str]:
-      …
-      45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
     mysql.py
     oracle.py
     postgresql.py
     sqlite.py
-      …
-      6→class SQLiteDatabase(BaseDatabase):
-      7→    def connect(self) -> None:
-      …
-      22→    def disconnect(self) -> None:
-      …
-      29→    def fetch_tables(self) -> List[str]:
-      …
-      43→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
   exceptions.py
     1→class InvalidPassword(Exception):
     2→    pass
@@ -300,4 +287,15 @@ project.toml
   47→peepdb = "peepdb.cli:main"
   …
 requirements.txt
+  1→async-timeout==4.0.3
+  2→backports.tarfile==1.2.0
+  3→CacheControl==0.14.0
+  4→cachetools==5.5.0
+  5→certifi==2024.8.30
+  6→cffi==1.17.1
+  7→charset-normalizer==3.3.2
+  8→click==8.1.7
+  …
+  28→importlib_metadata==8.5.0
+  …
 setup.py

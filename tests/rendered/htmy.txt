@@ -191,8 +191,22 @@ htmy/
     38→class WithContext(Fragment):
     …
     43→    __slots__ = ("_context",)
+    44→
+    45→    def __init__(self, *children: ComponentType, context: Context) -> None:
+    …
+    56→    def htmy_context(self) -> Context:
     …
     64→class ContextAware:
+    …
+    100→    __slots__ = ()
+    101→
+    102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
+    103→
+    104→    def __init_subclass__(cls) -> None:
+    …
+    108→    def in_context(self, *children: ComponentType) -> WithContext:
+    …
+    115→    def to_context(self) -> Context:
     …
     146→class SkipProperty(Exception):
     …
@@ -226,27 +240,11 @@ htmy/
   io.py
   md/
     __init__.py
-      1→from .core import MD as MD
-      2→from .core import MarkdownParser as MarkdownParser
-      3→from .typing import MarkdownMetadataDict as MarkdownMetadataDict
-      4→from .typing import MarkdownParserFunction as MarkdownParserFunction
-      5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
-      6→from .typing import ParsedMarkdown as ParsedMarkdown
     core.py
     typing.py
   py.typed (empty)
   renderer/
     __init__.py
-      …
-      3→from .typing import is_renderer as is_renderer
-      4→from .typing import is_streaming_renderer as is_streaming_renderer
-      5→
-      6→Renderer = _DefaultRenderer
-      …
-      9→StreamingRenderer = _BaselineRenderer
-      …
-      12→BaselineRenderer = _BaselineRenderer
-      …
     baseline.py
     context.py
     default.py
