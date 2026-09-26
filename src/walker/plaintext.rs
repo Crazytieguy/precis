@@ -508,12 +508,12 @@ fn is_comment_line(trimmed: &str) -> bool {
     if names_fold("#region") || names_fold("#endregion") {
         return true;
     }
-    for marker in ["//", "/*", "<!--", "\"\"\"", "'''"] {
+    for marker in ["//", "/*", "{-", "<!--", "\"\"\"", "'''"] {
         if trimmed.starts_with(marker) {
             return true;
         }
     }
-    for marker in ["#", "*", "--", ";", "%", "..", "\"", "@rem", "rem "] {
+    for marker in ["#", "*", "--", "(*", ";", "%", "..", "\"", "@rem", "rem "] {
         if let Some(rest) = trimmed.strip_prefix(marker)
             && (rest.is_empty()
                 || rest.starts_with(char::is_whitespace)
@@ -546,7 +546,7 @@ fn boilerplate_banner_end(lines: &[&str], in_block_comment: &[bool]) -> usize {
     let mut reached_content = false;
     for (line, &in_block_comment) in lines.iter().zip(in_block_comment) {
         let trimmed = line.trim();
-        if trimmed.is_empty() || trimmed.starts_with("#!") {
+        if trimmed.is_empty() || trimmed.starts_with("#!") || trimmed.starts_with("<?php") {
             block.push(trimmed);
             continue;
         }
@@ -571,21 +571,32 @@ fn boilerplate_banner_end(lines: &[&str], in_block_comment: &[bool]) -> usize {
     if is_banner { block.len() } else { 0 }
 }
 
-/// Per line, whether it sits inside a `/* … */` comment opened on an
-/// earlier line — interior lines carry no comment marker of their own.
-/// Only a line that starts with `/*` opens one, so a glob in a shell
-/// script (`rm build/*`) is not read as a comment.
+/// Block comment delimiters: the C family's, Haskell's, and the ML
+/// family's and Pascal's.
+const BLOCK_COMMENTS: &[(&str, &str)] = &[("/*", "*/"), ("{-", "-}"), ("(*", "*)")];
+
+/// Per line, whether it sits inside a block comment opened on an earlier
+/// line — interior lines carry no comment marker of their own. Only a
+/// comment line that starts with an opener opens one, so a glob in a
+/// shell script (`rm build/*`) or a C dereference (`(*fn)(x)`) does not.
 fn block_comment_interiors(lines: &[&str]) -> Vec<bool> {
-    let mut inside = false;
+    let mut open_until: Option<&str> = None;
     lines
         .iter()
         .map(|line| {
             let trimmed = line.trim();
-            let interior = inside;
-            if inside {
-                inside = !trimmed.contains("*/");
-            } else if let Some(rest) = trimmed.strip_prefix("/*") {
-                inside = !rest.contains("*/");
+            let interior = open_until.is_some();
+            if let Some(end) = open_until {
+                if trimmed.contains(end) {
+                    open_until = None;
+                }
+            } else if is_comment_line(trimmed)
+                && let Some((start, end)) = BLOCK_COMMENTS
+                    .iter()
+                    .find(|(start, _)| trimmed.starts_with(start))
+                && !trimmed[start.len()..].contains(end)
+            {
+                open_until = Some(end);
             }
             interior
         })
@@ -1394,6 +1405,30 @@ mod tests {
         let lines: Vec<&str> = csharp.lines().collect();
         let text: Vec<&str> = surface_of(csharp).iter().map(|n| lines[n - 1]).collect();
         assert_eq!(text, vec!["using System;", "namespace ShareX"]);
+    }
+
+    /// A license in a Haskell `{- -}` block, or after PHP's `<?php` opener,
+    /// is a banner too.
+    #[test]
+    fn plaintext_source_text_surface_skips_banners_in_every_comment_syntax() {
+        let haskell = "{-\n    Copyright 2012 Vidar Holen\n\n    GNU General Public License\n-}\n\
+                       module ShellCheck.AST where\n\ndata Token = Token\n";
+        let lines: Vec<&str> = haskell.lines().collect();
+        let text: Vec<&str> = surface_of(haskell).iter().map(|n| lines[n - 1]).collect();
+        assert_eq!(
+            text,
+            vec!["module ShellCheck.AST where", "data Token = Token"]
+        );
+
+        let php = "<?php declare(strict_types=1);\n\n/*\n * This file is part of Composer.\n *\n\
+                   * (c) Nils Adermann\n *\n * For the full copyright and license information\n */\n\n\
+                   namespace Composer;\n\nclass Cache\n{\n}\n";
+        let lines: Vec<&str> = php.lines().collect();
+        let text: Vec<&str> = surface_of(php).iter().map(|n| lines[n - 1]).collect();
+        assert_eq!(text, vec!["namespace Composer;", "class Cache"]);
+
+        assert!(!is_comment_line("(*fn)(argument);"));
+        assert!(block_comment_interiors(&["(* a", "b *)", "c"]) == [false, true, false]);
     }
 
     #[test]
