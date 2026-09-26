@@ -67,18 +67,10 @@ struct ModuleScope<'tree> {
 
 impl<'tree> ModuleScope<'tree> {
     fn new(scope: Node<'tree>, file: &SourceFile, is_program: bool) -> Self {
-        // `Node::prev_sibling` rescans the parent's children on every call.
-        let children: Vec<Node> = scope.children(&mut scope.walk()).collect();
-        let items: Vec<(Node, Leading)> = (0..children.len())
-            .filter(|&index| children[index].is_named() && !is_leading_trivia(children[index]))
-            .map(|index| {
-                let preceding = children[..index].iter().rev().copied();
-                (children[index], Leading::walking_back(preceding, file))
-            })
-            .collect();
+        let items = unhidden_children(scope, file);
         let hides_private = !is_program
             && items.iter().any(|(node, leading)| {
-                has_visibility_rule(*node) && !leading.hidden && is_visible(*node, leading, file)
+                has_visibility_rule(*node) && is_visible(*node, leading, file)
             });
         Self {
             items: items.into_iter(),
@@ -102,7 +94,7 @@ fn extract_items(
             scopes.pop();
             continue;
         };
-        if leading.hidden || is_anonymous_const(node, file) {
+        if is_anonymous_const(node, file) {
             continue;
         }
         let hides_private = scope.hides_private;
@@ -158,7 +150,11 @@ fn extract_items(
                 let list = node.child_by_field_name("body");
                 let body = list.map(|list| (list.start_position().row + 1, list));
                 let entries = list.map_or_else(Vec::new, |list| {
-                    file.admitted_items(list, 0, |entry| !Leading::above(entry, file).hidden)
+                    let shown: HashSet<usize> = unhidden_children(list, file)
+                        .into_iter()
+                        .map(|(entry, _)| entry.id())
+                        .collect();
+                    file.admitted_items(list, 0, |entry| shown.contains(&entry.id()))
                 });
                 model
                     .decls
@@ -170,6 +166,21 @@ fn extract_items(
             _ => {}
         }
     }
+}
+
+/// The named children of `scope` other than comments, attributes and hidden
+/// items, each with its [`Leading`], walked back over one collected slice
+/// (`Node::prev_sibling` rescans the parent's children on every call).
+fn unhidden_children<'tree>(scope: Node<'tree>, file: &SourceFile) -> Vec<(Node<'tree>, Leading)> {
+    let children: Vec<Node> = scope.children(&mut scope.walk()).collect();
+    (0..children.len())
+        .filter(|&index| children[index].is_named() && !is_leading_trivia(children[index]))
+        .map(|index| {
+            let preceding = children[..index].iter().rev().copied();
+            (children[index], Leading::walking_back(preceding, file))
+        })
+        .filter(|(_, leading)| !leading.hidden)
+        .collect()
 }
 
 /// An item that is private to its module unless it says otherwise.
@@ -284,18 +295,10 @@ struct Leading {
 }
 
 impl Leading {
-    /// Walks the attributes and comments directly preceding `node`. Plain
-    /// comments, own-row or trailing an attribute, are skipped over (rustc
-    /// ignores them); anything else ends the run.
-    fn above(node: Node, file: &SourceFile) -> Self {
-        Self::walking_back(
-            std::iter::successors(node.prev_sibling(), Node::prev_sibling),
-            file,
-        )
-    }
-
-    /// [`Self::above`] over `preceding`, a node's earlier siblings,
-    /// nearest first.
+    /// Walks the attributes and comments directly preceding a node, its
+    /// earlier siblings `preceding`, nearest first. Plain comments, own-row
+    /// or trailing an attribute, are skipped over (rustc ignores them);
+    /// anything else ends the run.
     fn walking_back<'tree>(
         preceding: impl Iterator<Item = Node<'tree>>,
         file: &SourceFile,
@@ -482,15 +485,10 @@ fn container(
     };
     let is_function =
         |child: Node| matches!(child.kind(), "function_item" | "function_signature_item");
-    let children: Vec<Node> = list.children(&mut list.walk()).collect();
     let mut members = Vec::new();
     let mut admitted_entries = HashSet::new();
-    for (index, &child) in children.iter().enumerate() {
-        if !child.is_named() || is_leading_trivia(child) {
-            continue;
-        }
-        let child_leading = Leading::walking_back(children[..index].iter().rev().copied(), file);
-        if child_leading.hidden || !admit(child) {
+    for (child, child_leading) in unhidden_children(list, file) {
+        if !admit(child) {
             continue;
         }
         if is_function(child) {
