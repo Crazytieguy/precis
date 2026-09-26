@@ -168,9 +168,10 @@ fn decls(source: &str) -> Vec<Decl> {
             let open_line = i + 1;
             // Brace-depth scan to the matching close brace. Prisma blocks
             // open with `{` on the keyword line; nested `{ }` (e.g. in
-            // `@default`) stay balanced within a line.
+            // `@default`) stay balanced within a line. An unclosed block
+            // runs to the end of the file.
             let mut depth = 0i32;
-            let mut close_line = open_line;
+            let mut close_line = lines.len();
             for (j, line) in lines.iter().enumerate().skip(i) {
                 depth += brace_delta(line);
                 if depth <= 0 {
@@ -400,6 +401,27 @@ model B {
 "#;
         let closers: Vec<usize> = decls(src).iter().map(|d| d.close_line).collect();
         assert_eq!(closers, vec![4, 9]);
+    }
+
+    /// An unclosed block ends the scan: it runs to the end of the file,
+    /// and each opener after it is part of it rather than a fresh scan
+    /// of the rest of the file.
+    #[test]
+    fn prisma_unclosed_block_runs_to_end_of_file() {
+        let src =
+            "model A {\n  id Int @id\n}\n\nmodel B {\n  id Int @id\nmodel C {\n  id Int @id\n}\n";
+        let spans: Vec<(usize, usize)> = decls(src)
+            .iter()
+            .map(|d| (d.open_line, d.close_line))
+            .collect();
+        assert_eq!(spans, vec![(1, 3), (5, 9)]);
+
+        let openers = "model A {\n".repeat(20_000);
+        let spans: Vec<(usize, usize)> = decls(&openers)
+            .iter()
+            .map(|d| (d.open_line, d.close_line))
+            .collect();
+        assert_eq!(spans, vec![(1, 20_000)]);
     }
 
     /// A schema with many declarations still gets its table of contents
