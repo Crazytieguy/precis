@@ -27,7 +27,7 @@ use super::workspace::{
 };
 use super::{
     WalkCtx, first_child_of_kind, fs::files_with_any_extension, gated_whole_file_content,
-    path_depth_factor, single_file_lines_content,
+    parser_for, path_depth_factor, single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering — generated files
@@ -63,9 +63,6 @@ impl JsonState {
                 self.membership.members(|| collect_workspace_members(root)),
             )
         });
-        fn dir_name(path: &Path) -> Option<&std::ffi::OsStr> {
-            path.parent().and_then(Path::file_name)
-        }
         primary.as_deref().is_some_and(|primary| {
             dir_name(file) == dir_name(primary) && self.is_workspace_member(file, root)
         })
@@ -165,23 +162,20 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
             is_runtime_dependencies_key,
         ),
     ];
-    let sections: Vec<_> = section_kinds
-        .into_iter()
-        .filter_map(|(key, value, name_match)| {
-            section_content(file, &source, &pairs, name_match).map(|content| (key, content, value))
-        })
-        .collect();
     let overlap_chain = package_sections_share_lines(&pairs);
-    // Identity is first in `section_kinds`, so it can only be the head of
-    // `sections` — the emission/chain order below relies on that ordering.
-    let identity = sections
-        .first()
-        .filter(|(key, _, _)| matches!(key, JsonKey::Identity { .. }))
-        .map(|(key, _, _)| BatchKey::Json(key.clone()));
+    let mut chunked_scripts = if overlap_chain {
+        None
+    } else {
+        scripts_chunks(file, &source, &tree)
+    };
+    // Identity is first in `section_kinds`, so every later section sees
+    // whether it was emitted.
+    let mut identity = None;
     let mut previous = None;
-    for (key, content, value) in sections {
+    for (key, value, name_match) in section_kinds {
+        let is_identity = matches!(key, JsonKey::Identity { .. });
         let emitted = BatchKey::Json(key.clone());
-        let predecessor = if matches!(key, JsonKey::Identity { .. }) {
+        let predecessor = if is_identity {
             None
         } else if overlap_chain {
             previous.clone()
@@ -189,19 +183,22 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
             identity.clone()
         };
         if matches!(key, JsonKey::Scripts { .. })
-            && !overlap_chain
-            && let Some(chunks) = scripts_chunks(file, &source, &tree)
+            && let Some(chunks) = chunked_scripts.take()
         {
             push_chained_chunks(out, file, chunks, predecessor, value);
-            previous = Some(emitted);
+        } else if let Some(content) = section_content(file, &source, &pairs, name_match) {
+            out.push(Batch {
+                key: emitted.clone(),
+                predecessor,
+                content,
+                value,
+            });
+        } else {
             continue;
         }
-        out.push(Batch {
-            key: emitted.clone(),
-            predecessor,
-            content,
-            value,
-        });
+        if is_identity {
+            identity = Some(emitted.clone());
+        }
         previous = Some(emitted);
     }
 }
@@ -309,15 +306,11 @@ fn section_content(
     pairs: &[(String, usize, usize)],
     name_match: fn(&str) -> bool,
 ) -> Option<BatchContent> {
-    let mut lines: Vec<usize> = Vec::new();
-    for (name, start, end) in pairs {
-        if name_match(name) {
-            lines.extend(*start..=*end);
-        }
-    }
-    if lines.is_empty() {
-        return None;
-    }
+    let lines = pairs
+        .iter()
+        .filter(|(name, _, _)| name_match(name))
+        .flat_map(|(_, start, end)| *start..=*end)
+        .collect();
     single_file_lines_content(file, source, lines)
 }
 
@@ -325,6 +318,10 @@ fn section_content(
 
 fn is_package_json(name: &str) -> bool {
     name.eq_ignore_ascii_case("package.json")
+}
+
+fn dir_name(path: &Path) -> Option<&std::ffi::OsStr> {
+    path.parent().and_then(Path::file_name)
 }
 
 /// Files that never produce JSON batches — lockfiles.
@@ -479,15 +476,10 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
 
 /// Parse `<dir>/package.json` into its source text + tree. The caller
 /// re-derives the root object node (tree-sitter nodes borrow the tree,
-/// so it can't be returned from here). The one manifest-parse prologue —
-/// grammar setup or root-node conventions change here, nowhere else.
+/// so it can't be returned from here).
 fn parse_manifest(dir: &Path) -> Option<(String, tree_sitter::Tree)> {
     let text = std::fs::read_to_string(dir.join(PACKAGE_JSON_FILENAME)).ok()?;
-    let mut parser = tree_sitter::Parser::new();
-    parser
-        .set_language(&tree_sitter_json::LANGUAGE.into())
-        .ok()?;
-    let tree = parser.parse(text.as_bytes(), None)?;
+    let tree = parser_for(&tree_sitter_json::LANGUAGE.into()).parse(text.as_bytes(), None)?;
     Some((text, tree))
 }
 
