@@ -155,7 +155,9 @@ never reached the ones answer keys rank.
   armor — is applied by `SourceCache` to everything it reads or is
   handed, so a refused file lists by name only — a single-file walk of
   one included, since naming the file doesn't make its secrets safe to
-  paste; no walker carries a check of its own. The name rule exempts samples (`*.example`,
+  paste; no walker carries a check of its own, except that the floor,
+  which reads only a file's head, also refuses a head cut off inside a
+  private-key armor (`walker::head_holds_private_key`). The name rule exempts samples (`*.example`,
   `*.sample`, `*.template`, `*.dist`), source code and documents, which
   are about credentials rather than holding them. A URL's password
   (`scheme://user:PASSWORD@host`) and the quoted literal of a

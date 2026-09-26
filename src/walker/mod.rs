@@ -466,6 +466,19 @@ pub(crate) fn holds_private_key(text: &str) -> bool {
     })
 }
 
+/// [`holds_private_key`] for `head`, the start of a longer file: an
+/// armor header naming a private key that the head cuts off before its
+/// closing armor may open key material, so it counts too.
+pub(crate) fn head_holds_private_key(head: &str) -> bool {
+    holds_private_key(head)
+        || head.split("-----BEGIN ").skip(1).any(|block| {
+            !block.contains("-----END ")
+                && block
+                    .split_once("-----")
+                    .is_some_and(|(label, _)| label.contains("PRIVATE KEY"))
+        })
+}
+
 /// Cached read behind an FS-metadata byte pre-flight — skips the read
 /// (and returns `None`) when the size hint alone disqualifies the
 /// file. Bytes-per-line multipliers are per-format — callers keep
@@ -632,6 +645,16 @@ mod tests {
         ] {
             assert!(!holds_private_key(&text), "{text}");
         }
+    }
+
+    #[test]
+    fn walker_mod_a_head_cut_inside_a_private_key_holds_one() {
+        let head = format!("-----BEGIN RSA PRIVATE KEY-----\n{}", "MIIE".repeat(8));
+        assert!(!holds_private_key(&head));
+        assert!(head_holds_private_key(&head));
+        assert!(!head_holds_private_key(
+            "-----BEGIN CERTIFICATE-----\nMIIE\n-----END CERTIFICATE-----\n# notes\n"
+        ));
     }
 
     #[test]

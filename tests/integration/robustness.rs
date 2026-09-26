@@ -524,6 +524,10 @@ fn robustness_credential_files_render_only_their_rows() {
         "-----BEGIN RSA PRIVATE KEY-----\n{SECRET}{}\n-----END RSA PRIVATE KEY-----\n",
         "A".repeat(64)
     );
+    let long_key = format!(
+        "-----BEGIN RSA PRIVATE KEY-----\n{SECRET}\n{}-----END RSA PRIVATE KEY-----\n",
+        format!("{}\n", "A".repeat(64)).repeat(100)
+    );
     for (path, text) in [
         ("README.md", "# demo\n".to_string()),
         (
@@ -562,6 +566,7 @@ fn robustness_credential_files_render_only_their_rows() {
             ),
         ),
         ("notes.txt", key.clone()),
+        ("certs/server.pem", long_key),
         ("src/keys.rs", format!("pub const KEY: &str = \"{key}\";\n")),
         (".env.example", "API_KEY=changeme\n".to_string()),
         (

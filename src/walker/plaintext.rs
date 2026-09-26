@@ -1421,10 +1421,13 @@ fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source
     if head.contains(&0) {
         return None;
     }
-    ctx.source_cache().insert(
-        file.to_path_buf(),
-        Arc::from(String::from_utf8_lossy(&head)),
-    );
+    let cut = head.len() > head_bytes;
+    let head = String::from_utf8_lossy(&head);
+    if cut && super::head_holds_private_key(&head) {
+        return None;
+    }
+    ctx.source_cache()
+        .insert(file.to_path_buf(), Arc::from(head));
     ctx.source_cache().cached(file)
 }
 
