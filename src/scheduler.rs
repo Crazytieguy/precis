@@ -362,7 +362,7 @@ impl<W: Walker> Scheduler<W> {
 
     /// A batch that says what the repository is and how to build it: the
     /// identity block or head of a root manifest, or the head of a root
-    /// build script (`build.zig`, `build.ps1`). A task roster (`Makefile`,
+    /// build script (`build.zig`, `build.gradle.kts`). A task roster (`Makefile`,
     /// `Dockerfile`, compose file) is not one.
     fn is_root_identity(&self, id: BatchId) -> bool {
         let (BatchKey::Toml(TomlKey::Identity { file })
@@ -377,10 +377,11 @@ impl<W: Walker> Scheduler<W> {
         let (Some(dir), Some(name)) = (file.parent(), file.file_name()) else {
             return false;
         };
+        let name = name.to_string_lossy();
         dir == self.ctx.root()
             && (!matches!(self.entries[id.index()].key, BatchKey::Plaintext(_))
-                || crate::walker::is_unparsed_manifest(dir, &name.to_string_lossy(), &self.ctx)
-                || file.file_stem() == Some("build".as_ref()))
+                || crate::walker::is_unparsed_manifest(dir, &name, &self.ctx)
+                || name.split('.').next() == Some("build"))
     }
 
     /// Cost a batch ranks at, in tokens. Under a char budget, its chars
