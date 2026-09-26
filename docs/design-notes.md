@@ -170,8 +170,10 @@ never reached the ones answer keys rank.
   files) unbounded. Every read, whole, gated by a caller's byte limit
   (`get_within`) or a head, goes through the one reader
   (`SourceCache::read`). The spine survey and the vendored-directory probe (the
-  root `.gitattributes`) read through `read_source` too; the floor reads
-  heads of listed files only.
+  root `.gitattributes`) read through `read_source` too, and the
+  renderer reads the root `.gitmodules` through the same listing check
+  (`SourceCache::get_listed_within`); the floor reads heads of listed
+  files only.
   Workspace membership
   canonicalizes member manifest paths without reading them, and the TS
   engine's nearest-`package.json` probe is a stat, which follows links
@@ -311,6 +313,13 @@ code to a single language.**
   ` …\n` costs the same one token as `\n`. Indent width is therefore a
   character cost, not a token cost — which is also why line numbers are
   not right-aligned.
+- **`(submodule)` has no `--help` legend line.** An empty directory the
+  root `.gitmodules` names renders `(submodule)` rather than `(empty)`,
+  which read as "nothing here" where the content lives in another
+  repository. `--help` rides in every plugin session's hook context,
+  while the marker shows in 11 of the 236 breadth and robustness repos'
+  plugin output; the word already tells an agent where the content is,
+  so the legend is left to the README.
 
 ## Code engine (`walker::code`)
 

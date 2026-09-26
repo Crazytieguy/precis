@@ -7,8 +7,8 @@
 //! end, render }`, the tree stores per-line `(owner: BatchId, render: Render)`
 //! records, and `render()` reads source to produce the final text.
 
-use std::cell::RefCell;
-use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::cell::{OnceCell, RefCell};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::fmt::Write as _;
 use std::io::Read as _;
 use std::ops::Range;
@@ -20,7 +20,7 @@ use crate::batch::BatchId;
 use crate::content::{
     BatchContent, FsEntries, FsGroup, Render, Span, explode_spans, with_truncate_regex,
 };
-use crate::fs_util::{DirFilter, EntryKind, list_dir, lists_nothing};
+use crate::fs_util::{DirFilter, EntryKind, list_dir, lists_file, lists_nothing};
 use crate::tokenizer;
 
 const INDENT_UNIT: &str = "  ";
@@ -145,6 +145,19 @@ impl SourceCache {
     /// by the length of its text.
     pub fn get_within(&self, path: &Path, byte_gate: usize) -> Option<Arc<Source>> {
         self.read(path, byte_gate.min(MAX_SOURCE_BYTES), false)
+    }
+
+    /// [`Self::get_within`], `None` unless the listing of `path`'s
+    /// directory admits it as a file.
+    pub fn get_listed_within(
+        &self,
+        path: &Path,
+        filter: &DirFilter,
+        byte_gate: usize,
+    ) -> Option<Arc<Source>> {
+        lists_file(path, filter)
+            .then(|| self.get_within(path, byte_gate))
+            .flatten()
     }
 
     /// `path`'s source as far as `head_bytes` reach into it: whole when it
@@ -286,6 +299,9 @@ pub struct RenderedTree {
     /// empty rather than read as unexpanded. Shared with the walk, so
     /// the filter's listing memo serves both.
     dir_filter: Rc<DirFilter>,
+    /// The directories the root `.gitmodules` names, read on the first
+    /// directory that lists nothing.
+    submodule_dirs: OnceCell<HashSet<PathBuf>>,
 }
 
 impl RenderedTree {
@@ -307,6 +323,7 @@ impl RenderedTree {
             source_cache,
             file_empty: RefCell::new(HashMap::new()),
             dir_filter,
+            submodule_dirs: OnceCell::new(),
         }
     }
 
@@ -373,20 +390,49 @@ impl RenderedTree {
 
     // ---- internal ----
 
-    /// Whether `path` holds nothing any budget could show: a directory
-    /// [`lists_nothing`] holds for, or a zero-byte file.
-    fn entry_empty(&self, path: &Path, kind: EntryKind) -> bool {
+    /// The marker for `path` when it holds nothing any budget could
+    /// show: a directory [`lists_nothing`] holds for, or a zero-byte
+    /// file. An empty directory the root `.gitmodules` names is a
+    /// submodule not checked out: its content lives in another
+    /// repository.
+    fn entry_marker(&self, path: &Path, kind: EntryKind) -> Option<&'static str> {
         if matches!(kind, EntryKind::Directory) {
-            return lists_nothing(path, &self.dir_filter);
+            if !lists_nothing(path, &self.dir_filter) {
+                return None;
+            }
+            let submodule_dirs = self
+                .submodule_dirs
+                .get_or_init(|| self.read_submodule_dirs());
+            return Some(if submodule_dirs.contains(path) {
+                "submodule"
+            } else {
+                "empty"
+            });
         }
         if let Some(&known) = self.file_empty.borrow().get(path) {
-            return known;
+            return known.then_some("empty");
         }
         let empty = std::fs::metadata(path).is_ok_and(|m| m.len() == 0);
         self.file_empty
             .borrow_mut()
             .insert(path.to_path_buf(), empty);
-        empty
+        empty.then_some("empty")
+    }
+
+    fn read_submodule_dirs(&self) -> HashSet<PathBuf> {
+        let Some(text) = self.source_cache.get_listed_within(
+            &self.root.join(".gitmodules"),
+            &self.dir_filter,
+            MAX_SOURCE_BYTES,
+        ) else {
+            return HashSet::new();
+        };
+        text.lines()
+            .filter_map(|line| {
+                let (key, value) = line.split_once('=')?;
+                (key.trim() == "path").then(|| self.root.join(value.trim()))
+            })
+            .collect()
     }
 
     fn fs_marginal_cost(&self, groups: &[FsGroup]) -> Cost {
@@ -510,7 +556,7 @@ impl RenderedTree {
             .parent()
             .map_or(0, |parent| self.child_indent(parent, added));
         let (names, tail) = self.chain_from(head, kind, added);
-        format_entry_row(&names, kind, indent, self.entry_empty(&tail, kind))
+        format_entry_row(&names, kind, indent, self.entry_marker(&tail, kind))
     }
 
     /// Names on the row headed by `head`, and the entry that ends it.
@@ -696,7 +742,7 @@ impl RenderedTree {
                 &names,
                 *kind,
                 indent_depth,
-                self.entry_empty(&tail, *kind),
+                self.entry_marker(&tail, *kind),
             ));
             match kind {
                 EntryKind::Directory => self.render_dir(&tail, indent_depth + 1, out),
@@ -981,15 +1027,20 @@ fn format_marker_row(indent_depth: usize) -> String {
 /// One tree entry row: an entry, or a chain of directories that each
 /// hold only the next (`src/main/java/`). An entry with nothing rendered
 /// under it reads as unexpanded, so the rare entry that holds nothing to
-/// show says so.
-fn format_entry_row(names: &[String], kind: EntryKind, indent_depth: usize, empty: bool) -> String {
+/// show says why.
+fn format_entry_row(
+    names: &[String],
+    kind: EntryKind,
+    indent_depth: usize,
+    marker: Option<&str>,
+) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
     push_escaped(&mut s, &names.join("/"), false);
     if matches!(kind, EntryKind::Directory) {
         s.push('/');
     }
-    if empty {
-        s.push_str(" (empty)");
+    if let Some(marker) = marker {
+        write!(s, " ({marker})").unwrap();
     }
     s.push('\n');
     s
@@ -1287,6 +1338,34 @@ mod tests {
         assert!(out.contains("listed/\n"), "output:\n{out}");
         assert!(out.contains("linked/\n"), "output:\n{out}");
         assert!(out.contains("shown.rs\n"), "output:\n{out}");
+    }
+
+    #[test]
+    fn render_submodule_marker_names_an_empty_directory_gitmodules_lists() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path().to_path_buf();
+        std::fs::write(
+            root.join(".gitmodules"),
+            "[submodule \"deps/lib\"]\n\tpath = deps/lib\n\turl = https://example.com/lib.git\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(root.join("deps/lib")).unwrap();
+        std::fs::create_dir(root.join("deps/other")).unwrap();
+        let mut tree = RenderedTree::new(root.clone(), SourceCache::new());
+        tree.apply(
+            &dir_listing(root.clone(), &[".gitmodules", "deps"]),
+            BatchId::new(0),
+            |_| true,
+        );
+        tree.apply(
+            &dir_listing(root.join("deps"), &["lib", "other"]),
+            BatchId::new(1),
+            |_| true,
+        );
+
+        let out = tree.render();
+        assert!(out.contains("lib/ (submodule)\n"), "output:\n{out}");
+        assert!(out.contains("other/ (empty)\n"), "output:\n{out}");
     }
 
     #[test]

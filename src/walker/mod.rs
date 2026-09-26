@@ -18,7 +18,7 @@ use tree_sitter::{Language, Node, Tree};
 
 use crate::batch::{Batch, BatchKey};
 use crate::content::{BatchContent, Render, Span};
-use crate::fs_util::{DirFilter, lists_file};
+use crate::fs_util::DirFilter;
 use crate::render::{MAX_SOURCE_BYTES, Source, SourceCache};
 
 pub(crate) mod code;
@@ -269,9 +269,8 @@ impl WalkCtx {
     /// [`Self::read_source`] of a file at most `byte_gate` long
     /// ([`SourceCache::get_within`]).
     pub fn read_source_within(&self, path: &Path, byte_gate: usize) -> Option<Arc<Source>> {
-        lists_file(path, &self.dir_filter)
-            .then(|| self.source_cache.get_within(path, byte_gate))
-            .flatten()
+        self.source_cache
+            .get_listed_within(path, &self.dir_filter, byte_gate)
     }
 
     /// Parse `path` with `language`. The tree is not cached: a file is
