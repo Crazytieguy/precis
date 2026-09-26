@@ -178,6 +178,17 @@ README.md
   57→>* Without Unicode support.
   58→>
   59→> This is also something that is reflected in the package name on Debian/Ubuntu (via the additional 'w' - 'w'ide character support).
+  61→List of additional build-time dependencies (based on feature flags):
+  62→*  `pkg-config`
+  63→*  `sensors`
+  64→*  `hwloc`
+  65→*  `libcap` (v2.21 or later)
+  66→*  `libnl-3` and `libnl-genl-3`
+  67→
+  …
+  73→~~~ shell
+  74→sudo apt install libncursesw5-dev autotools-dev autoconf automake build-essential
+  75→~~~
   …
   97→### Compile from source:
   …
@@ -192,12 +203,6 @@ README.md
   198→## Support
   …
   202→## Bugs, development feedback
-  203→
-  204→We have a [development mailing list](https://htop.dev/mailinglist.html). Feel free to subscribe for release announcements or asking questions on the development of `htop`.
-  205→
-  206→You can also join our IRC channel [#htop on Libera.Chat](https://web.libera.chat/#htop) and talk to the developers there.
-  207→
-  208→If you have found an issue within the source of `htop`, please check whether this has already been reported in our [GitHub issue tracker](https://github.com/htop-dev/htop/issues).
   …
   211→## History
   212→

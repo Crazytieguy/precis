@@ -1,4 +1,4 @@
-Score(3000)=0.850 I=0.901 C=0.802 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.756/0.819/0.839/0.850/0.707/0.595/0.498
+Score(3000)=0.850 I=0.901 C=0.802 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.750/0.803/0.839/0.850/0.707/0.595/0.498
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -27,41 +27,42 @@ Score(3000)=0.850 I=0.901 C=0.802 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 464 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.789 |
 | ns | 517 |  | 183 | README: build-from-source dependencies and the exact command sequence | 1.5 |  | 0.631 |
 | walker |  | 536 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.632 |
-| walker |  | 588 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.632 |
+| walker |  | 588 | 52 | Markdown::CommandBlock { file: README.md, row: 24 } |  |  | 0.632 |
 | ns | 607 |  | 90 | README: static build and released-tarball builds | 1.6 |  | 0.594 |
-| walker |  | 631 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.600 |
-| walker |  | 635 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.600 |
-| walker |  | 639 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.600 |
-| walker |  | 643 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.600 |
-| walker |  | 647 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.600 |
-| walker |  | 651 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.600 |
-| walker |  | 655 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.600 |
-| walker |  | 659 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.600 |
+| walker |  | 640 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.594 |
+| walker |  | 683 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.600 |
+| walker |  | 687 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.600 |
+| walker |  | 691 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.600 |
+| walker |  | 695 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.600 |
+| walker |  | 699 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.600 |
+| walker |  | 703 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.600 |
+| walker |  | 707 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.600 |
+| walker |  | 711 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.600 |
 | ns | 840 |  | 233 | src/ listing (complete) - the flat core | 1.7 |  | 0.449 |
-| walker |  | 892 | 233 | Fs::DirListing { dir: src } |  |  | 0.749 |
+| walker |  | 944 | 233 | Fs::DirListing { dir: src } |  |  | 0.749 |
 | ns | 1005 |  | 165 | tests/ listing (complete) | 1.8 |  | 0.652 |
-| walker |  | 1057 | 165 | Fs::DirListing { dir: tests } |  |  | 0.794 |
+| walker |  | 1109 | 165 | Fs::DirListing { dir: tests } |  |  | 0.794 |
 | ns | 1113 |  | 108 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.805 |
-| walker |  | 1140 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.805 |
 | ns | 1160 |  | 47 | CI workflows and vendored dependencies (complete listings) | 1.10 |  | 0.808 |
-| walker |  | 1316 | 176 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 0, line: 0 } |  |  | 0.811 |
-| walker |  | 1368 | 52 | Code::CodeKey { rung: Decl, file: src/jq.h, decl: 1, sub: 0, line: 11 } |  |  | 0.812 |
-| ns | 1385 |  | 225 | jq.h: jq_state lifecycle - init, compile, start, next, teardown | 2.1 |  | 0.798 |
+| walker |  | 1192 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.808 |
+| walker |  | 1368 | 176 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 0, line: 0 } |  |  | 0.811 |
+| ns | 1385 |  | 225 | jq.h: jq_state lifecycle - init, compile, start, next, teardown | 2.1 |  | 0.797 |
+| walker |  | 1420 | 52 | Code::CodeKey { rung: Decl, file: src/jq.h, decl: 1, sub: 0, line: 11 } |  |  | 0.798 |
 | ns | 1503 |  | 118 | jq.h: debug-trace flags and halt / exit-code / error-message API | 2.2 |  | 0.784 |
-| walker |  | 1549 | 181 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.824 |
-| walker |  | 1705 | 156 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.828 |
-| ns | 1749 |  | 246 | jq.h: input/debug/stderr callbacks and the attribute store | 2.3 |  | 0.822 |
-| walker |  | 1871 | 166 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 3, line: 0 } |  |  | 0.833 |
-| walker |  | 1969 | 98 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 4, line: 0 } |  |  | 0.837 |
-| ns | 1979 |  | 230 | jq.h: jq_util_input_* file/stdin reader and jq_set_colors | 2.4 |  | 0.839 |
-| walker |  | 2067 | 98 | Fs::DirListing { dir: sig } |  |  | 0.839 |
+| walker |  | 1601 | 181 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.824 |
+| ns | 1749 |  | 246 | jq.h: input/debug/stderr callbacks and the attribute store | 2.3 |  | 0.792 |
+| walker |  | 1757 | 156 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.822 |
+| walker |  | 1923 | 166 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 3, line: 0 } |  |  | 0.833 |
+| ns | 1979 |  | 230 | jq.h: jq_util_input_* file/stdin reader and jq_set_colors | 2.4 |  | 0.812 |
+| walker |  | 2021 | 98 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 4, line: 0 } |  |  | 0.839 |
+| walker |  | 2119 | 98 | Fs::DirListing { dir: sig } |  |  | 0.839 |
 | ns | 2202 |  | 223 | main.c usage(): synopsis and one-paragraph description | 3.1 |  | 0.818 |
-| walker |  | 2413 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.818 |
-| walker |  | 2428 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.818 |
-| walker |  | 2433 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.818 |
-| walker |  | 2545 | 112 | Plaintext::DeclSurface { file: compile-ios.sh } |  |  | 0.818 |
+| walker |  | 2465 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.818 |
+| walker |  | 2480 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.818 |
+| walker |  | 2485 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.818 |
 | ns | 2653 |  | 451 | main.c usage(): input and output-formatting options (-n through --seq) | 3.2 |  | 0.778 |
-| walker |  | 2780 | 235 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.778 |
+| walker |  | 2668 | 183 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.778 |
+| walker |  | 2780 | 112 | Plaintext::DeclSurface { file: compile-ios.sh } |  |  | 0.778 |
 | ns | 3043 |  | 390 | main.c usage(): program, argument and mode options (-f through --) | 3.3 |  | 0.745 |
 | walker |  | 3116 | 336 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.830 |
 | walker |  | 3203 | 87 | Code::CodeKey { rung: Doc, file: src/jq.h, decl: 34, sub: 0, line: 60 } |  |  | 0.830 |

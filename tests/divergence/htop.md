@@ -41,18 +41,19 @@ Score(3000)=0.702 I=0.934 C=0.527 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 1770 | 6 | Plaintext::Whole { file: autogen.sh } |  |  | 0.726 |
 | ns | 1810 |  | 235 | Row.h: the Row struct - every field of the base display row | 2.2 |  | 0.691 |
 | walker |  | 1912 | 142 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.691 |
+| walker |  | 1951 | 39 | Markdown::CommandBlock { file: README.md, row: 73 } |  |  | 0.691 |
 | ns | 2071 |  | 261 | Row.h: RowClass vtable - the six behaviours a row type overrides | 2.3 |  | 0.663 |
-| walker |  | 2211 | 299 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.663 |
-| walker |  | 2342 | 131 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.663 |
+| walker |  | 2250 | 299 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.663 |
+| walker |  | 2381 | 131 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.663 |
 | ns | 2395 |  | 324 | Table.h: the Table struct and the TableClass scan protocol | 2.4 |  | 0.630 |
-| walker |  | 2547 | 205 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.769 |
+| walker |  | 2586 | 205 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.769 |
 | ns | 2624 |  | 229 | ProcessTable.h in full: the process-table subclass and its platform hooks | 2.5 |  | 0.737 |
-| walker |  | 2658 | 111 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.737 |
-| walker |  | 2860 | 202 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.737 |
+| walker |  | 2697 | 111 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.737 |
+| walker |  | 2899 | 202 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.737 |
 | ns | 2991 |  | 367 | Machine.h: the Machine struct, htop's per-host state | 2.6 |  | 0.702 |
-| walker |  | 3034 | 174 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.702 |
+| walker |  | 3092 | 193 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.702 |
 | ns | 3245 |  | 254 | Panel.h: HandlerResult flags and the PanelClass event vtable | 2.7 |  | 0.680 |
-| walker |  | 3266 | 232 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.680 |
+| walker |  | 3266 | 174 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.680 |
 | walker |  | 3414 | 148 | Plaintext::DeclSurface { file: check-pcp-style.sh } |  |  | 0.680 |
 | ns | 3556 |  | 311 | Panel.h: the Panel struct (geometry, selection, scrolling, function bar) | 2.8 |  | 0.655 |
 | walker |  | 3641 | 227 | Code::CodeKey { rung: Names, file: CRT.c, decl: 0, sub: 0, line: 0 } |  |  | 0.655 |

@@ -54,9 +54,23 @@ README.md
   63→# Docker Support
   64→
   65→## Run from docker
-  …
+  66→
+  67→You can run dockly using docker:
+  68→
+  69→```
+  70→docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly
+  71→```
+  72→
+  73→
   74→## Build
-  …
+  75→
+  76→If you wish to build dockly as a docker image yourself, you can run the following:
+  77→
+  78→```
+  79→$ docker build -t dockly .
+  80→
+  81→$ docker run -it --rm --name dockly -v /var/run/docker.sock:/var/run/docker.sock dockly
+  82→```
   84→# FAQ
   …
   125→## Alternatives
@@ -387,16 +401,6 @@ widgets/
     imageList.widget.js
     imageUtilization.widget.js
   searchInput.widget.js
-    …
-    9→class myWidget extends baseWidget(EventEmitter) {
-    10→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {} }) {
-    …
-    24→  getLabel () {
-    …
-    28→  renderWidget () {
-    …
-    105→}
-    107→module.exports = myWidget
   services/
     servicesInfo.widget.js
     servicesList.widget.js
@@ -406,15 +410,4 @@ widgets/
   toolbar.widget.js
     …
     7→class myWidget extends baseWidget(EventEmitter) {
-    8→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {}, mode }) {
     …
-    21→  init () {
-    22→    return null
-    …
-    25→  getWidget () {
-    26→    return this.widget
-    …
-    29→  createWidget () {
-    …
-    141→}
-    143→module.exports = myWidget

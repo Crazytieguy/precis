@@ -1,4 +1,4 @@
-Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.531/0.832/0.852/0.736/0.672/0.591/0.614
+Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.531/0.761/0.852/0.736/0.672/0.591/0.614
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -45,25 +45,27 @@ Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 1242 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/update.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.747 |
 | ns | 1286 |  | 321 | README usage: every documented sps subcommand | 1.11 | 1.4 | 0.657 |
 | walker |  | 1355 | 113 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.708 |
-| walker |  | 1423 | 68 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.832 |
-| ns | 1444 |  | 158 | README current status and roadmap | 1.12 | 1.4 | 0.806 |
-| walker |  | 1455 | 32 | Toml::Operational { file: sps/Cargo.toml } |  |  | 0.806 |
-| walker |  | 1545 | 90 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.806 |
+| walker |  | 1380 | 25 | Markdown::CommandBlock { file: README.md, row: 144 } |  |  | 0.708 |
+| walker |  | 1422 | 42 | Markdown::CommandBlock { file: README.md, row: 127 } |  |  | 0.708 |
+| ns | 1444 |  | 158 | README current status and roadmap | 1.12 | 1.4 | 0.686 |
+| walker |  | 1490 | 68 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.806 |
+| walker |  | 1522 | 32 | Toml::Operational { file: sps/Cargo.toml } |  |  | 0.806 |
+| walker |  | 1612 | 90 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.806 |
 | ns | 1655 |  | 211 | Library crate re-export surfaces | 1.13 |  | 0.779 |
-| walker |  | 1669 | 124 | Code::CodeKey { rung: Names, file: sps-common/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.781 |
+| walker |  | 1736 | 124 | Code::CodeKey { rung: Names, file: sps-common/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.781 |
 | ns | 1797 |  | 142 | sps-common model and dependency re-exports | 1.14 |  | 0.758 |
 | ns | 1873 |  | 76 | sps-core check/ re-exports and the install path helper | 1.15 |  | 0.747 |
-| walker |  | 2029 | 360 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: true } |  |  | 0.852 |
+| walker |  | 2096 | 360 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: true } |  |  | 0.852 |
 | ns | 2098 |  | 225 | sps-core uninstall, upgrade and utils public names | 1.16 |  | 0.814 |
-| walker |  | 2125 | 96 | Code::CodeKey { rung: Names, file: sps-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.815 |
+| walker |  | 2192 | 96 | Code::CodeKey { rung: Names, file: sps-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.815 |
 | ns | 2340 |  | 242 | clap CliArgs and the complete Command enum | 2.1 |  | 0.776 |
-| walker |  | 2409 | 284 | Code::CodeKey { rung: Names, file: sps-net/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.799 |
-| walker |  | 2489 | 80 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.803 |
-| walker |  | 2593 | 104 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.824 |
-| walker |  | 2684 | 91 | Code::CodeKey { rung: Names, file: sps/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.824 |
-| ns | 2687 |  | 347 | Shared pipeline job vocabulary (PipelinePackageType, JobAction, PlannedJob, WorkerJob) | 2.2 |  | 0.770 |
-| walker |  | 2793 | 109 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.770 |
-| walker |  | 2905 | 112 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.770 |
+| walker |  | 2476 | 284 | Code::CodeKey { rung: Names, file: sps-net/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.799 |
+| walker |  | 2556 | 80 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.803 |
+| walker |  | 2623 | 67 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.803 |
+| ns | 2687 |  | 347 | Shared pipeline job vocabulary (PipelinePackageType, JobAction, PlannedJob, WorkerJob) | 2.2 |  | 0.750 |
+| walker |  | 2727 | 104 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.770 |
+| walker |  | 2818 | 91 | Code::CodeKey { rung: Names, file: sps/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.770 |
+| walker |  | 2905 | 87 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.770 |
 | ns | 2948 |  | 261 | PipelineEvent: all 23 variant names | 2.3 |  | 0.736 |
 | walker |  | 3034 | 129 | Code::CodeKey { rung: Names, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.736 |
 | walker |  | 3068 | 34 | Code::CodeKey { rung: Decl, file: sps/src/cli.rs, decl: 3, sub: 0, line: 56 } |  |  | 0.736 |

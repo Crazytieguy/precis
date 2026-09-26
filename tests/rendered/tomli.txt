@@ -69,6 +69,10 @@ README.md
   …
   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
   …
+  135→```
+  136→tomli >= 1.1.0 ; python_version < "3.11"
+  137→```
+  …
   152→## FAQ<a name="faq"></a>
   153→
   154→### Why this parser?<a name="why-this-parser"></a>
@@ -198,11 +202,7 @@ src/tomli/
     76→class TOMLDecodeError(ValueError):
     …
     87→    def __init__(
-    88→        self,
-    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    92→        *args: Any,
+    …
     93→    ):
     …
     137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:

@@ -1,4 +1,4 @@
-Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.731/0.632/0.549/0.518/0.536/0.532
+Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.725/0.731/0.628/0.549/0.518/0.536/0.532
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -41,32 +41,33 @@ Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 657 | 18 | Fs::DirListing { dir: internal/core/ports/mocks } |  |  | 0.561 |
 | ns | 724 |  | 105 | README section headings (all H2) | 1.10 |  | 0.528 |
 | walker |  | 762 | 105 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.587 |
+| walker |  | 806 | 44 | Markdown::CommandBlock { file: README.md, row: 49 } |  |  | 0.587 |
 | ns | 898 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.558 |
-| walker |  | 1015 | 253 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.745 |
-| ns | 1022 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.715 |
+| ns | 1022 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.535 |
+| walker |  | 1059 | 253 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.715 |
 | ns | 1175 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.681 |
 | ns | 1253 |  | 78 | Domain sentinel errors | 2.4 |  | 0.665 |
-| walker |  | 1257 | 242 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.665 |
-| walker |  | 1336 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.794 |
-| walker |  | 1415 | 79 | Markdown::Section { file: README.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.794 |
+| walker |  | 1301 | 242 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.665 |
+| walker |  | 1380 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.794 |
 | ns | 1440 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.731 |
+| walker |  | 1459 | 79 | Markdown::Section { file: README.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.731 |
 | ns | 1506 |  | 66 | dto.ActivityFilter — the query type | 2.6 |  | 0.714 |
 | ns | 1601 |  | 95 | dto.Report and dto.ProjectReport | 2.7 |  | 0.690 |
-| walker |  | 1657 | 242 | GoMod::File { file: go.mod } |  |  | 0.691 |
-| ns | 1685 |  | 84 | models.Activity method roster (bodies elided) | 2.8 |  | 0.672 |
-| walker |  | 1738 | 81 | Markdown::Section { file: README.md, section_index: 25, keeps_default_concavity: false } |  |  | 0.672 |
+| ns | 1685 |  | 84 | models.Activity method roster (bodies elided) | 2.8 |  | 0.671 |
+| walker |  | 1701 | 242 | GoMod::File { file: go.mod } |  |  | 0.672 |
+| walker |  | 1782 | 81 | Markdown::Section { file: README.md, section_index: 25, keeps_default_concavity: false } |  |  | 0.672 |
 | ns | 1832 |  | 147 | models.Activity method bodies | 2.9 | 2.8 | 0.640 |
-| walker |  | 1853 | 115 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.640 |
-| walker |  | 1965 | 112 | Plaintext::DeclSurface { file: install.sh } |  |  | 0.640 |
-| walker |  | 1977 | 12 | Code::CodeKey { rung: Names, file: cmd/tock/main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.641 |
-| walker |  | 1988 | 11 | Code::CodeKey { rung: Decl, file: cmd/tock/main.go, decl: 1, sub: 0, line: 7 } |  |  | 0.644 |
-| ns | 2000 |  | 168 | Root command declaration and the three persistent flags | 3.1 |  | 0.632 |
-| ns | 2162 |  | 162 | Complete subcommand registration list | 3.2 |  | 0.609 |
-| walker |  | 2211 | 223 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.609 |
+| walker |  | 1897 | 115 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.640 |
+| ns | 2000 |  | 168 | Root command declaration and the three persistent flags | 3.1 |  | 0.628 |
+| walker |  | 2009 | 112 | Plaintext::DeclSurface { file: install.sh } |  |  | 0.628 |
+| ns | 2162 |  | 162 | Complete subcommand registration list | 3.2 |  | 0.605 |
+| walker |  | 2248 | 239 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.605 |
+| walker |  | 2260 | 12 | Code::CodeKey { rung: Names, file: cmd/tock/main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.605 |
+| walker |  | 2271 | 11 | Code::CodeKey { rung: Decl, file: cmd/tock/main.go, decl: 1, sub: 0, line: 7 } |  |  | 0.609 |
 | ns | 2398 |  | 236 | Command declarations, part 1: add, analyze, calendar, continue, current, ical | 3.3 |  | 0.588 |
-| walker |  | 2494 | 283 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.588 |
+| walker |  | 2538 | 267 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.588 |
 | ns | 2733 |  | 335 | Command declarations, part 2: last, list, remove, report, start, stop, version, watch | 3.4 |  | 0.561 |
-| walker |  | 2761 | 267 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.561 |
+| walker |  | 2761 | 223 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.561 |
 | ns | 2764 |  | 31 | docs/commands.md structure | 3.5 |  | 0.558 |
 | walker |  | 2929 | 168 | Code::CodeKey { rung: Names, file: internal/config/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.558 |
 | walker |  | 2944 | 15 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 5, sub: 0, line: 41 } |  |  | 0.558 |

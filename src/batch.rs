@@ -92,6 +92,10 @@ pub enum MarkdownKey {
         section_index: usize,
         keeps_default_concavity: bool,
     },
+    /// A build/test/run section's heading plus its first shell block,
+    /// keyed by the block's first row. Predecessor: `HeadingsOutline`,
+    /// else `ReadmeHeadline`; the `Section` holding it gates on it.
+    CommandBlock { file: PathBuf, row: usize },
 }
 
 /// JSON batches. `package.json` splits along the shared manifest ontology

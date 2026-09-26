@@ -49,6 +49,19 @@ README.md
   44→### Using Homebrew (macOS)
   …
   52→### Building from Source
+  53→
+  54→```bash
+  55→# Clone the repository
+  56→git clone https://github.com/davidesantangelo/krep.git
+  57→cd krep
+  58→
+  59→# Build and install
+  60→make
+  61→sudo make install
+  62→
+  63→# uninstall
+  64→sudo make uninstall
+  65→```
   …
   69→### Requirements
   …
@@ -193,15 +206,10 @@ krep.h
   126→{
   127→   void *(*func)(void *); // Task function
   128→   void *arg;             // Function argument
-  129→   struct task *next;     // Next task in queue
+  …
   130→} task_t;
   131→
   132→typedef struct
-  133→{
-  134→   pthread_t *threads;           // Array of worker threads
-  135→   int num_threads;              // Number of worker threads
-  136→   task_t *task_queue;           // Task queue head
-  137→   task_t *task_queue_tail;      // Task queue tail for faster enqueue
   …
   143→} thread_pool_t;
   …

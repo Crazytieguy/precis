@@ -14,10 +14,13 @@
 //!   cover (H1–H2 when that is too many), when there are
 //!   2..=[`MAX_OUTLINE_HEADINGS`] of them.
 //!   Predecessor: the headline.
+//! - `CommandBlock`s — per top-level section, the heading and first
+//!   shell block of a build/test/run section inside it (see
+//!   [`command_block`]). Predecessor: the outline, else the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
 //!   an intro plus its H2s); an oversize section splits into a head
 //!   chunk plus chained `OversizeTail` chunks. Predecessor: the
-//!   outline, else the headline.
+//!   section's command block, else the outline, else the headline.
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
@@ -176,9 +179,10 @@ fn push_headline(
     Some(key)
 }
 
-/// Emit one `Section` batch per range. Each gates on
-/// `section_predecessor`, except oversize tails, which deliver in source
-/// order behind the chunk before them.
+/// Emit one `Section` batch per range, each head preceded by its
+/// `CommandBlock` when it has one past the headline. A head gates on its
+/// command block, else on `section_predecessor`; oversize tails deliver
+/// in source order behind the chunk before them.
 fn push_sections(
     out: &mut Vec<Batch>,
     file: &Path,
@@ -187,27 +191,40 @@ fn push_sections(
     headline: Option<&BTreeSet<usize>>,
     section_predecessor: Option<BatchKey>,
 ) {
-    let mut prev_section_key: Option<BatchKey> = None;
+    let headline_end = headline.and_then(|spec| spec.iter().next_back().copied());
+    let mut chain_key = section_predecessor.clone();
     for (idx, range) in ranges.iter().enumerate() {
+        if !range.chained_to_previous {
+            chain_key = section_predecessor.clone();
+        }
+        if let Some(CommandBlockRows { heading, block }) = range.command_block
+            && headline_end.is_none_or(|end| end < block.0)
+            && let Some(content) = single_file_lines_content(
+                file,
+                source,
+                (heading.0..=heading.1).chain(block.0..=block.1).collect(),
+            )
+        {
+            let key = BatchKey::from(MarkdownKey::CommandBlock {
+                file: file.to_path_buf(),
+                row: block.0,
+            });
+            out.push(Batch {
+                key: key.clone(),
+                predecessor: chain_key.replace(key),
+                content,
+                value: README_SECTION_VALUE,
+            });
+        }
         if let Some(content) = build_section_content(file, source, range, headline) {
-            let key = MarkdownKey::Section {
+            let key = BatchKey::from(MarkdownKey::Section {
                 file: file.to_path_buf(),
                 section_index: idx,
                 keeps_default_concavity: range.is_reference_usage_section,
-            };
-            // Oversize tails deliver in source order: each chunk
-            // gates on its predecessor chunk.
-            let predecessor = if range.chained_to_previous {
-                prev_section_key
-                    .clone()
-                    .or_else(|| section_predecessor.clone())
-            } else {
-                section_predecessor.clone()
-            };
-            prev_section_key = Some(BatchKey::Markdown(key.clone()));
+            });
             out.push(Batch {
-                key: key.into(),
-                predecessor,
+                key: key.clone(),
+                predecessor: chain_key.replace(key),
                 content,
                 value: section_value(range),
             });
@@ -687,6 +704,16 @@ struct SectionRange {
     /// Oversize tail chunks gate on the previous chunk so the section
     /// delivers as an in-order prefix.
     chained_to_previous: bool,
+    /// The section's [`command_block`]; on its first chunk only.
+    command_block: Option<CommandBlockRows>,
+}
+
+/// 1-based `(first, last)` rows of a command section's heading and of its
+/// first shell block.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct CommandBlockRows {
+    heading: (usize, usize),
+    block: (usize, usize),
 }
 
 impl SectionRange {
@@ -697,6 +724,7 @@ impl SectionRange {
             h2_index,
             is_reference_usage_section: false,
             chained_to_previous: false,
+            command_block: None,
         }
     }
 }
@@ -771,6 +799,7 @@ fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<Secti
                     &src_lines,
                     SectionRange {
                         is_reference_usage_section: reference_h2,
+                        command_block: command_block(*node, None, source, &src_lines),
                         ..SectionRange::new(*start, end, h2_idx)
                     },
                 );
@@ -1012,6 +1041,7 @@ fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], hea
             start: chunk_start,
             end: chunk_end,
             chained_to_previous: i > 0,
+            command_block: head.command_block.filter(|_| i == 0),
             ..head
         });
     }
@@ -1136,6 +1166,102 @@ fn is_appendix_title_core(core: &str) -> bool {
             | "citation"
             | "contact"
     )
+}
+
+/// Title words naming how to build, test, run or develop the project.
+const COMMAND_TITLE_WORDS: [&str; 12] = [
+    "build",
+    "building",
+    "compile",
+    "compiling",
+    "compilation",
+    "test",
+    "tests",
+    "testing",
+    "develop",
+    "development",
+    "run",
+    "running",
+];
+
+fn is_command_title_core(core: &str) -> bool {
+    core.split_whitespace()
+        .any(|word| COMMAND_TITLE_WORDS.contains(&word))
+}
+
+/// The first shell block (see [`is_shell_block`]) of at most
+/// [`OVERSIZE_CHUNK_TARGET_TOKENS`] that sits under a heading titled by
+/// [`is_command_title_core`] in `section`, paired with the innermost such
+/// heading (`command_heading` is the enclosing one). Back matter is
+/// skipped.
+fn command_block(
+    section: Node,
+    command_heading: Option<Node>,
+    source: &str,
+    src_lines: &[&str],
+) -> Option<CommandBlockRows> {
+    fn first_shell_block<'a>(node: Node<'a>, source: &str) -> Option<Node<'a>> {
+        if node.kind() == "fenced_code_block" {
+            return is_shell_block(node, source).then_some(node);
+        }
+        let mut cursor = node.walk();
+        let children: Vec<Node> = node.children(&mut cursor).collect();
+        children
+            .into_iter()
+            .find_map(|child| first_shell_block(child, source))
+    }
+    let title = section_title_core(section, source);
+    if is_appendix_title_core(&title) {
+        return None;
+    }
+    let command_heading = first_heading_child(section)
+        .filter(|_| is_command_title_core(&title))
+        .or(command_heading);
+    let rows = |node: Node| {
+        (
+            node.start_position().row + 1,
+            node_end_row_trimmed(node, source) + 1,
+        )
+    };
+    let mut cursor = section.walk();
+    let children: Vec<Node> = section.children(&mut cursor).collect();
+    children.into_iter().find_map(|child| {
+        if child.kind() == "section" {
+            return command_block(child, command_heading, source, src_lines);
+        }
+        let heading = command_heading?;
+        let (start, end) = rows(first_shell_block(child, source)?);
+        let tokens: usize = (start..=end).map(|row| row_tokens(src_lines, row)).sum();
+        (tokens <= OVERSIZE_CHUNK_TARGET_TOKENS).then(|| CommandBlockRows {
+            heading: rows(heading),
+            block: (start, end),
+        })
+    })
+}
+
+/// Fence languages of shell commands.
+const SHELL_LANGUAGES: [&str; 10] = [
+    "sh",
+    "bash",
+    "shell",
+    "console",
+    "zsh",
+    "fish",
+    "powershell",
+    "pwsh",
+    "cmd",
+    "bat",
+];
+
+/// A fenced block that holds shell commands: untagged, or tagged with a
+/// shell language.
+fn is_shell_block(block: Node, source: &str) -> bool {
+    let Some(info) = first_child_of_kind(block, "info_string") else {
+        return true;
+    };
+    first_child_of_kind(info, "language").is_some_and(|language| {
+        SHELL_LANGUAGES.contains(&source[language.byte_range()].to_ascii_lowercase().as_str())
+    })
 }
 
 /// Usage-demo titles; shared with the RST heading path.
@@ -2184,6 +2310,52 @@ mod tests {
             ) if *file == root.join("README.md")
         )));
         assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
+    }
+
+    /// A build/test/run section yields one `CommandBlock` per top-level
+    /// section — its first shell or untagged fence, never a code sample —
+    /// and the section holding it gates on it.
+    #[test]
+    fn markdown_command_block_per_section() {
+        use std::fs;
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let body = "# Tool\n\nDoes things.\n\n\
+                    ## Usage\n\n```sh\ntool run\n```\n\n\
+                    ## Building\n\nNeeds a compiler.\n\n\
+                    ```rust\nfn main() {}\n```\n\n\
+                    ```sh\ncargo build\n```\n\n\
+                    ### Running tests\n\n```\ncargo test\n```\n\n\
+                    ## Development\n\n```console\n$ make dev\n```\n";
+        fs::write(root.join("README.md"), body).unwrap();
+        let batches = expand_in_dir(root, &WalkCtx::new(root.to_path_buf()));
+        let command_rows: Vec<usize> = batches
+            .iter()
+            .filter_map(|b| match &b.key {
+                BatchKey::Markdown(MarkdownKey::CommandBlock { row, .. }) => Some(*row),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(command_rows, vec![19, 31]);
+        let building = batches
+            .iter()
+            .find(|b| {
+                matches!(
+                    &b.key,
+                    BatchKey::Markdown(MarkdownKey::Section {
+                        section_index: 2,
+                        ..
+                    })
+                )
+            })
+            .unwrap();
+        assert!(matches!(
+            &building.predecessor,
+            Some(BatchKey::Markdown(MarkdownKey::CommandBlock {
+                row: 19,
+                ..
+            }))
+        ));
     }
 
     /// A root README in any recognized markup is read — Markdown first,
