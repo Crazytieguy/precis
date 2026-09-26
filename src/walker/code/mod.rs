@@ -461,18 +461,10 @@ pub(in crate::walker) fn has_generator_banner(source: &str) -> bool {
             && line.starts_with('#')
             && line[1..].starts_with(char::is_alphabetic);
         in_leading_comments &= line.is_empty() || is_comment && !is_preprocessor;
-        if is_comment {
-            match (line.rfind("/*"), line.rfind("*/")) {
-                (Some(open), close) if close.is_none_or(|close| close < open) => {
-                    in_block_comment = true;
-                }
-                (_, Some(_)) => in_block_comment = false,
-                _ => {}
-            }
-        }
         if !is_comment {
             continue;
         }
+        in_block_comment = ends_in_block_comment(&line, in_block_comment);
         let text = line.trim_start_matches(|character: char| !character.is_ascii_alphanumeric());
         let is_auto_generated_banner = AUTO_GENERATED.iter().any(|marker| text.starts_with(marker))
             || AUTO_GENERATED.iter().any(|marker| text.contains(marker))
@@ -484,6 +476,30 @@ pub(in crate::walker) fn has_generator_banner(source: &str) -> bool {
         says_do_not_edit |= text.contains("do not edit");
     }
     says_generated && says_do_not_edit
+}
+
+/// Whether a `/* … */` comment is open at the end of `line`, given
+/// whether one was open at its start.
+fn ends_in_block_comment(line: &str, starts_in_block_comment: bool) -> bool {
+    let mut in_block_comment = starts_in_block_comment;
+    let mut rest = line;
+    loop {
+        if in_block_comment {
+            let Some(close) = rest.find("*/") else {
+                return true;
+            };
+            rest = &rest[close + 2..];
+            in_block_comment = false;
+        } else {
+            match rest.find("/*") {
+                Some(open) if !rest[..open].contains("//") => {
+                    rest = &rest[open + 2..];
+                    in_block_comment = true;
+                }
+                _ => return false,
+            }
+        }
+    }
 }
 
 /// Batches for every source file in `dir`, as [`extracting_language`]

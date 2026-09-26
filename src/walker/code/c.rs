@@ -35,7 +35,8 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{
-    Language, MAX_SCOPE_NESTING, SourceFile, has_extension, is_named_after, named_children,
+    Language, MAX_SCOPE_NESTING, SourceFile, ends_in_block_comment, has_extension, is_named_after,
+    named_children,
 };
 use crate::walker::WalkCtx;
 
@@ -138,28 +139,6 @@ pub(in crate::walker) fn is_cpp_header(path: &Path, source: &str) -> bool {
         }
     }
     false
-}
-
-fn ends_in_block_comment(line: &str, starts_in_block_comment: bool) -> bool {
-    let mut in_block_comment = starts_in_block_comment;
-    let mut rest = line;
-    loop {
-        if in_block_comment {
-            let Some(close) = rest.find("*/") else {
-                return true;
-            };
-            rest = &rest[close + 2..];
-            in_block_comment = false;
-        } else {
-            match rest.find("/*") {
-                Some(open) if !rest[..open].contains("//") => {
-                    rest = &rest[open + 2..];
-                    in_block_comment = true;
-                }
-                _ => return false,
-            }
-        }
-    }
 }
 
 fn is_header(path: &Path) -> bool {
