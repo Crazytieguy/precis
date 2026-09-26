@@ -612,7 +612,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_admits_only_bounded_json_family_sidecars() {
+    fn json_admits_only_bounded_json_family_sidecars() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         fs::write(
@@ -651,7 +651,7 @@ mod tests {
     /// identity block; a short one, even with many scripts on one line,
     /// stays one batch.
     #[test]
-    fn walker_json_long_scripts_block_chains_chunks() {
+    fn json_long_scripts_block_chains_chunks() {
         let scripts_keys = |script_count: usize, separator: &str| {
             let dir = tempfile::tempdir().unwrap();
             let scripts: Vec<String> = (0..script_count)
@@ -689,7 +689,7 @@ mod tests {
 
     #[cfg(unix)]
     #[test]
-    fn walker_json_rejects_escaping_family_symlinks() {
+    fn json_rejects_escaping_family_symlinks() {
         use std::os::unix::fs::symlink;
 
         let dir = tempfile::tempdir().unwrap();
@@ -710,7 +710,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_dependency_keys_exclude_dev_and_peer_rosters() {
+    fn json_dependency_keys_exclude_dev_and_peer_rosters() {
         for key in [
             "dependencies",
             "optionalDependencies",
@@ -731,7 +731,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_only_compact_sections_require_overlap_chain() {
+    fn json_only_compact_sections_require_overlap_chain() {
         let multiline = pairs_for_manifest(
             "{\n  \"name\": \"demo\",\n  \"scripts\": {\"test\": \"vitest\"},\n  \"dependencies\": {\"react\": \"19\"}\n}\n",
         );
@@ -744,7 +744,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_workspace_members_npm_array_glob_and_literal() {
+    fn json_workspace_members_npm_array_glob_and_literal() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(
@@ -777,7 +777,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_primary_member_is_named_after_the_repository() {
+    fn json_primary_member_is_named_after_the_repository() {
         let outer = tempfile::tempdir().unwrap();
         let root = outer.path().join("primary-package");
         fs::create_dir(&root).unwrap();
@@ -798,7 +798,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_workspace_members_yarn_object_form() {
+    fn json_workspace_members_yarn_object_form() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(
@@ -815,7 +815,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_workspace_members_pnpm_yaml_packages_list() {
+    fn json_workspace_members_pnpm_yaml_packages_list() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(root, r#"{"name": "monorepo"}"#);
@@ -841,7 +841,7 @@ mod tests {
     /// rather than expand the listed packages and silently skip the
     /// negation, we opt the entire repo out of JS workspace damping.
     #[test]
-    fn walker_json_workspace_members_pnpm_negation_opts_out() {
+    fn json_workspace_members_pnpm_negation_opts_out() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(root, r#"{"name": "monorepo"}"#);
@@ -863,7 +863,7 @@ mod tests {
     /// `pnpm-workspace.yaml` excludes one of them. The npm-source union
     /// path must not silently re-include the excluded package.
     #[test]
-    fn walker_json_workspace_members_pnpm_negation_overrides_npm_workspaces() {
+    fn json_workspace_members_pnpm_negation_overrides_npm_workspaces() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(
@@ -887,7 +887,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_workspace_members_no_workspace_declaration() {
+    fn json_workspace_members_no_workspace_declaration() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(root, r#"{"name": "single-package"}"#);
@@ -898,7 +898,7 @@ mod tests {
     /// Mid-name globs (`packages/foo-*`) are unsupported; resolver
     /// returns no entries from that line rather than mis-matching.
     #[test]
-    fn walker_json_workspace_members_unsupported_mid_name_glob() {
+    fn json_workspace_members_unsupported_mid_name_glob() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         write_pkg(

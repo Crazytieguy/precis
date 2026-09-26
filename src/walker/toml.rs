@@ -486,7 +486,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_toml_normalize_key_path_quoted_segments() {
+    fn toml_normalize_key_path_quoted_segments() {
         // Quoted segment without a literal dot normalizes into the
         // dotted path; a literal-dot segment keeps its quotes so it
         // can't be confused with the structurally-dotted table.
@@ -504,7 +504,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_toml_sections_include_array_of_tables() {
+    fn toml_sections_include_array_of_tables() {
         let source = "[package]\nname = \"demo\"\nversion = \"1.0\"\n\n\
                       [[bin]]\nname = \"demo-cli\"\n\n\
                       [dependencies]\nserde = \"1\"\n";
@@ -536,7 +536,7 @@ mod tests {
     /// except the PEP 621 dependency arrays, which the dependency batch owns
     /// and which no second batch may claim.
     #[test]
-    fn walker_toml_project_identity_splits_lede_from_metadata() {
+    fn toml_project_identity_splits_lede_from_metadata() {
         let source = r#"[project]
 name = "demo"
 dynamic = ["version"]
@@ -559,7 +559,7 @@ requires-python = ">=3.10"
     /// A multi-line string value renders whole in the residue rather than as
     /// a dangling opener in the lede.
     #[test]
-    fn walker_toml_multiline_description_stays_out_of_the_lede() {
+    fn toml_multiline_description_stays_out_of_the_lede() {
         let source = "[project]\nname = \"demo\"\ndescription = \"\"\"\nA demo.\n\"\"\"\n";
         let (lede, residue) = identity_partition(source, 5);
         assert_eq!(lede, vec![1, 2]);
@@ -569,7 +569,7 @@ requires-python = ">=3.10"
     /// `optional-dependencies` belongs to the dependency roster whether it is
     /// written as a `[project.optional-dependencies]` table or inline.
     #[test]
-    fn walker_toml_inline_optional_dependencies_join_the_roster() {
+    fn toml_inline_optional_dependencies_join_the_roster() {
         let source = "[project]\nname = \"demo\"\noptional-dependencies = { dev = [\"pytest\"] }\n";
         let owned: Vec<usize> =
             pep621_dependency_array_rows(&collect_table_pairs(&parse(source), source)).collect();
@@ -582,14 +582,14 @@ requires-python = ">=3.10"
     /// A Cargo manifest has no residue: `[package]` is taken whole, and the
     /// identity split is a Python-manifest rule.
     #[test]
-    fn walker_toml_cargo_package_table_has_no_identity_residue() {
+    fn toml_cargo_package_table_has_no_identity_residue() {
         let source = "[package]\nname = \"demo\"\nkeywords = [\"a\"]\nexclude = [\"rfcs/**/*\"]\n";
         let sections = collect_sections(&parse(source), source);
         assert!(python_identity_non_lede_rows(source, &sections).is_empty());
     }
 
     #[test]
-    fn walker_toml_python_manifest_is_pyproject_or_any_project_table() {
+    fn toml_python_manifest_is_pyproject_or_any_project_table() {
         let parse_sections = |source: &str| collect_sections(&parse(source), source);
 
         let project = parse_sections("[project]\nname = \"demo\"\n");
@@ -613,7 +613,7 @@ requires-python = ">=3.10"
     /// classified the same as PEP 621 `[project]`: same lede rule,
     /// same lede-detection signal.
     #[test]
-    fn walker_toml_poetry_table_treated_as_pyproject_identity() {
+    fn toml_poetry_table_treated_as_pyproject_identity() {
         assert!(is_pyproject_identity_table("tool.poetry"));
         assert!(is_pyproject_identity_table("project"));
         assert!(!is_pyproject_identity_table("tool.poetry.dependencies"));
@@ -635,7 +635,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
     /// dev- and build-dependencies stay out of it, as their untargeted
     /// tables do.
     #[test]
-    fn walker_toml_cargo_target_runtime_dependencies_join_the_roster() {
+    fn toml_cargo_target_runtime_dependencies_join_the_roster() {
         let source = "[package]\nname = \"demo\"\n\n\
                       [dependencies]\nserde = \"1\"\n\n\
                       [target.'cfg(unix)'.dependencies]\nlibc = \"0.2\"\n\n\
@@ -649,7 +649,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
     }
 
     #[test]
-    fn walker_toml_cargo_targets_are_operational() {
+    fn toml_cargo_targets_are_operational() {
         let source = "[package]\nname = \"demo\"\n\n\
                       [lib]\nproc-macro = true\n\n\
                       [[bin]]\nname = \"demo-cli\"\npath = \"src/cli.rs\"\n\
@@ -666,7 +666,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
     /// (`.`, `examples/.../mdbook-remove-emphasis`, `guide/guide-helper`),
     /// plus an unrelated nested Cargo.toml that must NOT be a member.
     #[test]
-    fn walker_toml_workspace_members_mdbook_fixture() {
+    fn toml_workspace_members_mdbook_fixture() {
         let root = fixture_path("mdbook");
         let members = collect_workspace_members(&root);
 
@@ -726,7 +726,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
     }
 
     #[test]
-    fn walker_toml_workspace_members_no_workspace() {
+    fn toml_workspace_members_no_workspace() {
         let (_dir, members) = members_with("[package]\nname = \"x\"\nversion = \"0.1.0\"\n", &[]);
         assert!(
             members.is_empty(),
@@ -738,7 +738,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
     /// dependency must NOT damp the dep's `[package]`. Path-dep
     /// auto-promotion is a workspace-only behavior.
     #[test]
-    fn walker_toml_workspace_members_path_dep_without_workspace() {
+    fn toml_workspace_members_path_dep_without_workspace() {
         let (_dir, members) = members_with(
             r#"[package]
 name = "root"
@@ -759,7 +759,7 @@ foo = { path = "deps/foo" }
     }
 
     #[test]
-    fn walker_toml_workspace_members_path_dependencies() {
+    fn toml_workspace_members_path_dependencies() {
         // Root manifest with a [workspace] (otherwise no auto-members) and
         // a path dependency.
         let (dir, members) = members_with(
@@ -792,7 +792,7 @@ foo = { path = "deps/foo" }
     /// Regression guard: `[workspace].exclude` must apply *after* the
     /// candidate set is built from members ∪ path-deps.
     #[test]
-    fn walker_toml_workspace_members_exclude_blocks_path_dep() {
+    fn toml_workspace_members_exclude_blocks_path_dep() {
         let (dir, members) = members_with(
             r#"[workspace]
 members = []
@@ -824,7 +824,7 @@ foo = { path = "deps/foo" }
     /// Honest scope: `crates/foo-*` (mid-name globs) are not supported;
     /// resolver returns no members rather than silently mis-matching.
     #[test]
-    fn walker_toml_workspace_members_unsupported_glob() {
+    fn toml_workspace_members_unsupported_glob() {
         let (_dir, members) = members_with(
             r#"[workspace]
 members = ["crates/mdbook-*"]

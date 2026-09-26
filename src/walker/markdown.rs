@@ -2546,7 +2546,7 @@ Tool is a small utility that does the useful thing for you.
     /// into the *preceding* section's span: a section bounds at the next
     /// heading's `start_row - 1` (the overline row), not its title row.
     #[test]
-    fn walker_markdown_rst_overline_section_excludes_next_overline_row() {
+    fn markdown_rst_overline_section_excludes_next_overline_row() {
         let src = "\
 ======
 Title
@@ -2592,7 +2592,7 @@ Details prose paragraph one.
     /// between the title and it stay whole; only the Overview section
     /// starts past the lede.
     #[test]
-    fn walker_markdown_rst_fallback_lede_keeps_preceding_sections() {
+    fn markdown_rst_fallback_lede_keeps_preceding_sections() {
         let src = "\
 Title
 =====
@@ -2643,7 +2643,7 @@ Overview trailing details stay here.
     /// max but whose char count is under it must measure as short — length
     /// is counted in chars, not bytes.
     #[test]
-    fn walker_markdown_strip_block_for_length_counts_chars_not_bytes() {
+    fn markdown_strip_block_for_length_counts_chars_not_bytes() {
         // 40 CJK chars = 120 bytes (> 90), but 40 chars (< 90). Wrapped in
         // bold markup the stripper must remove.
         let tagline: String = "字".repeat(40);
