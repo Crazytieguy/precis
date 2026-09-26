@@ -2,7 +2,6 @@
   devcontainer.json
 .github/
   ISSUE_TEMPLATE/
-    bug_report.yaml
   PULL_REQUEST_TEMPLATE.md
   mergify.yml
   workflows/
@@ -16,6 +15,13 @@
   launch.json
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+  …
+  14→### Tests
+  …
+  20→```bash
+  21→npm run test
+  22→```
+  …
 Dockerfile
   1→FROM node:24-alpine
   2→
@@ -350,7 +356,6 @@ src/
     180→  render () {
     …
     192→  teardown () {
-    193→    this.screen.destroy()
     …
     195→}
     197→module.exports = screen
@@ -408,6 +413,3 @@ widgets/
     servicesStatus.widget.js
     servicesVsImages.widget.js
   toolbar.widget.js
-    …
-    7→class myWidget extends baseWidget(EventEmitter) {
-    …

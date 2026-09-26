@@ -1,5 +1,4 @@
-.codex/environments/
-  environment.toml
+.codex/
 .coverage
 .github/
   FUNDING.yml
@@ -10,6 +9,40 @@
 .gitignore
 .python-version
 CONTRIBUTING.md
+  …
+  24→## Development
+  …
+  30→```bash
+  31→uv sync
+  32→```
+  33→
+  34→This will create a virtual environment with the dependencies installed.
+  35→Activate the virtual environment with:
+  36→
+  37→```bash
+  38→source .venv/bin/activate
+  39→# or, with fish shell:
+  40→source .venv/bin/activate.fish
+  41→```
+  42→
+  43→Then you can run Posting with:
+  44→
+  45→```bash
+  46→posting
+  47→```
+  48→
+  49→If you wish to connect to the Textual dev tools (strongly recommended), you can run `posting` like this:
+  50→
+  51→```bash
+  52→TEXTUAL=devtools,debug posting
+  53→```
+  54→
+  55→The repo includes a test collection which is used in the automated tests, but you can also load it in for manual testing.
+  56→
+  57→```bash 
+  58→TEXTUAL=devtools,debug posting --collection tests/sample-collections/ --env tests/sample-envs/sample_base.env --env tests/sample-envs/sample_extra.env
+  59→```
+  …
 LICENSE
 Makefile
   2→.PHONY: test
@@ -71,10 +104,8 @@ README.md
   44→```
   45→
   46→Homebrew and NixOS are not officially supported at the moment.
-  47→
   48→### Prefer `pipx`?
-  49→
-  50→If you'd prefer to use `pipx`, that works too: `pipx install posting`.
+  …
   52→## Contributing
   …
   56→## Learn More
@@ -229,46 +260,8 @@ src/posting/
     …
   _start_time.py
   app.py
-    …
-    93→class AppHeader(Horizontal):
-    …
-    96→    def compose(self) -> ComposeResult:
-    …
-    108→class AppBody(Vertical):
-    …
-    112→class MainScreen(Screen[None]):
-    …
-    1205→class Posting(App[None], inherit_bindings=False):
-    …
   auth.py
   collection.py
-    …
-    19→HttpRequestMethod = Literal["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
-    20→VALID_HTTP_METHODS = get_args(HttpRequestMethod)
-    21→
-    22→
-    23→class Auth(BaseModel):
-    …
-    56→class BasicAuth(BaseModel):
-    …
-    61→class DigestAuth(BaseModel):
-    …
-    66→class BearerTokenAuth(BaseModel):
-    …
-    70→class PathParam(BaseModel):
-    …
-    75→class Header(BaseModel):
-    …
-    81→class FormItem(BaseModel):
-    …
-    87→class QueryParam(BaseModel):
-    …
-    93→class Cookie(BaseModel):
-    …
-    103→class Options(BaseModel):
-    …
-    111→class RequestBody(BaseModel):
-    …
   commands.py
   config.py
   exit_codes.py
@@ -343,7 +336,6 @@ tests/
   __snapshots__/
   posting_snapshot_app.py
   resources/
-    snapshot_report_template.jinja2
   sample-collections/
     echo-post-01.posting.yaml
     echo.posting.yaml
@@ -353,8 +345,6 @@ tests/
       my_script.py
   sample-configs/
   sample-envs/
-    sample_base.env
-    sample_extra.env
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

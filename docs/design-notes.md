@@ -69,7 +69,13 @@ Markdown build guide (`BUILDING.md`, `INSTALL.md`, `TESTING.md`, …),
 the document a README sends builders to: it yields one `CommandBlock`
 at 0.75× a README section, nothing else. No fixture has one (grid
 byte-identical); on the robustness corpus guides with rows went 1 → 6
-of 18 in plugin mode and 1 → 9 at 8000 tokens.
+of 18 in plugin mode and 1 → 9 at 8000 tokens. A root `CONTRIBUTING.md`
+is one too, but only a block under a command-titled heading counts:
+its first block is as often a commit template or a fork's clone as a
+build step (3000 −.0003, avg7 −.0003; contributing guides with rows
+1 → 21 of 141 in plugin mode, 2 → 26 at 8000, 2026-09-26). `AGENTS.md`
+stays out: in 18 of the corpora's 22 repos that have both, `CLAUDE.md`
+links or imports it, so the host already loads it.
 A README section titled for building, testing, running or development
 sells its leading shell blocks as a separate `CommandBlock` batch behind
 the outline, one per top-level section, and the section gates on it

@@ -1,10 +1,10 @@
 //! README walker: the one root README (see [`root_readme`]). Markdown is
 //! parsed with `tree-sitter-md`'s block grammar; reST and AsciiDoc (and an
 //! extensionless README without ATX headings) are line-scanned into the
-//! same shapes (see [`line_scanned_readme`]). A root Markdown build guide
-//! (`BUILDING.md`, `INSTALL.md`, …) yields one `CommandBlock` (see
-//! [`build_guide_command_blocks`]). Every other document is left to the
-//! listing, which names it.
+//! same shapes (see [`line_scanned_readme`]). A root Markdown build or
+//! contributing guide (`BUILDING.md`, `INSTALL.md`, `CONTRIBUTING.md`, …)
+//! yields one `CommandBlock` (see [`build_guide_command_blocks`]). Every
+//! other document is left to the listing, which names it.
 //!
 //! In document order:
 //! - `ReadmeHeadline` — the first heading plus the lede: the first
@@ -277,10 +277,10 @@ const HEADINGS_OUTLINE_VALUE: f64 = 974.0;
 /// heading.
 const README_SECTION_VALUE: f64 = 1181.0;
 
-/// A root build guide's command block, below the README's own. No
-/// fixture has a root build guide, so the factor was judged on the
-/// robustness corpus: of its 17 unread guides, 0.5 showed 4 at 8000
-/// tokens, 0.75 showed 8 and 1.0 showed 10.
+/// A root build guide's command block, below the README's own. The
+/// factor was judged on the robustness corpus's build guides, before
+/// contributing guides joined them: of its 17 unread guides, 0.5 showed 4
+/// at 8000 tokens, 0.75 showed 8 and 1.0 showed 10.
 const BUILD_GUIDE_COMMAND_VALUE: f64 = README_SECTION_VALUE * 0.75;
 
 /// Boost for README usage/reference sections (see
@@ -400,8 +400,8 @@ enum ReadmeMarkup {
     AsciiDoc,
 }
 
-/// Stems of the root documents a README sends a builder to ("see
-/// BUILDING.md").
+/// Stems of the root documents a README sends a builder or contributor
+/// to ("see BUILDING.md").
 fn is_build_guide_stem(stem: &str) -> bool {
     matches!(
         stem.to_ascii_lowercase().as_str(),
@@ -417,13 +417,14 @@ fn is_build_guide_stem(stem: &str) -> bool {
             | "development"
             | "developing"
             | "developer"
+            | "contributing"
     )
 }
 
 /// One `CommandBlock` per root Markdown build guide: its first run of
 /// shell blocks (see [`command_block`]), under the innermost
-/// command-titled heading, else the guide's first heading. The rest of
-/// the guide stays a listing row.
+/// command-titled heading, else (not in a contributing guide) the
+/// guide's first heading. The rest of the guide stays a listing row.
 fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     if ctx.dir_filter().named_file().is_some() {
         return Vec::new();
@@ -447,9 +448,13 @@ fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             let root = tree.root_node();
             let title = headed_sections(root).next().and_then(first_heading_child)?;
             let src_lines: Vec<&str> = source.lines().collect();
+            // A contributing guide's first block is as often a commit
+            // template or a fork's clone command as a build step.
+            let contributing = name.to_ascii_lowercase().starts_with("contributing.");
             let CommandBlockRows { heading, block } =
-                command_block(root, None, &source, &src_lines)
-                    .or_else(|| command_block(root, Some(title), &source, &src_lines))?;
+                command_block(root, None, &source, &src_lines).or_else(|| {
+                    command_block(root, Some(title), &source, &src_lines).filter(|_| !contributing)
+                })?;
             let content = single_file_lines_content(
                 &file,
                 &source,
@@ -2747,8 +2752,9 @@ mod tests {
     }
 
     /// A root build guide yields one `CommandBlock`: the first under a
-    /// command-titled heading, else the first under its title. Nothing
-    /// else of it is read, and a nested guide not at all.
+    /// command-titled heading, else the first under its title, which a
+    /// contributing guide never falls back to. Nothing else of it is
+    /// read, and a nested guide not at all.
     #[test]
     fn markdown_root_build_guides_yield_one_command_block() {
         use std::fs;
@@ -2763,6 +2769,11 @@ mod tests {
         fs::write(
             root.join("INSTALL.md"),
             "# Installation\n\nFrom source:\n\n```\n./configure && make install\n```\n",
+        )
+        .unwrap();
+        fs::write(
+            root.join("CONTRIBUTING.md"),
+            "# How to contribute\n\n```\nSigned-off-by: A <a@b.c>\n```\n",
         )
         .unwrap();
         let ctx = WalkCtx::new(root.to_path_buf());

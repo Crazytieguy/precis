@@ -13,6 +13,13 @@
 CHANGELOG.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+  …
+  44→## Building mdBook
+  …
+  51→   ```
+  52→   git clone https://github.com/rust-lang/mdBook.git
+  53→   ```
+  …
 Cargo.lock
 Cargo.toml
   1→[workspace]
@@ -263,14 +270,6 @@ crates/
         18→pub use mdbook_core::book;
         19→pub use mdbook_core::config;
         20→pub use mdbook_core::errors;
-        …
-        28→pub trait Renderer {
-        …
-        30→    fn name(&self) -> &str;
-        …
-        40→pub struct RenderContext {
-        …
-        63→impl RenderContext {
         …
   mdbook-summary/
     Cargo.toml

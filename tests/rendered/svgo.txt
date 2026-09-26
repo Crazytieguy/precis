@@ -21,6 +21,25 @@
     plugin-interactive-tools.cjs
 .yarnrc.yml
 CONTRIBUTING.md
+  …
+  19→## Development
+  …
+  30→```sh
+  31→git clone https://github.com/svg/svgo.git
+  32→```
+  33→
+  34→As this is a Node.js project and uses Yarn for package management, install the dependencies.
+  35→
+  36→```sh
+  37→yarn install
+  38→```
+  39→
+  40→Finally, make sure all quality assurance checks pass before making changes. This will lint, build, and test the project.
+  41→
+  42→```sh
+  43→yarn run qa
+  44→```
+  …
 LICENSE
 README.md
   …
@@ -114,29 +133,6 @@ docs/
     collapseGroups.mdx
     convertColors.mdx
     convertEllipseToCircle.mdx
-    convertOneStopGradients.mdx
-    convertPathData.mdx
-    convertShapeToPath.mdx
-    convertStyleToAttrs.mdx
-    convertTransform.mdx
-    index.mdx
-    inlineStyles.mdx
-    mergePaths.mdx
-    mergeStyles.mdx
-    minifyStyles.mdx
-    moveElemsAttrsToGroup.mdx
-    moveGroupAttrsToElems.mdx
-    prefixIds.mdx
-    removeAttributesBySelector.mdx
-    removeAttrs.mdx
-    removeComments.mdx
-    removeDeprecatedAttrs.mdx
-    removeDesc.mdx
-    removeDimensions.mdx
-    removeDoctype.mdx
-    removeEditorsNSData.mdx
-    removeElementsByAttr.mdx
-    removeEmptyAttrs.mdx
     …
   05-plugins-api.mdx
   06-migrations/

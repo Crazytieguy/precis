@@ -26,6 +26,27 @@ CLAUDE.md
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
+  …
+  27→## Running Examples
+  …
+  33→```bash
+  34→> npm run examples
+  35→# Open 127.0.0.1:3000
+  36→```
+  37→
+  38→Running sandbox in browser
+  39→
+  40→```bash
+  41→> npm start
+  42→# Open 127.0.0.1:3000
+  43→```
+  44→
+  45→Running sandbox in terminal
+  46→
+  47→```bash
+  48→> npm start
+  49→> node ./sandbox/client
+  50→```
 CONTRIBUTORS.md
 ECOSYSTEM.md
 LICENSE
@@ -235,24 +256,6 @@ lib/
     55→axios.isCancel = isCancel;
     56→axios.VERSION = VERSION;
     57→axios.toFormData = toFormData;
-    …
-    60→axios.AxiosError = AxiosError;
-    …
-    63→axios.Cancel = axios.CanceledError;
-    …
-    66→axios.all = function all(promises) {
-    …
-    70→axios.spread = spread;
-    …
-    73→axios.isAxiosError = isAxiosError;
-    …
-    76→axios.mergeConfig = mergeConfig;
-    77→
-    78→axios.AxiosHeaders = AxiosHeaders;
-    79→
-    80→axios.formToJSON = (thing) => formDataToJSON(utils.isHTMLForm(thing) ? new FormData(thing) : thing);
-    81→
-    82→axios.getAdapter = adapters.getAdapter;
     …
   cancel/
     CancelToken.js

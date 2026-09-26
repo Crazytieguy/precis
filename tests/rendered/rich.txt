@@ -23,6 +23,19 @@ AI_POLICY.md
 CHANGELOG.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+  …
+  52→### Tests
+  …
+  56→```
+  57→make test
+  58→```
+  59→
+  60→Or if you don't have `make`, run the following:
+  61→
+  62→```
+  63→pytest --cov-report term-missing --cov=rich tests/ -vv
+  64→```
+  …
 CONTRIBUTORS.md
 FAQ.md
 LICENSE
@@ -299,7 +312,6 @@ rich/
     35→    ) -> Measurement:
     36→        return Measurement(1, options.max_width)
     39→def make_test_card() -> Table:
-    40→    """Get a renderable that demonstrates a number of features."""
     …
   _emoji_codes.py
   _emoji_replace.py
@@ -318,16 +330,6 @@ rich/
   _timer.py
   _unicode_data/
     __init__.py
-      …
-      15→from rich._unicode_data._versions import VERSIONS
-      …
-      20→VERSION_ORDER = sorted(
-      …
-      28→VERSION_SET = frozenset(VERSIONS)
-      29→
-      30→
-      31→def _parse_version(version: str) -> tuple[int, int, int]:
-      …
     _versions.py
     unicode10-0-0.py
     unicode11-0-0.py

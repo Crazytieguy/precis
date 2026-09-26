@@ -24,6 +24,15 @@
   tasks.json
 CHANGELOG.md
 CONTRIBUTING.md
+  …
+  89→## Running the editor tests
+  90→
+  91→```bash
+  92→> npm run build-monaco-editor
+  93→> npm run test
+  94→> npm run compile --prefix webpack-plugin
+  95→
+  …
 LICENSE.txt
 MAINTAINING.md
 README.md
@@ -81,15 +90,6 @@ monaco-lsp-client/
   README.md
   generator/
     index.ts
-      …
-      7→class LineWriter {
-      …
-      73→interface MetaModel {
-      …
-      82→interface MetaData {
-      …
-      86→interface Request {
-      …
   package-lock.json
   package.json
     …
@@ -307,9 +307,6 @@ samples/
     …
 scripts/
   ci/
-    build-monaco-editor-core-pkg.ts
-    build-monaco-editor-pkg.ts
-    env.ts
   lib/
     index.ts
 src/

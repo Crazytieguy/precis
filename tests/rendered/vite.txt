@@ -27,6 +27,13 @@
 .oxfmtrc.json
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+  …
+  23→### Ignoring commits when running `git blame`
+  …
+  28→```sh
+  29→git config --local blame.ignoreRevsFile .git-blame-ignore-revs
+  30→```
+  …
 LICENSE
 README.md
   …
@@ -421,15 +428,7 @@ playground/
     package.json
     server.js
   css-lightningcss-root/
-    __tests__/
-    package.json
-    root/
-    vite.config.js
   css-no-codesplit/
-    __tests__/
-    async-js.css
-    async-js.js
-    …
   css-sourcemap/
   data-uri/
   define/
@@ -461,11 +460,6 @@ playground/
   hmr/
   hmr-full-bundle-mode/
   hmr-root/
-    __tests__/
-    foo.js
-    root/
-      index.html
-    vite.config.ts
   hmr-ssr/
   html/
   import-assertion/
