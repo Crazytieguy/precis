@@ -9,9 +9,10 @@
 //! `row + 1`, the numbering of [`crate::content::Span`]. Use
 //! [`SourceFile::node_rows`](super::SourceFile::node_rows) to turn a node
 //! into rows; it ignores a final row the node covers only with whitespace.
-//! Row lists may be unsorted, may repeat a row and may include blank rows:
-//! the engine sorts, dedups and drops blank rows from every part (interior
-//! blanks still render, bridged between the kept rows around them).
+//! Row lists may be unsorted, may repeat a row and may include blank rows,
+//! and an [`Item`] may be empty: the engine sorts, dedups and drops blank
+//! rows from every part (interior blanks still render, bridged between the
+//! kept rows around them), then drops empty items.
 //!
 //! # Parts of a declaration
 //!
