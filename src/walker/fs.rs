@@ -347,15 +347,9 @@ fn is_declared_workspace_member(dir: &Path, ctx: &WalkCtx) -> bool {
             .is_workspace_member(&dir.join("package.json"), ctx)
 }
 
-const MODULE_ENTRYPOINT_FILES: &[&str] = &[
-    "index.ts",
-    "index.tsx",
-    "index.js",
-    "index.mjs",
-    "index.cjs",
-    "mod.rs",
-    "__init__.py",
-];
+#[rustfmt::skip]
+const MODULE_ENTRYPOINT_FILES: &[&str] =
+    &["index.ts", "index.tsx", "index.js", "index.mjs", "index.cjs", "mod.rs", "__init__.py"];
 const MODULE_SIBLING_EXTS: &[&str] = &["rs", "ts", "tsx", "py"];
 
 /// Case-insensitive, and `Sources/` counts: that is the spelling

@@ -341,11 +341,9 @@ fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
 }
 
 fn unquote_string(node: Node, source: &str) -> String {
-    let raw = source[node.byte_range()].trim();
-    raw.strip_prefix('"')
-        .and_then(|inner| inner.strip_suffix('"'))
-        .unwrap_or(raw)
-        .to_string()
+    first_child_of_kind(node, "string_content").map_or_else(String::new, |content| {
+        source[content.byte_range()].to_string()
+    })
 }
 
 // --- JS/TS workspace-member resolution ---
