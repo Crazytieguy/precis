@@ -36,14 +36,13 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let source = &*file.source;
     let in_header = is_header(&file.path);
-    let guard_name = header_guard_name(root, source);
     let mut decls = Vec::new();
     let mut directives = Vec::new();
     walk_top_level(root, source, &mut |node| {
         if node.kind().starts_with('#') {
             directives.extend(gate_directive(node, file));
         } else {
-            decls.extend(declaration(node, file, in_header, guard_name));
+            decls.extend(declaration(node, file, in_header));
         }
     });
     attach_directives(&mut decls, &directives);
@@ -74,12 +73,7 @@ fn is_header(path: &Path) -> bool {
         .is_some_and(|extension| extension.eq_ignore_ascii_case("h"))
 }
 
-fn declaration(
-    node: Node,
-    file: &SourceFile,
-    in_header: bool,
-    guard_name: Option<&str>,
-) -> Option<DeclInfo> {
+fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInfo> {
     let source = &*file.source;
     let shape = match node.kind() {
         "function_definition" => Shape::Callable,
@@ -89,7 +83,7 @@ fn declaration(
         | "union_specifier"
         | "enum_specifier"
         | "preproc_function_def" => Shape::Whole,
-        "preproc_def" if !is_header_guard_define(node, source, guard_name) => Shape::Whole,
+        "preproc_def" if !is_header_guard_define(node, source) => Shape::Whole,
         _ => return None,
     };
     // A header's `static inline` definition is the header-only accessor
@@ -456,12 +450,6 @@ fn header_guard_body_node<'a>(root: Node<'a>, source: &str) -> Option<Node<'a>> 
     candidate
 }
 
-fn header_guard_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
-    let guard = header_guard_body_node(root, source)?;
-    let name = guard.child_by_field_name("name")?;
-    Some(&source[name.byte_range()])
-}
-
 /// True iff `ifdef` is `#ifndef X` whose first child (comments aside)
 /// is `#define X`.
 fn is_header_guard(ifdef: Node, source: &str) -> bool {
@@ -483,22 +471,14 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
     })
 }
 
-/// True iff a valueless `#define X` is header-guard envelope rather than
-/// a macro: `X` is the file's guard symbol, or, for guards not
-/// recognized as wrapping the file, an all-caps name.
-fn is_header_guard_define(node: Node, source: &str, guard_name: Option<&str>) -> bool {
-    if node.child_by_field_name("value").is_some() {
-        return false;
-    }
-    let Some(name) = node.child_by_field_name("name") else {
-        return false;
-    };
-    let name = &source[name.byte_range()];
-    !name.is_empty()
-        && (guard_name == Some(name)
-            || name
-                .chars()
-                .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_'))
+/// True iff `define` is the `#define X` of an `#ifndef X` header guard.
+fn is_header_guard_define(define: Node, source: &str) -> bool {
+    define
+        .parent()
+        .filter(|guard| is_header_guard(*guard, source))
+        .and_then(|guard| guard.child_by_field_name("name"))
+        .zip(define.child_by_field_name("name"))
+        .is_some_and(|(guard, defined)| source[guard.byte_range()] == source[defined.byte_range()])
 }
 
 fn has_storage_class(node: Node, source: &str, keyword: &str) -> bool {
@@ -771,17 +751,24 @@ int next;
     }
 
     #[test]
-    fn c_macros_are_whole_and_guard_like_defines_are_skipped() {
+    fn c_macros_are_whole_and_only_the_guard_define_is_skipped() {
         let source = "\
-#define _POSIX_C_SOURCE 200809L
+#pragma once
+#ifndef UTIL_H
+#define UTIL_H
+#define _GNU_SOURCE
 #define HAVE_FEATURE
-#define Foo_Debug
 #define MAX(a, b) \\
     ((a) > (b) ? (a) : (b))
+int util(void);
+#endif
 ";
         let model = model("util.h", source);
-        let heads: Vec<_> = model.decls.iter().map(|decl| decl.head.clone()).collect();
-        assert_eq!(heads, vec![vec![1], vec![3], vec![4, 5]]);
+        assert_eq!(
+            name_rows_of(&model),
+            vec![vec![4], vec![5], vec![6], vec![8]]
+        );
+        assert_eq!(model.decls[2].head, vec![6, 7]);
     }
 
     #[test]

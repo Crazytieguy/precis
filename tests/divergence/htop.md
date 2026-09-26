@@ -143,41 +143,42 @@ Score(3000)=0.578 I=0.656 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | ns | 7661 |  | 131 | CRT.h: the colour schemes selectable by color_scheme / -C | 3.9 |  | 0.446 |
 | walker |  | 7694 | 70 | Code::CodeKey { rung: Names, file: HeaderOptionsPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.446 |
 | walker |  | 7724 | 30 | Code::CodeKey { rung: Decl, file: HeaderOptionsPanel.h, decl: 1, sub: 0, line: 15 } |  |  | 0.446 |
-| walker |  | 7937 | 213 | Code::CodeKey { rung: Names, file: Scheduling.h, decl: 0, sub: 0, line: 0 } |  |  | 0.446 |
-| walker |  | 7949 | 12 | Code::CodeKey { rung: Decl, file: Scheduling.h, decl: 10, sub: 0, line: 46 } |  |  | 0.446 |
-| walker |  | 7963 | 14 | Code::CodeKey { rung: Decl, file: Scheduling.h, decl: 7, sub: 0, line: 37 } |  |  | 0.446 |
+| walker |  | 7954 | 230 | Code::CodeKey { rung: Names, file: Scheduling.h, decl: 0, sub: 0, line: 0 } |  |  | 0.446 |
+| walker |  | 7966 | 12 | Code::CodeKey { rung: Decl, file: Scheduling.h, decl: 11, sub: 0, line: 46 } |  |  | 0.446 |
 | ns | 7974 |  | 313 | Makefile.am: what gets built, and the per-platform conditional blocks | 4.1 |  | 0.438 |
-| walker |  | 8019 | 56 | Code::CodeKey { rung: Decl, file: Scheduling.h, decl: 1, sub: 0, line: 19 } |  |  | 0.438 |
-| walker |  | 8055 | 36 | Code::CodeKey { rung: Names, file: UptimeMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.438 |
-| walker |  | 8182 | 127 | Code::CodeKey { rung: Names, file: Affinity.h, decl: 0, sub: 0, line: 0 } |  |  | 0.438 |
-| walker |  | 8205 | 23 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 6, sub: 0, line: 43 } |  |  | 0.438 |
-| walker |  | 8230 | 25 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 5, sub: 0, line: 39 } |  |  | 0.438 |
-| walker |  | 8266 | 36 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 1, sub: 0, line: 26 } |  |  | 0.438 |
+| walker |  | 7980 | 14 | Code::CodeKey { rung: Decl, file: Scheduling.h, decl: 8, sub: 0, line: 37 } |  |  | 0.438 |
+| walker |  | 8005 | 25 | Code::CodeKey { rung: Decl, file: Scheduling.h, decl: 2, sub: 0, line: 22 } |  |  | 0.438 |
+| walker |  | 8034 | 29 | Code::CodeKey { rung: Decl, file: Scheduling.h, decl: 1, sub: 0, line: 19 } |  |  | 0.438 |
+| walker |  | 8070 | 36 | Code::CodeKey { rung: Names, file: UptimeMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.438 |
+| walker |  | 8197 | 127 | Code::CodeKey { rung: Names, file: Affinity.h, decl: 0, sub: 0, line: 0 } |  |  | 0.438 |
+| walker |  | 8220 | 23 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 6, sub: 0, line: 43 } |  |  | 0.438 |
+| walker |  | 8245 | 25 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 5, sub: 0, line: 39 } |  |  | 0.438 |
 | ns | 8275 |  | 301 | configure.ac: the complete list of build options | 4.2 |  | 0.431 |
-| walker |  | 8289 | 23 | Code::CodeKey { rung: Doc, file: History.h, decl: 3, sub: 0, line: 28 } |  |  | 0.431 |
-| walker |  | 8418 | 129 | Code::CodeKey { rung: Names, file: DynamicMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.431 |
-| walker |  | 8470 | 52 | Code::CodeKey { rung: Decl, file: DynamicMeter.h, decl: 1, sub: 0, line: 17 } |  |  | 0.431 |
+| walker |  | 8281 | 36 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 1, sub: 0, line: 26 } |  |  | 0.431 |
+| walker |  | 8304 | 23 | Code::CodeKey { rung: Doc, file: History.h, decl: 3, sub: 0, line: 28 } |  |  | 0.431 |
+| walker |  | 8433 | 129 | Code::CodeKey { rung: Names, file: DynamicMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.431 |
+| walker |  | 8485 | 52 | Code::CodeKey { rung: Decl, file: DynamicMeter.h, decl: 1, sub: 0, line: 17 } |  |  | 0.431 |
 | ns | 8559 |  | 284 | CI: every job in the GitHub Actions build matrix | 4.3 |  | 0.425 |
 | ns | 8707 |  | 148 | How htop is tested: TESTPLAN and the lua/rote UI harness | 4.4 |  | 0.422 |
-| walker |  | 8748 | 278 | Code::CodeKey { rung: Names, file: CPUMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.422 |
+| walker |  | 8763 | 278 | Code::CodeKey { rung: Names, file: CPUMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.422 |
 | ns | 8793 |  | 86 | Auxiliary directory listings: docs, scripts, iwyu, m4, workflows | 4.5 |  | 0.430 |
-| walker |  | 8909 | 161 | Code::CodeKey { rung: Decl, file: CPUMeter.h, decl: 1, sub: 0, line: 13 } |  |  | 0.430 |
+| walker |  | 8924 | 161 | Code::CodeKey { rung: Decl, file: CPUMeter.h, decl: 1, sub: 0, line: 13 } |  |  | 0.430 |
 | ns | 8992 |  | 199 | linux/: the complete Linux platform back-end | 5.1 |  | 0.449 |
-| walker |  | 9152 | 243 | Code::CodeKey { rung: Names, file: LineEditor.h, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| walker |  | 9167 | 243 | Code::CodeKey { rung: Names, file: LineEditor.h, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
 | ns | 9204 |  | 212 | darwin/, freebsd/, netbsd/ and openbsd/ contents | 5.2 |  | 0.466 |
-| walker |  | 9240 | 88 | Code::CodeKey { rung: Decl, file: LineEditor.h, decl: 2, sub: 0, line: 16 } |  |  | 0.466 |
-| walker |  | 9250 | 10 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 5, sub: 0, line: 31 } |  |  | 0.466 |
-| walker |  | 9260 | 10 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 8, sub: 0, line: 42 } |  |  | 0.466 |
-| walker |  | 9272 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 3, sub: 0, line: 25 } |  |  | 0.466 |
-| walker |  | 9284 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 7, sub: 0, line: 37 } |  |  | 0.466 |
-| walker |  | 9297 | 13 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 4, sub: 0, line: 28 } |  |  | 0.466 |
-| walker |  | 9311 | 14 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 6, sub: 0, line: 34 } |  |  | 0.466 |
-| walker |  | 9329 | 18 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 9, sub: 0, line: 47 } |  |  | 0.466 |
+| walker |  | 9255 | 88 | Code::CodeKey { rung: Decl, file: LineEditor.h, decl: 2, sub: 0, line: 16 } |  |  | 0.466 |
+| walker |  | 9265 | 10 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 5, sub: 0, line: 31 } |  |  | 0.466 |
+| walker |  | 9275 | 10 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 8, sub: 0, line: 42 } |  |  | 0.466 |
+| walker |  | 9287 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 3, sub: 0, line: 25 } |  |  | 0.466 |
+| walker |  | 9299 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 7, sub: 0, line: 37 } |  |  | 0.466 |
+| walker |  | 9312 | 13 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 4, sub: 0, line: 28 } |  |  | 0.466 |
+| walker |  | 9326 | 14 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 6, sub: 0, line: 34 } |  |  | 0.466 |
+| walker |  | 9344 | 18 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 9, sub: 0, line: 47 } |  |  | 0.466 |
 | ns | 9351 |  | 147 | dragonflybsd/, solaris/ and unsupported/ contents | 5.3 |  | 0.477 |
-| walker |  | 9460 | 131 | Code::CodeKey { rung: Names, file: MetersPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
 | ns | 9474 |  | 123 | generic/ and zfs/: routines shared across platforms | 5.4 |  | 0.484 |
-| walker |  | 9536 | 76 | Code::CodeKey { rung: Decl, file: MetersPanel.h, decl: 3, sub: 0, line: 21 } |  |  | 0.484 |
+| walker |  | 9475 | 131 | Code::CodeKey { rung: Names, file: MetersPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.484 |
+| walker |  | 9551 | 76 | Code::CodeKey { rung: Decl, file: MetersPanel.h, decl: 3, sub: 0, line: 21 } |  |  | 0.484 |
 | ns | 9622 |  | 148 | linux/Platform.h: the symbols every platform must provide | 5.5 |  | 0.479 |
 | ns | 9847 |  | 225 | pcp/: the Performance Co-Pilot back-end and its dynamic definition trees | 5.6 |  | 0.496 |
 | ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.493 |
-| walker |  | 9995 | 459 | Code::CodeKey { rung: Names, file: Settings.h, decl: 0, sub: 0, line: 0 } |  |  | 0.493 |
+| walker |  | 9985 | 434 | Code::CodeKey { rung: Names, file: Settings.h, decl: 0, sub: 0, line: 0 } |  |  | 0.493 |

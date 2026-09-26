@@ -95,6 +95,23 @@ include/
     105→// Size of the receive buffer for incoming string data
     106→#define MAX_RECV_BUF_LEN 256
     …
+    111→#define SEND_BRAND
+    …
+    118→#define BROADCAST_ALL_MOVEMENT
+    …
+    125→#define SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT
+    …
+    129→#define DO_FLUID_FLOW
+    …
+    135→#define ALLOW_CHESTS
+    …
+    146→#define ENABLE_PICKUP_ANIMATION
+    148→// If defined, players are able to receive damage from nearby cacti.
+    149→#define ENABLE_CACTUS_DAMAGE
+    …
+    154→// If defined, logs cases when packet length doesn't match parsed byte count
+    155→#define DEV_LOG_LENGTH_DISCREPANCY
+    …
     165→#define STATE_NONE 0
     166→#define STATE_STATUS 1
     167→#define STATE_LOGIN 2
@@ -135,20 +152,6 @@ include/
     206→  short z;
     207→  short visited_x[VISITED_HISTORY];
     208→  short visited_z[VISITED_HISTORY];
-    209→  #ifdef SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT
-    210→    uint16_t packets_since_update;
-    211→  #endif
-    212→  int8_t yaw;
-    213→  int8_t pitch;
-    214→  uint8_t grounded_y;
-    215→  uint8_t health;
-    216→  uint8_t hunger;
-    217→  uint16_t saturation;
-    218→  uint8_t hotbar;
-    219→  uint16_t inventory_items[41];
-    220→  uint16_t craft_items[9];
-    221→  uint8_t inventory_count[41];
-    222→  uint8_t craft_count[9];
     …
     238→} PlayerData;
     239→
