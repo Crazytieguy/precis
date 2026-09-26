@@ -71,7 +71,6 @@ README.md
   61→
   62→```c
   63→struct yourAverageStringLibrary {
-  64→    char *buf;
   …
   119→SDS basics
   120→===
@@ -251,6 +250,7 @@ sds.h
   266→void *sds_malloc(size_t size);
   267→void *sds_realloc(void *ptr, size_t size);
   268→void sds_free(void *ptr);
+  269→
   270→#ifdef REDIS_TEST
   271→int sdsTest(int argc, char *argv[]);
   272→#endif

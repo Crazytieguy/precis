@@ -56,20 +56,19 @@ Score(3000)=0.702 I=0.934 C=0.527 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 3303 | 148 | Plaintext::DeclSurface { file: check-pcp-style.sh } |  |  | 0.680 |
 | walker |  | 3530 | 227 | Code::CodeKey { rung: Names, file: CRT.c, decl: 0, sub: 0, line: 0 } |  |  | 0.680 |
 | ns | 3556 |  | 311 | Panel.h: the Panel struct (geometry, selection, scrolling, function bar) | 2.8 |  | 0.655 |
-| walker |  | 3735 | 205 | Code::CodeKey { rung: Names, file: CRT.c, decl: 0, sub: 1, line: 0 } |  |  | 0.655 |
-| walker |  | 3745 | 10 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 17, sub: 0, line: 91 } |  |  | 0.655 |
-| walker |  | 3757 | 12 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 21, sub: 0, line: 102 } |  |  | 0.655 |
-| walker |  | 3767 | 10 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 22, sub: 0, line: 105 } |  |  | 0.655 |
-| walker |  | 3801 | 34 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 20, sub: 0, line: 99 } |  |  | 0.655 |
+| walker |  | 3729 | 199 | Code::CodeKey { rung: Names, file: CRT.c, decl: 0, sub: 1, line: 0 } |  |  | 0.655 |
+| walker |  | 3736 | 7 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 21, sub: 0, line: 102 } |  |  | 0.655 |
+| walker |  | 3746 | 10 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 17, sub: 0, line: 91 } |  |  | 0.655 |
+| walker |  | 3858 | 112 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 15, sub: 0, line: 65 } |  |  | 0.655 |
 | ns | 3869 |  | 313 | Meter.h: MeterClass - the full definition record of a meter | 2.9 |  | 0.634 |
-| walker |  | 3915 | 114 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 15, sub: 0, line: 65 } |  |  | 0.634 |
-| walker |  | 4176 | 261 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 16, sub: 0, line: 76 } |  |  | 0.634 |
+| walker |  | 4103 | 245 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 16, sub: 0, line: 76 } |  |  | 0.634 |
+| walker |  | 4323 | 220 | Code::CodeKey { rung: Names, file: CRT.c, decl: 0, sub: 2, line: 0 } |  |  | 0.634 |
+| walker |  | 4328 | 5 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 22, sub: 0, line: 105 } |  |  | 0.634 |
 | ns | 4343 |  | 474 | Process.h: every field of the Process struct, declarations only | 2.10 |  | 0.602 |
-| walker |  | 4509 | 333 | Code::CodeKey { rung: Names, file: CRT.c, decl: 0, sub: 2, line: 0 } |  |  | 0.602 |
-| walker |  | 4523 | 14 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 31, sub: 0, line: 979 } |  |  | 0.602 |
 | ns | 4536 |  | 193 | Process.h: the shared ProcessState enum | 2.11 |  | 0.589 |
-| walker |  | 4543 | 20 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 42, sub: 0, line: 1119 } |  |  | 0.589 |
-| walker |  | 4565 | 22 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 37, sub: 0, line: 1066 } |  |  | 0.589 |
+| walker |  | 4553 | 225 | Code::CodeKey { rung: Names, file: CRT.c, decl: 0, sub: 3, line: 0 } |  |  | 0.589 |
+| walker |  | 4557 | 4 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 37, sub: 0, line: 1066 } |  |  | 0.589 |
+| walker |  | 4565 | 8 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 42, sub: 0, line: 1119 } |  |  | 0.589 |
 | walker |  | 4587 | 22 | Code::CodeKey { rung: Decl, file: CRT.c, decl: 38, sub: 0, line: 1071 } |  |  | 0.589 |
 | ns | 4664 |  | 128 | Process.h: ProcessFieldData, the per-column metadata record | 2.12 |  | 0.581 |
 | walker |  | 4770 | 183 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
@@ -90,13 +89,14 @@ Score(3000)=0.702 I=0.934 C=0.527 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | ns | 6010 |  | 381 | Action_setBindings, part 2: control characters and lowercase keys | 3.2 | 3.1 | 0.522 |
 | walker |  | 6147 | 184 | Code::CodeKey { rung: Names, file: Action.c, decl: 0, sub: 3, line: 0 } |  |  | 0.522 |
 | ns | 6264 |  | 254 | Action_setBindings, part 3: function keys, mouse and screen-tab keys | 3.3 | 3.2 | 0.514 |
-| walker |  | 6321 | 174 | Code::CodeKey { rung: Names, file: Action.c, decl: 0, sub: 4, line: 0 } |  |  | 0.514 |
-| walker |  | 6347 | 26 | Code::CodeKey { rung: Decl, file: Action.c, decl: 39, sub: 0, line: 494 } |  |  | 0.514 |
+| walker |  | 6333 | 186 | Code::CodeKey { rung: Names, file: Action.c, decl: 0, sub: 4, line: 0 } |  |  | 0.514 |
+| walker |  | 6347 | 14 | Code::CodeKey { rung: Decl, file: Action.c, decl: 39, sub: 0, line: 494 } |  |  | 0.514 |
 | ns | 6446 |  | 182 | Action.h: the Htop_Reaction flag set every action handler returns | 3.4 |  | 0.510 |
 | walker |  | 6515 | 168 | Code::CodeKey { rung: Names, file: Settings.c, decl: 0, sub: 1, line: 0 } |  |  | 0.510 |
 | ns | 6555 |  | 109 | Action.h: the State struct every action handler receives | 3.5 |  | 0.505 |
-| walker |  | 6813 | 298 | Code::CodeKey { rung: Names, file: Action.c, decl: 0, sub: 5, line: 0 } |  |  | 0.505 |
-| walker |  | 6833 | 20 | Code::CodeKey { rung: Decl, file: Action.c, decl: 46, sub: 0, line: 637 } |  |  | 0.505 |
+| walker |  | 6711 | 196 | Code::CodeKey { rung: Names, file: Action.c, decl: 0, sub: 5, line: 0 } |  |  | 0.505 |
+| walker |  | 6718 | 7 | Code::CodeKey { rung: Decl, file: Action.c, decl: 46, sub: 0, line: 637 } |  |  | 0.505 |
+| walker |  | 6833 | 115 | Code::CodeKey { rung: Names, file: Action.c, decl: 0, sub: 6, line: 0 } |  |  | 0.505 |
 | ns | 6948 |  | 393 | A real htoprc: the config file format, meter vocabulary and screen definitions | 3.6 |  | 0.496 |
 | walker |  | 7011 | 178 | Code::CodeKey { rung: Names, file: Settings.c, decl: 0, sub: 2, line: 0 } |  |  | 0.496 |
 | walker |  | 7028 | 17 | Code::CodeKey { rung: Decl, file: Settings.c, decl: 20, sub: 0, line: 601 } |  |  | 0.496 |
