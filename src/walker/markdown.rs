@@ -2338,7 +2338,7 @@ mod tests {
     }
 
     /// A build/test/run section yields one `CommandBlock` per top-level
-    /// section — its first shell or untagged fence, never a code sample —
+    /// section — its shell, untagged or indented blocks, never a code sample —
     /// and the section holding it gates on it.
     #[test]
     fn markdown_command_block_per_section() {
