@@ -52,13 +52,6 @@ struct Decl {
     kind: DeclKind,
 }
 
-impl Decl {
-    /// Rows of the block, opener and closing brace included.
-    fn rows(&self) -> usize {
-        self.close_line.saturating_sub(self.open_line) + 1
-    }
-}
-
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     for file in files_with_any_extension(dir, &["prisma"], ctx) {
@@ -84,7 +77,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             key: toc_key.clone(),
             predecessor: None,
             content,
-            value: toc_value(depth),
+            value: crate::value::manifest_identity_value(1.0, depth),
         });
 
         for decl in decls.iter() {
@@ -94,9 +87,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     out
 }
 
-/// Emit the body batch(es) for one declaration. A wide model splits
-/// into a head `Decl` + a `DeclTail`; everything else emits a single
-/// whole-block `Decl`.
+/// Emit the body batch(es) for one declaration. A wide model splits at
+/// its row midpoint into a head `Decl` + a `DeclTail` behind it;
+/// everything else emits a single whole-block `Decl`. The midpoint can
+/// land on a blank or comment row, which is harmless because
+/// `build_file_spans` trims blank rows at span edges.
 fn push_decl_batches(
     out: &mut Vec<Batch>,
     file: &Path,
@@ -105,57 +100,39 @@ fn push_decl_batches(
     depth: f64,
     toc_key: &BatchKey,
 ) {
-    let body_rows = decl.rows();
+    let body_rows = decl.close_line.saturating_sub(decl.open_line) + 1;
     let value = decl_value(body_rows.saturating_sub(2), depth);
-    let head_key: BatchKey = PrismaKey::Decl {
-        file: file.to_path_buf(),
-        start_line: decl.open_line,
-    }
-    .into();
-
     let split_at = (decl.kind == DeclKind::Model && body_rows > MODEL_SPLIT_MIN_ROWS)
-        .then(|| model_split_line(decl));
-
-    let head_end = split_at.map_or(decl.close_line, |s| s - 1);
-    let Some(head_content) =
-        single_file_lines_content(file, source, (decl.open_line..=head_end).collect())
-    else {
-        return;
-    };
-    out.push(Batch {
-        key: head_key.clone(),
-        predecessor: Some(toc_key.clone()),
-        content: head_content,
-        value,
-    });
-
-    let Some(tail_start) = split_at else {
-        return;
-    };
-    let Some(tail_content) =
-        single_file_lines_content(file, source, (tail_start..=decl.close_line).collect())
-    else {
-        return;
-    };
-    out.push(Batch {
-        key: PrismaKey::DeclTail {
-            file: file.to_path_buf(),
-            start_line: decl.open_line,
-            tail_start_line: tail_start,
+        .then(|| decl.open_line + (decl.close_line - decl.open_line) / 2);
+    let head = (decl.open_line, split_at.map_or(decl.close_line, |s| s - 1));
+    let tail = split_at.map(|s| (s, decl.close_line));
+    let mut predecessor = toc_key.clone();
+    for (start, end) in std::iter::once(head).chain(tail) {
+        let Some(content) = single_file_lines_content(file, source, (start..=end).collect()) else {
+            return;
+        };
+        let file = file.to_path_buf();
+        let key: BatchKey = if start == decl.open_line {
+            PrismaKey::Decl {
+                file,
+                start_line: start,
+            }
+        } else {
+            PrismaKey::DeclTail {
+                file,
+                start_line: decl.open_line,
+                tail_start_line: start,
+            }
         }
-        .into(),
-        predecessor: Some(head_key),
-        value,
-        content: tail_content,
-    });
-}
-
-/// Split line for a wide model: the midpoint row of the block. No
-/// field-line awareness — the split can land on a blank/comment row,
-/// which is harmless because `build_file_spans` trims blank rows at span
-/// edges. Strictly interior for any block past `MODEL_SPLIT_MIN_ROWS`.
-fn model_split_line(decl: &Decl) -> usize {
-    decl.open_line + (decl.close_line - decl.open_line) / 2
+        .into();
+        out.push(Batch {
+            key: key.clone(),
+            predecessor: Some(predecessor),
+            content,
+            value,
+        });
+        predecessor = key;
+    }
 }
 
 /// Top-level Prisma declarations with their brace-block row ranges,
@@ -227,10 +204,6 @@ fn decl_keyword(line: &str) -> Option<DeclKind> {
     } else {
         None
     }
-}
-
-fn toc_value(depth: f64) -> f64 {
-    crate::value::manifest_identity_value(1.0, depth)
 }
 
 /// Per-decl body value. Below the TOC cat (so the catalog surface
@@ -355,7 +328,7 @@ model Real {
             .iter()
             .find(|b| matches!(b.key, BatchKey::Prisma(PrismaKey::Toc { .. })))
             .expect("toc batch");
-        assert!((toc.value - toc_value(unpinned)).abs() < 1e-9);
+        assert!((toc.value - crate::value::manifest_identity_value(1.0, unpinned)).abs() < 1e-9);
 
         // Adding one model turns the pin back on at the same path.
         std::fs::write(
@@ -368,7 +341,7 @@ model Real {
             .into_iter()
             .find(|b| matches!(b.key, BatchKey::Prisma(PrismaKey::Toc { .. })))
             .expect("toc batch");
-        assert!((toc.value - toc_value(pinned)).abs() < 1e-9);
+        assert!((toc.value - crate::value::manifest_identity_value(1.0, pinned)).abs() < 1e-9);
     }
 
     #[test]
@@ -440,17 +413,5 @@ model B {
             .iter()
             .any(|b| matches!(b.key, BatchKey::Prisma(PrismaKey::Toc { .. })));
         assert!(has_toc);
-    }
-
-    #[test]
-    fn prisma_wide_model_splits_strictly_interior() {
-        // 40-row model: open at 1, close at 40.
-        let decl = Decl {
-            open_line: 1,
-            close_line: 40,
-            kind: DeclKind::Model,
-        };
-        let split = model_split_line(&decl);
-        assert!(split > 1 && split < 40);
     }
 }
