@@ -934,10 +934,8 @@ fn class(
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
                 let mut member = callable(file, start..=end, member_name_row, block);
                 member.doc = doc_items(file, anchor);
-                if !is_internal(file, &member.doc) {
-                    body.push(Item::new(member.name_rows.iter().copied()));
-                    members.push(member);
-                }
+                body.push(Item::new(member.name_rows.iter().copied()));
+                members.push(member);
             } else {
                 let start = leading_comment.unwrap_or(start).max(last_row + 1);
                 body.push(Item::new(start..=end));
