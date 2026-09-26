@@ -104,7 +104,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     };
     model.non_essential = api_only && !reaches_something;
     if let Some(package) = package {
-        model.module_doc = doc(package, file);
+        (model.module_doc, _) = doc_and_directives(package, file);
     }
     for child in root.named_children(&mut root.walk()) {
         let decl = match child.kind() {
@@ -184,12 +184,38 @@ fn declares_exported(node: Node, file: &SourceFile) -> bool {
     names.any(|name| is_exported(file.text(name)))
 }
 
-/// The comments directly above `node`, one [`Item`] per paragraph. A Go
-/// doc separates paragraphs with a bare `//` row, which stays with the
-/// paragraph above it.
-fn doc(node: Node, file: &SourceFile) -> Vec<Item> {
-    let rows = file.comments_above(node, 1, |_| true).into_iter().flatten();
-    file.paragraphs_by(rows, |line| matches!(line.trim(), "" | "//"))
+/// The comments directly above `node`: its doc, one [`Item`] per
+/// paragraph, and the rows of its directives. A Go doc separates
+/// paragraphs with a bare `//` row, which stays with the paragraph above
+/// it. A directive (`//go:embed f`, `//go:linkname x`, `//export f`)
+/// instructs the toolchain and belongs with the declaration's head, as
+/// an attribute would.
+fn doc_and_directives(node: Node, file: &SourceFile) -> (Vec<Item>, Vec<usize>) {
+    let (directives, doc): (Vec<usize>, Vec<usize>) = file
+        .comments_above(node, 1, |_| true)
+        .into_iter()
+        .flatten()
+        .partition(|&row| is_directive(file.line(row).trim()));
+    let doc = file.paragraphs_by(doc, |line| matches!(line.trim(), "" | "//"));
+    (doc, directives)
+}
+
+/// Go's directive comment syntax: `//line `, `//extern `, `//export `,
+/// or `//` then `[a-z0-9]+:[a-z0-9]` (`//go:noinline`, `//nolint:errcheck`).
+fn is_directive(text: &str) -> bool {
+    let Some(rest) = text.strip_prefix("//") else {
+        return false;
+    };
+    if ["line ", "extern ", "export "]
+        .iter()
+        .any(|prefix| rest.starts_with(prefix))
+    {
+        return true;
+    }
+    let is_word = |c: char| c.is_ascii_lowercase() || c.is_ascii_digit();
+    rest.split_once(':').is_some_and(|(namespace, after)| {
+        !namespace.is_empty() && namespace.chars().all(is_word) && after.starts_with(is_word)
+    })
 }
 
 /// A function or method: the head runs through the row opening its
@@ -207,11 +233,10 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
             vec![child]
         }
     });
-    let decl = file.callable(vec![start], rows, statements, open_row);
-    Some(DeclInfo {
-        doc: doc(node, file),
-        ..decl
-    })
+    let mut decl = file.callable(vec![start], rows, statements, open_row);
+    let (doc, directives) = doc_and_directives(node, file);
+    decl.head.extend(directives);
+    Some(DeclInfo { doc, ..decl })
 }
 
 /// `type`, `const` or `var`: a grouped declaration's body is its specs;
@@ -265,10 +290,9 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
         let is_entry = |entry: &Node| is_spec(entry) || entry.kind() == "field_declaration";
         decl.body = file.admitted_items(list, start, |entry| !is_entry(&entry) || visible(&entry));
     }
-    Some(DeclInfo {
-        doc: doc(node, file),
-        ..decl
-    })
+    let (doc, directives) = doc_and_directives(node, file);
+    decl.head.extend(directives);
+    Some(DeclInfo { doc, ..decl })
 }
 
 /// The specs of a `type`, `const` or `var` declaration, and the node
@@ -473,9 +497,10 @@ func Foo() {}
         );
     }
 
-    /// A directive is a doc paragraph; a build constraint joins the roster.
+    /// A directive stays with its declaration even when the doc is hidden;
+    /// a build constraint joins the roster.
     #[test]
-    fn go_directives_are_doc_and_build_constraints_are_roster() {
+    fn go_directives_are_head_not_doc() {
         let model = extract_source(
             "\
 //go:build linux && !purego
@@ -496,14 +521,16 @@ func Gosched() {
 ",
         );
         assert_eq!(model.reexports, [Item::new([1])]);
-        assert_eq!(model.module_doc, [Item::new([3, 4])]);
+        assert_eq!(model.module_doc, [Item::new([3])]);
         assert_eq!(
             describe(&model),
             [
-                "Whole name [10] head [10] doc [[7, 8], [9]] body []",
-                "Callable name [13] head [13] doc [[12]] body [[14]]",
+                "Whole name [10] head [9, 10] doc [[7, 8]] body []",
+                "Callable name [13] head [12, 13] doc [] body [[14]]",
             ]
         );
+        assert!(is_directive("//nolint:errcheck") && is_directive("//export Add"));
+        assert!(!is_directive("// Note: prose") && !is_directive("//TODO: fix"));
     }
 
     #[test]

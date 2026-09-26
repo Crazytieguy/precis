@@ -229,10 +229,10 @@ Score(3000)=0.669 I=0.831 C=0.538 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | ns | 8790 |  | 356 | Both docker-compose samples (complete files) | 5.4 |  | 0.468 |
 | walker |  | 8877 | 287 | Code::CodeKey { rung: Names, file: agent/sensors_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.468 |
 | walker |  | 8880 | 3 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 3, sub: 0, line: 46 } |  |  | 0.468 |
-| walker |  | 8979 | 99 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 1, sub: 0, line: 31 } |  |  | 0.468 |
-| walker |  | 8993 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 6, sub: 0, line: 83 } |  |  | 0.468 |
-| walker |  | 9007 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 10, sub: 0, line: 247 } |  |  | 0.468 |
-| walker |  | 9023 | 16 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 2, sub: 0, line: 44 } |  |  | 0.468 |
+| walker |  | 8898 | 18 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 2, sub: 0, line: 43 } |  |  | 0.468 |
+| walker |  | 8995 | 97 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 1, sub: 0, line: 31 } |  |  | 0.468 |
+| walker |  | 9009 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 6, sub: 0, line: 83 } |  |  | 0.468 |
+| walker |  | 9023 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 10, sub: 0, line: 247 } |  |  | 0.468 |
 | walker |  | 9040 | 17 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 11, sub: 0, line: 255 } |  |  | 0.468 |
 | walker |  | 9058 | 18 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 7, sub: 0, line: 119 } |  |  | 0.468 |
 | walker |  | 9077 | 19 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 1, sub: 0, line: 31 } |  |  | 0.468 |

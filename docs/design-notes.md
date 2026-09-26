@@ -339,8 +339,7 @@ must not undo:
     returns (0 of 572 real-world renders changed);
   - AMD/UMD factory unwrapping, Python `@overload` stub hiding, Rust
     declaring-macro invocations (`bitflags!`, `cfg_*!`), Go
-    `Deprecated:` and directive rows in the head, and C recovery for
-    all-caps macro invocations (each grid ±0.0002 avg7, at most three
+    `Deprecated:`, and C recovery for all-caps macro invocations (each grid ±0.0002 avg7, at most three
     plugin-mode renders of 236 changed).
 - **Measured again and kept** (2026-09-26): the sibling-reference roster
   chain (size-only ordering cost 3000 −.0069); the Lua identity table
@@ -357,7 +356,10 @@ must not undo:
   becomes one opaque gate that hides its whole API); C recovery for
   prototypes ending in an attribute macro (`int f(void) NOEXCEPT;`;
   grid-flat, but without it one such prototype makes its enclosing
-  feature gate opaque, hiding every other declaration in it).
+  feature gate opaque, hiding every other declaration in it); Go
+  directive comments in the head rather than the doc (as doc paragraphs,
+  `//nolint:x` became a file's package doc at doc priority, the failure
+  the TS/JS directive skip below exists for; avg7 −.0001).
 - **TS/JS docs skip linter / coverage directives** (`// @ts-ignore`,
   `/* istanbul ignore next */`): without the skip, a directive that is a
   declaration's only comment became its whole doc, at doc priority.
