@@ -92,7 +92,7 @@ pub enum MarkdownKey {
         section_index: usize,
         keeps_default_concavity: bool,
     },
-    /// A build/test/run section's heading plus its first shell block,
+    /// A build/test/run section's heading plus its leading shell blocks,
     /// keyed by the block's first row. Predecessor: `HeadingsOutline`,
     /// else `ReadmeHeadline`; the `Section` holding it gates on it.
     CommandBlock { file: PathBuf, row: usize },

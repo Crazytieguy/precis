@@ -14,8 +14,8 @@
 //!   cover (H1–H2 when that is too many), when there are
 //!   2..=[`MAX_OUTLINE_HEADINGS`] of them.
 //!   Predecessor: the headline.
-//! - `CommandBlock`s — per top-level section, the heading and first
-//!   shell block of a build/test/run section inside it (see
+//! - `CommandBlock`s — per top-level section, the heading and leading
+//!   shell blocks of a build/test/run section inside it (see
 //!   [`command_block`]). Predecessor: the outline, else the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
 //!   an intro plus its H2s); an oversize section splits into a head
@@ -709,7 +709,7 @@ struct SectionRange {
 }
 
 /// 1-based `(first, last)` rows of a command section's heading and of its
-/// first shell block.
+/// shell blocks (see [`command_block`]).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct CommandBlockRows {
     heading: (usize, usize),
@@ -1189,10 +1189,11 @@ fn is_command_title_core(core: &str) -> bool {
         .any(|word| COMMAND_TITLE_WORDS.contains(&word))
 }
 
-/// The first shell block (see [`is_shell_block`]) of at most
-/// [`OVERSIZE_CHUNK_TARGET_TOKENS`] that sits under a heading titled by
-/// [`is_command_title_core`] in `section`, paired with the innermost such
-/// heading (`command_heading` is the enclosing one). Back matter is
+/// The first shell block (see [`is_shell_block`]) that sits under a
+/// heading titled by [`is_command_title_core`] in `section`, extended
+/// through the shell blocks after it before the next subsection, all
+/// within [`OVERSIZE_CHUNK_TARGET_TOKENS`]; paired with the innermost
+/// such heading (`command_heading` is the enclosing one). Back matter is
 /// skipped.
 fn command_block(
     section: Node,
@@ -1225,18 +1226,42 @@ fn command_block(
     };
     let mut cursor = section.walk();
     let children: Vec<Node> = section.children(&mut cursor).collect();
-    children.into_iter().find_map(|child| {
+    let tokens = |start: usize, end: usize| -> usize {
+        (start..=end).map(|row| row_tokens(src_lines, row)).sum()
+    };
+    for (idx, child) in children.iter().enumerate() {
         if child.kind() == "section" {
-            return command_block(child, command_heading, source, src_lines);
+            if let Some(found) = command_block(*child, command_heading, source, src_lines) {
+                return Some(found);
+            }
+            continue;
         }
-        let heading = command_heading?;
-        let (start, end) = rows(first_shell_block(child, source)?);
-        let tokens: usize = (start..=end).map(|row| row_tokens(src_lines, row)).sum();
-        (tokens <= OVERSIZE_CHUNK_TARGET_TOKENS).then(|| CommandBlockRows {
+        let (Some(heading), Some(block)) = (command_heading, first_shell_block(*child, source))
+        else {
+            continue;
+        };
+        let (start, mut end) = rows(block);
+        if tokens(start, end) > OVERSIZE_CHUNK_TARGET_TOKENS {
+            continue;
+        }
+        for sibling in children[idx + 1..]
+            .iter()
+            .take_while(|sibling| sibling.kind() != "section")
+        {
+            if let Some(next) = first_shell_block(*sibling, source) {
+                let next_end = rows(next).1;
+                if tokens(start, next_end) > OVERSIZE_CHUNK_TARGET_TOKENS {
+                    break;
+                }
+                end = next_end;
+            }
+        }
+        return Some(CommandBlockRows {
             heading: rows(heading),
             block: (start, end),
-        })
-    })
+        });
+    }
+    None
 }
 
 /// Fence languages of shell commands.

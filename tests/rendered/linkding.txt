@@ -96,6 +96,22 @@ README.md
   71→```
   72→make init
   73→```
+  74→This sets up a virtual environment using uv, installs NPM dependencies and runs migrations to create the initial database.
+  75→
+  76→Create a user for the frontend:
+  77→```
+  78→uv run manage.py createsuperuser --username=joe --email=joe@example.com
+  79→```
+  80→
+  81→Run the frontend build for bundling frontend components with:
+  82→```
+  83→make frontend
+  84→```
+  85→
+  86→Then start the Django development server with:
+  87→```
+  88→make serve
+  89→```
   …
   92→### Tests
   …
@@ -163,18 +179,6 @@ bookmarks/
     migrate_tasks.py
   middlewares.py
   migrations/
-    0001_initial.py
-    0002_auto_20190629_2303.py
-    0003_auto_20200913_0656.py
-    0004_auto_20200926_1028.py
-    0005_auto_20210103_1212.py
-    0006_bookmark_is_archived.py
-    0007_userprofile.py
-    0008_userprofile_bookmark_date_display.py
-    0009_bookmark_web_archive_snapshot_url.py
-    0010_userprofile_bookmark_link_target.py
-    0011_userprofile_web_archive_integration.py
-    …
   models.py
   queries.py
   services/
@@ -387,8 +391,6 @@ package.json
   18→    "postcss": "^8.4.45",
   19→    "postcss-cli": "^11.0.0",
   20→    "postcss-import": "^16.1.0",
-  21→    "postcss-nesting": "^13.0.0"
-  22→  },
   …
 postcss.config.js
 pyproject.toml

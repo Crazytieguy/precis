@@ -173,23 +173,30 @@ README.md
   52→  * `ncurses`
   53→
   54→**Note about `ncurses`:**
-  55→> `htop` requires `ncurses` 6.0. Be aware the appropriate package is sometimes still called libncurses5 (on Debian/Ubuntu). Also `ncurses` usually comes in two flavours:
-  56→>* With Unicode support.
-  57→>* Without Unicode support.
-  58→>
-  59→> This is also something that is reflected in the package name on Debian/Ubuntu (via the additional 'w' - 'w'ide character support).
-  61→List of additional build-time dependencies (based on feature flags):
-  62→*  `pkg-config`
-  63→*  `sensors`
-  64→*  `hwloc`
-  65→*  `libcap` (v2.21 or later)
-  66→*  `libnl-3` and `libnl-genl-3`
-  67→
   …
   73→~~~ shell
   74→sudo apt install libncursesw5-dev autotools-dev autoconf automake build-essential
   75→~~~
-  …
+  76→
+  77→**Fedora/RHEL**
+  78→~~~ shell
+  79→sudo dnf install ncurses-devel automake autoconf gcc
+  80→~~~
+  81→
+  82→**OpenSUSE/SLES**
+  83→~~~ shell
+  84→sudo zypper install ncurses-devel ncurses-devel-static automake autoconf gcc make glibc-devel glibc-devel-static
+  85→~~~
+  86→
+  87→**Archlinux/Manjaro**
+  88→~~~ shell
+  89→sudo pacman -S --needed base-devel ncurses
+  90→~~~
+  91→
+  92→**macOS**
+  93→~~~ shell
+  94→brew install ncurses automake autoconf gcc
+  95→~~~
   97→### Compile from source:
   …
   103→### Install
