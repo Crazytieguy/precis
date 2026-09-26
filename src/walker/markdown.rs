@@ -10,7 +10,7 @@
 //! - `ReadmeHeadline` — the first heading plus the lede: the first
 //!   substantive block before it and the blocks under it through the
 //!   first paragraph, stepping over chrome (badges, logos, nav rows,
-//!   badge tables).
+//!   badge tables); a headingless README's is its lede alone.
 //! - `Prelude` — the rest of the text above the first heading, chrome
 //!   excluded. Predecessor: the headline.
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
@@ -506,10 +506,20 @@ fn is_section_boundary(kind: &str) -> bool {
 }
 
 fn headline_rows(tree: &Tree, source: &str) -> Option<BTreeSet<usize>> {
-    let section = headed_sections(tree.root_node()).next()?;
+    let mut spec = BTreeSet::new();
+    let Some(section) = headed_sections(tree.root_node()).next() else {
+        // A headingless README's headline is its lede past the chrome.
+        let mut cursor = tree.root_node().walk();
+        let blocks: Vec<Node> = tree
+            .root_node()
+            .children(&mut cursor)
+            .flat_map(unwrap_section)
+            .collect();
+        extend_lede(&mut spec, &blocks, source, true);
+        return (!spec.is_empty()).then_some(spec);
+    };
     let heading = first_heading_child(section)?;
 
-    let mut spec = BTreeSet::new();
     // Prelude content: README opens with HTML title blocks / badges /
     // lede paragraph before the first heading.
     extend_lede(
@@ -1655,23 +1665,24 @@ fn extend_lede(
     }
 }
 
+/// The blocks of a top-level `section` — the prelude is one, wrapping
+/// the pre-heading blocks — or a block outside any section (rare) as-is.
+fn unwrap_section(node: Node) -> Vec<Node> {
+    if node.kind() == "section" {
+        let mut cursor = node.walk();
+        node.children(&mut cursor).collect()
+    } else {
+        vec![node]
+    }
+}
+
 /// Top-level blocks above the first headed section.
 fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
     let mut cursor = root.walk();
     let mut blocks: Vec<Node> = root
         .children(&mut cursor)
         .take_while(|c| *c != first_headed)
-        .flat_map(|c| {
-            // The prelude is itself a `section` node wrapping the
-            // pre-heading blocks; descend into it. Top-level blocks
-            // outside any section (rare) are walked as-is.
-            if c.kind() == "section" {
-                let mut inner = c.walk();
-                c.children(&mut inner).collect::<Vec<_>>()
-            } else {
-                vec![c]
-            }
-        })
+        .flat_map(unwrap_section)
         .collect();
     // A setext heading opens no `section`, so the blocks above it sit in
     // the section it heads.
@@ -2242,6 +2253,17 @@ mod tests {
                    Widget renders gadgets.\n",
             &[1, 13],
             &[3, 5, 7, 9, 11],
+        ),
+        // A headingless README's headline is its lede past the chrome.
+        (
+            "markdown_headingless_lede_past_chrome",
+            "<div align=\"center\"><img src=\"logo.png\"></div>\n\
+                   \n\
+                   [![ci](https://e.x/ci.svg)](https://e.x/ci)\n\
+                   \n\
+                   Widget renders gadgets.\n",
+            &[5],
+            &[1, 3],
         ),
     ];
 

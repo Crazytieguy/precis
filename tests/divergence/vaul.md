@@ -3,13 +3,13 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 62 | 62 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 66 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.000 |
 | ns | 86 |  | 86 | Package identity: name, version, description, entry points | 1.1 |  | 0.000 |
-| walker |  | 124 | 58 | Json::Identity { file: package.json } |  |  | 0.460 |
-| walker |  | 130 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.460 |
-| ns | 148 |  | 62 | Complete repository root listing | 1.2 |  | 0.677 |
-| walker |  | 151 | 21 | Json::Runtime { file: package.json } |  |  | 0.677 |
-| walker |  | 214 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.684 |
+| walker |  | 125 | 63 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 129 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.000 |
+| ns | 148 |  | 62 | Complete repository root listing | 1.2 |  | 0.503 |
+| walker |  | 187 | 58 | Json::Identity { file: package.json } |  |  | 0.683 |
+| walker |  | 193 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.684 |
+| walker |  | 214 | 21 | Json::Runtime { file: package.json } |  |  | 0.684 |
 | ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.511 |
 | walker |  | 285 | 71 | Fs::DirListing { dir: src } |  |  | 0.743 |
 | walker |  | 319 | 34 | Json::Dependencies { file: package.json } |  |  | 0.743 |
