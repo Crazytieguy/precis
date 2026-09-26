@@ -337,14 +337,12 @@ once workspace members were exempt.
   The exception is size-gated: pricing a listing by its non-media share
   cost the grid while it reached a three-file `media/`, and was neutral
   once it applied only from eleven media files up.
-  Only a long listing of the project's own source is split into a head
-  and the rest. No answer key ranks a listing past the split size, so
-  the split is invisible to the grid. Delivered whole, a big source
-  directory (`Lib/`, `drivers/`, `src/`) is never bought and its files
-  never open; split everywhere, heads of test, data and generated
-  directories spend the budget; ordered alphabetically, a head reaches
-  `DEPRECATED/` before the core. Whole listings of huge test
-  directories still cost a render probe apiece.
+  No answer key ranks a listing past the split size, so the long-listing
+  split (`fs::listing_parts`) is invisible to the grid; it is judged on
+  real repositories, where a big source directory delivered whole
+  (`Lib/`, `drivers/`, `src/`) is never bought and its files never open.
+  Whole listings of huge test directories still cost a render probe
+  apiece.
 - **Pre-0.2 plugin hooks are recognized by their plugin manifest**
   (`run_by_session_hook` in `src/main.rs`): they don't set
   `PRECIS_SESSION_HOOK`, yet their update script installs the latest

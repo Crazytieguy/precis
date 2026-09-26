@@ -7,8 +7,7 @@
 
 use std::{
     cell::RefCell,
-    cmp::Reverse,
-    collections::{BTreeMap, BTreeSet, HashMap, HashSet},
+    collections::{BTreeMap, HashMap, HashSet},
     path::{Path, PathBuf},
     rc::Rc,
 };
@@ -32,21 +31,16 @@ pub fn seed(ctx: &WalkCtx) -> Vec<Batch> {
 pub fn expand_listed<'k>(key: &'k FsKey, ctx: &WalkCtx) -> (Vec<Batch>, Option<&'k Path>) {
     let (FsKey::DirListing { dir } | FsKey::DirListingTail { dir }) = key;
     let children = list_dir(dir, ctx.dir_filter());
-    let head = listing_head(dir, &children, ctx);
-    let tail = matches!(key, FsKey::DirListingTail { .. });
-    let fully_listed = (head.is_none() || tail).then_some(dir.as_path());
+    let (head, tail) = listing_parts(dir, &children, ctx);
+    let is_tail = matches!(key, FsKey::DirListingTail { .. });
+    let fully_listed = (tail.is_empty() || is_tail).then_some(dir.as_path());
     if crate::value::is_third_party_dir(dir, ctx.root()) {
         return (Vec::new(), fully_listed);
     }
-    let subdirectories = children
-        .iter()
-        .filter(|(name, kind)| {
-            matches!(kind, EntryKind::Directory)
-                && head
-                    .as_ref()
-                    .is_none_or(|head| head.contains(*name) != tail)
-        })
-        .map(|(name, _)| dir.join(name))
+    let subdirectories = if is_tail { tail } else { head }
+        .into_iter()
+        .filter(|name| matches!(children[*name], EntryKind::Directory))
+        .map(|name| dir.join(name))
         .filter(|child| should_recurse_dir(child, ctx))
         .flat_map(|child| dir_listing_batches(child, ctx))
         .collect();
@@ -107,10 +101,9 @@ fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
         return Vec::new();
     }
     let head_key: BatchKey = FsKey::DirListing { dir: dir.clone() }.into();
+    let (head_entries, tail_entries) = listing_parts(&dir, &children, ctx);
     let mut tail = None;
-    if let Some(head) = listing_head(&dir, &children, ctx) {
-        let (head_entries, tail_entries): (Vec<&String>, Vec<&String>) =
-            listed_entries(&children).partition(|name| head.contains(*name));
+    if !tail_entries.is_empty() {
         let tail_share =
             tail_entries.len() as f64 / (head_entries.len() + tail_entries.len()) as f64;
         if let Some(last) = groups.last_mut() {
@@ -149,63 +142,31 @@ const LISTING_SPLIT_ENTRIES: usize = 120;
 /// Entries in a split listing's head.
 const LISTING_HEAD_ENTRIES: usize = 40;
 
-/// The entries a long listing names first, or `None` for a listing that
-/// is delivered whole. Only a directory of the project's own source is
-/// split: the root is always whole, since everything else hangs off it,
-/// and a long listing of tests, vendored code or data stays one batch.
-/// The head is its essential subdirectories, then its source files,
-/// largest first, then everything else, up to [`LISTING_HEAD_ENTRIES`].
-/// Decided once per directory: the listing's batches and their expansion
-/// must agree on it, and a capped source probe can answer differently
-/// later in the run.
-fn listing_head(
+/// The entries a listing of `children` names first, and the rest: a
+/// long listing is split so that a big directory's first names are
+/// bought even when the whole listing never is. Only an essential
+/// directory's listing is split: the root is always whole, since
+/// everything else hangs off it, and a long listing of tests or vendored
+/// code stays one batch. The head names the essential subdirectories
+/// first, then the rest, in name order.
+fn listing_parts<'c>(
     dir: &Path,
-    children: &BTreeMap<String, EntryKind>,
+    children: &'c BTreeMap<String, EntryKind>,
     ctx: &WalkCtx,
-) -> Option<Rc<BTreeSet<String>>> {
-    if let Some(head) = ctx.fs_state.listing_heads.borrow().get(dir) {
-        return head.clone();
-    }
-    let head = ranked_listing_head(dir, children, ctx).map(Rc::new);
-    ctx.fs_state
-        .listing_heads
-        .borrow_mut()
-        .insert(dir.to_path_buf(), head.clone());
-    head
-}
-
-fn ranked_listing_head(
-    dir: &Path,
-    children: &BTreeMap<String, EntryKind>,
-    ctx: &WalkCtx,
-) -> Option<BTreeSet<String>> {
+) -> (Vec<&'c String>, Vec<&'c String>) {
+    let mut listed: Vec<&String> = listed_entries(children).collect();
     if dir == ctx.root()
-        || listed_entries(children).count() <= LISTING_SPLIT_ENTRIES
+        || listed.len() <= LISTING_SPLIT_ENTRIES
         || ctx.non_essential_factor(dir) < 1.0
-        || !ctx.fs_state.holds_source(dir, ctx.dir_filter())
     {
-        return None;
+        return (listed, Vec::new());
     }
-    let rank = |name: &String| {
-        let path = dir.join(name);
-        match children[name] {
-            EntryKind::Directory if ctx.non_essential_factor(&path) >= 1.0 => (0, Reverse(0)),
-            EntryKind::File if is_source_inventory_file(&path) => (
-                1,
-                Reverse(std::fs::metadata(&path).map_or(0, |meta| meta.len())),
-            ),
-            _ => (2, Reverse(0)),
-        }
-    };
-    let mut ranked: Vec<&String> = listed_entries(children).collect();
-    ranked.sort_by_cached_key(|name| (rank(name), *name));
-    Some(
-        ranked
-            .into_iter()
-            .take(LISTING_HEAD_ENTRIES)
-            .cloned()
-            .collect(),
-    )
+    listed.sort_by_key(|name| {
+        !(matches!(children[*name], EntryKind::Directory)
+            && ctx.non_essential_factor(&dir.join(name)) >= 1.0)
+    });
+    let tail = listed.split_off(LISTING_HEAD_ENTRIES);
+    (listed, tail)
 }
 
 /// A game engine's per-asset metadata file (`player.png.meta`,
@@ -439,7 +400,6 @@ pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
     shape_repeats: RefCell<HashMap<PathBuf, Rc<HashSet<String>>>>,
-    listing_heads: RefCell<HashMap<PathBuf, Option<Rc<BTreeSet<String>>>>>,
     module_source_dirs: RefCell<HashMap<PathBuf, bool>>,
 }
 
@@ -682,15 +642,14 @@ mod tests {
     use crate::batch::BatchKey;
 
     #[test]
-    fn fs_long_source_listing_splits_into_a_ranked_head_and_the_rest() {
+    fn fs_long_listing_splits_into_a_head_and_the_rest() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         let big = root.join("src");
-        for dir in ["core", "tests"] {
+        for dir in ["tests", "zlib"] {
             std::fs::create_dir_all(big.join(dir)).unwrap();
             std::fs::write(big.join(dir).join("x.py"), "").unwrap();
         }
-        std::fs::write(big.join("engine.py"), "x = 1\n".repeat(100)).unwrap();
         for index in 0..LISTING_SPLIT_ENTRIES {
             std::fs::write(big.join(format!("f{index:03}.py")), "x = 1\n").unwrap();
         }
@@ -712,8 +671,7 @@ mod tests {
         };
         let head_entries = listed(head);
         assert_eq!(head_entries.len(), LISTING_HEAD_ENTRIES);
-        assert!(head_entries.contains(&PathBuf::from("core")));
-        assert!(head_entries.contains(&PathBuf::from("engine.py")));
+        assert_eq!(head_entries[0], PathBuf::from("zlib"));
         assert!(!head_entries.contains(&PathBuf::from("tests")));
         assert_eq!(tail.predecessor.as_ref(), Some(&head.key));
 
