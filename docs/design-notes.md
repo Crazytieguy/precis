@@ -111,8 +111,9 @@ displaces a priced batch.
   `walker::is_refused` — a credential file name (of the path or its link
   target), or a PEM/PGP private-key block with key material under its
   armor — is applied by `SourceCache` to everything it reads or is
-  handed, so a refused file lists by name only; no walker carries a
-  check of its own. The name rule exempts samples (`*.example`,
+  handed, so a refused file lists by name only — a single-file walk of
+  one included, since naming the file doesn't make its secrets safe to
+  paste; no walker carries a check of its own. The name rule exempts samples (`*.example`,
   `*.sample`, `*.template`, `*.dist`), source code and documents, which
   are about credentials rather than holding them. A URL's password
   (`scheme://user:PASSWORD@host`) is redacted where rows are formatted
