@@ -446,7 +446,13 @@ pub(crate) fn is_refused_by_name(path: &Path) -> bool {
     plaintext::is_credential_name(path)
         || path.canonicalize().is_ok_and(|target| {
             plaintext::is_credential_name(&target)
-                || (target != path && target.parent() == path.parent())
+                || (target != path
+                    && path.is_symlink()
+                    && path
+                        .parent()
+                        .and_then(|dir| dir.canonicalize().ok())
+                        .as_deref()
+                        == target.parent())
         })
 }
 
@@ -643,6 +649,27 @@ mod tests {
             "-----BEGIN PRIVATE KEY-----\n<your key here>\n".to_string(),
         ] {
             assert!(!holds_private_key(&text), "{text}");
+        }
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn walker_mod_a_link_to_a_sibling_is_refused_under_any_spelling_of_its_directory() {
+        let temp = tempfile::tempdir().unwrap();
+        std::fs::create_dir(temp.path().join("sub")).unwrap();
+        std::fs::write(temp.path().join("AGENTS.md"), "# Agents\n").unwrap();
+        std::os::unix::fs::symlink("AGENTS.md", temp.path().join("CLAUDE.md")).unwrap();
+        for dir in [temp.path().to_path_buf(), temp.path().join("sub/..")] {
+            assert!(
+                is_refused_by_name(&dir.join("CLAUDE.md")),
+                "{}",
+                dir.display()
+            );
+            assert!(
+                !is_refused_by_name(&dir.join("AGENTS.md")),
+                "{}",
+                dir.display()
+            );
         }
     }
 
