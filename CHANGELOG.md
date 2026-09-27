@@ -26,7 +26,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
 
 ### Highlights
 
-- One code engine serves Rust, TypeScript/JavaScript, Python, Go, C and Lua. It shows module docs, then declaration names, signatures, doc comments and bodies as the budget allows.
+- One code engine serves Rust, TypeScript/JavaScript, Python, Go, C and Lua. It shows module docs, then declaration names, signatures, doc comments and bodies as the budget allows. When an entry file only re-exports, the modules it names open right after it.
 - Walkers for `package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`/`go.work`, Prisma schemas, READMEs in reST and AsciiDoc, and build and ops files (Makefile, Taskfile, justfile, Dockerfile, compose files, dotenv samples).
 - A root manifest in a format precis doesn't parse (`pom.xml`, `composer.json`, `*.cabal`, `build.sbt`, `CMakeLists.txt`, `action.yml`, R's `DESCRIPTION`, …) shows its leading fields, such as the project's name, version and description.
 - Source files in other languages (Java, Kotlin, Swift, C++, C#, Ruby, PHP, Zig, Solidity, Vue, …) show their top-level declaration lines instead of plain text. In a repository written mostly in one of these languages, those lines rank like parsed declarations. Stylesheets show their top-level selector lines and shell scripts their top-level lines, both priced below parsed declarations; extensionless scripts that start with a shebang are read as scripts.
