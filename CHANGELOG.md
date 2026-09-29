@@ -12,7 +12,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
 - New output notation:
   - Output is a nested tree of directories and files with a 2-space indent.
   - Source lines are unpadded `N→` rows nested under their file.
-  - A `…` row marks hidden source in a file, or hidden entries in a directory.
+  - A `…` row marks hidden source in a file, or hidden entries in a directory. A jump in line numbers without one skips only blank lines.
   - A source line longer than 500 characters is cut short with `…`.
   - A row like `src/main/java/` is a chain of directories that each hold only the next.
   - `(empty)` marks a zero-byte file, or a directory holding nothing precis lists. An entry with nothing under it wasn't expanded, or couldn't be read.
