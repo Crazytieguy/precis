@@ -78,9 +78,8 @@
 //! model entirely (not in `decls`, not in a container's `members`, their
 //! name rows not in a container's `body`): test code, `#[doc(hidden)]`,
 //! unexported TS/JS and Go declarations, TS/JS `@internal` / `@ignore`
-//! ones, C non-`inline` `static` in a header, `@overload` stubs followed
-//! by their implementation, and members private to their container by
-//! the language or by convention (TS `_name`). Every declaration in the
+//! ones, C non-`inline` `static` in a header, and members private to
+//! their container by the language or by convention (TS `_name`). Every declaration in the
 //! model is priced alike. Whole files (derived artifacts, minified or
 //! generated code) are skipped by the engine before they parse.
 //!
