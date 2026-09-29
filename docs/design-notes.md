@@ -42,9 +42,9 @@
   path dev-dependency of the crate on itself turns the feature on for
   every test and example build, which keeps `cargo t`, `cargo lint` and
   both examples unchanged; `cargo publish` strips that dev-dependency.
-  Because of it `cargo lint` never checks the build without `eval`; CI's
-  `cargo clippy --lib --bins` does. Code reachable only from these
-  modules goes behind the feature or into them.
+  Because of it `cargo lint` never checks the build without `eval`; the
+  warnings `cargo run --release` prints do. Code reachable only from
+  these modules goes behind the feature or into them.
 
 ## The subset property
 
