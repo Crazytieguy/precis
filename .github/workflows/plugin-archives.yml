@@ -1,0 +1,35 @@
+# Publishes the platform-specific plugin archives (plugins/precis plus that
+# platform's release binary, one zip each) onto the rolling `plugin-archives`
+# release, replacing the assets in place. The urls are fixed, so nothing in
+# marketplace.json changes at release time.
+#
+# The release workflow calls this once a release is announced
+# (dist-workspace.toml's post-announce-jobs), from the release tag, so each
+# zip carries the plugin and the binary of the same version.
+
+name: Plugin archives
+
+on:
+  workflow_call:
+    inputs:
+      plan:
+        required: true
+        type: string
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archives:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    concurrency:
+      group: plugin-archives
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and publish archives
+        run: python3 scripts/plugin-archives.py publish

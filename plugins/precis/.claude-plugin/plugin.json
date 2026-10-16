@@ -5,5 +5,15 @@
   "author": { "name": "Yoav Tzfati" },
   "homepage": "https://github.com/Crazytieguy/precis",
   "repository": "https://github.com/Crazytieguy/precis",
-  "license": "MIT"
+  "license": "MIT",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "token_budget": {
+      "type": "number",
+      "title": "Token budget",
+      "description": "Size in tokens (o200k_base) of the overview each session starts with, and the summarize tool's default",
+      "default": 3000,
+      "min": 1
+    }
+  }
 }

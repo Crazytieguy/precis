@@ -4,8 +4,40 @@
   "plugins": [
     {
       "name": "precis",
-      "source": "./plugins/precis",
-      "description": "Automatic codebase structure context via precis"
+      "source": "./plugins/precis-legacy",
+      "description": "Superseded by the per-machine precis plugins: automatic codebase structure context via precis"
+    },
+    {
+      "name": "precis-aarch64-apple-darwin",
+      "source": {
+        "source": "archive",
+        "url": "https://github.com/Crazytieguy/precis/releases/download/plugin-archives/precis-aarch64-apple-darwin.zip"
+      },
+      "description": "Automatic codebase structure context via precis (macOS, Apple Silicon)"
+    },
+    {
+      "name": "precis-aarch64-unknown-linux-gnu",
+      "source": {
+        "source": "archive",
+        "url": "https://github.com/Crazytieguy/precis/releases/download/plugin-archives/precis-aarch64-unknown-linux-gnu.zip"
+      },
+      "description": "Automatic codebase structure context via precis (Linux, arm64)"
+    },
+    {
+      "name": "precis-x86_64-apple-darwin",
+      "source": {
+        "source": "archive",
+        "url": "https://github.com/Crazytieguy/precis/releases/download/plugin-archives/precis-x86_64-apple-darwin.zip"
+      },
+      "description": "Automatic codebase structure context via precis (macOS, Intel)"
+    },
+    {
+      "name": "precis-x86_64-unknown-linux-gnu",
+      "source": {
+        "source": "archive",
+        "url": "https://github.com/Crazytieguy/precis/releases/download/plugin-archives/precis-x86_64-unknown-linux-gnu.zip"
+      },
+      "description": "Automatic codebase structure context via precis (Linux, x86_64)"
     }
   ]
 }

@@ -1,5 +1,5 @@
-//! The plugin's shell hooks, run as Claude Code runs them: JSON on stdin,
-//! a decision (or nothing) on stdout.
+//! The plain `precis` plugin's shell hooks (plugins/precis-legacy), run as
+//! Claude Code runs them: JSON on stdin, a decision (or nothing) on stdout.
 
 use std::ffi::OsStr;
 use std::io::Write;
@@ -9,7 +9,7 @@ use std::process::{Command, Stdio};
 
 fn hook_script(relative: &str) -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("plugins/precis")
+        .join("plugins/precis-legacy")
         .join(relative)
 }
 
@@ -90,7 +90,7 @@ fn project_with_outside_link() -> (tempfile::TempDir, PathBuf) {
 }
 
 #[test]
-fn plugin_hooks_approve_paths_inside_project() {
+fn plugin_legacy_approve_paths_inside_project() {
     let (temp, project) = project_with_outside_link();
     let cwd = Some(project.as_path());
     let home = temp.path();
@@ -109,7 +109,7 @@ fn plugin_hooks_approve_paths_inside_project() {
 }
 
 #[test]
-fn plugin_hooks_approve_numeric_path_only_inside_project() {
+fn plugin_legacy_approve_numeric_path_only_inside_project() {
     let (temp, project) = project_with_outside_link();
     let home = temp.path();
     assert!(!approves(Some(&project), "precis 123", home));
@@ -123,7 +123,7 @@ fn plugin_hooks_approve_numeric_path_only_inside_project() {
 }
 
 #[test]
-fn plugin_hooks_prompt_outside_project_or_unknown_syntax() {
+fn plugin_legacy_prompt_outside_project_or_unknown_syntax() {
     let (temp, project) = project_with_outside_link();
     let cwd = Some(project.as_path());
     let home = temp.path();
@@ -146,7 +146,7 @@ fn plugin_hooks_prompt_outside_project_or_unknown_syntax() {
 }
 
 #[test]
-fn plugin_hooks_prompt_without_cwd() {
+fn plugin_legacy_prompt_without_cwd() {
     let (temp, _project) = project_with_outside_link();
     let home = temp.path();
     assert!(!approves(None, "precis /", home));
@@ -155,7 +155,7 @@ fn plugin_hooks_prompt_without_cwd() {
 }
 
 #[test]
-fn plugin_hooks_approve_through_symlinked_cwd() {
+fn plugin_legacy_approve_through_symlinked_cwd() {
     let (temp, project) = project_with_outside_link();
     let link = temp.path().join("link");
     std::os::unix::fs::symlink(&project, &link).unwrap();
@@ -166,7 +166,7 @@ fn plugin_hooks_approve_through_symlinked_cwd() {
 /// The session hook without a binary to run says why, and adds the
 /// plugin's data directory to PATH once however often it runs.
 #[test]
-fn plugin_hooks_session_start_without_binary() {
+fn plugin_legacy_session_start_without_binary() {
     let temp = tempfile::tempdir().unwrap();
     let plugin_data = temp.path().join("plugin-data");
     let env_file = temp.path().join("env");
@@ -201,7 +201,7 @@ fn plugin_hooks_session_start_without_binary() {
 /// A binary that is present but doesn't run (a truncated download, the
 /// wrong architecture) is an error, not "available".
 #[test]
-fn plugin_hooks_session_start_with_broken_binary() {
+fn plugin_legacy_session_start_with_broken_binary() {
     let temp = tempfile::tempdir().unwrap();
     let plugin_data = temp.path().join("plugin-data");
     std::fs::create_dir_all(&plugin_data).unwrap();
@@ -222,7 +222,7 @@ fn plugin_hooks_session_start_with_broken_binary() {
 /// summary would push `additionalContext` past Claude Code's 10,000-unit
 /// inline limit; the binary caps itself so the whole context stays inline.
 #[test]
-fn plugin_hooks_session_start_context_fits_hook_cap() {
+fn plugin_legacy_session_start_context_fits_hook_cap() {
     const HOOK_CONTEXT_CAP: usize = 10_000;
     let fixture = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/toasty");
     assert!(
@@ -276,7 +276,7 @@ fn path_with_fakes(dir: &Path, fakes: &[(&str, &str)]) -> std::ffi::OsString {
 /// The installer logs why it gave up, since the session hook's only
 /// message on a missing binary points at the log.
 #[test]
-fn plugin_hooks_install_logs_unsupported_arch() {
+fn plugin_legacy_install_logs_unsupported_arch() {
     let temp = tempfile::tempdir().unwrap();
     let plugin_data = temp.path().join("plugin-data");
     let path = path_with_fakes(
@@ -301,7 +301,7 @@ fn plugin_hooks_install_logs_unsupported_arch() {
 /// An installed plugin asks GitHub for the latest release at most once
 /// an hour, however many sessions start.
 #[test]
-fn plugin_hooks_update_checks_at_most_hourly() {
+fn plugin_legacy_update_checks_at_most_hourly() {
     let temp = tempfile::tempdir().unwrap();
     let plugin_data = temp.path().join("plugin-data");
     std::fs::create_dir_all(&plugin_data).unwrap();
@@ -336,7 +336,7 @@ fn plugin_hooks_update_checks_at_most_hourly() {
 /// Work dirs left by killed updates are cleared once they are old
 /// enough not to belong to an update still running.
 #[test]
-fn plugin_hooks_update_clears_stale_work_dirs() {
+fn plugin_legacy_update_clears_stale_work_dirs() {
     let temp = tempfile::tempdir().unwrap();
     let plugin_data = temp.path().join("plugin-data");
     let stale = plugin_data.join("update.stale");

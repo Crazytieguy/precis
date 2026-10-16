@@ -62,12 +62,14 @@ fixture instead of running the walker per budget. Skipping an ill-fitting batch
 for a smaller one would break this.
 
 Under a char budget, batches rank on the budget they draw down faster,
-because the plugin's char cap binds before its token budget on large
-repos and token-only ranking underpriced deep indentation and long
-listings exactly there. The subset property therefore holds across runs
-that share one chars-per-token rate, not across runs that vary only one
-of the two budgets. The grid runs uncapped; this was judged on
-plugin-mode output of external repos.
+because the char cap of the plugin's shell hooks (plugin 0.2 and
+earlier) binds before its token budget on large repos and token-only
+ranking underpriced deep indentation and long listings exactly there.
+The subset property therefore holds across runs that share one
+chars-per-token rate, not across runs that vary only one of the two
+budgets. The grid runs uncapped; this was judged on plugin-mode output
+of external repos. The hooks-module plugin runs uncapped, so only those
+older installs and an explicit `--char-budget` take this path.
 
 ## Only the root README is read as a document
 
@@ -316,10 +318,11 @@ code to a single language.**
 - **`(submodule)` has no `--help` legend line.** An empty directory the
   root `.gitmodules` names renders `(submodule)` rather than `(empty)`,
   which read as "nothing here" where the content lives in another
-  repository. `--help` rides in every plugin session's hook context,
-  while the marker shows in 11 of the 236 breadth and robustness repos'
-  plugin output; the word already tells an agent where the content is,
-  so the legend is left to the README.
+  repository. `--help`'s legend rides in every plugin session as the
+  `summarize` tool's description, while the marker shows in 11 of the
+  236 breadth and robustness repos' plugin output; the word already
+  tells an agent where the content is, so the legend is left to the
+  README.
 
 ## Code engine (`walker::code`)
 
@@ -569,6 +572,64 @@ breadth pressure on them after 1000 to 4000 spine tokens 3000 −0.004 to
   listings and inventory probes, which doubled user time on 0.3M- and
   1.2M-entry trees of ignored build objects.
 
+## The Claude Code plugin
+
+`plugins/precis` is a hooks module (`hooks/precis.ts`), tested with
+`claude plugin test plugins/precis` and checked with
+`claude plugin validate plugins/precis`. It ships only as the
+`precis-<target>` marketplace entries, archives that
+`scripts/plugin-archives.py` builds (ported from alignment-hive's) with
+the release's binary for that target at `bin/`, so plugin and binary
+always match. `plugins/precis-legacy` is the plain `precis` entry: the
+0.2 shell hooks, frozen, plus a band row offering this machine's entry.
+The two share `hooks/notice-band.tsx` (alignment-hive's, verbatim) and
+`hooks/switch.tsx`, kept identical by `plugin_shared_files_match`. What
+the API leaves implicit, as observed on Claude Code 2.1.301:
+
+- **The overview is a `classic.SessionStart` answer** on `startup` and
+  `clear`, not on `compact` or `resume`. A module's `additionalContext`
+  is not held to the 10,000-character cap a command hook's is (a 30,000
+  character entry arrived whole), and subagents don't get it. Subagents
+  sometimes need not to know the repo, and a compaction summary already
+  carries the paths the conversation used, so neither gets the overview.
+  A `prompt.context` block was the other way in: it reaches every
+  subagent and comes back after each compaction. Where an organization
+  manages Claude Code, `classic.*` hooks of a plugin the person
+  installed don't run (`claude plugin validate` says so), and the plugin
+  is the tool alone.
+- **A plugin's own tool skips the permission check**: no `tool.check`
+  fires for it. So the tool asks `$.tool.check` for a Read of the
+  resolved path, refuses on its deny, and puts its ask to the user with
+  `$.ui.ask`, which rejects under `-p`. Only the given path is checked:
+  the walker knows nothing of Claude Code's rules, so a Read deny rule on
+  a file under a summarized directory (or under the working directory,
+  for the overview) doesn't hide it. The shell-hook plugin checked no
+  rules at all, and an exclusion input to the CLI fed from per-file
+  Read decisions was judged not needed.
+- **The bundled binary unpacks to
+  `${XDG_CACHE_HOME:-~/.cache}/precis/v<version>/`**, as model-router's
+  does, leaving the plugin's own directory to Claude Code; nothing
+  removes older versions' directories.
+  Children of `$.process.run` carry no `CLAUDE_PLUGIN_ROOT`, so the
+  legacy manifest check never caps the module's runs. A plugin loaded
+  from source has no bundle: `PRECIS_DEV` names the binary it runs.
+- **Both plugins are named `precis`**, so the tool keeps its name and
+  they share `$.state`: a switch takes its band row down before
+  `/reload-plugins` hands the state to the plugin it installed. A local
+  uninstall clears the local `enabledPlugins` entry a local disable
+  writes, so the switch disables last.
+- **Archive urls must be `https://` on a public host**, so an archive
+  install can't be tried before the release publishes it; unzipping a
+  built archive into a path-source marketplace entry tests the same
+  files.
+- **The rolling `plugin-archives` release is never "latest"**: the
+  legacy plugin's updater installs the binary from GitHub's latest
+  release.
+- **The archive urls 404 until a first release publishes them**, and
+  each release's push reaches the marketplace before its archives job
+  runs; past the first release, that window serves the previous
+  release's archives.
+
 ## Open items
 
 - **Ellipsis atoms are credited on schedule content, not rendered
@@ -599,11 +660,14 @@ breadth pressure on them after 1000 to 4000 spine tokens 3000 −0.004 to
   (`Lib/`, `drivers/`, `src/`) is never bought and its files never open.
   Whole listings of huge test directories still cost a render probe
   apiece.
-- **Pre-0.2 plugin hooks are recognized by their plugin manifest**
-  (`run_by_session_hook` in `src/main.rs`): they don't set
-  `PRECIS_SESSION_HOOK`, yet their update script installs the latest
-  binary, and uncapped output overflows the hook cap. Drop that branch
-  once those plugin installs have had time to update.
+- **The char cap serves the plain `precis` plugin only.** Its session
+  hook (0.2 and later) sets `PRECIS_SESSION_HOOK`, and pre-0.2 hooks are
+  recognized by their 0.1 plugin manifest (`run_by_session_hook` in
+  `src/main.rs`); both keep installing the latest binary, whose uncapped
+  output would overflow the hook cap. `HOOK_WRAPPER`,
+  `plugin_char_budget`, `plugins/precis-legacy` and its tests
+  (`tests/integration/plugin_legacy.rs`) exist for them. Drop the lot
+  once those installs have switched to the per-platform plugins.
 - **Very large budgets are slow.** Runs at 3000 tokens and in the
   plugin stay under 1.5 s on the largest corpus repositories, but zig
   takes 12 s at 100k tokens, llvm 14 s and TypeScript 13 s at 1M.

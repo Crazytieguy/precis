@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+### Plugin
+
+- The plugin now comes in one build per machine: `precis-aarch64-apple-darwin`, `precis-x86_64-apple-darwin`, `precis-aarch64-unknown-linux-gnu` and `precis-x86_64-unknown-linux-gnu`. Each carries its machine's precis binary, so nothing is downloaded at session start; the binary now updates with the plugin instead of from GitHub, so turn on auto-update for the `precis` marketplace to keep getting new versions. A build installed on the wrong machine shows a row above the prompt whose **Fix** installs the right one.
+- The `precis` plugin keeps working as before, and offers the build for your machine in a row above the prompt, whose **Switch** installs it and takes `precis` out.
+- The plugin is a Claude Code hooks module instead of shell hooks. The overview of the working directory still starts each session and comes back after `/clear`, but no longer comes back after compaction, and subagents don't get it. Claude Code's 10,000-character hook limit no longer applies, so it is a plain 3000-token overview instead of one cut to fit beside the help text.
+- Claude zooms in with a `summarize` tool (`mcp__precis__summarize`) instead of running `precis` through Bash, and the plugin no longer puts `precis` on Bash's `PATH`: if your `CLAUDE.md` tells Claude to run `precis`, point it at the tool, or install the standalone CLI. The tool summarizes a path the Read tool may read without asking, refuses one a Read deny rule covers, and asks you about any other. Like the old auto-approval, it checks only the path it is given, not each file under a directory. Its description is the `--help` notation legend.
+- A `token_budget` option (in `/config`, or `/plugin configure <plugin>@precis`, `<plugin>` being your build) sets the overview's budget and the tool's default.
+- The "precis: available" line at session start is gone; errors still show.
+- The plugin no longer needs `jq`.
+- Where an organization manages Claude Code, a plugin a person installs can't add to a session's starting context, so it provides the tool alone there.
+
 ## 0.2.0
 
 A rewrite of how precis decides what to show. The CLI and the plugin install the same way as before.

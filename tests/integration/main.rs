@@ -4,7 +4,9 @@ mod cli;
 mod fixture_baselines;
 mod ns_simulate;
 #[cfg(unix)]
-mod plugin_hooks;
+mod plugin;
+#[cfg(unix)]
+mod plugin_legacy;
 mod readme_example;
 mod robustness;
 mod scheduler_invariants;

@@ -9,8 +9,10 @@ use clap::{CommandFactory, Parser};
 /// swaps the text for a file path and a short preview.
 const HOOK_CONTEXT_CAP: usize = 10_000;
 
-/// The text `plugins/precis/hooks/session-start.sh` puts around `--help`
-/// and the summary in that one field.
+/// The text the plain `precis` plugin's session-start hook
+/// (`plugins/precis-legacy/hooks/session-start.sh`) puts around `--help`
+/// and the summary in that one field. The per-platform plugins inject
+/// through a hooks module, which has no cap and runs no hook.
 const HOOK_WRAPPER: [&str; 3] = [
     "## precis\n\nOutput of `precis --help`:\n\n```\n",
     "\n```\n\nOutput of `precis .`:\n\n```\n",
@@ -61,12 +63,12 @@ fn main() -> Result<()> {
     write_stdout(&output)
 }
 
-/// Whether precis's own session-start hook is running us, so the output
-/// must fit the hook cap. Hooks from plugin versions before 0.2 don't set
-/// [`SESSION_HOOK_VAR`] but still download this binary; they are
-/// recognized by the plugin they run from. Claude Code sets
-/// `CLAUDE_PLUGIN_ROOT` for every plugin's hooks, so that alone would
-/// cap other plugins' runs too.
+/// Whether the plain `precis` plugin's session-start hook is running us,
+/// so the output must fit the hook cap. Hooks from plugin versions
+/// before 0.2 don't set [`SESSION_HOOK_VAR`] but still download this
+/// binary; they are recognized by the plugin they run from. Claude Code
+/// sets `CLAUDE_PLUGIN_ROOT` for every plugin's hooks, so that alone
+/// would cap other plugins' runs too.
 fn run_by_session_hook() -> bool {
     std::env::var_os(SESSION_HOOK_VAR).is_some()
         || std::env::var_os("CLAUDE_PLUGIN_ROOT").is_some_and(|root| {
@@ -75,8 +77,9 @@ fn run_by_session_hook() -> bool {
         })
 }
 
+/// A pre-0.2 precis plugin's manifest: all of them were version 0.1.0.
 fn is_precis_plugin_manifest(manifest: &str) -> bool {
-    manifest.contains("\"name\": \"precis\"")
+    manifest.contains("\"name\": \"precis\"") && manifest.contains("\"version\": \"0.1.")
 }
 
 /// What is left of the hook cap once the session-start hook has spent
@@ -139,7 +142,7 @@ mod tests {
 
     #[test]
     fn main_hook_wrapper_matches_session_start_script() {
-        let script = include_str!("../plugins/precis/hooks/session-start.sh");
+        let script = include_str!("../plugins/precis-legacy/hooks/session-start.sh");
         let [before_help, before_output, after_output] =
             HOOK_WRAPPER.map(|piece| format!("\"{}\"", piece.replace('\n', "\\n")));
         let jq_expression =
@@ -156,7 +159,8 @@ mod tests {
     }
 
     /// The 0.1 plugin's manifest, which sets no [`SESSION_HOOK_VAR`], and
-    /// not another plugin's whose name starts the same.
+    /// neither another plugin's whose name starts the same nor the
+    /// per-platform plugin's, whose module's runs are uncapped.
     #[test]
     fn main_recognizes_legacy_plugin_manifest() {
         let legacy = r#"{
@@ -168,5 +172,14 @@ mod tests {
         assert!(is_precis_plugin_manifest(legacy));
         let other = legacy.replace("\"precis\"", "\"precis-notes\"");
         assert!(!is_precis_plugin_manifest(&other));
+        let current = include_str!("../plugins/precis/.claude-plugin/plugin.json");
+        assert!(!is_precis_plugin_manifest(current));
+    }
+
+    /// The per-platform plugin's tool description is `--help` above its
+    /// usage line.
+    #[test]
+    fn main_help_opens_with_about_then_usage() {
+        assert!(help_output().starts_with(&format!("{ABOUT}\n\nUsage:")));
     }
 }

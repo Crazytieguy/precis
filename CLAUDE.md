@@ -1,6 +1,6 @@
 # Precis
 
-Canonical commands: `cargo t` (nextest, debug), `cargo lint`, `cargo fmt`, `cargo run --release -- <path>`, `cargo run --example clone_fixtures`, `cargo run --example validate_ns -- <north-star.toml>`.
+Canonical commands: `cargo t` (nextest, debug), `cargo lint`, `cargo fmt`, `cargo run --release -- <path>`, `cargo run --example clone_fixtures`, `cargo run --example validate_ns -- <north-star.toml>`. The plugins (`plugins/precis` and `plugins/precis-legacy`, Claude Code hooks modules): `claude plugin validate plugins/<plugin>`, `claude plugin test plugins/<plugin>`, `python3 scripts/plugin-archives.py build`.
 
 ## Documentation
 

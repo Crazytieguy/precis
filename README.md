@@ -142,32 +142,33 @@ A `…` row means "there is more here that isn't shown": source inside a file, o
 
 ### Claude Code plugin (recommended)
 
-The precis plugin automatically injects a structural overview of your project into Claude's context at the start of every session. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude the `precis` CLI so it can zoom into specific directories on demand, and lets `precis` runs on paths inside the project skip the permission prompt.
+The precis plugin automatically puts a structural overview of your project into Claude's context at the start of every session, and again after `/clear`. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude a `summarize` tool so it can zoom into specific directories or files on demand. The tool summarizes a path Claude's Read tool may read without asking, refuses one your Read deny rules cover, and asks you about any other. Only that path is checked: a deny rule on a file inside a summarized directory, or inside the working directory for the overview, doesn't hide the file.
+
+The plugin comes in one build per machine:
+
+| Machine | Plugin |
+|---|---|
+| macOS, Apple Silicon | `precis-aarch64-apple-darwin` |
+| macOS, Intel | `precis-x86_64-apple-darwin` |
+| Linux, arm64 | `precis-aarch64-unknown-linux-gnu` |
+| Linux, x86_64 | `precis-x86_64-unknown-linux-gnu` |
+
+Install yours, for example on an Apple Silicon Mac:
 
 ```
 claude plugin marketplace add Crazytieguy/precis
-claude plugin install precis
+claude plugin install precis-aarch64-apple-darwin@precis
 ```
 
-Or add to your `.claude/settings.json` manually:
+Install it for your user, not in a checked-in `.claude/settings.json`: teammates on other machines need a different build. Below, `<plugin>` stands for your build's name from the table.
 
-```json
-{
-  "enabledPlugins": {
-    "precis@precis": true
-  },
-  "extraKnownMarketplaces": {
-    "precis": {
-      "source": {
-        "source": "github",
-        "repo": "Crazytieguy/precis"
-      }
-    }
-  }
-}
-```
+Each build carries the precis binary for its machine, so it works offline from the first session. New versions arrive as plugin updates: turn on auto-update for the `precis` marketplace (`/plugin`, Marketplaces tab), or run `claude plugin update <plugin>@precis` now and then. If you install the wrong build, a row above the prompt says so, and its **Fix** button installs the right one. On other platforms, install the standalone CLI and configure your agent as below.
 
-The plugin automatically downloads and updates the binary — no manual install needed. It runs on macOS and Linux (x86_64 and arm64); on other platforms, install the standalone CLI and configure your agent as below.
+The overview and the tool default to a 3000-token budget. To change it, set the plugin's `token_budget` option in `/config`, with `/plugin configure <plugin>@precis`, or when installing with `--config token_budget=6000`.
+
+Where an organization manages Claude Code, a plugin you install yourself can't add to a session's starting context: you get the `summarize` tool but no overview, unless the organization enables precis in its managed settings.
+
+**Upgrading from the `precis` plugin:** it keeps working, and a row above the prompt offers the build for your machine. **Switch** installs that build and takes `precis` out; where a checked-in `.claude/settings.json` enables `precis@precis`, it disables it in your local settings and leaves that file alone. By hand: `claude plugin install <plugin>@precis`, then `claude plugin uninstall precis@precis` (or `claude plugin disable precis@precis --scope local` if the project enables it). If your `CLAUDE.md` tells Claude to run `precis`, point it at the `summarize` tool instead, or install the standalone CLI.
 
 ### Standalone CLI
 
@@ -207,7 +208,7 @@ precis . --token-budget 8000       # with a larger token budget
 precis . --char-budget 9000        # also cap the output's length
 ```
 
-The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in; when run from the plugin's session-start hook, precis derives a default so the injected context stays within Claude Code's 10,000-unit limit.
+The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in.
 
 Given a single file, precis shows its structure first, then spends whatever budget is left on the file's text from the top, so a file that fits prints whole. A binary file prints only its name.
 
