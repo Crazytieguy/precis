@@ -597,10 +597,24 @@ the API leaves implicit, as observed on Claude Code 2.1.301:
   manages Claude Code, `classic.*` hooks of a plugin the person
   installed don't run (`claude plugin validate` says so), and the plugin
   is the tool alone.
-- **A plugin's own tool skips the permission check**: no `tool.check`
-  fires for it. So the tool asks `$.tool.check` for a Read of the
-  resolved path, refuses on its deny, and puts its ask to the user with
-  `$.ui.ask`, which rejects under `-p`. Only the given path is checked:
+- **A plugin's own tool reaches the permission check only through
+  `next`** (observed on 2.1.308): the hook that serves it answers above
+  core, and `next(e)` runs `tool.check`, the mode's decider (dialog,
+  auto-mode classifier, headless refusal) and then core's error for a
+  call no hook answered, which is how a granted call is told from a
+  refused one (both are `isError` results, not `{ deny }`). Plan mode
+  refuses every such call whatever a `tool.check` hook answers, since a
+  registered tool can't be marked read-only. So the tool asks
+  `$.tool.check` for a Read of the resolved path: an allow runs precis
+  without `next`, a deny refuses, and only an ask goes through `next`.
+  A settings PreToolUse hook's `updatedInput` reaches `tool.check`'s
+  `e.input` but not the serving hook's `e`, so the tool records what its
+  check read and refuses a granted call whose path or budget changed.
+  A PermissionRequest hook's `updatedInput` lands after the check and
+  isn't seen. Reached through `next`, the interactive dialog is the
+  ordinary MCP one ("precis — Summarize", with "don't ask again").
+  An earlier version put Read's ask to the user with `$.ui.ask`, which
+  raised AskUserQuestion even in auto mode. Only the given path is checked:
   the walker knows nothing of Claude Code's rules, so a Read deny rule on
   a file under a summarized directory (or under the working directory,
   for the overview) doesn't hide it. The shell-hook plugin checked no

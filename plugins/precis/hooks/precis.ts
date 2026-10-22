@@ -4,6 +4,12 @@ import { drawOffer, platformTarget, refreshOffer } from './switch'
 
 const TOOL = 'mcp__precis__summarize'
 
+/** What the engine answers a call of a plugin's tool that its permission check let through. */
+const UNSERVED = 'no tool.call hook answered this call'
+
+/** The tool's arguments, as the model gives them and as the permission check reads them. */
+type Args = { path?: string; token_budget?: number }
+
 /** This machine's target, and the binary bundle this plugin carries, if any. */
 type Platform = { target: string | undefined; bundle: { target: string; path: string } | undefined }
 
@@ -13,6 +19,9 @@ type Setup = { platform: Promise<Platform>; binary: Promise<string | undefined> 
 export const register: Register = (on, options) => {
   const tokenBudget = Number(options.token_budget)
   let setup: Setup | undefined
+  // The input each call's permission check read, by `tool_use_id`: a
+  // PreToolUse hook's rewrite shows here and not on the call's own `e`.
+  const checked = new Map<string, Args>()
 
   drawOffer(on)
 
@@ -42,13 +51,27 @@ export const register: Register = (on, options) => {
     return next(e)
   })
 
-  on('tool.call', { tool: TOOL }, async ($, e) => {
-    const args = e as { path?: string; token_budget?: number }
+  on('tool.check', { tool: TOOL }, ($, e, next) => {
+    if (e.tool_use_id !== undefined) checked.set(e.tool_use_id, e.input as Args)
+    return next(e)
+  })
+
+  on('tool.call', { tool: TOOL }, async ($, e, next) => {
+    const args = e as Args
     const bin = await (setup ??= setUp($)).binary
     if (bin === undefined) return { deny: 'precis has no binary to run' }
     const path = await expandHome($, args.path ?? '.')
-    const refusal = await readRefusal($, path)
-    if (refusal !== undefined) return { deny: refusal }
+    const read = await readDecision($, path)
+    if ('deny' in read) return read
+    if (read.decision === 'ask') {
+      const decided = await next(e)
+      const input = checked.get(e.tool_use_id)
+      checked.delete(e.tool_use_id)
+      if (decided.isError !== true || !decided.text?.includes(UNSERVED)) return decided
+      if (input === undefined || input.path !== args.path || input.token_budget !== args.token_budget) {
+        return { deny: 'A hook changed the path or budget before the permission check; precis runs only what it checked' }
+      }
+    }
     const run = await $.process.run(
       [bin, '--token-budget', String(args.token_budget ?? tokenBudget), '--', path],
       { timeoutMs: 120_000 },
@@ -166,22 +189,23 @@ async function expandHome($: EngineInterface, path: string): Promise<string> {
 }
 
 /**
- * Why precis may not read `path`, or undefined when it may. A plugin's own
- * tool skips the permission check, so this asks it the way it would answer a
- * Read of the same path, and puts an `ask` to the user.
+ * Read's decision on `path`, or why precis may not read it. A plugin's own
+ * tool reaches the permission check only through `next`, which ends at the
+ * engine's error for a call no hook served, so the tool follows Read's
+ * decision on the same path and puts only Read's ask to the permission mode:
+ * the dialog, the auto-mode classifier, a headless host's refusal. Plan mode
+ * refuses every call that reaches it, so an allow skips it.
  */
-async function readRefusal($: EngineInterface, path: string): Promise<string | undefined> {
+async function readDecision(
+  $: EngineInterface,
+  path: string,
+): Promise<{ decision: 'allow' | 'ask' } | { deny: string }> {
   const stat = await $.fs.stat(path, { resolve: true }).catch(() => undefined)
-  if (stat === undefined) return `${path} does not exist`
+  if (stat === undefined) return { deny: `${path} does not exist` }
   const target = stat.realPath ?? path
   const { decision, reason } = await $.tool.check({ tool: 'Read', input: { file_path: target } })
-  if (decision === 'allow') return undefined
-  if (decision === 'deny') return reason ?? `Reading ${target} is denied`
-  const answer = await $.ui.ask(`Let precis summarize ${target}?`, ['Yes', 'No']).catch(() => undefined)
-  if (answer === 'Yes') return undefined
-  return answer === undefined
-    ? `Reading ${target} needs the user's permission, and they could not be asked`
-    : `The user declined to let precis read ${target}`
+  if (decision === 'deny') return { deny: reason ?? `Reading ${target} is denied` }
+  return { decision }
 }
 
 function longestBacktickRun(text: string): number {

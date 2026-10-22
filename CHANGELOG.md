@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Plugin
+
+- A path the Read tool would ask about now goes to your permission mode, as any MCP tool call does, instead of to a question from the plugin: in auto mode the classifier decides, and the permission prompt asks only where Claude Code would ask anyway.
+
 ## 0.2.1
 
 ### Plugin

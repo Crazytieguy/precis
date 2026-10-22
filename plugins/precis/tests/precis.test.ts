@@ -15,7 +15,7 @@ type World = {
   bundled?: string
   dev?: string
   readDecision?: ToolCheckDecision
-  answer?: string
+  granted?: boolean
 }
 
 function ran(stdout: string): { value: ProcessRunResult } {
@@ -24,12 +24,11 @@ function ran(stdout: string): { value: ProcessRunResult } {
 
 /**
  * The host beneath the plugin: an arm64 Mac, the binary the plugin bundles,
- * Read's verdict, the user. Returns what the plugin ran, asked, registered
- * and invoked.
+ * Read's verdict, the permission mode's. Returns what the plugin ran,
+ * registered and invoked.
  */
 function world(on: On, w: World = {}) {
   const runs: (readonly string[])[] = []
-  const asked: string[] = []
   const registered: string[] = []
   const commands: string[] = []
   mock.env(on, { HOME: '/home/u', ...(w.dev === undefined ? {} : { PRECIS_DEV: w.dev }) })
@@ -45,12 +44,12 @@ function world(on: On, w: World = {}) {
   on('settings.read', ($, e) => ({
     value: e.source === 'user' ? { enabledPlugins: { [`precis-${w.bundled}@precis`]: true } } : {},
   }))
-  on('tool.check', () => ({ decision: w.readDecision ?? 'allow' }))
-  on('tool.call', { tool: 'AskUserQuestion' }, ($, e) => {
-    const question = e.questions[0]!.question
-    asked.push(question)
-    if (w.answer === undefined) return { deny: 'no one to ask' }
-    return { result: { questions: e.questions, answers: { [question]: w.answer } } }
+  on('tool.check', { tool: 'Read' }, () => ({ decision: w.readDecision ?? 'allow' }))
+  on('tool.call', { tool: 'mcp__precis__summarize' }, () => {
+    const text = w.granted
+      ? 'precis registered the tool summarize but no tool.call hook answered this call'
+      : "Claude requested permissions to use mcp__precis__summarize, but you haven't granted it yet."
+    return { result: `Error: ${text}`, text, isError: true }
   })
   on('command.run', ($, e) => {
     commands.push(e.command)
@@ -69,7 +68,7 @@ function world(on: On, w: World = {}) {
     if (e.argv[0] === 'claude') return ran('')
     return ran(e.argv.includes('--help') ? HELP : SUMMARY)
   })
-  return { runs, asked, registered, commands }
+  return { runs, registered, commands }
 }
 
 const start = { cwd: '/repo', surface: null, isInteractive: false } as const
@@ -146,19 +145,32 @@ test('the tool runs precis on a path the user lets Read see', async ($, on) => {
   expect(w.runs).toContainEqual([BINARY, '--token-budget', '500', '--', 'src'])
 })
 
-test('a path Read would ask about is put to the user', async ($, on) => {
-  const w = world(on, { readDecision: 'ask', answer: 'No' })
-  await $.session.start(start)
-  const result = await $.tool.call({ tool: 'mcp__precis__summarize', path: '/etc' })
-  expect(result.deny).toBe('The user declined to let precis read /etc')
-  expect(w.asked).toHaveLength(1)
-})
-
-test('with nobody to ask, a path Read would ask about is refused', async ($, on) => {
-  world(on, { readDecision: 'ask' })
+test('a path Read would ask about runs once the permission mode lets the call through', async ($, on) => {
+  const w = world(on, { readDecision: 'ask', granted: true })
   await $.session.start(start)
   const result = await $.tool.call({ tool: 'mcp__precis__summarize', path: '~/notes' })
-  expect(result.deny).toBe("Reading /home/u/notes needs the user's permission, and they could not be asked")
+  expect(result.result).toBe(SUMMARY)
+  expect(w.runs).toContainEqual([BINARY, '--token-budget', '3000', '--', '/home/u/notes'])
+})
+
+test('a path Read would ask about is refused as the permission mode refuses it', async ($, on) => {
+  const w = world(on, { readDecision: 'ask' })
+  await $.session.start(start)
+  const before = w.runs.length
+  const result = await $.tool.call({ tool: 'mcp__precis__summarize', path: '/etc' })
+  expect(result.isError).toBe(true)
+  expect(result.text).toBe("Claude requested permissions to use mcp__precis__summarize, but you haven't granted it yet.")
+  expect(w.runs).toHaveLength(before)
+})
+
+test('a path a PreToolUse hook rewrote on its way to the permission check is refused', async ($, on) => {
+  const w = world(on, { readDecision: 'ask', granted: true })
+  on('classic.PreToolUse', () => ({ updatedInput: { path: '/home/u' } }))
+  await $.session.start(start)
+  const before = w.runs.length
+  const result = await $.tool.call({ tool: 'mcp__precis__summarize', path: '/etc' })
+  expect(result.deny).toBe('A hook changed the path or budget before the permission check; precis runs only what it checked')
+  expect(w.runs).toHaveLength(before)
 })
 
 test('a path Read is denied is refused without running precis', async ($, on) => {

@@ -142,7 +142,7 @@ A `…` row means "there is more here that isn't shown": source inside a file, o
 
 ### Claude Code plugin (recommended)
 
-The precis plugin automatically puts a structural overview of your project into Claude's context at the start of every session, and again after `/clear`. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude a `summarize` tool so it can zoom into specific directories or files on demand. The tool summarizes a path Claude's Read tool may read without asking, refuses one your Read deny rules cover, and asks you about any other. Only that path is checked: a deny rule on a file inside a summarized directory, or inside the working directory for the overview, doesn't hide the file.
+The precis plugin automatically puts a structural overview of your project into Claude's context at the start of every session, and again after `/clear`. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude a `summarize` tool so it can zoom into specific directories or files on demand. The tool summarizes a path Claude's Read tool may read without asking, refuses one your Read deny rules cover, and leaves any other to your permission mode, as it would any MCP tool call: the permission prompt, auto mode's classifier, or a refusal where nobody can be asked. Only that path is checked: a deny rule on a file inside a summarized directory, or inside the working directory for the overview, doesn't hide the file.
 
 The plugin comes in one build per machine:
 
