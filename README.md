@@ -142,7 +142,7 @@ A `…` row means "there is more here that isn't shown": source inside a file, o
 
 ### Claude Code plugin (recommended)
 
-The precis plugin automatically puts a structural overview of your project into Claude's context at the start of every session, and again after `/clear`. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude a `summarize` tool so it can zoom into specific directories or files on demand. The tool summarizes a path Claude's Read tool may read without asking, refuses one your Read deny rules cover, and leaves any other to your permission mode, as it would any MCP tool call: the permission prompt, auto mode's classifier, or a refusal where nobody can be asked. Only that path is checked: a deny rule on a file inside a summarized directory, or inside the working directory for the overview, doesn't hide the file.
+The precis plugin automatically puts a structural overview of your project into Claude's context with the first prompt of every session (a slash command doesn't carry it), and again after `/clear`. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude a `summarize` tool so it can zoom into specific directories or files on demand. The tool summarizes a path Claude's Read tool may read without asking, refuses one your Read deny rules cover, and leaves any other to your permission mode, as it would any MCP tool call: the permission prompt, auto mode's classifier, or a refusal where nobody can be asked. Only that path is checked: a deny rule on a file inside a summarized directory, or inside the working directory for the overview, doesn't hide the file.
 
 The plugin comes in one build per machine:
 
@@ -166,7 +166,7 @@ Each build carries the precis binary for its machine, so it works offline from t
 
 The overview and the tool default to a 3000-token budget. To change it, set the plugin's `token_budget` option in `/config`, with `/plugin configure <plugin>@precis`, or when installing with `--config token_budget=6000`.
 
-Where an organization manages Claude Code, a plugin you install yourself can't add to a session's starting context: you get the `summarize` tool but no overview, unless the organization enables precis in its managed settings.
+Where an organization manages Claude Code and its managed settings restrict MCP servers (`allowedMcpServers`), Claude Code refuses the `summarize` tool to a plugin you install yourself; the overview still comes.
 
 **Upgrading from the `precis` plugin:** it keeps working, and a row above the prompt offers the build for your machine. **Switch** installs that build and takes `precis` out; where a checked-in `.claude/settings.json` enables `precis@precis`, it disables it in your local settings and leaves that file alone. By hand: `claude plugin install <plugin>@precis`, then `claude plugin uninstall precis@precis` (or `claude plugin disable precis@precis --scope local` if the project enables it). If your `CLAUDE.md` tells Claude to run `precis`, point it at the `summarize` tool instead, or install the standalone CLI.
 

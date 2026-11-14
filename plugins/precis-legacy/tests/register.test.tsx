@@ -4,9 +4,10 @@ import { expect, test } from 'claude-code/testing'
 const BAND = {
   plugin: 'precis',
   component: 'AbovePrompt' as const,
-  props: { hasSurvey: false, isWorking: false, maxRows: 20, bodyColumns: 140, scroll: { offset: 0, bodyRows: 19 }, view: {} },
+  props: { hasSurvey: false, isCollapsed: false, isWorking: false, maxRows: 20, bodyColumns: 140, scroll: { offset: 0, bodyRows: 19 }, view: {} },
 }
 const SWITCH = { key: 'precis:switch:switch' }
+const START = { cwd: '/repo', surface: 'terminal', isInteractive: true } as const
 
 type Host = { machine?: string; enabledIn?: SettingsSource[]; failing?: string }
 
@@ -19,7 +20,7 @@ function host(on: On, h: Host = {}) {
   const claude: string[][] = []
   const commands: string[] = []
   const toasts: string[] = []
-  on('classic.SessionStart', () => ({}))
+  on('session.start', ($, e) => ({ cwd: e.cwd }))
   on('settings.read', ($, e) => ({
     value: (h.enabledIn ?? ['user']).includes(e.source!) ? { enabledPlugins: { 'precis@precis': true } } : {},
   }))
@@ -42,7 +43,7 @@ function host(on: On, h: Host = {}) {
 
 test("the band offers this machine's plugin in place of the plain one", async ($, on) => {
   const { claude, commands, toasts } = host(on)
-  await $.classic.SessionStart({ source: 'startup' })
+  await $.session.start(START)
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
   expect(await ui.find({ type: 'Text', text: /superseded by precis-aarch64-apple-darwin/ })).toBeDefined()
 
@@ -59,7 +60,7 @@ test("the band offers this machine's plugin in place of the plain one", async ($
 
 test('a project that enables the plain plugin keeps its file; the switch goes in local settings', async ($, on) => {
   const { claude } = host(on, { machine: 'Linux x86_64', enabledIn: ['project'] })
-  await $.classic.SessionStart({ source: 'startup' })
+  await $.session.start(START)
   const ui = await $.ui.mount({ ...BAND, surface: 'desktop' })
   await ui.press(SWITCH)
   expect(claude).toEqual([
@@ -71,7 +72,7 @@ test('a project that enables the plain plugin keeps its file; the switch goes in
 
 test('enabled in the project and installed locally, the plain plugin is left disabled locally', async ($, on) => {
   const { claude } = host(on, { enabledIn: ['project', 'local'] })
-  await $.classic.SessionStart({ source: 'startup' })
+  await $.session.start(START)
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
   await ui.press(SWITCH)
   expect(claude).toEqual([
@@ -84,7 +85,7 @@ test('enabled in the project and installed locally, the plain plugin is left dis
 
 test('a failed switch says why and leaves the plain plugin and the button', async ($, on) => {
   const { claude, commands, toasts } = host(on, { failing: 'install' })
-  await $.classic.SessionStart({ source: 'startup' })
+  await $.session.start(START)
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
   await ui.press(SWITCH)
   expect(claude).toHaveLength(1)
@@ -96,7 +97,7 @@ test('a failed switch says why and leaves the plain plugin and the button', asyn
 
 test('off the platforms precis builds for, nothing is offered', async ($, on) => {
   host(on, { machine: 'Linux riscv64' })
-  await $.classic.SessionStart({ source: 'startup' })
+  await $.session.start(START)
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
   expect(await ui.find({ key: SWITCH.key })).toBeUndefined()
   await ui.unmount()

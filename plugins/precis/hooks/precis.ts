@@ -25,30 +25,37 @@ export const register: Register = (on, options) => {
 
   drawOffer(on)
 
+  // Whether the session's next prompt hands the model the overview: a new
+  // session's first, or the first after /clear. A resumed or compacted
+  // conversation and a reloaded plugin get none, and subagents submit no
+  // prompts.
+  let armed = false
+  let hasTool = false
+
   on('session.start', async ($, e, next) => {
-    const bin = await (setup ??= setUp($)).binary
-    if (bin !== undefined) {
-      await $.tool.register({
-        name: 'summarize',
-        description: await about($, bin),
-        inputSchema: {
-          type: 'object',
-          properties: {
-            path: {
-              type: 'string',
-              description: 'Directory or file to summarize. Default: the working directory.',
-            },
-            token_budget: {
-              type: 'integer',
-              minimum: 1,
-              description: `Output budget in o200k_base tokens. Default: ${tokenBudget}.`,
-            },
-          },
-        },
-        isDeferred: false,
-      })
-    }
+    const { platform, binary } = (setup ??= setUp($))
+    armed = (await $.session.turns()) === 0
+    ;[hasTool] = await Promise.all([registerTool($, binary, tokenBudget), offerFix($, platform)])
     return next(e)
+  })
+
+  // A /clear or /resume ends the session and the next starts with no `session.start`.
+  on('session.end', ($, e, next) => {
+    armed = e.reason === 'clear'
+    return next(e)
+  })
+
+  // The prompt's own context rather than a session-start hook's: where an
+  // organization manages Claude Code, its cc-plugin-sec-default skips the
+  // `classic.*` hooks of the plugins a person installs.
+  on('prompt.submit', async ($, e, next) => {
+    if (!armed || e.command !== undefined) return next(e)
+    armed = false
+    const overview = await workingDirOverview($, (setup ??= setUp($)).binary, hasTool, tokenBudget)
+    if (overview === undefined) return next(e)
+    const entered = await next({ ...e, context: [...(e.context ?? []), overview] })
+    if (entered.drop !== undefined) armed = true
+    return entered
   })
 
   on('tool.check', { tool: TOOL }, ($, e, next) => {
@@ -79,21 +86,6 @@ export const register: Register = (on, options) => {
     if (run.exitCode !== 0) return { deny: run.stderr.trim() }
     return { result: run.stdout === '' ? run.stderr.trim() : run.stdout }
   })
-
-  // The main conversation's context, not subagents'. A compacted conversation
-  // keeps what it needs of the overview in its summary, and a resumed one
-  // still holds it.
-  on('classic.SessionStart', async ($, e, next) => {
-    if (e.source !== 'startup' && e.source !== 'clear') return next(e)
-    const { platform, binary } = (setup ??= setUp($))
-    const [below, overview] = await Promise.all([
-      next(e),
-      workingDirOverview($, binary, tokenBudget),
-      offerFix($, platform),
-    ])
-    if (overview === undefined) return below
-    return { ...below, additionalContext: [...(below.additionalContext ?? []), overview] }
-  })
 }
 
 function setUp($: EngineInterface): Setup {
@@ -101,9 +93,48 @@ function setUp($: EngineInterface): Setup {
   return { platform, binary: bundledBinary($, platform) }
 }
 
+/**
+ * Declares the summarize tool, resolving whether the engine took it: an
+ * organization's policy can refuse a plugin the person installed its tools.
+ */
+async function registerTool(
+  $: EngineInterface,
+  binary: Promise<string | undefined>,
+  tokenBudget: number,
+): Promise<boolean> {
+  const bin = await binary
+  if (bin === undefined) return false
+  try {
+    await $.tool.register({
+      name: 'summarize',
+      description: await about($, bin),
+      inputSchema: {
+        type: 'object',
+        properties: {
+          path: {
+            type: 'string',
+            description: 'Directory or file to summarize. Default: the working directory.',
+          },
+          token_budget: {
+            type: 'integer',
+            minimum: 1,
+            description: `Output budget in o200k_base tokens. Default: ${tokenBudget}.`,
+          },
+        },
+      },
+      isDeferred: false,
+    })
+    return true
+  } catch (error: unknown) {
+    $.ui.log(`precis: the summarize tool was not registered: ${String(error)}`)
+    return false
+  }
+}
+
 async function workingDirOverview(
   $: EngineInterface,
   binary: Promise<string | undefined>,
+  hasTool: boolean,
   tokenBudget: number,
 ): Promise<string | undefined> {
   const bin = await binary
@@ -121,7 +152,8 @@ async function workingDirOverview(
   }
   if (run.stdout === '') return undefined
   const fence = '`'.repeat(Math.max(3, longestBacktickRun(run.stdout) + 1))
-  return `## precis\n\nOutput of \`${TOOL}\` on the working directory:\n\n${fence}\n${run.stdout.trimEnd()}\n${fence}`
+  const source = hasTool ? `\`${TOOL}\`` : '`precis`'
+  return `## precis\n\nOutput of ${source} on the working directory:\n\n${fence}\n${run.stdout.trimEnd()}\n${fence}`
 }
 
 /**

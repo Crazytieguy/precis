@@ -584,19 +584,40 @@ always match. `plugins/precis-legacy` is the plain `precis` entry: the
 0.2 shell hooks, frozen, plus a band row offering this machine's entry.
 The two share `hooks/notice-band.tsx` (alignment-hive's, verbatim) and
 `hooks/switch.tsx`, kept identical by `plugin_shared_files_match`. What
-the API leaves implicit, as observed on Claude Code 2.1.301:
+the API leaves implicit, as observed on Claude Code 2.1.301 to 2.1.325:
 
-- **The overview is a `classic.SessionStart` answer** on `startup` and
-  `clear`, not on `compact` or `resume`. A module's `additionalContext`
-  is not held to the 10,000-character cap a command hook's is (a 30,000
-  character entry arrived whole), and subagents don't get it. Subagents
-  sometimes need not to know the repo, and a compaction summary already
-  carries the paths the conversation used, so neither gets the overview.
-  A `prompt.context` block was the other way in: it reaches every
-  subagent and comes back after each compaction. Where an organization
-  manages Claude Code, `classic.*` hooks of a plugin the person
-  installed don't run (`claude plugin validate` says so), and the plugin
-  is the tool alone.
+- **The overview is `prompt.submit` context on a session's first
+  prompt**, and on the first after `/clear`, computed in that hook so it
+  is never stale and its run is the hook's own `$` call (another hook's
+  pending call doesn't stop the 10 s hook budget). A flag arms it:
+  `session.start` sets it when `$.session.turns()` is 0, so a resume or a
+  reloaded plugin doesn't send it again, and `session.end` sets it only
+  for reason `clear`, since neither `/clear` nor an in-process `/resume`
+  is followed by a `session.start`. Not after a compaction. Subagents
+  submit no prompts, so they don't get it. Subagents sometimes need not
+  to know the repo, and a compaction summary already carries the paths
+  the conversation used. A slash command's submission (or a prompt a hook
+  drops) leaves it for the next plain prompt, so a session that only runs
+  a skill gets none; whether context attaches to a command's submission
+  is undocumented. Rewinding past the first prompt drops it for good. Until 0.2.2 it was a `classic.SessionStart`
+  answer, but where an organization manages Claude Code (Team and
+  Enterprise plans, any machine with managed settings) the built-in
+  `cc-plugin-sec-default` continues past every `classic.*` hook of a
+  plugin the person installed, and past their `prompt.context`,
+  `prompt.section` and `prompt.attachment` hooks too, while `prompt.submit`
+  and its context stay theirs. A `prompt.context` block would also reach
+  every subagent and come back after each compaction. The wrong-platform
+  and legacy switch rows are set from `session.start` for the same
+  reason. Prompt context isn't held to a command hook's 10,000-character
+  cap, but the model reads only a head of an entry past 100,000
+  characters (about a 25,000-token budget). Tested by seating
+  sec-default's own source (`anthropics/claude-code` `mods/sec-default`)
+  with `--plugin-dir` and user-settings `prependPlugins:
+  ["sec-default@inline"]` under a scratch `CLAUDE_CONFIG_DIR`.
+  The built-in id doesn't seat that way on a machine with no managed
+  settings, and `CLAUDE_CODE_MANAGED_SETTINGS_PATH` isn't read. Under
+  sec-default, a refused `tool.register` (an `allowedMcpServers` policy)
+  leaves the overview, labelled as precis's own output.
 - **A plugin's own tool reaches the permission check only through
   `next`** (observed on 2.1.308): the hook that serves it answers above
   core, and `next(e)` runs `tool.check`, the mode's decider (dialog,

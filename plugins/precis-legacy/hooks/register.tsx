@@ -6,8 +6,9 @@ import { drawOffer, platformTarget, refreshOffer } from './switch'
 // and the band offers the plugin built for this machine in their place.
 
 export const register: Register = on => {
-  on('classic.SessionStart', async ($, e, next) => {
-    if (e.source !== 'startup' && e.source !== 'clear') return next(e)
+  // `session.start`, not `classic.SessionStart`, which an organization's
+  // cc-plugin-sec-default skips for the plugins a person installs.
+  on('session.start', async ($, e, next) => {
     const [below] = await Promise.all([next(e), offerReplacement($)])
     return below
   })

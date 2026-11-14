@@ -8,7 +8,7 @@ const BINARY = '/cache/precis/v0.3.0/precis'
 const BAND = {
   plugin: 'precis',
   component: 'AbovePrompt' as const,
-  props: { hasSurvey: false, isWorking: false, maxRows: 20, bodyColumns: 140, scroll: { offset: 0, bodyRows: 19 }, view: {} },
+  props: { hasSurvey: false, isCollapsed: false, isWorking: false, maxRows: 20, bodyColumns: 140, scroll: { offset: 0, bodyRows: 19 }, view: {} },
 }
 
 type World = {
@@ -16,6 +16,8 @@ type World = {
   dev?: string
   readDecision?: ToolCheckDecision
   granted?: boolean
+  turns?: number
+  refuseTools?: boolean
 }
 
 function ran(stdout: string): { value: ProcessRunResult } {
@@ -24,15 +26,24 @@ function ran(stdout: string): { value: ProcessRunResult } {
 
 /**
  * The host beneath the plugin: an arm64 Mac, the binary the plugin bundles,
- * Read's verdict, the permission mode's. Returns what the plugin ran,
- * registered and invoked.
+ * Read's verdict, the permission mode's, the prompts the session already
+ * holds. Returns what the plugin ran, registered and invoked, and the context
+ * each prompt entered with.
  */
 function world(on: On, w: World = {}) {
   const runs: (readonly string[])[] = []
   const registered: string[] = []
   const commands: string[] = []
+  const prompts: (readonly string[])[] = []
   mock.env(on, { HOME: '/home/u', ...(w.dev === undefined ? {} : { PRECIS_DEV: w.dev }) })
   on('session.start', ($, e) => ({ cwd: e.cwd }))
+  on('session.end', ($, e) => ({ sessionId: e.sessionId }))
+  on('session.turns', () => ({ value: w.turns ?? 0 }))
+  on('prompt.submit', ($, e) => {
+    if (e.text === 'blocked') return { drop: 'a hook beneath refused it' }
+    prompts.push(e.context ?? [])
+    return { text: e.text, context: e.context }
+  })
   on('fs.list', () => ({
     value: [{ name: `precis-${w.bundled ?? 'aarch64-apple-darwin'}.tar.xz`, kind: 'file', size: 1, mtimeMs: 0, isLink: false }],
   }))
@@ -58,6 +69,7 @@ function world(on: On, w: World = {}) {
   on('ui.log', () => ({ value: undefined }))
   on('ui.render', () => ({ type: 'Box', props: {}, children: [] }) as never)
   on('tool.register', ($, e) => {
+    if (w.refuseTools) return { deny: 'refused by policy' }
     registered.push(e.name)
     return { value: { tool: `mcp__precis__${e.name}` } }
   })
@@ -68,39 +80,80 @@ function world(on: On, w: World = {}) {
     if (e.argv[0] === 'claude') return ran('')
     return ran(e.argv.includes('--help') ? HELP : SUMMARY)
   })
-  return { runs, registered, commands }
+  return { runs, registered, commands, prompts }
 }
 
 const start = { cwd: '/repo', surface: null, isInteractive: false } as const
+const prompt = (text: string) => ({ text, wait: false, origin: { kind: 'composer' } }) as const
+const overviewRuns = (runs: (readonly string[])[]) => runs.filter(argv => argv.at(-1) === '.')
 
-test('a new or cleared conversation starts with the summary of the working directory', async ($, on) => {
+test("a new conversation's first prompt carries the summary of the working directory", async ($, on) => {
   const w = world(on)
-  on('classic.SessionStart', () => ({ additionalContext: ['another hook'] }))
-  for (const source of ['startup', 'clear'] as const) {
-    const { additionalContext } = await $.classic.SessionStart({ source })
-    expect(additionalContext).toHaveLength(2)
-    expect(additionalContext![0]).toBe('another hook')
-    expect(additionalContext![1]).toContain('Output of `mcp__precis__summarize` on the working directory:')
-    expect(additionalContext![1]).toContain('\n````\n.cargo/\n')
-  }
-  expect(w.runs).toContainEqual([BINARY, '--token-budget', '3000', '.'])
+  await $.session.start(start)
+  await $.prompt.submit(prompt('hi'))
+  await $.prompt.submit(prompt('and then'))
+  const [first, second] = w.prompts
+  expect(first).toHaveLength(1)
+  expect(first![0]).toContain('Output of `mcp__precis__summarize` on the working directory:')
+  expect(first![0]).toContain('\n````\n.cargo/\n')
+  expect(second).toEqual([])
+  expect(overviewRuns(w.runs)).toEqual([[BINARY, '--token-budget', '3000', '.']])
 })
 
-test('a compacted or resumed conversation gets no new summary', async ($, on) => {
+test("a cleared conversation's first prompt carries a fresh summary", async ($, on) => {
   const w = world(on)
-  on('classic.SessionStart', () => ({ additionalContext: ['another hook'] }))
-  for (const source of ['compact', 'resume'] as const) {
-    const { additionalContext } = await $.classic.SessionStart({ source })
-    expect(additionalContext).toEqual(['another hook'])
-  }
-  expect(w.runs).toHaveLength(0)
+  await $.session.start(start)
+  await $.prompt.submit(prompt('hi'))
+  await $.session.end({ reason: 'clear', sessionId: 's1', resume: { id: 's1' } })
+  await $.prompt.submit(prompt('fresh start'))
+  expect(w.prompts[1]).toHaveLength(1)
+  expect(w.prompts[1]![0]).toContain('Output of `mcp__precis__summarize` on the working directory:')
+  expect(overviewRuns(w.runs)).toHaveLength(2)
+})
+
+test('a resumed conversation, or a plugin reloaded mid-conversation, gets no new summary', async ($, on) => {
+  const w = world(on, { turns: 3 })
+  await $.session.start(start)
+  await $.prompt.submit(prompt('hi'))
+  expect(w.prompts).toEqual([[]])
+  expect(overviewRuns(w.runs)).toHaveLength(0)
+})
+
+test('a conversation resumed in the same process gets no summary', async ($, on) => {
+  const w = world(on)
+  await $.session.start(start)
+  await $.session.end({ reason: 'resume', sessionId: 's1', resume: { id: 's1' } })
+  await $.prompt.submit(prompt('hi'))
+  await $.session.end({ reason: 'clear', sessionId: 's2', resume: { id: 's2' } })
+  await $.session.end({ reason: 'resume', sessionId: 's3', resume: { id: 's3' } })
+  await $.prompt.submit(prompt('and then'))
+  expect(w.prompts).toEqual([[], []])
+  expect(overviewRuns(w.runs)).toHaveLength(0)
+})
+
+test('a slash command or a refused prompt leaves the summary for the next prompt', async ($, on) => {
+  const w = world(on)
+  await $.session.start(start)
+  await $.prompt.submit({ ...prompt('/model'), command: { name: 'model', args: '' } })
+  await $.prompt.submit(prompt('blocked'))
+  await $.prompt.submit(prompt('hi'))
+  expect(w.prompts).toHaveLength(2)
+  expect(w.prompts[1]![0]).toContain('Output of `mcp__precis__summarize` on the working directory:')
 })
 
 test('the token budget option sets the summary budget', { options: { token_budget: 8000 } }, async ($, on) => {
   const w = world(on)
-  on('classic.SessionStart', () => ({}))
-  await $.classic.SessionStart({ source: 'startup' })
+  await $.session.start(start)
+  await $.prompt.submit(prompt('hi'))
   expect(w.runs).toContainEqual([BINARY, '--token-budget', '8000', '.'])
+})
+
+test('where policy refuses the tool, the summary still comes and names precis itself', async ($, on) => {
+  const w = world(on, { refuseTools: true })
+  await $.session.start(start)
+  await $.prompt.submit(prompt('hi'))
+  expect(w.registered).toEqual([])
+  expect(w.prompts[0]![0]).toContain('Output of `precis` on the working directory:')
 })
 
 test('the binary is the one bundled for this machine', async ($, on) => {
@@ -119,10 +172,9 @@ test('PRECIS_DEV names the binary of a plugin loaded from source', async ($, on)
 
 test("a bundle for another machine offers this machine's plugin instead of running", async ($, on) => {
   const w = world(on, { bundled: 'x86_64-unknown-linux-gnu' })
-  on('classic.SessionStart', () => ({}))
-  const { additionalContext } = await $.classic.SessionStart({ source: 'startup' })
   await $.session.start(start)
-  expect(additionalContext).toBeUndefined()
+  await $.prompt.submit(prompt('hi'))
+  expect(w.prompts).toEqual([[]])
   expect(w.registered).toEqual([])
 
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
