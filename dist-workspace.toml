@@ -21,3 +21,8 @@ publish-jobs = ["homebrew"]
 post-announce-jobs = ["./plugin-archives"]
 # Whether to install an updater program
 install-updater = false
+
+# dist 0.30.3 defaults the arm Mac target to macos-14, which GitHub retired on
+# 2026-11-02.
+[dist.github-custom-runners]
+aarch64-apple-darwin = "macos-15"
