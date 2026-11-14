@@ -1,10 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.2.3
 
 ### Plugin
 
-- The overview of the working directory now reaches Claude where an organization manages Claude Code (Team and Enterprise plans, and machines with managed settings). Claude Code's security default there, `cc-plugin-sec-default`, skips session-start hooks of plugins a person installs, so the overview now comes with the first prompt of each session, and the first after `/clear`. It still doesn't come back after compaction or a resume, and subagents still don't get it.
+- The overview of the working directory now reaches Claude where an organization manages Claude Code (Team and Enterprise plans, and machines with managed settings). Claude Code's security default there, `cc-plugin-sec-default`, skips session-start hooks of plugins a person installs, so the overview now comes with the first prompt of each session, and the first after `/clear`. A slash command doesn't carry it: a session that starts with a skill gets it with the next prompt you type. It still doesn't come back after compaction or a resume, and subagents still don't get it.
 - The `precis` plugin's row offering your machine's build now shows there too.
 - Where an organization's managed settings refuse the `summarize` tool to plugins a person installs (`allowedMcpServers`), the overview still comes, labelled as precis's output.
 
