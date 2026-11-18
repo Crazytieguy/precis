@@ -162,7 +162,7 @@ claude plugin install precis-aarch64-apple-darwin@precis
 
 Install it for your user, not in a checked-in `.claude/settings.json`: teammates on other machines need a different build. Below, `<plugin>` stands for your build's name from the table.
 
-Each build carries the precis binary for its machine, so it works offline from the first session. New versions arrive as plugin updates: turn on auto-update for the `precis` marketplace (`/plugin`, Marketplaces tab), or run `claude plugin update <plugin>@precis` now and then. If you install the wrong build, a row above the prompt says so, and its **Fix** button installs the right one. On other platforms, install the standalone CLI and configure your agent as below.
+The plugin needs Claude Code 2.1.326 or later; it also works in Claude Code's experimental Code Mode (2.1.327 or later). Each build carries the precis binary for its machine, so it works offline from the first session. New versions arrive as plugin updates: turn on auto-update for the `precis` marketplace (`/plugin`, Marketplaces tab), or run `claude plugin update <plugin>@precis` now and then. If you install the wrong build, a row above the prompt says so, and its **Fix** button installs the right one. On other platforms, install the standalone CLI and configure your agent as below.
 
 The overview and the tool default to a 3000-token budget. To change it, set the plugin's `token_budget` option in `/config`, with `/plugin configure <plugin>@precis`, or when installing with `--config token_budget=6000`.
 

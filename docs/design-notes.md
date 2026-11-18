@@ -584,7 +584,7 @@ always match. `plugins/precis-legacy` is the plain `precis` entry: the
 0.2 shell hooks, frozen, plus a band row offering this machine's entry.
 The two share `hooks/notice-band.tsx` (alignment-hive's, verbatim) and
 `hooks/switch.tsx`, kept identical by `plugin_shared_files_match`. What
-the API leaves implicit, as observed on Claude Code 2.1.301 to 2.1.325:
+the API leaves implicit, as observed on Claude Code 2.1.301 to 2.1.327:
 
 - **The overview is `prompt.submit` context on a session's first
   prompt**, and on the first after `/clear`, computed in that hook so it
@@ -618,29 +618,42 @@ the API leaves implicit, as observed on Claude Code 2.1.301 to 2.1.325:
   settings, and `CLAUDE_CODE_MANAGED_SETTINGS_PATH` isn't read. Under
   sec-default, a refused `tool.register` (an `allowedMcpServers` policy)
   leaves the overview, labelled as precis's own output.
-- **A plugin's own tool reaches the permission check only through
-  `next`** (observed on 2.1.308): the hook that serves it answers above
-  core, and `next(e)` runs `tool.check`, the mode's decider (dialog,
-  auto-mode classifier, headless refusal) and then core's error for a
-  call no hook answered, which is how a granted call is told from a
-  refused one (both are `isError` results, not `{ deny }`). Plan mode
-  refuses every such call whatever a `tool.check` hook answers, since a
-  registered tool can't be marked read-only. So the tool asks
-  `$.tool.check` for a Read of the resolved path: an allow runs precis
-  without `next`, a deny refuses, and only an ask goes through `next`.
-  A settings PreToolUse hook's `updatedInput` reaches `tool.check`'s
-  `e.input` but not the serving hook's `e`, so the tool records what its
-  check read and refuses a granted call whose path or budget changed.
-  A PermissionRequest hook's `updatedInput` lands after the check and
-  isn't seen. Reached through `next`, the interactive dialog is the
-  ordinary MCP one ("precis — Summarize", with "don't ask again").
-  An earlier version put Read's ask to the user with `$.ui.ask`, which
-  raised AskUserQuestion even in auto mode. Only the given path is checked:
-  the walker knows nothing of Claude Code's rules, so a Read deny rule on
-  a file under a summarized directory (or under the working directory,
-  for the overview) doesn't hide it. The shell-hook plugin checked no
-  rules at all, and an exclusion input to the CLI fed from per-file
-  Read decisions was judged not needed.
+- **The tool follows Read's decision on its path, and serves an ask at
+  `tool.run`** (2.1.326 and later, hence `engines` `>=2.1.326`). Its
+  `tool.call` hook asks `$.tool.check` for a Read of the resolved path:
+  an allow runs precis there, without `next`, a deny refuses, and an ask
+  goes on through `next` to the mode's decider (dialog, auto-mode
+  classifier, headless refusal). A call the mode allows comes back at
+  `tool.run`, on the input as allowed (a PreToolUse or PermissionRequest
+  hook's rewrite included), where Read is asked again and precis runs.
+  Through `next`, the dialog is the ordinary MCP one ("precis —
+  Summarize", with "don't ask again"). An allow skips `next` because a
+  registered tool can't be marked read-only, and headless plan mode
+  refuses such a call that reaches the check (interactive plan mode, on
+  2.1.327, asks). Until 0.2.3 the tool told a granted call from a refused
+  one by core's error text for an unserved call, recorded the input its
+  own `tool.check` hook saw to catch a PreToolUse rewrite, and missed a
+  PermissionRequest one; 2.1.326 reworded that error, so every granted
+  ask failed. An earlier version still put Read's ask to the user with
+  `$.ui.ask`, which raised AskUserQuestion even in auto mode. Only the
+  given path is checked: the walker knows nothing of Claude Code's
+  rules, so a Read deny rule on a file under a summarized directory (or
+  under the working directory, for the overview) doesn't hide it. The
+  shell-hook plugin checked no rules at all, and an exclusion input to
+  the CLI fed from per-file Read decisions was judged not needed.
+- **Code Mode** (`CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1`, where the model
+  calls tools from scripts in one `REPL` tool): up to 2.1.326 it refused
+  to start while any installed mod hooked `tool.call`, `tool.check`,
+  `tool.judge`, `tool.run`, PreToolUse and other per-call events, by event
+  name alone, so no way of serving a tool avoided it. 2.1.327 dropped
+  that refusal. A script's calls of `mcp__precis__summarize` go through
+  the same `tool.call` and `tool.run` hooks and the same dialog or
+  classifier, and the overview still arrives as the first prompt's
+  context (checked live on 2.1.327, interactive, in default, plan and
+  auto modes). A hook on the tool turns off Code Mode's wait for a
+  stopped result for that tool, which a call this short doesn't need.
+  Code Mode isn't offered under `-p`, background jobs, Remote Control or
+  the Agent SDK.
 - **The bundled binary unpacks to
   `${XDG_CACHE_HOME:-~/.cache}/precis/v<version>/`**, as model-router's
   does, leaving the plugin's own directory to Claude Code; nothing

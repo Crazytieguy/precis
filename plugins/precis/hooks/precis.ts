@@ -1,13 +1,10 @@
-import type { EngineInterface, Register } from 'claude-code'
+import type { EngineInterface, Register, ToolCallResult } from 'claude-code'
 
 import { drawOffer, platformTarget, refreshOffer } from './switch'
 
 const TOOL = 'mcp__precis__summarize'
 
-/** What the engine answers a call of a plugin's tool that its permission check let through. */
-const UNSERVED = 'no tool.call hook answered this call'
-
-/** The tool's arguments, as the model gives them and as the permission check reads them. */
+/** The tool's arguments, as the model gives them. */
 type Args = { path?: string; token_budget?: number }
 
 /** This machine's target, and the binary bundle this plugin carries, if any. */
@@ -19,9 +16,6 @@ type Setup = { platform: Promise<Platform>; binary: Promise<string | undefined> 
 export const register: Register = (on, options) => {
   const tokenBudget = Number(options.token_budget)
   let setup: Setup | undefined
-  // The input each call's permission check read, by `tool_use_id`: a
-  // PreToolUse hook's rewrite shows here and not on the call's own `e`.
-  const checked = new Map<string, Args>()
 
   drawOffer(on)
 
@@ -58,39 +52,46 @@ export const register: Register = (on, options) => {
     return entered
   })
 
-  on('tool.check', { tool: TOOL }, ($, e, next) => {
-    if (e.tool_use_id !== undefined) checked.set(e.tool_use_id, e.input as Args)
-    return next(e)
-  })
+  // Read's allow runs precis here, ahead of the permission check, so plan
+  // mode (which may refuse a registered tool's call that reaches it) still
+  // summarizes the project; Read's ask goes on to the permission mode.
+  on('tool.call', { tool: TOOL }, ($, e, next) =>
+    serve($, (setup ??= setUp($)).binary, tokenBudget, e as Args, () => next(e)),
+  )
 
-  on('tool.call', { tool: TOOL }, async ($, e, next) => {
-    const args = e as Args
-    const bin = await (setup ??= setUp($)).binary
-    if (bin === undefined) return { deny: 'precis has no binary to run' }
-    const path = await expandHome($, args.path ?? '.')
-    const read = await readDecision($, path)
-    if ('deny' in read) return read
-    if (read.decision === 'ask') {
-      const decided = await next(e)
-      const input = checked.get(e.tool_use_id)
-      checked.delete(e.tool_use_id)
-      if (decided.isError !== true || !decided.text?.includes(UNSERVED)) return decided
-      if (input === undefined || input.path !== args.path || input.token_budget !== args.token_budget) {
-        return { deny: 'A hook changed the path or budget before the permission check; precis runs only what it checked' }
-      }
-    }
-    const run = await $.process.run(
-      [bin, '--token-budget', String(args.token_budget ?? tokenBudget), '--', path],
-      { timeoutMs: 120_000 },
-    )
-    if (run.exitCode !== 0) return { deny: run.stderr.trim() }
-    return { result: run.stdout === '' ? run.stderr.trim() : run.stdout }
-  })
+  // A call the permission mode allowed, on the input as allowed: a PreToolUse
+  // or PermissionRequest hook's rewrite included, so Read is asked again.
+  on('tool.run', { tool: TOOL }, ($, e) => serve($, (setup ??= setUp($)).binary, tokenBudget, e as Args, undefined))
 }
 
 function setUp($: EngineInterface): Setup {
   const platform = detectPlatform($)
   return { platform, binary: bundledBinary($, platform) }
+}
+
+/**
+ * Serves a call on a path Read's decision allows, refuses one it denies, and
+ * leaves Read's ask to `onAsk`; with none, the permission mode has allowed it.
+ */
+async function serve(
+  $: EngineInterface,
+  binary: Promise<string | undefined>,
+  tokenBudget: number,
+  args: Args,
+  onAsk: (() => Promise<ToolCallResult>) | undefined,
+): Promise<ToolCallResult> {
+  const bin = await binary
+  if (bin === undefined) return { deny: 'precis has no binary to run' }
+  const path = await expandHome($, args.path ?? '.')
+  const read = await readDecision($, path)
+  if ('deny' in read) return read
+  if (read.decision === 'ask' && onAsk !== undefined) return onAsk()
+  const run = await $.process.run(
+    [bin, '--token-budget', String(args.token_budget ?? tokenBudget), '--', path],
+    { timeoutMs: 120_000 },
+  )
+  if (run.exitCode !== 0) return { deny: run.stderr.trim() }
+  return { result: run.stdout === '' ? run.stderr.trim() : run.stdout }
 }
 
 /**
@@ -221,12 +222,10 @@ async function expandHome($: EngineInterface, path: string): Promise<string> {
 }
 
 /**
- * Read's decision on `path`, or why precis may not read it. A plugin's own
- * tool reaches the permission check only through `next`, which ends at the
- * engine's error for a call no hook served, so the tool follows Read's
- * decision on the same path and puts only Read's ask to the permission mode:
- * the dialog, the auto-mode classifier, a headless host's refusal. Plan mode
- * refuses every call that reaches it, so an allow skips it.
+ * Read's decision on `path`, or why precis may not read it. The tool follows
+ * Read's decision on the same path and puts only Read's ask to the
+ * permission mode: the dialog, the auto-mode classifier, a headless host's
+ * refusal.
  */
 async function readDecision(
   $: EngineInterface,

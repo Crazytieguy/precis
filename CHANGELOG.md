@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Plugin
+
+- Fixed the `summarize` tool failing on a path you had just approved (outside the project, in auto mode or at the permission prompt) on Claude Code 2.1.326 and later. It said "precis registered the tool summarize but no hook answered this call".
+- The plugin now needs Claude Code 2.1.326 or later.
+- Works in Claude Code's experimental Code Mode (from Claude Code 2.1.327), where Claude calls the tool from its scripts. The tool asks, runs and refuses as it does outside Code Mode, and the overview still comes with the first prompt.
+
 ## 0.2.3
 
 ### Plugin

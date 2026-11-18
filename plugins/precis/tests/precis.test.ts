@@ -4,6 +4,7 @@ import { expect, mock, test } from 'claude-code/testing'
 const SUMMARY = '.cargo/\n  config.toml\nREADME.md\n  1→# demo\n  2→```sh\n'
 const HELP = 'Summarize a directory or file within a token budget.\n\n`N→` rows are source line N.\n\nUsage: precis [OPTIONS] [PATH]\n'
 const BINARY = '/cache/precis/v0.3.0/precis'
+const REFUSED = "Claude requested permissions to use mcp__precis__summarize, but you haven't granted it yet."
 
 const BAND = {
   plugin: 'precis',
@@ -14,7 +15,9 @@ const BAND = {
 type World = {
   bundled?: string
   dev?: string
-  readDecision?: ToolCheckDecision
+  /** Read's decision on a path: one for every path, or by path. */
+  readDecision?: ToolCheckDecision | ((path: string) => ToolCheckDecision)
+  /** Whether the permission mode lets a call it is asked about through. */
   granted?: boolean
   turns?: number
   refuseTools?: boolean
@@ -55,11 +58,17 @@ function world(on: On, w: World = {}) {
   on('settings.read', ($, e) => ({
     value: e.source === 'user' ? { enabledPlugins: { [`precis-${w.bundled}@precis`]: true } } : {},
   }))
-  on('tool.check', { tool: 'Read' }, () => ({ decision: w.readDecision ?? 'allow' }))
+  on('tool.check', { tool: 'Read' }, ($, e) => {
+    const decide = w.readDecision ?? 'allow'
+    return { decision: typeof decide === 'function' ? decide((e.input as { file_path: string }).file_path) : decide }
+  })
+  // The permission mode settling the ask of a call that reaches it.
+  on('tool.check', { tool: 'mcp__precis__summarize' }, () =>
+    w.granted ? { decision: 'allow' } : { decision: 'deny', reason: REFUSED },
+  )
+  // Core, under a call no hook served, in Claude Code 2.1.327's words.
   on('tool.call', { tool: 'mcp__precis__summarize' }, () => {
-    const text = w.granted
-      ? 'precis registered the tool summarize but no tool.call hook answered this call'
-      : "Claude requested permissions to use mcp__precis__summarize, but you haven't granted it yet."
+    const text = 'precis registered the tool summarize but no hook answered this call'
     return { result: `Error: ${text}`, text, isError: true }
   })
   on('command.run', ($, e) => {
@@ -211,17 +220,28 @@ test('a path Read would ask about is refused as the permission mode refuses it',
   const before = w.runs.length
   const result = await $.tool.call({ tool: 'mcp__precis__summarize', path: '/etc' })
   expect(result.isError).toBe(true)
-  expect(result.text).toBe("Claude requested permissions to use mcp__precis__summarize, but you haven't granted it yet.")
+  expect(result.text).toBe(REFUSED)
   expect(w.runs).toHaveLength(before)
 })
 
-test('a path a PreToolUse hook rewrote on its way to the permission check is refused', async ($, on) => {
+test('a path a hook rewrote on its way to the permission check runs as the mode allowed it', async ($, on) => {
   const w = world(on, { readDecision: 'ask', granted: true })
-  on('classic.PreToolUse', () => ({ updatedInput: { path: '/home/u' } }))
+  on('classic.PreToolUse', () => ({ updatedInput: { path: '/home/u/other', token_budget: 700 } }))
+  await $.session.start(start)
+  const result = await $.tool.call({ tool: 'mcp__precis__summarize', path: '/etc' })
+  expect(result.result).toBe(SUMMARY)
+  expect(w.runs).toContainEqual([BINARY, '--token-budget', '700', '--', '/home/u/other'])
+  expect(w.runs.some(argv => argv.at(-1) === '/etc')).toBe(false)
+})
+
+test('an allowed call a hook rewrote to a path Read is denied is refused', async ($, on) => {
+  const w = world(on, { readDecision: path => (path === '/home/u/.ssh' ? 'deny' : 'ask'), granted: true })
+  on('classic.PreToolUse', () => ({ updatedInput: { path: '~/.ssh' } }))
   await $.session.start(start)
   const before = w.runs.length
   const result = await $.tool.call({ tool: 'mcp__precis__summarize', path: '/etc' })
-  expect(result.deny).toBe('A hook changed the path or budget before the permission check; precis runs only what it checked')
+  expect(result.isError).toBe(true)
+  expect(result.text).toBe('Reading /home/u/.ssh is denied')
   expect(w.runs).toHaveLength(before)
 })
 
